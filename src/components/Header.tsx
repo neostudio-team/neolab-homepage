@@ -121,7 +121,7 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       label: dict.serviceApp,
       href: `/${lang}/neosmartpen#apps`,
       children: [
-        { label: dict.neoStudio, href: lang === "ko" ? "https://neosmartpen.co.kr/app-neostudio/" : lang === "ja" ? "https://neosmartpen.jp/neo-studio-2/" : "https://neosmartpen.com/app-neostudio/", external: true },
+        { label: dict.neoStudio, href: `/${lang}/apps/neo-studio` },
         { label: dict.aigle, href: "https://aigle.neolab.net", external: true },
         { label: dict.gridaboard, href: lang === "ko" ? "https://neosmartpen.co.kr/app-gridaboard/" : lang === "ja" ? "https://neosmartpen.jp/gridaboard-2/" : "https://neosmartpen.com/app-gridaboard/", external: true },
         ...(lang !== "ja" ? [{ label: dict.penManager, href: lang === "ko" ? "https://neosmartpen.co.kr/penmanager/" : "https://neosmartpen.com/penmanager/", external: true }] : []),
