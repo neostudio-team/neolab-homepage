@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import Image from "next/image";
-import R1Gallery from "@/components/neosmartpen/R1Gallery";
 
 const CDN = "https://shop.neosmartpen.com/cdn/shop";
 
@@ -56,26 +55,8 @@ export default async function ProductR1Page({ params }: { params: Promise<{ lang
   const dict = await getDictionary(lang);
   const t = dict.neosmartpen.productR1;
 
-  const buyUrl =
-    lang === "ko"
-      ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454"
-      : lang === "ja"
-      ? "https://neosmartpenjp.com/"
-      : "https://shop.neosmartpen.com/products/neo-smartpen-r1";
-
   return (
     <>
-      {/* S1: Hero – Image Gallery + Product Info */}
-      <R1Gallery
-        eyebrow={t.hero.eyebrow}
-        tagline={t.hero.tagline}
-        price={t.hero.price}
-        colorBlack={t.hero.colorBlack}
-        colorSkyBlue={t.hero.colorSkyBlue}
-        buyBtn={t.hero.buyBtn}
-        buyUrl={buyUrl}
-      />
-
       {/* S2: "Experience the freedom" */}
       <section className="bg-[#171717] text-white py-16">
         <div className="max-w-[900px] mx-auto px-6 text-center">
