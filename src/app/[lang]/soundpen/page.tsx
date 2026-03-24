@@ -55,7 +55,7 @@ export default async function SoundPenPage({
                         팝펜 공식몰
                       </Link>
                       <Link href="https://cafe.naver.com/dotcotory" target="_blank" rel="noopener noreferrer" className="inline-block bg-[#03c75a] text-white px-8 py-3 rounded font-semibold hover:opacity-90 transition-opacity uppercase tracking-wider text-sm">
-                        팝펜 프렌즈
+                        팝펜 팩토리
                       </Link>
                     </>
                   )}
