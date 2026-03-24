@@ -92,10 +92,10 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
           href: lang === "ko" ? "https://store.neosmartpen.com/" : `/${lang}/neosmartpen`,
           external: lang === "ko",
           children: [
-            { label: dict.neoSmartpenR1, href: `/${lang}/neosmartpen/product-r1` },
-            ...(lang !== "en" ? [{ label: dict.neoSmartpenA1, href: lang === "ko" ? "https://neosmartpen.co.kr/a1/" : "https://neosmartpen.jp/neo-smartpen-a1/", external: true }] : []),
-            { label: dict.neoSmartpenM1, href: lang === "ko" ? "https://neosmartpen.co.kr/product-m1+/" : lang === "ja" ? "https://neosmartpen.jp/product-m1/" : "https://neosmartpen.com/product-m1/", external: true },
-            { label: dict.neoSmartpenDimo, href: lang === "ko" ? "https://neosmartpen.co.kr/product-dimo/" : lang === "ja" ? "https://neosmartpen.jp/product-dimo/" : "https://neosmartpen.com/product-dimo/", external: true },
+            { label: dict.neoSmartpenR1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : `/${lang}/neosmartpen/product-r1`, external: lang === "ko" },
+            ...(lang !== "en" ? [{ label: dict.neoSmartpenA1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=455" : "https://neosmartpen.jp/neo-smartpen-a1/", external: true }] : []),
+            { label: dict.neoSmartpenM1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=531" : lang === "ja" ? "https://neosmartpen.jp/product-m1/" : "https://neosmartpen.com/product-m1/", external: true },
+            { label: dict.neoSmartpenDimo, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=154&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "ja" ? "https://neosmartpen.jp/product-dimo/" : "https://neosmartpen.com/product-dimo/", external: true },
             { label: dict.lamySafari, href: lang === "ko" ? "https://neosmartpen.co.kr/product-lamy/" : lang === "ja" ? "https://neosmartpen.jp/product-lamy/" : "https://neosmartpen.com/product-lamy/", external: true },
           ],
         },
@@ -164,7 +164,7 @@ export default function Header({ lang, dict }: HeaderProps) {
         </button>
 
         <div className="w-[200px] bg-white shadow-[-5px_0_15px_-5px_rgba(0,0,0,0.1)] rounded-bl-xl border-l border-b border-t border-gray-100 p-4 flex flex-col gap-3">
-          <Link href={lang === 'ko' ? 'https://neosmartpen.co.kr/' : lang === 'ja' ? 'https://neosmartpenjp.com/' : 'https://shop.neosmartpen.com/'} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-700 hover:text-[#ff4e00] transition-colors border-b border-gray-50 pb-2">{dict.quickMenu.neoSmartpenShop}</Link>
+          <Link href={lang === 'ko' ? 'https://store.neosmartpen.com/main/index.php' : lang === 'ja' ? 'https://neosmartpenjp.com/' : 'https://shop.neosmartpen.com/'} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-700 hover:text-[#ff4e00] transition-colors border-b border-gray-50 pb-2">{dict.quickMenu.neoSmartpenShop}</Link>
           {lang === 'ja' && (
             <Link href="https://www.amazon.co.jp/neosmartpen" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-700 hover:text-[#ff4e00] transition-colors border-b border-gray-50 pb-2">Amazon</Link>
           )}
