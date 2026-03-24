@@ -109,7 +109,34 @@ export default async function NeoSmartpenHome({
   return (
     <>
       {/* S0: Hero */}
-      {slides ? (
+      {lang === "ko" ? (
+        <section style={{ background: "#f0f0f0", minHeight: 500 }} className="flex items-center overflow-hidden">
+          <div className="max-w-[1080px] mx-auto px-8 flex flex-col lg:flex-row items-center w-full py-16 gap-0">
+            <div className="w-full lg:w-1/2 flex flex-col gap-5">
+              <h1 className="text-[40px] lg:text-[54px] font-bold text-[#222] leading-tight">모든 특별함이 하나로</h1>
+              <p className="text-[18px] lg:text-[20px] text-[#444]">Neo smartpen A1</p>
+              <a
+                href="https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border border-[#333] text-[#333] bg-white px-8 py-3 text-[14px] font-medium hover:bg-[#333] hover:text-white transition-colors w-fit"
+              >
+                공식몰 가기
+              </a>
+            </div>
+            <div className="w-full lg:w-1/2 flex justify-end items-end self-stretch pt-8 lg:pt-0">
+              <Image
+                src={`${IMG}/ja/product_a1.png`}
+                alt="Neo smartpen A1"
+                width={520}
+                height={520}
+                className="w-full max-w-[460px] lg:max-w-[520px] object-contain self-end"
+                priority
+              />
+            </div>
+          </div>
+        </section>
+      ) : slides ? (
         <HeroSlider slides={slides} />
       ) : (
         <section className="relative w-full" style={{ height: 600, backgroundColor: "#f3f1ec" }}>
