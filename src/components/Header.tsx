@@ -102,16 +102,18 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
         {
           label: dict.soundpen,
           href: `/${lang}/soundpen`,
-          children: [
-            {
-              label: dict.poppenFactory,
-              href: "https://cafe.naver.com/dotcotory",
-              external: true,
-              children: [
-                { label: dict.ncpDownload, href: "https://neolabconvergence.notion.site/NCP-254d4c1a42e2805f8ae1cddedadc083e", external: true },
-              ],
-            },
-          ],
+          ...(lang !== 'en' ? {
+            children: [
+              {
+                label: dict.poppenFactory,
+                href: "https://cafe.naver.com/dotcotory",
+                external: true,
+                children: [
+                  { label: dict.ncpDownload, href: "https://neolabconvergence.notion.site/NCP-254d4c1a42e2805f8ae1cddedadc083e", external: true },
+                ],
+              },
+            ],
+          } : {}),
         },
         { label: dict.pokoro, href: `/${lang}/pokoro` },
         { label: lang === "ja" ? "ノート" : dict.accessories, href: lang === "ja" ? "https://neosmartpenjp.com/collections/n_note" : lang === "ko" ? "https://store.neosmartpen.com/goods/goods_list.php?cateCd=019" : "https://shop.neosmartpen.com/collections/accessories", external: true },
