@@ -96,6 +96,7 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
             ...(lang !== "en" ? [{ label: dict.neoSmartpenA1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=455" : "https://neosmartpen.jp/neo-smartpen-a1/", external: true }] : []),
             { label: dict.neoSmartpenM1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=531" : lang === "ja" ? "https://neosmartpen.jp/product-m1/" : "https://neosmartpen.com/product-m1/", external: true },
             { label: dict.neoSmartpenDimo, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=154&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "ja" ? "https://neosmartpen.jp/product-dimo/" : "https://neosmartpen.com/product-dimo/", external: true },
+            { label: dict.lamySafari, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=392" : lang === "ja" ? "https://neosmartpen.jp/product-lamy/" : "https://neosmartpen.com/product-lamy/", external: true },
           ],
         },
         {
