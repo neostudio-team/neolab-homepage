@@ -89,7 +89,8 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       children: [
         {
           label: dict.smartpen,
-          href: `/${lang}/neosmartpen`,
+          href: lang === "ko" ? "https://store.neosmartpen.com/" : `/${lang}/neosmartpen`,
+          external: lang === "ko",
           children: [
             { label: dict.neoSmartpenR1, href: `/${lang}/neosmartpen/product-r1` },
             ...(lang !== "en" ? [{ label: dict.neoSmartpenA1, href: lang === "ko" ? "https://neosmartpen.co.kr/a1/" : "https://neosmartpen.jp/neo-smartpen-a1/", external: true }] : []),
