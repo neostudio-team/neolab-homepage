@@ -89,14 +89,14 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       children: [
         {
           label: dict.smartpen,
-          href: lang === "ko" ? "https://store.neosmartpen.com/" : lang === "en" ? "https://shop.neosmartpen.com/" : `/${lang}/neosmartpen`,
-          external: lang !== "ja",
+          href: lang === "ko" ? "https://store.neosmartpen.com/" : lang === "en" ? "https://shop.neosmartpen.com/" : "https://neosmartpenjp.com/",
+          external: true,
           children: [
-            { label: dict.neoSmartpenR1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-r1" : `/${lang}/neosmartpen/product-r1`, external: lang !== "ja" },
-            ...(lang !== "en" ? [{ label: dict.neoSmartpenA1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=455" : "https://neosmartpen.jp/neo-smartpen-a1/", external: true }] : [{ label: dict.neoSmartpenA1, href: "https://shop.neosmartpen.com/products/neo-smartpen-a1", external: true }]),
-            { label: dict.neoSmartpenM1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=531" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-m1-plus" : "https://neosmartpen.jp/product-m1/", external: true },
-            { label: dict.neoSmartpenDimo, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=154&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "en" ? "https://shop.neosmartpen.com/collections/all/products/neo-smartpen-dimo" : "https://neosmartpen.jp/product-dimo/", external: true },
-            { label: dict.lamySafari, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=392" : lang === "en" ? "https://shop.neosmartpen.com/products/lamy-safari-all-black-ncode" : "https://neosmartpen.jp/product-lamy/", external: true },
+            { label: dict.neoSmartpenR1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-r1" : "https://neosmartpenjp.com/products/neo-smartpen-r1", external: true },
+            { label: dict.neoSmartpenA1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=455" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-a1" : "https://neosmartpenjp.com/products/neo-smartpen-a1", external: true },
+            { label: dict.neoSmartpenM1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=531" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-m1-plus" : "https://neosmartpenjp.com/products/neo-smartpen-m1-plus", external: true },
+            { label: dict.neoSmartpenDimo, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=154&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "en" ? "https://shop.neosmartpen.com/collections/all/products/neo-smartpen-dimo" : "https://neosmartpenjp.com/products/neosmartpen-dimo", external: true },
+            { label: dict.lamySafari, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=392" : lang === "en" ? "https://shop.neosmartpen.com/products/lamy-safari-all-black-ncode" : "https://neosmartpenjp.com/products/lamysafari-smartpen", external: true },
           ],
         },
         {
