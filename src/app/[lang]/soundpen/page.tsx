@@ -46,7 +46,7 @@ export default async function SoundPenPage({
                 <h1 className="text-[32px] lg:text-[40px] font-black mb-6 leading-tight">{t.hero.title}</h1>
                 <p className="text-gray-200 text-sm leading-[2] mb-8">{t.hero.description}</p>
                 <div className="flex gap-4 flex-wrap">
-                  {lang !== 'en' && (
+                  {lang === 'ko' && (
                   <Link href="#enquire" className="inline-block bg-primary text-white px-8 py-3 rounded font-semibold hover:bg-primary-dark transition-colors uppercase tracking-wider text-sm">
                     {dict.common.enquiry}
                   </Link>
@@ -187,7 +187,7 @@ export default async function SoundPenPage({
             <h2 className="text-[30px] font-medium text-black mb-4">{dict.common.creatingNewValue}</h2>
             <p className="text-[#666]">
               {dict.common.contactUsAt}{" "}
-              <a href={`mailto:${lang === 'en' ? 'global@neolab.net' : 'bizinquiry@neolab.net'}`} className="text-primary hover:underline">{lang === 'en' ? 'global@neolab.net' : 'bizinquiry@neolab.net'}</a>
+              <a href={`mailto:${lang === 'ko' ? 'bizinquiry@neolab.net' : 'global@neolab.net'}`} className="text-primary hover:underline">{lang === 'ko' ? 'bizinquiry@neolab.net' : 'global@neolab.net'}</a>
             </p>
           </div>
           <div className="max-w-lg mx-auto">

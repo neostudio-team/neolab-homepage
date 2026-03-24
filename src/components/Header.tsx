@@ -102,7 +102,7 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
         {
           label: dict.soundpen,
           href: `/${lang}/soundpen`,
-          ...(lang !== 'en' ? {
+          ...(lang === 'ko' ? {
             children: [
               {
                 label: dict.poppenFactory,
