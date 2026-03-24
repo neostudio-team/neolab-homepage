@@ -1,119 +1,83 @@
-# Findings - EN/KO/JA 전수 점검 종합 보고서
+# Findings – shop.neosmartpen.com/products/neo-smartpen-r1 분석
 
-> 점검일: 2026-03-11
-> 방법: curl (서버사이드) HTML 추출 → heading/image 수, title, 콘텐츠 구조 비교
+> 수집일: 2026-03-24
 
-## 페이지 매핑
+## 페이지 섹션 순서 (top → bottom)
+1. Hero: 이미지 갤러리 + 제품 정보 (제목/태그라인/가격/색상/구매버튼)
+2. "Experience the freedom" - 다크 bg, 4가지 기능 불릿
+3. "Feature Rich Smartpen, For Less" - 배경이미지 오버레이
+4. "About R1" - 3개 이미지 카드 (Bluetooth / Battery / Storage)
+5. "Digitize your handwriting and beyond!" - 텍스트 + 3 블록
+6. "What You Can Do with R1" - 4개 기능 리스트
+7. Sync handwriting - 큰 이미지 + 텍스트
+8. Edit The Way You Like It - 이미지 + 텍스트
+9. Transcribe & Export - 이미지 + 텍스트
+10. "Search & Organize" - 배경이미지 fullscreen
+11. "NEO Smart Planner" - 회색 bg
+12. "Notebooks for Neo Smartpen" - 섹션 + 이미지
+13. Notebooks 8종 그리드
+14. Apps (Neo Studio2 + Grida Board)
+15. Specification - 이미지 + 스펙 테이블
+16. "What's Inside The Box" - 박스 이미지 + 목록
+17. Product Comparison Table
+18. User Manual - 다운로드 링크
 
-### Localhost 라우트 (15개)
-| # | localhost path | EN original | KO original | JA original |
-|---|---------------|-------------|-------------|-------------|
-| 1 | /neosmartpen | / | / | / |
-| 2 | /neosmartpen/product-n2 | /product-n2/ | /product-n2/ | /product-n2/ |
-| 3 | /neosmartpen/product-m1 | /product-m1/ | /product-m1/ | /product-m1/ |
-| 4 | /neosmartpen/product-dimo | /product-dimo/ | /product-dimo/ | /product-dimo/ |
-| 5 | /neosmartpen/product-lamy | /product-lamy/ | /product-lamy/ | /product-lamy/ |
-| 6 | /neosmartpen/product-reco | /product-reco/ | /product-reco/ | ❌ 없음 |
-| 7 | /neosmartpen/neo-studio | /neo-studio-introduction/ | /app-neostudio/ | /neo-studio-2/ |
-| 8 | /neosmartpen/gridaboard | /app-gridaboard/ | /app-gridaboard/ | /gridaboard-2/ |
-| 9 | /neosmartpen/papertube | /app-papertube/ | /app-papertube/ | /papertube-2/ |
-| 10 | /neosmartpen/penmanager | /penmanager/ | /penmanager/ | ❌ 없음 |
-| 11 | /neosmartpen/hybriddocs | /solutions-hybriddocs/ | /hybriddocs/ | ❌ 없음 |
-| 12 | /neosmartpen/notebooks | /paper-digitalnote/ | /paper-digitalnote/ | /paper-digitalnote/ |
-| 13 | /neosmartpen/ncode-pdf | /ncode-pdf/ | /ncode-pdf/ | ❌ 없음 |
-| 14 | /neosmartpen/customer | /customer/ | /customer/ | ❌ 없음 |
-| 15 | /neosmartpen/knowledge-base | /knowledge-base/ | ❌ 없음 | ❌ 없음 |
+## 이미지 URL 매핑
+| 섹션 | 이미지 URL |
+|------|-----------|
+| Hero main (Black) | https://shop.neosmartpen.com/cdn/shop/files/F45.png?v=1748305970 |
+| Hero Sky Blue | https://shop.neosmartpen.com/cdn/shop/files/KakaoTalk_20250103_114024634.png?v=1756790863 |
+| Hero photo 1 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2147-278110.jpg?v=1756790863 |
+| Hero photo 2 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2171-592434.jpg?v=1756790863 |
+| Hero photo 3 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2216-408424.jpg?v=1756790863 |
+| Hero photo 4 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2459.jpg?v=1756790863 |
+| Hero extra 1 | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-extra-001.png?v=1756790863 |
+| Hero extra 2 | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-extra-002.png?v=1756790863 |
+| Hero extra 3 | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-extra-003.png?v=1756790863 |
+| Feature Rich BG | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-img.png?v=1756778721 |
+| About R1 - Bluetooth | https://shop.neosmartpen.com/cdn/shop/files/25.png?v=1756700568 |
+| About R1 - Battery | https://shop.neosmartpen.com/cdn/shop/files/26.png?v=1756700529 |
+| About R1 - Storage | https://shop.neosmartpen.com/cdn/shop/files/27.png?v=1756700645 |
+| Sync section img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2234_1.png?v=1756790290 |
+| Edit section img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2378_1.png?v=1756790344 |
+| Transcribe img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2396_1.png?v=1756790387 |
+| Pen Mouse img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2408_1.png?v=1756790437 |
+| Search BG | https://shop.neosmartpen.com/cdn/shop/files/14.png?v=1756693263 |
+| Notebooks section | https://shop.neosmartpen.com/cdn/shop/files/11_a0ab5ef5-fed0-4e2d-a0f3-676cce04e21e.jpg?v=1756697566 |
+| Neo Studio2 app | https://shop.neosmartpen.com/cdn/shop/files/16.png?v=1756698404 |
+| Grida Board app | https://shop.neosmartpen.com/cdn/shop/files/12.jpg?v=1756698417 |
+| Spec image | https://shop.neosmartpen.com/cdn/shop/files/28.png?v=1756701172 |
+| Box contents | https://shop.neosmartpen.com/cdn/shop/files/1_bf147d36-cecc-47e6-89bc-d6bd0c372927.jpg?v=1756790863 |
 
-### 원본에만 있는 페이지 (localhost에 없음)
-- EN: /neoblog/ (블로그)
-- KO: /a1/ (A1 제품 페이지)
-- JA: /neo-smartpen-a1/, /faq/, /information-sub/*
+## 노트북 8종
+| 제품명 | 이미지 | 가격 | 링크 |
+|--------|--------|------|------|
+| NEO SMART PLANNER 2026 Pro | NEOSMARTPLANNER2026Pro_001.jpg | $20.00 | /products/neo-smart-planner-2026 |
+| 100 DAY COUNTDOWN PLANNER | 1-437017.png | $9.50 | /products/100-day-countdown-planner |
+| N PROFESSIONAL NOTEBOOK | n-professional-notebook...798281.jpg | $19.00 | /products/n-professional-notebook-1 |
+| N MOLESKINE NOTEBOOK | n-moleskine-notebook...509125.jpg | $29.00 | /products/n-moleskine-notebook |
+| N RING NOTEBOOK 5-PACK | n-ring-notebook-5-pack...197592.jpg | $19.90 | /products/n-ring-notebook-5-pack |
+| N POCKET NOTEBOOKS 5-PACK | N-730011.jpg | $14.90 | /products/n-pocket-notebooks-5-pack |
+| N MEMO NOTEBOOKS 5-PACK | MEMO-NOTEBOOKS-766389.jpg | $14.90 | /products/n-memo-notebooks-5-pack |
+| N HANDY NOTEBOOK (BLUE) | n-handy-notebook...light-blue...jpg | $15.00 | /products/n-handy-notebook-blue |
 
----
+## 비교표 데이터
+| 스펙 | Lamy Safari | A1 | M1+ | R1 | Dimo |
+|------|------------|-----|-----|-----|------|
+| Model | NWP-F80 | NWP-F151 | NWP-F55 | NWP-F45 | NWP-F30 |
+| Storage | 160pgs | 160pgs | 1000pgs | 20pgs | 20pgs |
+| Battery | 180mA | 130mAh | 280mAh | 180mAh | AAA×1 |
+| Battery Life | 11h | 14h | 14h | 14h | 9.5h |
+| Charging | 5 Pin | USB-C | USB-C | USB-C | — |
+| Size | 144×16mm | 139×13.9mm | 149.6×10.9mm | 149×11mm | 140×14.7mm |
+| Weight | 28g | 20g | 22g | 18g | 26.5g |
 
-## 크로스 언어 종합 매트릭스
+## 색상
+- Primary text: #171717 (rgb 23,23,23)
+- Accent: standard (no brand orange - shop uses black as primary)
+- Background variations: white, #ECECEC (light gray), #1F1F1F (footer dark)
+- Buy button: dark (#171717) with white text, rounded-full
 
-| # | 페이지 | EN | KO | JA | 종합 |
-|---|--------|:--:|:--:|:--:|:----:|
-| 1 | Home | ❌ Major | ⚠️ Minor | ⚠️ Minor | ❌ Major |
-| 2 | product-n2 | ⚠️ Minor | ⚠️ Minor | ⚠️ Minor | ⚠️ Minor |
-| 3 | product-m1 | ⚠️ Minor | ❌ Major | 🔴 Major | ❌ Major |
-| 4 | product-dimo | ⚠️ Minor | ❌ Major | 🔴 Major | ❌ Major |
-| 5 | product-lamy | ⚠️ Minor | ⚠️ Minor | ⚠️ Minor | ⚠️ Minor |
-| 6 | product-reco | ❌ Major | ❌ Major | N/A | ❌ Major |
-| 7 | neo-studio | ❌ Major | ❌ Major | 🔴 Critical | 🔴 Critical |
-| 8 | gridaboard | ❌ Major | ❌ Major | 🔴 Major | ❌ Major |
-| 9 | papertube | 🔴 Critical | ❌ Major | 🔴 Critical | 🔴 Critical |
-| 10 | penmanager | ⚠️ Minor | ⚠️ Minor | N/A | ⚠️ Minor |
-| 11 | hybriddocs | ⚠️ Minor | ❌ Major | N/A | ❌ Major |
-| 12 | notebooks | ❌ Major | ❌ Major | 🔴 Critical | 🔴 Critical |
-| 13 | ncode-pdf | ⚠️ Minor | ⚠️ Minor | N/A | ⚠️ Minor |
-| 14 | customer | ⚠️ Minor | N/A | N/A | ⚠️ Minor |
-
----
-
-## 심각도별 분류
-
-### 🔴 Critical (3 페이지) — 콘텐츠 자체가 크게 다름
-| 페이지 | 핵심 이슈 |
-|--------|-----------|
-| **neo-studio** | Title 미설정, 이미지 -15~17개, 완전히 재설계된 콘텐츠 구조 |
-| **papertube** | Title 미설정, 이미지 -8~9개, EASY/SHORT/LIGHT 등 키워드 섹션 전체 누락, 사용법 가이드 누락 |
-| **notebooks** | Title 미설정, 이미지 -11~12개, heading -9~10개, 제품 4종 누락 (N memo, DIGITAL NOTEBOOK B5, N pocket, NEO SMART HOLDER) |
-
-### ❌ Major (6 페이지) — 구조적 차이 있음
-| 페이지 | 핵심 이슈 |
-|--------|-----------|
-| **Home** | EN: 6 heading 누락 (Neo Studio/Grida Board/PaperTube/뉴스 섹션 제거) |
-| **product-m1** | 빈 heading 정리로 -5~7, 구성품 heading 병합 |
-| **product-dimo** | 빈 heading 정리로 -5, localhost가 원본보다 콘텐츠 많음 (JA) |
-| **product-reco** | Title 부분 변경, 이미지 +9~11, 사용법 step→spec grid 교체 |
-| **gridaboard** | Title 미설정, "GRIDA BOARD" H1 누락, -2~3 heading |
-| **hybriddocs** | Title 미설정, heading 계층 대폭 재구성, 사용 방법 섹션 축소 |
-
-### ⚠️ Minor (5 페이지) — 경미한 차이
-| 페이지 | 핵심 이슈 |
-|--------|-----------|
-| **product-n2** | 빈 heading 정리, `<br>` 제거로 heading 병합 (의도적) |
-| **product-lamy** | +1~4 heading (#SMART WRITING 추가), heading level 변경 |
-| **penmanager** | Title만 미설정, 콘텐츠 구조 동일 |
-| **ncode-pdf** | Title만 미설정, 콘텐츠 구조 동일 |
-| **customer** | Title만 미설정, subtitle 1개 누락 |
-
----
-
-## 공통 이슈 (Cross-Language)
-
-### 이슈 1: Title 미설정 (시스템 버그)
-**영향 범위**: neo-studio, gridaboard, papertube, penmanager, hybriddocs, notebooks, ncode-pdf (+ customer EN)
-**증상**: `<title>`이 "Home - NeoLAB Convergence Inc."로 표시
-**원인**: 해당 페이지들의 `generateMetadata()`에서 locale dictionary의 title을 읽지 못하거나, metadata 설정 자체가 누락
-**심각도**: 높음 (SEO에 직접 영향)
-
-### 이슈 2: 이미지 대량 누락 (3개 페이지)
-| 페이지 | EN 차이 | KO 차이 | JA 차이 |
-|--------|---------|---------|---------|
-| neo-studio | -1 | -15 | -17 |
-| papertube | -8 | -9 | -8 |
-| notebooks | -5 | -11 | -12 |
-
-### 이슈 3: 클라이언트 사이드 locale redirect
-**증상**: 브라우저에서 `/en/` 또는 `/ja/` URL 접근 시 브라우저 언어 설정에 따라 `/ko/`로 redirect
-**영향**: EN/JA 실사용자가 KO 페이지로 강제 이동
-**원인**: JavaScript 기반 locale detection (서버사이드 curl은 정상 200)
-
-### 이슈 4: Heading Level 불일치
-원본 사이트의 빈 `<h1>`, `<h2>` 태그와 `<br>`로 분리된 heading을 localhost에서 정리하면서 heading 수 차이 발생. 이는 대부분 **의도적 구조 개선**으로 판단.
-
----
-
-## 우선 수정 권장 순서
-
-1. **Title 메타데이터 설정** — 7개 페이지 (빠른 수정, 높은 SEO 효과)
-2. **papertube 콘텐츠 보완** — 이미지 +8, 키워드 섹션 복원, 사용법 가이드 추가
-3. **notebooks 제품 라인업 보완** — 누락 4종 추가, 이미지 +11
-4. **neo-studio 이미지 마이그레이션** — 이미지 +15~17
-5. **Home EN 섹션 복원** — Neo Studio/Grida Board/PaperTube/뉴스 섹션
-6. **클라이언트 locale redirect 수정** — 미들웨어/클라이언트 로직 점검
-
-상세: `findings_en.md`, `findings_ko.md`, `findings_ja.md` 참조
+## 가격/구매 정보
+- 가격: $89.00 USD (en), 구매하기 버튼 → store URL
+- 색상: Black (NWP-F45-NC-BK), Sky Blue (NWP-F45-NC-SB)

@@ -1,35 +1,40 @@
-# Task Plan: /ja 회사소개 페이지 (neolab.co.jp 복사)
+# Task Plan: R1 Product Page – shop.neosmartpen.com 완전 복사
 
 ## Goal
-1. /ja GNB 회사소개 하위 메뉴(공지사항, 기업뉴스, BI) 모두 삭제
-2. 회사소개 클릭 시 내부 `/ja/company` 이동
-3. `/ja/company` 페이지는 https://neolab.co.jp/ 를 완전 복사
+shop.neosmartpen.com/products/neo-smartpen-r1 페이지를
+/[lang]/neosmartpen/product-r1 에 완전히 동일하게 복사.
+ko/en/ja 각각 번역 적용.
 
 ## Phases
 
-### Phase 1: Research [in_progress]
-- [ ] neolab.co.jp 전체 구조/텍스트/이미지 분석
-- [ ] Header.tsx ja 처리 확인
-- [ ] /[lang]/company/page.tsx 현재 구조 확인
+### Phase 1: Research [completed]
+- [x] shop 페이지 전체 구조/텍스트 수집
+- [x] 모든 이미지 URL 수집
+- [x] 비교표 데이터 수집
+- [x] findings.md 작성
 
-### Phase 2: GNB 수정 [pending]
-- [ ] Header.tsx ja일 때 company 하위메뉴 제거
-- [ ] ja 회사소개 href → `/${lang}/company`
+### Phase 2: Implementation [in_progress]
+- [ ] R1Gallery 클라이언트 컴포넌트 생성
+- [ ] locale ko/en/ja 전체 업데이트 (17섹션)
+- [ ] page.tsx 완전 재작성 (17섹션)
 
-### Phase 3: company 페이지 구현 [pending]
-- [ ] ja 전용 company 페이지 또는 lang 분기 처리
-- [ ] neolab.co.jp 콘텐츠 완전 복사
+### Phase 3: Build & Deploy [pending]
+- [ ] TypeScript 빌드 검증
+- [ ] GitHub commit + push
+- [ ] Vercel 배포 확인
 
-### Phase 4: 검증 [pending]
-- [ ] /ja/company 브라우저 확인
-- [ ] 원본과 비교
+### Phase 4: Verification [pending]
+- [ ] 원본 shop 페이지와 섹션별 비교
+- [ ] 3개 언어 페이지 확인
+
+## Key Files
+- `src/app/[lang]/neosmartpen/product-r1/page.tsx`
+- `src/components/neosmartpen/R1Gallery.tsx` (신규)
+- `src/locales/ko.ts`
+- `src/locales/en.ts`
+- `src/locales/ja.ts`
 
 ## Errors Encountered
 | Error | Attempt | Resolution |
 |-------|---------|------------|
 | - | - | - |
-
-## Key Files
-- `src/components/Header.tsx`
-- `src/app/[lang]/company/page.tsx`
-- `src/locales/ja.ts`
