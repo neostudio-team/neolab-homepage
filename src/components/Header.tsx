@@ -119,7 +119,7 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
     },
     {
       label: dict.serviceApp,
-      href: `/${lang}/neosmartpen#apps`,
+      href: "#",
       children: [
         { label: dict.neoStudio, href: `/${lang}/apps/neo-studio` },
         { label: dict.aigle, href: "https://aigle.neolab.net", external: true },
