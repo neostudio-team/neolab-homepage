@@ -123,9 +123,9 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       children: [
         { label: dict.neoStudio, href: `/${lang}/apps/neo-studio` },
         { label: dict.aigle, href: "https://aigle.neolab.net", external: true },
-        { label: dict.gridaboard, href: lang === "ko" ? "https://neosmartpen.co.kr/app-gridaboard/" : lang === "ja" ? "https://neosmartpen.jp/gridaboard-2/" : "https://neosmartpen.com/app-gridaboard/", external: true },
-        ...(lang !== "ja" ? [{ label: dict.penManager, href: lang === "ko" ? "https://neosmartpen.co.kr/penmanager/" : "https://neosmartpen.com/penmanager/", external: true }] : []),
-        { label: dict.paperTube, href: lang === "ko" ? "https://neosmartpen.co.kr/app-papertube/" : lang === "ja" ? "https://neosmartpen.jp/papertube-2/" : "https://neosmartpen.com/app-papertube/", external: true },
+        { label: dict.gridaboard, href: `/${lang}/apps/gridaboard` },
+        { label: dict.penManager, href: `/${lang}/apps/penmanager` },
+        { label: dict.paperTube, href: `/${lang}/apps/papertube` },
       ],
     },
     {
