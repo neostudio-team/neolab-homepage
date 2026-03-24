@@ -114,7 +114,7 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
           ],
         },
         { label: dict.pokoro, href: `/${lang}/pokoro` },
-        { label: lang === "ja" ? "ノート" : dict.accessories, href: lang === "ja" ? "https://neosmartpenjp.com/collections/n_note" : lang === "ko" ? "https://store.neosmartpen.com/goods/goods_list.php?cateCd=019" : `/${lang}/neosmartpen/notebooks`, external: lang !== "en" },
+        { label: lang === "ja" ? "ノート" : dict.accessories, href: lang === "ja" ? "https://neosmartpenjp.com/collections/n_note" : lang === "ko" ? "https://store.neosmartpen.com/goods/goods_list.php?cateCd=019" : "https://shop.neosmartpen.com/collections/accessories", external: true },
       ],
     },
     {
