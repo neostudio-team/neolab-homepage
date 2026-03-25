@@ -158,45 +158,77 @@ export default async function CustomerPage({ params }: { params: Promise<{ lang:
         </section>
 
         {/* Product Categories Section */}
-        <section className="py-20 bg-[#F5F8F8]">
+        <section className="py-20 bg-white">
           <div className="max-w-[1080px] mx-auto px-4 text-center">
             <h2 className="text-[32px] font-bold mb-16 text-[#333]">각 제품군의 상세 설명</h2>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 max-w-[860px] mx-auto">
-              <div className="flex flex-col items-center">
-                <Link href={`/${lang}/soundpen`} className="block w-[160px] h-[160px] rounded-full overflow-hidden mb-5 shadow-lg transition-transform hover:-translate-y-2 bg-[#FDE8C8] flex items-center justify-center">
+              {/* 소리펜 */}
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-[150px] h-[150px] flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/soundpen/poppen_soundpen_001.png" alt="소리펜" className="w-full h-full object-cover" />
-                </Link>
-                <h3 className="text-[17px] font-bold mb-4 text-[#333]">소리펜</h3>
-                <Link href={`/${lang}/soundpen`} className="bg-[#222] text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors">자세히 알아보기</Link>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <div className="w-[160px] h-[160px] rounded-full overflow-hidden mb-5 shadow-lg transition-transform hover:-translate-y-2 bg-[#E8F0F5] flex items-center justify-center cursor-pointer">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/pokoro/sec01-img01.png" alt="미디어플레이어" className="w-full h-full object-cover" />
+                  <img src="/images/customer/Neo-soripen.png" alt="소리펜" className="w-full h-full object-fill" />
                 </div>
-                <h3 className="text-[17px] font-bold mb-4 text-[#333]">미디어플레이어</h3>
-                <Link href={`/${lang}/pokoro`} className="bg-[#222] text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors">자세히 알아보기</Link>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <div className="w-[160px] h-[160px] rounded-full overflow-hidden mb-5 shadow-lg transition-transform hover:-translate-y-2 bg-[#EEF2F0] flex items-center justify-center cursor-pointer">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/technology/Neo-02.png" alt="빔프로젝터" className="w-full h-full object-contain p-4" />
-                </div>
-                <h3 className="text-[17px] font-bold mb-4 text-[#333]">빔프로젝터</h3>
-                <Link href="https://www.neolab.kr/customer/" target="_blank" rel="noopener noreferrer" className="bg-[#222] text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors">자세히 알아보기</Link>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <Link href={`/${lang}/neosmartpen`} className="block w-[160px] h-[160px] rounded-full overflow-hidden mb-5 shadow-lg transition-transform hover:-translate-y-2 bg-[#E8EAF0] flex items-center justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/neosmartpen/main/hero_bg.jpg" alt="네오스마트펜" className="w-full h-full object-cover" />
+                <h4 className="text-[17px] font-bold text-[#333]">소리펜</h4>
+                <Link
+                  href="https://www.neolab.kr/support-sori"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
+                >
+                  자세히 알아보기
                 </Link>
-                <h3 className="text-[17px] font-bold mb-4 text-[#333]">네오스마트펜</h3>
-                <Link href={`/${lang}/neosmartpen`} className="bg-[#222] text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors">자세히 알아보기</Link>
+              </div>
+
+              {/* 미디어플레이어 */}
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-[150px] h-[150px] flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/customer/Neo-mediaplayer.png" alt="미디어플레이어" className="w-full h-full object-fill" />
+                </div>
+                <h4 className="text-[17px] font-bold text-[#333]">미디어플레이어</h4>
+                <Link
+                  href="https://www.neolab.kr/support-mediaplayer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
+                >
+                  자세히 알아보기
+                </Link>
+              </div>
+
+              {/* 빔프로젝터 */}
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-[150px] h-[150px] flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/customer/Neo-beam.png" alt="빔프로젝터" className="w-full h-full object-fill" />
+                </div>
+                <h4 className="text-[17px] font-bold text-[#333]">빔프로젝터</h4>
+                <Link
+                  href="https://www.neolab.kr/support-beam"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
+                >
+                  자세히 알아보기
+                </Link>
+              </div>
+
+              {/* 네오스마트펜 */}
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-[150px] h-[150px] flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/customer/Neo-smartpen.png" alt="네오스마트펜" className="w-full h-full object-fill" />
+                </div>
+                <h4 className="text-[17px] font-bold text-[#333]">네오스마트펜</h4>
+                <Link
+                  href="https://www.neolab.kr/support-smartpen"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
+                >
+                  자세히 알아보기
+                </Link>
               </div>
             </div>
           </div>
