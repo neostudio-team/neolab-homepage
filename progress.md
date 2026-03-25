@@ -1,4 +1,10 @@
-# Progress - 제품 페이지 콘텐츠 수정
+# Progress – 관리자 페이지 CMS 구축
+
+## Phase 0: Supabase 설정 `대기중`
+- [ ] 사용자가 Supabase 계정/프로젝트 생성 후 키 제공 필요
+
+---
+# (이전) Progress - 제품 페이지 콘텐츠 수정
 
 ## Phase 0: generateMetadata 추가 `complete`
 - product-n2, m1, dimo, lamy, reco 모두 추가

@@ -1,6 +1,77 @@
-# Findings – shop.neosmartpen.com/products/neo-smartpen-r1 분석
+# Findings – 관리자 페이지 CMS 구축
 
-> 수집일: 2026-03-24
+> 수집일: 2026-03-25
+
+## 현재 상태 분석
+
+### 공지사항 페이지 (`/[lang]/company/news/page.tsx`)
+- notices 배열 하드코딩 (11개 항목)
+- 필드: id, isNotice, title, author, date, views
+- 상세 페이지 없음 (Link href="#")
+- 검색 UI 있으나 기능 없음 (정적)
+- 국문 전용 UI (영문/일문 번역 없음)
+
+### 기업뉴스 페이지 (`/[lang]/company/press/page.tsx`)
+- pressReleases 배열 하드코딩 (7개 항목)
+- 필드: title, author, date, category, excerpt
+- 상세 페이지 없음 (Link href="#")
+- 국문 전용 (영문/일문 미적용)
+
+## DB 스키마 설계
+
+### notices 테이블
+```sql
+create table notices (
+  id uuid default gen_random_uuid() primary key,
+  is_pinned boolean default false,
+  title_ko text not null,
+  title_en text,
+  title_ja text,
+  content_ko text,
+  content_en text,
+  content_ja text,
+  author text default 'NeoLAB',
+  views integer default 0,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+```
+
+### press_releases 테이블
+```sql
+create table press_releases (
+  id uuid default gen_random_uuid() primary key,
+  title_ko text not null,
+  title_en text,
+  title_ja text,
+  excerpt_ko text,
+  excerpt_en text,
+  excerpt_ja text,
+  content_ko text,
+  content_en text,
+  content_ja text,
+  author text default 'NeoLAB',
+  category text default 'press',
+  external_url text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+```
+
+## Supabase 환경변수 목록
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...  (서버 전용, 절대 클라이언트 노출 금지)
+ADMIN_EMAIL=admin@neolab.net  (관리자 로그인 이메일)
+```
+
+## 패키지
+- @supabase/supabase-js: ^2
+- @supabase/ssr: ^0.6 (Next.js SSR용 쿠키 기반 세션)
+
+---
+# (이전) Findings – shop.neosmartpen.com/products/neo-smartpen-r1 분석
 
 ## 페이지 섹션 순서 (top → bottom)
 1. Hero: 이미지 갤러리 + 제품 정보 (제목/태그라인/가격/색상/구매버튼)
