@@ -171,9 +171,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ lang:
                 </div>
                 <h4 className="text-[17px] font-bold text-[#333]">소리펜</h4>
                 <Link
-                  href="https://www.neolab.kr/support-sori"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/${lang}/customer/support-sori`}
                   className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
                 >
                   자세히 알아보기
@@ -188,9 +186,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ lang:
                 </div>
                 <h4 className="text-[17px] font-bold text-[#333]">미디어플레이어</h4>
                 <Link
-                  href="https://www.neolab.kr/support-mediaplayer"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/${lang}/customer/support-mediaplayer`}
                   className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
                 >
                   자세히 알아보기
@@ -205,9 +201,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ lang:
                 </div>
                 <h4 className="text-[17px] font-bold text-[#333]">빔프로젝터</h4>
                 <Link
-                  href="https://www.neolab.kr/support-beam"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/${lang}/customer/support-beam`}
                   className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
                 >
                   자세히 알아보기
@@ -222,9 +216,7 @@ export default async function CustomerPage({ params }: { params: Promise<{ lang:
                 </div>
                 <h4 className="text-[17px] font-bold text-[#333]">네오스마트펜</h4>
                 <Link
-                  href="https://www.neolab.kr/support-smartpen"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/${lang}/customer/support-smartpen`}
                   className="bg-black text-white text-[12px] px-5 py-[10px] rounded-full hover:opacity-80 transition-opacity"
                 >
                   자세히 알아보기
