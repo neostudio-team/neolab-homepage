@@ -5,6 +5,8 @@ import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { adminDb } from "@/lib/firebase-admin";
 
+export const dynamic = "force-dynamic";
+
 interface Notice {
   id: string;
   isPinned: boolean;
