@@ -15,7 +15,7 @@ async function verifyAdmin(request: NextRequest) {
 export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   try {
-    const doc = await adminDb.collection("press_releases").doc(id).get();
+    const doc = await adminDb.collection("press").doc(id).get();
     if (!doc.exists) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
     return NextResponse.json({
@@ -36,7 +36,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   const { id } = await params;
   try {
     const body = await request.json();
-    await adminDb.collection("press_releases").doc(id).update({
+    await adminDb.collection("press").doc(id).update({
       ...body,
       updatedAt: FieldValue.serverTimestamp(),
     });
@@ -52,7 +52,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
 
   const { id } = await params;
   try {
-    await adminDb.collection("press_releases").doc(id).delete();
+    await adminDb.collection("press").doc(id).delete();
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: "Failed to delete press release" }, { status: 500 });

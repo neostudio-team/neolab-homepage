@@ -16,7 +16,7 @@ export default async function PressDetailPage({
 
   let press: Record<string, string> | null = null;
   try {
-    const doc = await adminDb.collection("press_releases").doc(id).get();
+    const doc = await adminDb.collection("press").doc(id).get();
     if (!doc.exists) notFound();
     press = { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate().toISOString() } as Record<string, string>;
   } catch {

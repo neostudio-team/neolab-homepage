@@ -15,7 +15,7 @@ async function verifyAdmin(request: NextRequest) {
 export async function GET() {
   try {
     const snapshot = await adminDb
-      .collection("press_releases")
+      .collection("press")
       .orderBy("createdAt", "desc")
       .get();
 
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const docRef = await adminDb.collection("press_releases").add({
+    const docRef = await adminDb.collection("press").add({
       titleKo: body.titleKo ?? "",
       titleEn: body.titleEn ?? "",
       titleJa: body.titleJa ?? "",

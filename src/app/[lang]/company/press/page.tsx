@@ -15,6 +15,9 @@ interface PressRelease {
   excerptKo: string;
   excerptEn: string;
   excerptJa: string;
+  contentKo: string;
+  contentEn: string;
+  contentJa: string;
   author: string;
   category: string;
   externalUrl: string;
@@ -24,7 +27,7 @@ interface PressRelease {
 async function getPressReleases(): Promise<PressRelease[]> {
   try {
     const snapshot = await adminDb
-      .collection("press_releases")
+      .collection("press")
       .orderBy("createdAt", "desc")
       .get();
     return snapshot.docs.map((doc) => ({
@@ -35,6 +38,9 @@ async function getPressReleases(): Promise<PressRelease[]> {
       excerptKo: doc.data().excerptKo ?? "",
       excerptEn: doc.data().excerptEn ?? "",
       excerptJa: doc.data().excerptJa ?? "",
+      contentKo: doc.data().contentKo ?? "",
+      contentEn: doc.data().contentEn ?? "",
+      contentJa: doc.data().contentJa ?? "",
       author: doc.data().author ?? "NeoLAB",
       category: doc.data().category ?? "press",
       externalUrl: doc.data().externalUrl ?? "",
@@ -57,9 +63,12 @@ export default async function PressPage({ params }: { params: Promise<{ lang: Lo
   }
 
   function getExcerpt(p: PressRelease) {
-    if (lang === "en") return p.excerptEn || p.excerptKo;
-    if (lang === "ja") return p.excerptJa || p.excerptKo;
-    return p.excerptKo;
+    const raw =
+      lang === "en" ? (p.excerptEn || p.excerptKo || p.contentEn || p.contentKo) :
+      lang === "ja" ? (p.excerptJa || p.excerptKo || p.contentJa || p.contentKo) :
+      (p.excerptKo || p.contentKo);
+    if (!raw) return "";
+    return raw.length > 120 ? raw.slice(0, 120) + "…" : raw;
   }
 
   return (
