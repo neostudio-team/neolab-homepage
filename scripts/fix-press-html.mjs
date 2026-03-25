@@ -1,10 +1,18 @@
 /**
- * fix-press-html.mjs
+ * fix-press-html.mjs (v2)
  * press 컬렉션의 모든 게시글을 HTML 포함해서 재추출/업데이트
  *
- * contentKo   → 일반 텍스트 (목록 요약용)
+ * 실제 구조:
+ *   <article>
+ *     <div class="entry-content">  ← 여기가 실제 본문
+ *       ...
+ *     </div>
+ *     <div class="et_post_meta_wrapper"></div>
+ *   </article>
+ *
+ * contentKo     → 일반 텍스트 (목록 요약용)
  * contentHtmlKo → 원본 HTML (상세 페이지 렌더링용)
- * createdAt   → article:published_time 메타태그 기준
+ * createdAt     → article:published_time 메타태그 기준
  */
 
 import { initializeApp, cert } from 'firebase-admin/app';
@@ -82,48 +90,75 @@ function stripTags(html = '') {
 }
 
 /**
- * HTML 정리: 불필요한 클래스/속성 제거, 외부 링크 target=_blank 추가
+ * <article> 안의 <div class="entry-content"> 내부 HTML을 div 깊이를 추적해서 정확하게 추출
+ */
+function extractEntryContent(html) {
+  // 먼저 <article> 범위로 한정
+  const articleStart = html.search(/<article\b/i);
+  const articleEnd = html.search(/<\/article>/i);
+  if (articleStart === -1 || articleEnd === -1) return '';
+  const articleHtml = html.slice(articleStart, articleEnd);
+
+  // <div class="entry-content"> 시작점 찾기
+  const entryMatch = articleHtml.match(/(<div[^>]+class="[^"]*entry-content[^"]*"[^>]*>)/i);
+  if (!entryMatch) return '';
+
+  const startIdx = articleHtml.indexOf(entryMatch[0]) + entryMatch[0].length;
+
+  // div 깊이를 추적해서 정확한 닫는 태그 찾기
+  let depth = 1;
+  let i = startIdx;
+  while (i < articleHtml.length && depth > 0) {
+    if (articleHtml.slice(i).match(/^<div\b/i)) { depth++; i += 4; continue; }
+    if (articleHtml.slice(i).match(/^<\/div\b/i)) {
+      depth--;
+      if (depth === 0) break;
+      i += 6; continue;
+    }
+    i++;
+  }
+
+  return articleHtml.slice(startIdx, i).trim();
+}
+
+/**
+ * HTML 정리: 불필요한 속성 제거, 외부 링크 target=_blank 추가
  */
 function cleanHtml(html = '') {
   return html
-    // 빈 <p> 태그 제거
+    // 빈 <p> / <li> 태그 제거
     .replace(/<p[^>]*>\s*<\/p>/gi, '')
-    // class, style, id, srcset, sizes, fetchpriority, decoding, loading 속성 제거 (src, href, alt, target, rel은 유지)
-    .replace(/\s(?:class|style|id|srcset|sizes|fetchpriority|decoding|loading|width|height|data-[a-z-]+)="[^"]*"/gi, '')
-    // <figure>를 <div>로 단순화
+    .replace(/<li[^>]*>\s*<\/li>/gi, '')
+    // 이미지: srcset/sizes/fetchpriority/decoding/loading/width/height 제거 (src, alt 유지)
+    .replace(/\s(?:srcset|sizes|fetchpriority|decoding|loading|width|height|class|style|id|data-[a-z-]+)="[^"]*"/gi, '')
+    // <figure>를 <div class="press-img">로 단순화
     .replace(/<figure[^>]*>/gi, '<div class="press-img">').replace(/<\/figure>/gi, '</div>')
-    // 외부 링크에 target="_blank" rel="noopener noreferrer" 추가 (이미 있는 경우 제외)
+    // 외부 링크에 target="_blank" rel="noopener noreferrer" 추가
     .replace(/<a\s+href="(https?:\/\/(?!www\.neolab\.kr)[^"]+)"([^>]*)>/gi, (_, href, rest) => {
-      const hasTarget = /target=/i.test(rest);
-      return `<a href="${href}"${rest}${hasTarget ? '' : ' target="_blank" rel="noopener noreferrer"'}>`;
+      if (/target=/i.test(rest)) return `<a href="${href}"${rest}>`;
+      return `<a href="${href}"${rest} target="_blank" rel="noopener noreferrer">`;
     })
-    // 공백 정리
+    // 공백/줄바꿈 정리
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 }
 
 /**
- * WordPress 포스트에서 HTML 본문 추출
- * 우선순위: et_pb_text_inner → entry-content > p tags
+ * 제목
  */
-function extractContentHtml(html) {
-  // 1. Divi builder: et_pb_text_inner (탐욕적 매칭으로 전체 내부 캡처)
-  const diviMatch = html.match(/class="et_pb_text_inner">([\s\S]*?)<\/div>\s*<\/div>\s*<\/div>\s*<\/div>/i);
-  if (diviMatch && diviMatch[1].trim()) return cleanHtml(diviMatch[1]);
+function extractTitle(html) {
+  // <article> 안의 <h1 class="entry-title">
+  const articleStart = html.search(/<article\b/i);
+  const articleEnd = html.search(/<\/article>/i);
+  const scope = articleStart !== -1 && articleEnd !== -1
+    ? html.slice(articleStart, articleEnd)
+    : html;
 
-  // 2. et_pb_text_inner (닫는 태그가 바로 오는 경우)
-  const diviSimple = html.match(/class="et_pb_text_inner">([\s\S]*?)<\/div>/i);
-  if (diviSimple && diviSimple[1].trim().length > 20) return cleanHtml(diviSimple[1]);
+  const h1 = scope.match(/<h1[^>]*class="[^"]*entry-title[^"]*"[^>]*>([\s\S]*?)<\/h1>/i);
+  if (h1) return decodeEntities(stripTags(h1[1])).trim();
 
-  // 3. entry-content 내부 <p> 태그 전체 수집
-  const entryMatch = html.match(/class="[^"]*entry-content[^"]*"[^>]*>([\s\S]*?)(?:<footer|<div class="[^"]*post-navigation|<\/article)/i);
-  if (entryMatch) {
-    // entry-content 내의 모든 p/h/ul/ol 태그 수집
-    const inner = entryMatch[1];
-    const blocks = [...inner.matchAll(/<(?:p|h[1-6]|ul|ol|blockquote|figure)[^>]*>[\s\S]*?<\/(?:p|h[1-6]|ul|ol|blockquote|figure)>/gi)];
-    if (blocks.length) return cleanHtml(blocks.map(m => m[0]).join('\n'));
-  }
-
+  const og = html.match(/<meta[^>]+property="og:title"[^>]+content="([^"]+)"/i);
+  if (og) return decodeEntities(og[1]).replace(/\s*[-|–]\s*NeoLAB.*/i, '').trim();
   return '';
 }
 
@@ -133,17 +168,6 @@ function extractContentHtml(html) {
 function extractDate(html) {
   const m = html.match(/<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/i);
   return m ? m[1] : '';
-}
-
-/**
- * 제목
- */
-function extractTitle(html) {
-  const h1 = html.match(/<h1[^>]*class="[^"]*entry-title[^"]*"[^>]*>([\s\S]*?)<\/h1>/i);
-  if (h1) return decodeEntities(stripTags(h1[1])).trim();
-  const og = html.match(/<meta[^>]+property="og:title"[^>]+content="([^"]+)"/i);
-  if (og) return decodeEntities(og[1]).replace(/\s*[-|–]\s*NeoLAB.*/i, '').trim();
-  return '';
 }
 
 // ── 목록 URL 수집 ─────────────────────────────────────────────────────────
@@ -158,13 +182,14 @@ async function getPressUrls() {
       const linkMatch = article.match(/href="(https:\/\/www\.neolab\.kr\/[^"?#]+?)"/i);
       if (linkMatch) {
         const u = linkMatch[1];
-        if (!u.includes('/press/page/') && !u.includes('/author/') && !u.includes('/category/')
-            && !u.includes('/tag/') && u !== 'https://www.neolab.kr/' && !urls.includes(u)) {
+        if (
+          !u.includes('/press/page/') && !u.includes('/author/') && !u.includes('/category/') &&
+          !u.includes('/tag/') && u !== 'https://www.neolab.kr/' && !urls.includes(u)
+        ) {
           urls.push(u);
         }
       }
     }
-
     if (!html.includes(`/press/page/${page + 1}/`)) break;
     await sleep(400);
   }
@@ -173,9 +198,9 @@ async function getPressUrls() {
 
 // ── 메인 ─────────────────────────────────────────────────────────────────
 (async () => {
-  console.log('🔧 press HTML 콘텐츠 업데이트 시작\n');
+  console.log('🔧 press HTML 콘텐츠 업데이트 시작 (v2)\n');
 
-  // 현재 Firestore 문서 로드 (제목 → docId 매핑)
+  // Firestore 문서 로드 (제목 → docId 매핑)
   const snapshot = await db.collection('press').get();
   const titleToDoc = {};
   for (const doc of snapshot.docs) {
@@ -191,31 +216,34 @@ async function getPressUrls() {
     try {
       const html = await fetchHtml(postUrl);
       const title = extractTitle(html);
-      const contentHtml = extractContentHtml(html);
-      const plainText = stripTags(contentHtml);
+      const rawContentHtml = extractEntryContent(html);
+      const contentHtml = cleanHtml(rawContentHtml);
+      const plainText = stripTags(rawContentHtml);
       const dateStr = extractDate(html);
 
-      console.log(`📄 "${title.slice(0, 45)}"`);
-      console.log(`   HTML: ${contentHtml.length}자, 텍스트: ${plainText.length}자, 날짜: ${dateStr}`);
+      console.log(`📄 "${title.slice(0, 50)}"`);
+      console.log(`   HTML: ${contentHtml.length}자, 텍스트: ${plainText.length}자, 날짜: ${dateStr.slice(0, 10)}`);
 
       if (!title) { console.warn('   ⚠ 제목 없음, 건너뜀\n'); continue; }
 
-      // Firestore 매칭
+      // Firestore 매칭 (완전 일치 → 부분 일치)
       let doc = titleToDoc[title];
       if (!doc) {
-        // 부분 매칭
-        const key = Object.keys(titleToDoc).find(k => k.includes(title.slice(0, 15)) || title.includes(k.slice(0, 15)));
+        const key = Object.keys(titleToDoc).find(
+          k => k.includes(title.slice(0, 15)) || title.includes(k.slice(0, 15))
+        );
         if (key) doc = titleToDoc[key];
       }
-      if (!doc) { console.warn(`   ⚠ 매칭 문서 없음: "${title}"\n`); continue; }
+      if (!doc) { console.warn(`   ⚠ 매칭 문서 없음\n`); continue; }
 
       const updates = {
         contentKo: plainText,
         contentHtmlKo: contentHtml,
       };
       if (dateStr) {
-        updates.createdAt = Timestamp.fromDate(new Date(dateStr));
-        updates.updatedAt = Timestamp.fromDate(new Date(dateStr));
+        const d = Timestamp.fromDate(new Date(dateStr));
+        updates.createdAt = d;
+        updates.updatedAt = d;
       }
 
       await doc.ref.update(updates);
@@ -227,6 +255,6 @@ async function getPressUrls() {
     await sleep(300);
   }
 
-  console.log(`\n✅ 완료: ${updated}/${urls.length} 업데이트`);
+  console.log(`✅ 완료: ${updated}/${urls.length} 업데이트`);
   process.exit(0);
 })();
