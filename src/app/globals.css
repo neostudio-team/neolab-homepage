@@ -25,6 +25,60 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Press 본문 HTML 렌더링 스타일 ────────────────────────────────────── */
+.press-content {
+  font-size: 15px;
+  color: #374151;
+  line-height: 1.85;
+}
+.press-content p {
+  margin-bottom: 1.25rem;
+}
+.press-content p:empty {
+  display: none;
+}
+.press-content h1, .press-content h2, .press-content h3 {
+  font-weight: 700;
+  color: #111827;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.press-content h1 { font-size: 1.5rem; }
+.press-content h2 { font-size: 1.25rem; }
+.press-content h3 { font-size: 1.1rem; }
+.press-content a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.press-content a:hover { color: #1d4ed8; }
+.press-content strong, .press-content b { font-weight: 700; }
+.press-content em { font-style: italic; }
+.press-content ul, .press-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.press-content li { margin-bottom: 0.35rem; }
+.press-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+.press-content .press-img {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+.press-content blockquote {
+  border-left: 3px solid #e5e7eb;
+  padding-left: 1rem;
+  color: #6b7280;
+  margin: 1.25rem 0;
+}
+.press-content figure { margin: 1.5rem 0; }
+.press-content .has-text-align-right { text-align: right; }
+.press-content .has-text-align-center { text-align: center; }
+
 /* Partner logo animation */
 @keyframes scroll-left {
   0% { transform: translateX(0); }
