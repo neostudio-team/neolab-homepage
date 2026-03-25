@@ -57,25 +57,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <span className="text-base">🏠</span> 대시보드
               </Link>
 
-              <div className="pt-4 pb-2">
-                <p className="px-4 text-[10px] text-white/30 uppercase tracking-widest font-semibold">공지사항</p>
-              </div>
-              <Link href="/admin/notices" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname === "/admin/notices" ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
-                <span className="text-base">📋</span> 목록 관리
+              <Link href="/admin/notices" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/notices") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
+                <span className="text-base">📋</span> 공지사항
               </Link>
-
-              <div className="pt-4 pb-2">
-                <p className="px-4 text-[10px] text-white/30 uppercase tracking-widest font-semibold">기업뉴스</p>
-              </div>
-              <Link href="/admin/press" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname === "/admin/press" ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
-                <span className="text-base">📰</span> 목록 관리
+              <Link href="/admin/press" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/press") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
+                <span className="text-base">📰</span> 기업뉴스
               </Link>
-
-              <div className="pt-4 pb-2">
-                <p className="px-4 text-[10px] text-white/30 uppercase tracking-widest font-semibold">고객지원</p>
-              </div>
-              <Link href="/admin/customer" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname === "/admin/customer" ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
-                <span className="text-base">🎧</span> 목록 관리
+              <Link href="/admin/customer" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/customer") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
+                <span className="text-base">🎧</span> 고객지원
               </Link>
             </nav>
             <div className="px-4 py-4 border-t border-white/10">
