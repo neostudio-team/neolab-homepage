@@ -16,7 +16,6 @@ export async function GET() {
   try {
     const snapshot = await adminDb
       .collection("notices")
-      .orderBy("isPinned", "desc")
       .orderBy("createdAt", "desc")
       .get();
 

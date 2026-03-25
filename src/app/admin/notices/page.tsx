@@ -19,7 +19,8 @@ export default function AdminNoticesPage() {
   async function fetchNotices() {
     const res = await fetch("/api/notices");
     const data = await res.json();
-    setNotices(Array.isArray(data) ? data : []);
+    const list: Notice[] = Array.isArray(data) ? data : [];
+    setNotices([...list.filter(n => n.isPinned), ...list.filter(n => !n.isPinned)]);
     setLoading(false);
   }
 

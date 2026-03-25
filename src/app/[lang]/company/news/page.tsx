@@ -20,10 +20,9 @@ async function getNotices(): Promise<Notice[]> {
   try {
     const snapshot = await adminDb
       .collection("notices")
-      .orderBy("isPinned", "desc")
       .orderBy("createdAt", "desc")
       .get();
-    return snapshot.docs.map((doc, idx) => ({
+    const docs = snapshot.docs.map((doc) => ({
       id: doc.id,
       isPinned: doc.data().isPinned ?? false,
       titleKo: doc.data().titleKo ?? "",
@@ -33,6 +32,7 @@ async function getNotices(): Promise<Notice[]> {
       views: doc.data().views ?? 0,
       createdAt: doc.data().createdAt?.toDate().toISOString() ?? new Date().toISOString(),
     }));
+    return [...docs.filter(d => d.isPinned), ...docs.filter(d => !d.isPinned)];
   } catch {
     return [];
   }
