@@ -36,10 +36,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="mt-8 bg-blue-50 border border-blue-100 rounded-xl p-5 max-w-2xl text-sm text-blue-800">
-        <p className="font-medium mb-1">💡 안내</p>
-        <p>작성한 내용은 국문/영문/일문 사이트에 각각 적용됩니다. 각 언어별 제목과 내용을 입력해 주세요.</p>
-      </div>
     </div>
   );
 }

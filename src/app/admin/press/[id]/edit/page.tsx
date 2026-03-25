@@ -9,21 +9,22 @@ export default function EditPressPage() {
   const { id } = useParams<{ id: string }>();
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<"ko" | "en" | "ja">("ko");
   const [form, setForm] = useState({
-    titleKo: "", titleEn: "", titleJa: "",
-    excerptKo: "", excerptEn: "", excerptJa: "",
-    contentKo: "", contentEn: "", contentJa: "",
-    author: "NeoLAB", category: "press", externalUrl: "",
+    titleKo: "",
+    contentKo: "",
+    author: "NeoLAB",
+    category: "press",
+    externalUrl: "",
   });
 
   useEffect(() => {
     fetch(`/api/press/${id}`).then(r => r.json()).then(data => {
       setForm({
-        titleKo: data.titleKo ?? "", titleEn: data.titleEn ?? "", titleJa: data.titleJa ?? "",
-        excerptKo: data.excerptKo ?? "", excerptEn: data.excerptEn ?? "", excerptJa: data.excerptJa ?? "",
-        contentKo: data.contentKo ?? "", contentEn: data.contentEn ?? "", contentJa: data.contentJa ?? "",
-        author: data.author ?? "NeoLAB", category: data.category ?? "press", externalUrl: data.externalUrl ?? "",
+        titleKo: data.titleKo ?? "",
+        contentKo: data.contentKo ?? "",
+        author: data.author ?? "NeoLAB",
+        category: data.category ?? "press",
+        externalUrl: data.externalUrl ?? "",
       });
       setLoading(false);
     });
@@ -50,9 +51,6 @@ export default function EditPressPage() {
     }
   }
 
-  const lang = tab === "ko" ? "Ko" : tab === "en" ? "En" : "Ja";
-  const tabs = [{ key: "ko", label: "국문" }, { key: "en", label: "영문" }, { key: "ja", label: "일문" }] as const;
-
   if (loading) return <div className="p-8 text-gray-400 text-sm">불러오는 중...</div>;
 
   return (
@@ -66,49 +64,39 @@ export default function EditPressPage() {
         <div className="bg-white rounded-xl border border-gray-100 p-6 grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs text-gray-500 mb-1">카테고리</label>
-            <input value={form.category} onChange={(e) => set("category", e.target.value)} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
+            <input value={form.category} onChange={(e) => set("category", e.target.value)}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
           </div>
           <div>
             <label className="block text-xs text-gray-500 mb-1">작성자</label>
-            <input value={form.author} onChange={(e) => set("author", e.target.value)} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
+            <input value={form.author} onChange={(e) => set("author", e.target.value)}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
           </div>
           <div className="col-span-2">
             <label className="block text-xs text-gray-500 mb-1">외부 링크 (원문 기사 URL)</label>
-            <input value={form.externalUrl} onChange={(e) => set("externalUrl", e.target.value)} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
+            <input value={form.externalUrl} onChange={(e) => set("externalUrl", e.target.value)}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-          <div className="flex border-b border-gray-100">
-            {tabs.map((t) => (
-              <button key={t.key} type="button" onClick={() => setTab(t.key)}
-                className={`px-6 py-3 text-sm font-medium transition-colors ${tab === t.key ? "border-b-2 border-[#1a1a2e] text-[#1a1a2e]" : "text-gray-400 hover:text-gray-600"}`}>
-                {t.label}
-              </button>
-            ))}
+        <div className="bg-white rounded-xl border border-gray-100 p-6 space-y-4">
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">제목</label>
+            <input value={form.titleKo} onChange={(e) => set("titleKo", e.target.value)}
+              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
           </div>
-          <div className="p-6 space-y-4">
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">제목</label>
-              <input value={form[`title${lang}` as keyof typeof form]} onChange={(e) => set(`title${lang}`, e.target.value)}
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">요약</label>
-              <textarea value={form[`excerpt${lang}` as keyof typeof form]} onChange={(e) => set(`excerpt${lang}`, e.target.value)}
-                rows={3} className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] resize-none" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">본문</label>
-              <textarea value={form[`content${lang}` as keyof typeof form]} onChange={(e) => set(`content${lang}`, e.target.value)}
-                rows={10} className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] resize-none" />
-            </div>
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">본문</label>
+            <textarea value={form.contentKo} onChange={(e) => set("contentKo", e.target.value)}
+              rows={12}
+              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] resize-none" />
           </div>
         </div>
 
         <div className="flex justify-end gap-3">
           <Link href="/admin/press" className="px-6 py-3 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">취소</Link>
-          <button type="submit" disabled={saving} className="px-6 py-3 bg-[#1a1a2e] text-white rounded-lg text-sm hover:bg-[#16213e] transition-colors disabled:opacity-50">
+          <button type="submit" disabled={saving}
+            className="px-6 py-3 bg-[#1a1a2e] text-white rounded-lg text-sm hover:bg-[#16213e] transition-colors disabled:opacity-50">
             {saving ? "저장 중..." : "저장"}
           </button>
         </div>

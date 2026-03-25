@@ -64,11 +64,10 @@ export default async function PressPage({ params }: { params: Promise<{ lang: Lo
 
   function getExcerpt(p: PressRelease) {
     const raw =
-      lang === "en" ? (p.excerptEn || p.excerptKo || p.contentEn || p.contentKo) :
-      lang === "ja" ? (p.excerptJa || p.excerptKo || p.contentJa || p.contentKo) :
-      (p.excerptKo || p.contentKo);
-    if (!raw) return "";
-    return raw.length > 120 ? raw.slice(0, 120) + "…" : raw;
+      lang === "en" ? (p.contentEn || p.contentKo) :
+      lang === "ja" ? (p.contentJa || p.contentKo) :
+      p.contentKo;
+    return raw ?? "";
   }
 
   return (
@@ -113,7 +112,7 @@ export default async function PressPage({ params }: { params: Promise<{ lang: Lo
                     by <span className="text-[#888]">{post.author}</span> | {new Date(post.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} | <span>{post.category}</span>
                   </div>
                   {getExcerpt(post) && (
-                    <p className="text-[14px] text-[#666666] leading-[1.7] mb-4 text-justify break-keep">{getExcerpt(post)}</p>
+                    <p className="text-[14px] text-[#666666] leading-[1.7] mb-4 text-justify break-keep line-clamp-3">{getExcerpt(post)}</p>
                   )}
                   <Link
                     href={post.externalUrl || `/${lang}/company/press/${post.id}`}
