@@ -97,12 +97,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <aside className="w-60 bg-[#1a1a2e] text-white flex flex-col fixed h-full z-10">
             <Link href="/admin" className="block px-6 py-5 border-b border-white/10 hover:bg-white/5 transition-colors group">
               <img
-                src="/images/bi/logo_01.png"
+                src="/images/NeoLAB-CI-2.png"
                 alt="NeoLAB Convergence"
-                className="h-7 w-auto mb-2.5"
-                style={{ filter: "brightness(0) invert(1)" }}
+                className="h-10 w-auto block mb-1.5"
               />
-              <p className="text-xs font-semibold text-white/60 tracking-wide group-hover:text-white/80 transition-colors">홈페이지 관리자</p>
+              <p className="text-sm font-medium text-white/60 tracking-wide group-hover:text-white/80 transition-colors">홈페이지 관리자</p>
             </Link>
             <nav className="flex-1 px-4 py-5 space-y-1 text-sm overflow-y-auto">
               <Link href="/admin" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname === "/admin" ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
