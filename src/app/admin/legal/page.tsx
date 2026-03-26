@@ -31,6 +31,8 @@ export default function AdminLegalPage() {
   const [viewContent, setViewContent] = useState("");
   const [viewVersion, setViewVersion] = useState<Version | null>(null);
   const [saving, setSaving] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [legalPage, setLegalPage] = useState(1);
 
   async function getToken() {
     return await auth.currentUser?.getIdToken();
@@ -154,6 +156,13 @@ export default function AdminLegalPage() {
 
   const currentTabInfo = TABS.find(t => t.key === activeTab)!;
   const tabVersions = versions[activeTab];
+  const legalTotalPages = Math.max(1, Math.ceil(tabVersions.length / pageSize));
+  const pagedVersions = tabVersions.slice((legalPage - 1) * pageSize, legalPage * pageSize);
+
+  function handleLegalPageSizeChange(size: number) {
+    setPageSize(size);
+    setLegalPage(1);
+  }
 
   function fmtDate(iso: string | null) {
     if (!iso) return "-";
@@ -186,10 +195,21 @@ export default function AdminLegalPage() {
         <>
           <div className="flex justify-between items-center mb-4">
             <p className="text-sm text-gray-500">총 {tabVersions.length}개 버전 | <span className="text-green-600 font-medium">●  발행 중</span> 버전만 실제 홈페이지에 노출됩니다.</p>
-            <button onClick={() => { setEditContent(""); setEditNote(""); setEditVersion(null); setMode("new"); }}
-              className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs font-semibold hover:bg-[#16213e] transition-colors">
-              + 새 버전 작성
-            </button>
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <select value={pageSize} onChange={e => handleLegalPageSizeChange(Number(e.target.value))}
+                  className="border border-gray-200 rounded-lg px-3 py-1.5 pr-7 text-xs text-gray-700 focus:outline-none appearance-none cursor-pointer">
+                  <option value={10}>10개씩 보기</option>
+                  <option value={20}>20개씩 보기</option>
+                  <option value={50}>50개씩 보기</option>
+                </select>
+                <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">▾</span>
+              </div>
+              <button onClick={() => { setEditContent(""); setEditNote(""); setEditVersion(null); setMode("new"); }}
+                className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs font-semibold hover:bg-[#16213e] transition-colors">
+                + 새 버전 작성
+              </button>
+            </div>
           </div>
 
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
@@ -208,7 +228,7 @@ export default function AdminLegalPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {tabVersions.map(v => (
+                  {pagedVersions.map(v => (
                     <tr key={v.id} className={`hover:bg-gray-50 transition-colors ${v.isActive ? "bg-blue-50/40" : ""}`}>
                       <td className="px-4 py-3 text-center font-bold text-gray-700">v{v.versionNumber}</td>
                       <td className="px-4 py-3 text-center">
@@ -249,6 +269,30 @@ export default function AdminLegalPage() {
               </table>
             )}
           </div>
+          {legalTotalPages > 1 && (
+            <div className="mt-3 flex justify-center items-center gap-1">
+              <button onClick={() => setLegalPage(1)} disabled={legalPage === 1}
+                className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">«</button>
+              <button onClick={() => setLegalPage(p => Math.max(1, p - 1))} disabled={legalPage === 1}
+                className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">‹</button>
+              {Array.from({ length: legalTotalPages }, (_, i) => i + 1)
+                .filter(p => p === 1 || p === legalTotalPages || Math.abs(p - legalPage) <= 2)
+                .reduce<(number | string)[]>((acc, p, i, arr) => {
+                  if (i > 0 && (p as number) - (arr[i - 1] as number) > 1) acc.push("…");
+                  acc.push(p); return acc;
+                }, [])
+                .map((p, i) => p === "…"
+                  ? <span key={`e-${i}`} className="px-1 text-xs text-gray-400">…</span>
+                  : <button key={p} onClick={() => setLegalPage(p as number)}
+                      className={`px-2.5 py-1 text-xs border rounded transition-colors ${legalPage === p ? "bg-[#1a1a2e] text-white border-[#1a1a2e]" : "border-gray-200 hover:bg-gray-50"}`}>{p}</button>
+                )}
+              <button onClick={() => setLegalPage(p => Math.min(legalTotalPages, p + 1))} disabled={legalPage === legalTotalPages}
+                className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">›</button>
+              <button onClick={() => setLegalPage(legalTotalPages)} disabled={legalPage === legalTotalPages}
+                className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">»</button>
+              <span className="ml-2 text-xs text-gray-400">{tabVersions.length}개 중 {(legalPage-1)*pageSize+1}–{Math.min(legalPage*pageSize, tabVersions.length)}</span>
+            </div>
+          )}
         </>
       ) : isEditMode ? (
         <>

@@ -41,6 +41,8 @@ export default function AdminMembersPage() {
   const [activeKeyword, setActiveKeyword] = useState({ field: "username", value: "" });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [myLevel, setMyLevel] = useState<number>(99);
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
 
   async function fetchMembers() {
     setLoading(true);
@@ -82,8 +84,20 @@ export default function AdminMembersPage() {
     });
   }, [members, activeKeyword]);
 
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
+
+  function handlePageSizeChange(size: number) {
+    setPageSize(size);
+    setPage(1);
+  }
+  function handleKeywordChange() {
+    setActiveKeyword({ field: searchField, value: searchKeyword });
+    setPage(1);
+  }
+
   function toggleAll(checked: boolean) {
-    setSelected(checked ? new Set(filtered.map(m => m.id)) : new Set());
+    setSelected(checked ? new Set(paged.map(m => m.id)) : new Set());
   }
   function toggleOne(id: string) {
     setSelected(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
@@ -147,11 +161,22 @@ export default function AdminMembersPage() {
             <option value="email">이메일</option>
           </select>
           <input value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && setActiveKeyword({ field: searchField, value: searchKeyword })}
+            onKeyDown={e => e.key === "Enter" && handleKeywordChange()}
             placeholder="검색어 입력"
             className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-40" />
-          <button onClick={() => setActiveKeyword({ field: searchField, value: searchKeyword })}
+          <button onClick={handleKeywordChange}
             className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">검색</button>
+          {/* 페이지당 개수 */}
+          <div className="relative ml-2">
+            <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}
+              className="border border-gray-200 rounded-lg px-3 py-1.5 pr-7 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] appearance-none cursor-pointer">
+              <option value={10}>10개씩 보기</option>
+              <option value={20}>20개씩 보기</option>
+              <option value={50}>50개씩 보기</option>
+              <option value={100}>100개씩 보기</option>
+            </select>
+            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">▾</span>
+          </div>
         </div>
       </div>
 
@@ -165,7 +190,7 @@ export default function AdminMembersPage() {
               <tr>
                 <th className="px-3 py-3 w-10">
                   <input type="checkbox" onChange={e => toggleAll(e.target.checked)}
-                    checked={selected.size === filtered.length && filtered.length > 0}
+                    checked={selected.size === paged.length && paged.length > 0}
                     className="w-4 h-4 rounded accent-[#1a1a2e]" />
                 </th>
                 <th className="px-3 py-3 w-12 text-center font-medium">번호</th>
@@ -182,9 +207,9 @@ export default function AdminMembersPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {filtered.length === 0 ? (
+              {paged.length === 0 ? (
                 <tr><td colSpan={10} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
-              ) : filtered.map(m => (
+              ) : paged.map(m => (
                 <tr key={m.id} className={`hover:bg-gray-50 transition-colors ${selected.has(m.id) ? "bg-blue-50/60" : ""}`}>
                   <td className="px-3 py-2.5 text-center">
                     <input type="checkbox" checked={selected.has(m.id)} onChange={() => toggleOne(m.id)}
@@ -221,6 +246,36 @@ export default function AdminMembersPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="mt-3 flex justify-center items-center gap-1">
+          <button onClick={() => setPage(1)} disabled={page === 1}
+            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">«</button>
+          <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
+            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">‹</button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1)
+            .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
+            .reduce<(number | string)[]>((acc, p, i, arr) => {
+              if (i > 0 && (p as number) - (arr[i - 1] as number) > 1) acc.push("…");
+              acc.push(p);
+              return acc;
+            }, [])
+            .map((p, i) => p === "…" ? (
+              <span key={`ellipsis-${i}`} className="px-1 text-xs text-gray-400">…</span>
+            ) : (
+              <button key={p} onClick={() => setPage(p as number)}
+                className={`px-2.5 py-1 text-xs border rounded transition-colors ${
+                  page === p ? "bg-[#1a1a2e] text-white border-[#1a1a2e]" : "border-gray-200 hover:bg-gray-50"
+                }`}>{p}</button>
+            ))}
+          <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
+            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">›</button>
+          <button onClick={() => setPage(totalPages)} disabled={page === totalPages}
+            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">»</button>
+          <span className="ml-2 text-xs text-gray-400">{filtered.length}명 중 {(page-1)*pageSize+1}–{Math.min(page*pageSize, filtered.length)}</span>
         </div>
       )}
 
