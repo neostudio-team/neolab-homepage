@@ -9,13 +9,11 @@ interface Member {
   seq: number;
   name: string;
   level: number;
-  group: string;
   email: string;
   loginCount: number;
   postCount: number;
   replyCount: number;
   commentCount: number;
-
   createdAt: string;
   lastLoginAt: string;
 }
@@ -173,7 +171,6 @@ export default function AdminMembersPage() {
                 <th className="px-3 py-3 w-12 text-center font-medium">번호</th>
                 <th className="px-3 py-3 w-28 text-center font-medium">이름</th>
                 <th className="px-3 py-3 w-24 text-center font-medium">레벨</th>
-                <th className="px-3 py-3 w-20 text-center font-medium">그룹</th>
                 <th className="px-3 py-3 text-center font-medium">이메일</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">로그인</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">글쓰기</th>
@@ -186,7 +183,7 @@ export default function AdminMembersPage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.length === 0 ? (
-                <tr><td colSpan={13} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
+                <tr><td colSpan={10} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
               ) : filtered.map(m => (
                 <tr key={m.id} className={`hover:bg-gray-50 transition-colors ${selected.has(m.id) ? "bg-blue-50/60" : ""}`}>
                   <td className="px-3 py-2.5 text-center">
@@ -203,9 +200,6 @@ export default function AdminMembersPage() {
                       <option value={1} style={{ color: "#ef4444" }}>1 (최고관리자)</option>
                       <option value={2} style={{ color: "#3b82f6" }}>2 (일반관리자)</option>
                     </select>
-                  </td>
-                  <td className="px-3 py-2.5 text-center">
-                    <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-xs">{m.group || "home"}</span>
                   </td>
                   <td className="px-3 py-2.5 text-center text-gray-600">{m.email}</td>
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.loginCount ?? 0}</td>

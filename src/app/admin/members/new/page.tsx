@@ -7,23 +7,13 @@ import Link from "next/link";
 const FIELD_ROWS = [
   { key: "name", label: "이름", required: true, type: "text" },
   { key: "email", label: "이메일", required: true, type: "email" },
-  { key: "group", label: "그룹", required: false, type: "text" },
-  { key: "phone", label: "핸드폰", required: false, type: "text" },
-  { key: "birthday", label: "생년월일", required: false, type: "text" },
-  { key: "messenger", label: "메신저", required: false, type: "text" },
-  { key: "homepage", label: "홈페이지", required: false, type: "text" },
-  { key: "blog", label: "블로그", required: false, type: "text" },
-  { key: "homePhone", label: "집 전화", required: false, type: "text" },
-  { key: "statusMessage", label: "상태 메시지", required: false, type: "text" },
 ];
 
 export default function NewMemberPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
-    name: "", email: "", group: "home", level: 2,
-    phone: "", birthday: "", messenger: "",
-    homepage: "", blog: "", homePhone: "", statusMessage: "",
+    name: "", email: "", level: 2,
     memberMemo: "", adminMemo: "",
   });
 
