@@ -152,22 +152,32 @@ export default function EditPressPage() {
               <tr className="border-b border-gray-100">
                 <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">파일1</td>
                 <td className="px-5 py-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <button type="button" onClick={() => file1Ref.current?.click()} className="px-3 py-1.5 border border-gray-300 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">파일선택</button>
                     <span className="text-xs text-gray-500">{file1 ? file1.name : form.file1Name || "-"}</span>
+                    <span className="text-xs text-gray-400">최대 10MB</span>
                     {form.file1Url && !file1 && <a href={form.file1Url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">다운로드</a>}
-                    <input ref={file1Ref} type="file" className="hidden" onChange={(e) => setFile1(e.target.files?.[0] ?? null)} />
+                    <input ref={file1Ref} type="file" className="hidden" onChange={(e) => {
+                      const f = e.target.files?.[0] ?? null;
+                      if (f && f.size > 10 * 1024 * 1024) { alert("파일 크기는 최대 10MB까지 가능합니다."); e.target.value = ""; return; }
+                      setFile1(f);
+                    }} />
                   </div>
                 </td>
               </tr>
               <tr>
                 <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">파일2</td>
                 <td className="px-5 py-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <button type="button" onClick={() => file2Ref.current?.click()} className="px-3 py-1.5 border border-gray-300 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">파일선택</button>
                     <span className="text-xs text-gray-500">{file2 ? file2.name : form.file2Name || "-"}</span>
+                    <span className="text-xs text-gray-400">최대 10MB</span>
                     {form.file2Url && !file2 && <a href={form.file2Url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">다운로드</a>}
-                    <input ref={file2Ref} type="file" className="hidden" onChange={(e) => setFile2(e.target.files?.[0] ?? null)} />
+                    <input ref={file2Ref} type="file" className="hidden" onChange={(e) => {
+                      const f = e.target.files?.[0] ?? null;
+                      if (f && f.size > 10 * 1024 * 1024) { alert("파일 크기는 최대 10MB까지 가능합니다."); e.target.value = ""; return; }
+                      setFile2(f);
+                    }} />
                   </div>
                 </td>
               </tr>
