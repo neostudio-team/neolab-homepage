@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
+import Script from "next/script";
 import "../globals.css";
 import { i18n, Locale } from "@/i18n/config";
 
@@ -30,6 +31,20 @@ export default async function RootLayout({
   const { lang } = await params;
   return (
     <html lang={lang}>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-5865P9Q0K2"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5865P9Q0K2');
+          `}
+        </Script>
+      </head>
       <body className={`${openSans.variable} antialiased`}>
         {children}
       </body>
