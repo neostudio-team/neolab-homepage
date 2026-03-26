@@ -35,7 +35,7 @@ export default function AdminLegalPage() {
     return await auth.currentUser?.getIdToken();
   }
 
-  async function fetchVersions(type: TabKey) {
+  async function fetchVersions(type: TabKey): Promise<Version[]> {
     const token = await getToken();
     const res = await fetch(`/api/legal/${type}`, {
       cache: "no-store",
@@ -46,10 +46,30 @@ export default function AdminLegalPage() {
     return (data.versions ?? []) as Version[];
   }
 
+  async function seedDefault(type: TabKey) {
+    // Auto-create v1 from default content if no versions exist
+    const token = await getToken();
+    await fetch(`/api/legal/${type}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ content: DEFAULTS[type], note: "초기 버전 (기본값)" }),
+    });
+  }
+
   async function loadAll() {
     setLoading(true);
     const [p, t] = await Promise.all([fetchVersions("privacy"), fetchVersions("terms")]);
-    setVersions({ privacy: p, terms: t });
+    // Auto-seed if empty
+    const tasks: Promise<void>[] = [];
+    if (p.length === 0) tasks.push(seedDefault("privacy"));
+    if (t.length === 0) tasks.push(seedDefault("terms"));
+    if (tasks.length > 0) {
+      await Promise.all(tasks);
+      const [p2, t2] = await Promise.all([fetchVersions("privacy"), fetchVersions("terms")]);
+      setVersions({ privacy: p2, terms: t2 });
+    } else {
+      setVersions({ privacy: p, terms: t });
+    }
     setLoading(false);
   }
 
@@ -108,7 +128,7 @@ export default function AdminLegalPage() {
     setMode("view");
   }
 
-  const currentTab = TABS.find(t => t.key === activeTab)!;
+  const currentTabInfo = TABS.find(t => t.key === activeTab)!;
   const tabVersions = versions[activeTab];
 
   function fmtDate(iso: string | null) {
@@ -120,7 +140,7 @@ export default function AdminLegalPage() {
     <div className="p-8 max-w-6xl">
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-2xl font-bold text-gray-800">약관 관리</h1>
-        <a href={currentTab.href} target="_blank" rel="noopener noreferrer"
+        <a href={currentTabInfo.href} target="_blank" rel="noopener noreferrer"
           className="text-xs text-blue-500 hover:underline">→ 홈페이지에서 보기</a>
       </div>
 
@@ -140,7 +160,7 @@ export default function AdminLegalPage() {
         <>
           <div className="flex justify-between items-center mb-4">
             <p className="text-sm text-gray-500">총 {tabVersions.length}개 버전 | 발행 중인 버전만 홈페이지에 표시됩니다.</p>
-            <button onClick={() => { setNewContent(DEFAULTS[activeTab]); setNewNote(""); setMode("new"); }}
+            <button onClick={() => { setNewContent(""); setNewNote(""); setMode("new"); }}
               className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs font-semibold hover:bg-[#16213e] transition-colors">
               + 새 버전 작성
             </button>
@@ -148,7 +168,7 @@ export default function AdminLegalPage() {
 
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
             {tabVersions.length === 0 ? (
-              <div className="p-12 text-center text-gray-400 text-sm">등록된 버전이 없습니다. 새 버전을 작성해 주세요.</div>
+              <div className="p-12 text-center text-gray-400 text-sm">등록된 버전이 없습니다.</div>
             ) : (
               <table className="w-full text-xs">
                 <thead className="bg-gray-50 border-b border-gray-200 text-gray-500">
@@ -172,7 +192,7 @@ export default function AdminLegalPage() {
                       </td>
                       <td className="px-4 py-3 text-gray-600">{v.note || "-"}</td>
                       <td className="px-4 py-3 text-center text-gray-500">{fmtDate(v.createdAt)}</td>
-                      <td className="px-4 py-3 text-center text-gray-500 truncate max-w-[100px]">{v.createdBy.split("@")[0]}</td>
+                      <td className="px-4 py-3 text-center text-gray-500 truncate max-w-[100px]">{v.createdBy ? v.createdBy.split("@")[0] : "-"}</td>
                       <td className="px-4 py-3 text-center">
                         <div className="flex gap-1.5 justify-center">
                           <button onClick={() => handleView(v)}
@@ -223,7 +243,7 @@ export default function AdminLegalPage() {
             />
           </div>
           <div className="flex justify-between items-center">
-            <p className="text-xs text-gray-400">※ 저장 후 목록에서 '발행' 버튼을 눌러야 홈페이지에 반영됩니다.</p>
+            <p className="text-xs text-gray-400">※ 저장 후 목록에서 &apos;발행&apos; 버튼을 눌러야 홈페이지에 반영됩니다.</p>
             <div className="flex gap-2">
               <button onClick={() => setMode("list")} className="px-4 py-2.5 border border-gray-200 rounded-lg text-xs text-gray-600 hover:bg-gray-50">취소</button>
               <button onClick={handleCreate} disabled={saving}
