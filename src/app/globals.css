@@ -79,6 +79,30 @@ html {
 .press-content .has-text-align-right { text-align: right; }
 .press-content .has-text-align-center { text-align: center; }
 
+/* ── Quill Rich Editor ──────────────────────────────────────────────────── */
+.rich-editor-container .ql-toolbar.ql-snow {
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  padding: 8px 10px;
+  flex-wrap: wrap;
+}
+.rich-editor-container .ql-container.ql-snow {
+  border: none;
+  font-size: 14px;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
+.rich-editor-container .ql-editor {
+  min-height: 320px;
+  padding: 16px;
+  line-height: 1.7;
+}
+.rich-editor-container .ql-editor.ql-blank::before {
+  color: #d1d5db;
+  font-style: normal;
+}
+
+/* ── Partner logo animation ───────────────────────────────────────────── */
 /* Partner logo animation */
 @keyframes scroll-left {
   0% { transform: translateX(0); }

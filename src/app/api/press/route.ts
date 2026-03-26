@@ -40,17 +40,15 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const docRef = await adminDb.collection("press").add({
       titleKo: body.titleKo ?? "",
-      titleEn: body.titleEn ?? "",
-      titleJa: body.titleJa ?? "",
-      excerptKo: body.excerptKo ?? "",
-      excerptEn: body.excerptEn ?? "",
-      excerptJa: body.excerptJa ?? "",
       contentKo: body.contentKo ?? "",
-      contentEn: body.contentEn ?? "",
-      contentJa: body.contentJa ?? "",
       author: body.author ?? "NeoLAB",
       category: body.category ?? "press",
       externalUrl: body.externalUrl ?? "",
+      tags: body.tags ?? "",
+      file1Url: body.file1Url ?? "",
+      file1Name: body.file1Name ?? "",
+      file2Url: body.file2Url ?? "",
+      file2Name: body.file2Name ?? "",
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     });

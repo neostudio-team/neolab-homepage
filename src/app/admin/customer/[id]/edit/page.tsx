@@ -1,98 +1,221 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { auth } from "@/lib/firebase";
+import { auth, storage } from "@/lib/firebase";
+import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import Link from "next/link";
+import RichEditor from "@/components/admin/RichEditor";
 
 export default function EditCustomerNoticePage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
     isPinned: false,
+    isSecret: false,
     titleKo: "",
     contentKo: "",
     author: "NeoLAB_CS",
     externalUrl: "",
+    tags: "",
+    file1Url: "",
+    file1Name: "",
+    file2Url: "",
+    file2Name: "",
   });
+  const [file1, setFile1] = useState<File | null>(null);
+  const [file2, setFile2] = useState<File | null>(null);
+  const file1Ref = useRef<HTMLInputElement>(null);
+  const file2Ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch(`/api/customer-notices/${id}`)
-      .then(r => r.json())
-      .then(data => setForm({
-        isPinned: data.isPinned ?? false,
-        titleKo: data.titleKo ?? "",
-        contentKo: data.contentKo ?? "",
-        author: data.author ?? "NeoLAB_CS",
-        externalUrl: data.externalUrl ?? "",
-      }));
+      .then((r) => r.json())
+      .then((data) => {
+        setForm({
+          isPinned: data.isPinned ?? false,
+          isSecret: data.isSecret ?? false,
+          titleKo: data.titleKo ?? "",
+          contentKo: data.contentKo ?? "",
+          author: data.author ?? "NeoLAB_CS",
+          externalUrl: data.externalUrl ?? "",
+          tags: data.tags ?? "",
+          file1Url: data.file1Url ?? "",
+          file1Name: data.file1Name ?? "",
+          file2Url: data.file2Url ?? "",
+          file2Name: data.file2Name ?? "",
+        });
+        setLoading(false);
+      });
   }, [id]);
 
   function set(key: string, value: string | boolean) {
-    setForm(f => ({ ...f, [key]: value }));
+    setForm((f) => ({ ...f, [key]: value }));
+  }
+
+  async function uploadFile(file: File): Promise<{ url: string; name: string }> {
+    const path = `customer/${Date.now()}_${file.name}`;
+    const fileRef = storageRef(storage, path);
+    await uploadBytes(fileRef, file);
+    const url = await getDownloadURL(fileRef);
+    return { url, name: file.name };
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
+    setSaving(true);
     try {
+      const payload = { ...form };
+      if (file1) {
+        const { url, name } = await uploadFile(file1);
+        payload.file1Url = url;
+        payload.file1Name = name;
+      }
+      if (file2) {
+        const { url, name } = await uploadFile(file2);
+        payload.file2Url = url;
+        payload.file2Name = name;
+      }
       const token = await auth.currentUser?.getIdToken();
       const res = await fetch(`/api/customer-notices/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       if (res.ok) router.push("/admin/customer");
       else alert("수정에 실패했습니다.");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   }
 
+  if (loading) return <div className="p-8 text-gray-400 text-sm">불러오는 중...</div>;
+
   return (
-    <div className="p-8 max-w-3xl">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">고객지원 공지 수정</h1>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="bg-white rounded-xl border border-gray-100 p-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-              <input type="checkbox" checked={form.isPinned} onChange={e => set("isPinned", e.target.checked)} className="w-4 h-4" />
-              공지 상단 고정
-            </label>
-            <div className="flex-1" />
-            <div>
-              <label className="text-xs text-gray-500 mr-2">작성자</label>
-              <input value={form.author} onChange={e => set("author", e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
-            </div>
-          </div>
+    <div className="p-8 max-w-4xl">
+      <div className="flex items-center gap-3 mb-6">
+        <Link href="/admin/customer" className="text-gray-400 hover:text-gray-600 text-sm">← 목록으로</Link>
+        <h1 className="text-2xl font-bold text-gray-800">고객지원 공지 수정</h1>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-4">
+          <table className="w-full text-sm">
+            <tbody>
+              {/* Options */}
+              <tr className="border-b border-gray-100">
+                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium w-28">옵션</td>
+                <td className="px-5 py-3">
+                  <div className="flex items-center gap-6">
+                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
+                      <input type="checkbox" checked={form.isSecret} onChange={(e) => set("isSecret", e.target.checked)}
+                        className="w-4 h-4 rounded accent-[#1a1a2e]" />
+                      비밀글
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
+                      <input type="checkbox" checked={form.isPinned} onChange={(e) => set("isPinned", e.target.checked)}
+                        className="w-4 h-4 rounded accent-[#1a1a2e]" />
+                      공지
+                    </label>
+                    <div className="flex items-center gap-2 ml-4">
+                      <label className="text-xs text-gray-500">작성자</label>
+                      <input value={form.author} onChange={(e) => set("author", e.target.value)}
+                        className="border border-gray-200 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-36" />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              {/* External URL */}
+              <tr className="border-b border-gray-100">
+                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">외부 링크</td>
+                <td className="px-5 py-3">
+                  <input value={form.externalUrl} onChange={(e) => set("externalUrl", e.target.value)}
+                    placeholder="https://... (선택)"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
+                </td>
+              </tr>
+
+              {/* Title */}
+              <tr className="border-b border-gray-100">
+                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">제목 <span className="text-red-500">*</span></td>
+                <td className="px-5 py-3">
+                  <input value={form.titleKo} onChange={(e) => set("titleKo", e.target.value)} required
+                    placeholder="공지 제목을 입력하세요"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
+                </td>
+              </tr>
+
+              {/* Content */}
+              <tr className="border-b border-gray-100">
+                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium align-top pt-4">내용</td>
+                <td className="px-5 py-3">
+                  <RichEditor value={form.contentKo} onChange={(v) => set("contentKo", v)} />
+                </td>
+              </tr>
+
+              {/* Tags */}
+              <tr className="border-b border-gray-100">
+                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">태그</td>
+                <td className="px-5 py-3">
+                  <input value={form.tags} onChange={(e) => set("tags", e.target.value)}
+                    placeholder="쉼표로 구분 (예: FAQ, 점검, 업데이트)"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
+                </td>
+              </tr>
+
+              {/* File 1 */}
+              <tr className="border-b border-gray-100">
+                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">파일1</td>
+                <td className="px-5 py-3">
+                  <div className="flex items-center gap-3">
+                    <button type="button" onClick={() => file1Ref.current?.click()}
+                      className="px-3 py-1.5 border border-gray-300 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">
+                      파일선택
+                    </button>
+                    <span className="text-xs text-gray-500">{file1 ? file1.name : form.file1Name || "-"}</span>
+                    {form.file1Url && !file1 && (
+                      <a href={form.file1Url} target="_blank" rel="noopener noreferrer"
+                        className="text-xs text-blue-500 hover:underline">다운로드</a>
+                    )}
+                    <input ref={file1Ref} type="file" className="hidden"
+                      onChange={(e) => setFile1(e.target.files?.[0] ?? null)} />
+                  </div>
+                </td>
+              </tr>
+
+              {/* File 2 */}
+              <tr>
+                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">파일2</td>
+                <td className="px-5 py-3">
+                  <div className="flex items-center gap-3">
+                    <button type="button" onClick={() => file2Ref.current?.click()}
+                      className="px-3 py-1.5 border border-gray-300 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">
+                      파일선택
+                    </button>
+                    <span className="text-xs text-gray-500">{file2 ? file2.name : form.file2Name || "-"}</span>
+                    {form.file2Url && !file2 && (
+                      <a href={form.file2Url} target="_blank" rel="noopener noreferrer"
+                        className="text-xs text-blue-500 hover:underline">다운로드</a>
+                    )}
+                    <input ref={file2Ref} type="file" className="hidden"
+                      onChange={(e) => setFile2(e.target.files?.[0] ?? null)} />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-100 p-6 space-y-4">
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1.5">제목</label>
-            <input value={form.titleKo} onChange={e => set("titleKo", e.target.value)} required
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1.5">내용</label>
-            <textarea value={form.contentKo} onChange={e => set("contentKo", e.target.value)} rows={12}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] resize-y" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1.5">외부 링크 (선택)</label>
-            <input value={form.externalUrl} onChange={e => set("externalUrl", e.target.value)}
-              placeholder="https://..." className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
-          </div>
-        </div>
-
-        <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={loading}
-            className="bg-[#1a1a2e] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#16213e] transition-colors disabled:opacity-50">
-            {loading ? "저장 중..." : "저장"}
-          </button>
-          <button type="button" onClick={() => router.back()}
-            className="border border-gray-200 text-gray-600 px-6 py-3 rounded-xl text-sm hover:bg-gray-50 transition-colors">
-            취소
+        <div className="flex items-center justify-between">
+          <Link href="/admin/customer"
+            className="px-5 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+            목록
+          </Link>
+          <button type="submit" disabled={saving}
+            className="px-6 py-2.5 bg-[#1a1a2e] text-white rounded-lg text-sm hover:bg-[#16213e] transition-colors disabled:opacity-50">
+            {saving ? "저장 중..." : "확인"}
           </button>
         </div>
       </form>
