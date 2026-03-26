@@ -13,13 +13,8 @@ interface Notice {
 }
 
 const BADGE_COLORS = ["#3b82f6","#10b981","#8b5cf6","#f97316","#ef4444","#14b8a6","#ec4899","#6366f1"];
-function badgeColor(name: string) {
-  return BADGE_COLORS[(name?.charCodeAt(0) || 0) % BADGE_COLORS.length];
-}
-function fmtDate(iso: string) {
-  if (!iso) return "-";
-  return iso.slice(0, 10);
-}
+function badgeColor(name: string) { return BADGE_COLORS[(name?.charCodeAt(0) || 0) % BADGE_COLORS.length]; }
+function fmtDate(iso: string) { if (!iso) return "-"; return iso.slice(0, 10); }
 function todayStr() { return new Date().toISOString().slice(0, 10); }
 function offsetDay(n: number) { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); }
 function firstOfMonth(offset = 0) { const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + offset); return d.toISOString().slice(0, 10); }
@@ -27,13 +22,9 @@ function lastOfMonth(offset = 0) { const d = new Date(); d.setDate(1); d.setMont
 
 type QuickDate = "today" | "yesterday" | "1week" | "1month" | "thismonth" | "lastmonth" | "all";
 const QUICK_OPTIONS: { key: QuickDate; label: string }[] = [
-  { key: "today", label: "오늘" },
-  { key: "yesterday", label: "어제" },
-  { key: "1week", label: "1주일" },
-  { key: "1month", label: "1개월" },
-  { key: "thismonth", label: "이번달" },
-  { key: "lastmonth", label: "지난달" },
-  { key: "all", label: "전체" },
+  { key: "today", label: "오늘" }, { key: "yesterday", label: "어제" },
+  { key: "1week", label: "1주일" }, { key: "1month", label: "1개월" },
+  { key: "thismonth", label: "이번달" }, { key: "lastmonth", label: "지난달" }, { key: "all", label: "전체" },
 ];
 function quickRange(key: QuickDate): [string, string] {
   const today = todayStr();
@@ -48,6 +39,11 @@ function quickRange(key: QuickDate): [string, string] {
   }
 }
 
+const PAGE_SIZE_OPTIONS = [10, 20, 50];
+const BTN = "flex items-center justify-center w-8 h-8 rounded text-xs transition-colors border";
+const BTN_NORMAL = `${BTN} border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed`;
+const BTN_ACTIVE = `${BTN} border-[#1a1a2e] bg-[#1a1a2e] text-white font-semibold`;
+
 export default function AdminNoticesPage() {
   const [items, setItems] = useState<Notice[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +55,8 @@ export default function AdminNoticesPage() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [activeKeyword, setActiveKeyword] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   async function fetchAll() {
     setLoading(true);
@@ -73,10 +71,9 @@ export default function AdminNoticesPage() {
   function applyQuick(key: QuickDate) {
     setQuickDate(key);
     const [s, e] = quickRange(key);
-    setStartDate(s);
-    setEndDate(e);
+    setStartDate(s); setEndDate(e);
   }
-  function doSearch() { setActiveKeyword(searchKeyword); }
+  function doSearch() { setActiveKeyword(searchKeyword); setCurrentPage(1); }
 
   const filtered = useMemo(() => items.filter(item => {
     if (startDate || endDate) {
@@ -92,36 +89,37 @@ export default function AdminNoticesPage() {
     return true;
   }), [items, startDate, endDate, activeKeyword, searchField]);
 
+  // reset page on filter / size change
+  useEffect(() => { setCurrentPage(1); }, [activeKeyword, startDate, endDate, pageSize]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const pagedItems = useMemo(() => filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize), [filtered, currentPage, pageSize]);
   const nonPinnedFiltered = filtered.filter(x => !x.isPinned);
 
-  function toggleAll(checked: boolean) {
-    setSelected(checked ? new Set(filtered.map(n => n.id)) : new Set());
-  }
-  function toggleOne(id: string) {
-    setSelected(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
-  }
+  function toggleAll(checked: boolean) { setSelected(checked ? new Set(pagedItems.map(n => n.id)) : new Set()); }
+  function toggleOne(id: string) { setSelected(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; }); }
 
   async function doDelete() {
     const token = await auth.currentUser?.getIdToken();
     await Promise.all([...selected].map(id =>
       fetch(`/api/notices/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } })
     ));
-    setSelected(new Set());
-    setShowDeleteModal(false);
-    fetchAll();
+    setSelected(new Set()); setShowDeleteModal(false); fetchAll();
   }
+
+  // pagination bar
+  const groupStart = Math.floor((currentPage - 1) / 10) * 10 + 1;
+  const groupEnd = Math.min(groupStart + 9, totalPages);
+  const pageNums = Array.from({ length: groupEnd - groupStart + 1 }, (_, i) => groupStart + i);
 
   return (
     <div className="p-8 max-w-6xl">
-      {/* 삭제 확인 모달 */}
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-2xl shadow-xl p-8 w-[360px] flex flex-col items-center gap-5">
             <div className="text-3xl">🗑️</div>
             <h2 className="text-lg font-bold text-gray-800">게시글 삭제</h2>
-            <p className="text-sm text-gray-500 text-center">
-              {selected.size}개의 게시글을 삭제하시겠습니까?<br />삭제된 게시글은 복구할 수 없습니다.
-            </p>
+            <p className="text-sm text-gray-500 text-center">{selected.size}개의 게시글을 삭제하시겠습니까?<br />삭제된 게시글은 복구할 수 없습니다.</p>
             <div className="flex gap-3 w-full">
               <button onClick={() => setShowDeleteModal(false)} className="flex-1 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">취소</button>
               <button onClick={doDelete} className="flex-1 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold hover:bg-red-600 transition-colors">삭제</button>
@@ -153,7 +151,7 @@ export default function AdminNoticesPage() {
       </div>
 
       {/* 키워드 검색 */}
-      <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 mb-4 flex items-center gap-3">
+      <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 mb-3 flex items-center gap-3">
         <select value={searchField} onChange={e => setSearchField(e.target.value as "title" | "author")}
           className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]">
           <option value="title">제목</option>
@@ -166,6 +164,15 @@ export default function AdminNoticesPage() {
         <button onClick={doSearch} className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">검색</button>
       </div>
 
+      {/* 총 개수 + 페이지당 행 수 */}
+      <div className="flex items-center justify-between mb-2 px-1">
+        <span className="text-xs text-gray-500">총 <strong className="text-gray-800">{filtered.length}</strong>개</span>
+        <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}
+          className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] bg-white">
+          {PAGE_SIZE_OPTIONS.map(n => <option key={n} value={n}>{n}개씩 보기</option>)}
+        </select>
+      </div>
+
       {/* 테이블 */}
       {loading ? (
         <div className="bg-white border border-gray-200 rounded-xl p-12 text-center text-gray-400 text-sm">불러오는 중...</div>
@@ -176,7 +183,7 @@ export default function AdminNoticesPage() {
               <tr>
                 <th className="px-4 py-3 w-10">
                   <input type="checkbox" onChange={e => toggleAll(e.target.checked)}
-                    checked={selected.size === filtered.length && filtered.length > 0}
+                    checked={pagedItems.length > 0 && pagedItems.every(n => selected.has(n.id))}
                     className="w-4 h-4 rounded accent-[#1a1a2e]" />
                 </th>
                 <th className="px-4 py-3 w-16 text-center font-medium">번호</th>
@@ -187,9 +194,9 @@ export default function AdminNoticesPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {filtered.length === 0 ? (
+              {pagedItems.length === 0 ? (
                 <tr><td colSpan={6} className="px-6 py-12 text-center text-gray-400 text-sm">등록된 공지사항이 없습니다.</td></tr>
-              ) : filtered.map(n => {
+              ) : pagedItems.map(n => {
                 const nonPinnedIdx = nonPinnedFiltered.findIndex(x => x.id === n.id);
                 return (
                   <tr key={n.id} className={`hover:bg-gray-50 transition-colors ${selected.has(n.id) ? "bg-blue-50/60" : ""}`}>
@@ -208,9 +215,7 @@ export default function AdminNoticesPage() {
                     <td className="px-4 py-3 text-center">
                       <div className="flex items-center justify-center gap-1.5">
                         <span className="inline-flex w-6 h-6 rounded-full items-center justify-center text-white text-[10px] font-bold flex-shrink-0"
-                          style={{ backgroundColor: badgeColor(n.author) }}>
-                          {n.author?.charAt(0) || "?"}
-                        </span>
+                          style={{ backgroundColor: badgeColor(n.author) }}>{n.author?.charAt(0) || "?"}</span>
                         <span className="text-gray-600 text-xs">{n.author}</span>
                       </div>
                     </td>
@@ -224,25 +229,29 @@ export default function AdminNoticesPage() {
         </div>
       )}
 
+      {/* 페이지네이션 */}
+      {!loading && totalPages > 1 && (
+        <div className="flex items-center justify-center gap-1 mt-4">
+          <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className={BTN_NORMAL}>«</button>
+          <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className={BTN_NORMAL}>‹</button>
+          {pageNums.map(p => (
+            <button key={p} onClick={() => setCurrentPage(p)} className={currentPage === p ? BTN_ACTIVE : BTN_NORMAL}>{p}</button>
+          ))}
+          <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} className={BTN_NORMAL}>›</button>
+          <button onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} className={BTN_NORMAL}>»</button>
+        </div>
+      )}
+
       {/* 하단 툴바 */}
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <select className="border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none bg-white">
-            <option>공지사항</option>
-          </select>
-          <button className="px-4 py-2 border border-gray-200 rounded-lg text-xs text-gray-600 bg-white hover:bg-gray-50 transition-colors">이동</button>
-          <button className="px-4 py-2 border border-gray-200 rounded-lg text-xs text-gray-600 bg-white hover:bg-gray-50 transition-colors">복사</button>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => { if (selected.size === 0) { alert("삭제할 게시글을 선택해 주세요."); return; } setShowDeleteModal(true); }}
-            className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
-            삭제
-          </button>
-          <Link href="/admin/notices/new" className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
-            글쓰기
-          </Link>
-        </div>
+      <div className="mt-4 flex items-center justify-end gap-2">
+        <button
+          onClick={() => { if (selected.size === 0) { alert("삭제할 게시글을 선택해 주세요."); return; } setShowDeleteModal(true); }}
+          className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
+          삭제
+        </button>
+        <Link href="/admin/notices/new" className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
+          글쓰기
+        </Link>
       </div>
     </div>
   );
