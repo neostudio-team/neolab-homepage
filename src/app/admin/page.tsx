@@ -14,6 +14,19 @@ interface GATrend { date: string; sessions: number; users: number; }
 interface GAPage { path: string; pageViews: number; sessions: number; users: number; pct: number; }
 interface GASource { channel: string; sessions: number; users: number; pct: number; }
 
+type GAPreset = "today" | "yesterday" | "7" | "14" | "30" | "90" | "180" | "365" | "custom";
+const PRESET_OPTIONS: { key: GAPreset; label: string }[] = [
+  { key: "today",     label: "오늘" },
+  { key: "yesterday", label: "어제" },
+  { key: "7",         label: "7일" },
+  { key: "14",        label: "14일" },
+  { key: "30",        label: "30일" },
+  { key: "90",        label: "90일" },
+  { key: "180",       label: "6개월" },
+  { key: "365",       label: "1년" },
+  { key: "custom",    label: "직접입력" },
+];
+
 function fmtShort(iso: string) {
   if (!iso) return "-";
   const d = new Date(iso);
@@ -70,6 +83,27 @@ export default function AdminDashboard() {
   const [gaError, setGaError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [gaTab, setGaTab] = useState<GATab>("overview");
+  const [gaPreset, setGaPreset] = useState<GAPreset>("30");
+  const [customStart, setCustomStart] = useState("");
+  const [customEnd, setCustomEnd] = useState("");
+  const [gaLoading, setGaLoading] = useState(false);
+
+  async function fetchGA(preset: GAPreset, cStart: string, cEnd: string) {
+    setGaLoading(true);
+    setGaError(null);
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      if (!token) return;
+      let url = `/api/analytics?preset=${preset}`;
+      if (preset === "custom" && cStart && cEnd) {
+        url += `&startDate=${cStart}&endDate=${cEnd}`;
+      }
+      const gaRes = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+      if (gaRes.ok) setGaData(await gaRes.json());
+      else { const e = await gaRes.json(); setGaError(e.error || "GA_FETCH_ERROR"); }
+    } catch { setGaError("GA_FETCH_ERROR"); }
+    setGaLoading(false);
+  }
 
   useEffect(() => {
     async function load() {
@@ -89,17 +123,13 @@ export default function AdminDashboard() {
             headers: { Authorization: `Bearer ${token}` },
           }).then(r => r.json());
           setMembers(Array.isArray(membersRes) ? membersRes : []);
-
-          try {
-            const gaRes = await fetch("/api/analytics", { headers: { Authorization: `Bearer ${token}` } });
-            if (gaRes.ok) setGaData(await gaRes.json());
-            else { const e = await gaRes.json(); setGaError(e.error || "GA_FETCH_ERROR"); }
-          } catch { setGaError("GA_FETCH_ERROR"); }
+          await fetchGA("30", "", "");
         }
       } catch (e) { console.error(e); }
       finally { setLoading(false); }
     }
     load();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const CARDS = [
@@ -206,12 +236,59 @@ export default function AdminDashboard() {
       {/* GA 방문 통계 */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         {/* 헤더 */}
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
           <div>
             <h2 className="text-base font-bold text-gray-800">방문 통계</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Google Analytics · 최근 30일</p>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Google Analytics ·{" "}
+              {gaPreset === "today" ? "오늘" : gaPreset === "yesterday" ? "어제" :
+               gaPreset === "custom" && customStart && customEnd ? `${customStart} ~ ${customEnd}` :
+               gaPreset === "7" ? "최근 7일" : gaPreset === "14" ? "최근 14일" :
+               gaPreset === "30" ? "최근 30일" : gaPreset === "90" ? "최근 90일" :
+               gaPreset === "180" ? "최근 6개월" : gaPreset === "365" ? "최근 1년" : ""}
+            </p>
           </div>
-          {gaData && <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-3 py-1 rounded-full">● 연동됨</span>}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* 프리셋 버튼 */}
+            <div className="flex flex-wrap gap-1">
+              {PRESET_OPTIONS.map(opt => (
+                <button key={opt.key}
+                  onClick={() => {
+                    setGaPreset(opt.key);
+                    if (opt.key !== "custom") fetchGA(opt.key, "", "");
+                  }}
+                  className={`px-3 py-1.5 text-xs rounded-lg border font-medium transition-colors ${
+                    gaPreset === opt.key
+                      ? "bg-[#1a1a2e] text-white border-[#1a1a2e]"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                  }`}>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            {/* 직접입력 날짜 */}
+            {gaPreset === "custom" && (
+              <div className="flex items-center gap-1.5">
+                <input type="date" value={customStart} onChange={e => setCustomStart(e.target.value)}
+                  className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]/20" />
+                <span className="text-xs text-gray-400">~</span>
+                <input type="date" value={customEnd} onChange={e => setCustomEnd(e.target.value)}
+                  className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]/20" />
+                <button
+                  onClick={() => { if (customStart && customEnd) fetchGA("custom", customStart, customEnd); }}
+                  disabled={!customStart || !customEnd}
+                  className="px-3 py-1.5 text-xs bg-[#1a1a2e] text-white rounded-lg hover:bg-[#2a2a4e] disabled:opacity-40 transition-colors">
+                  조회
+                </button>
+              </div>
+            )}
+            {gaData && !gaLoading && (
+              <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-3 py-1 rounded-full">● 연동됨</span>
+            )}
+            {gaLoading && (
+              <span className="text-xs text-gray-400 font-medium bg-gray-50 px-3 py-1 rounded-full">조회 중...</span>
+            )}
+          </div>
         </div>
 
         {/* 에러 */}
@@ -295,7 +372,16 @@ export default function AdminDashboard() {
                 {/* 7일 트렌드 */}
                 {gaData.trend.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-700 mb-3">최근 7일 일별 세션</h3>
+                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                    {gaPreset === "today" || gaPreset === "yesterday" ? "시간별 세션" :
+                     gaPreset === "7" ? "최근 7일 일별 세션" :
+                     gaPreset === "14" ? "최근 14일 일별 세션" :
+                     gaPreset === "30" ? "최근 30일 일별 세션" :
+                     gaPreset === "90" ? "최근 90일 일별 세션" :
+                     gaPreset === "180" ? "최근 90일 일별 세션 (최근 90일)" :
+                     gaPreset === "365" ? "최근 90일 일별 세션 (최근 90일)" :
+                     "일별 세션"}
+                  </h3>
                     <div className="flex items-end gap-1.5 h-20 px-1">
                       {(() => {
                         const max = Math.max(...gaData.trend.map(t => t.sessions), 1);
