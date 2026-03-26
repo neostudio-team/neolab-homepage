@@ -40,7 +40,10 @@ export default function NewNoticePage() {
   async function uploadFile(file: File): Promise<{ url: string; name: string }> {
     const path = `notices/${Date.now()}_${file.name}`;
     const fileRef = storageRef(storage, path);
-    await uploadBytes(fileRef, file);
+    const timeout = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("파일 업로드 시간 초과")), 15000)
+    );
+    await Promise.race([uploadBytes(fileRef, file), timeout]);
     const url = await getDownloadURL(fileRef);
     return { url, name: file.name };
   }

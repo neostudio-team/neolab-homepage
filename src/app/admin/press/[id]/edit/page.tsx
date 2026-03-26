@@ -46,7 +46,10 @@ export default function EditPressPage() {
 
   async function uploadFile(file: File): Promise<{ url: string; name: string }> {
     const fileRef = storageRef(storage, `press/${Date.now()}_${file.name}`);
-    await uploadBytes(fileRef, file);
+    const timeout = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("파일 업로드 시간 초과")), 15000)
+    );
+    await Promise.race([uploadBytes(fileRef, file), timeout]);
     return { url: await getDownloadURL(fileRef), name: file.name };
   }
 
