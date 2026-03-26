@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
-import Link from "next/link";
+import { DEFAULT_PRIVACY, DEFAULT_TERMS } from "@/lib/legal-defaults";
 
 const TABS = [
   { key: "privacy", label: "개인정보처리방침", href: "/ko/privacy" },
@@ -10,16 +10,30 @@ const TABS = [
 
 type TabKey = "privacy" | "terms";
 
+const DEFAULTS: Record<TabKey, string> = {
+  privacy: DEFAULT_PRIVACY,
+  terms: DEFAULT_TERMS,
+};
+
 export default function AdminLegalPage() {
   const [activeTab, setActiveTab] = useState<TabKey>("privacy");
-  const [contents, setContents] = useState<Record<TabKey, string>>({ privacy: "", terms: "" });
+  const [contents, setContents] = useState<Record<TabKey, string>>({
+    privacy: DEFAULT_PRIVACY,
+    terms: DEFAULT_TERMS,
+  });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<Record<TabKey, string | null>>({ privacy: null, terms: null });
 
   async function fetchDoc(type: TabKey) {
     try {
-      const res = await fetch(`/api/legal/${type}`, { cache: "no-store" });
+      const user = auth.currentUser;
+      if (!user) return { content: "", updatedAt: null };
+      const token = await user.getIdToken();
+      const res = await fetch(`/api/legal/${type}`, {
+        cache: "no-store",
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = await res.json();
       return { content: data.content ?? "", updatedAt: data.updatedAt ?? null };
     } catch {
@@ -32,7 +46,10 @@ export default function AdminLegalPage() {
       if (user) {
         setLoading(true);
         const [privacy, terms] = await Promise.all([fetchDoc("privacy"), fetchDoc("terms")]);
-        setContents({ privacy: privacy.content, terms: terms.content });
+        setContents({
+          privacy: privacy.content || DEFAULTS.privacy,
+          terms: terms.content || DEFAULTS.terms,
+        });
         setSavedAt({ privacy: privacy.updatedAt, terms: terms.updatedAt });
         setLoading(false);
       }
@@ -71,13 +88,14 @@ export default function AdminLegalPage() {
     <div className="p-8 max-w-5xl">
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-2xl font-bold text-gray-800">약관 관리</h1>
-        <Link
+        <a
           href={currentTab.href}
           target="_blank"
+          rel="noopener noreferrer"
           className="text-xs text-blue-500 hover:underline"
         >
-          → 미리보기
-        </Link>
+          → 미리보기 (새 탭)
+        </a>
       </div>
 
       {/* Tabs */}
@@ -103,7 +121,7 @@ export default function AdminLegalPage() {
         <>
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-4">
             <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
-              <span className="text-xs text-gray-500">마크다운 형식으로 작성하세요. 미리보기 버튼으로 실제 출력 결과를 확인할 수 있습니다.</span>
+              <span className="text-xs text-gray-500">내용을 직접 입력하세요. 저장 후 즉시 홈페이지에 반영됩니다.</span>
               {savedAt[activeTab] && (
                 <span className="text-[10px] text-gray-400">
                   마지막 수정: {new Date(savedAt[activeTab]!).toLocaleString("ko-KR")}
@@ -113,14 +131,14 @@ export default function AdminLegalPage() {
             <textarea
               value={contents[activeTab]}
               onChange={e => setContents(prev => ({ ...prev, [activeTab]: e.target.value }))}
-              className="w-full h-[600px] p-4 text-sm font-mono text-gray-800 resize-none focus:outline-none"
-              placeholder="마크다운 형식으로 내용을 입력하세요..."
+              className="w-full h-[600px] p-4 text-sm text-gray-800 resize-none focus:outline-none leading-relaxed"
+              placeholder="내용을 입력하세요..."
             />
           </div>
 
           <div className="flex justify-between items-center">
             <p className="text-xs text-gray-400">
-              ※ 내용 저장 후 홈페이지 {currentTab.href} 페이지에 즉시 반영됩니다.
+              ※ 저장 후 홈페이지 <a href={currentTab.href} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{currentTab.href}</a> 페이지에 즉시 반영됩니다.
             </p>
             <button
               onClick={handleSave}
