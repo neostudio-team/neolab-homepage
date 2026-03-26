@@ -5,11 +5,9 @@ import { auth } from "@/lib/firebase";
 import Link from "next/link";
 
 const FIELD_ROWS = [
-  { key: "username", label: "아이디", required: true, type: "text" },
   { key: "name", label: "이름", required: true, type: "text" },
-  { key: "password", label: "비밀번호", required: false, type: "password" },
+  { key: "email", label: "이메일", required: true, type: "email" },
   { key: "group", label: "그룹", required: false, type: "text" },
-  { key: "email", label: "이메일", required: false, type: "email" },
   { key: "phone", label: "핸드폰", required: false, type: "text" },
   { key: "birthday", label: "생년월일", required: false, type: "text" },
   { key: "messenger", label: "메신저", required: false, type: "text" },
@@ -23,8 +21,8 @@ export default function NewMemberPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
-    username: "", name: "", password: "", group: "home", level: 2,
-    email: "", phone: "", birthday: "", messenger: "",
+    name: "", email: "", group: "home", level: 2,
+    phone: "", birthday: "", messenger: "",
     homepage: "", blog: "", homePhone: "", statusMessage: "",
     memberMemo: "", adminMemo: "",
   });
@@ -35,8 +33,8 @@ export default function NewMemberPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.username) return alert("아이디를 입력해 주세요.");
     if (!form.name) return alert("이름을 입력해 주세요.");
+    if (!form.email) return alert("이메일을 입력해 주세요.");
     setSaving(true);
     try {
       const token = await auth.currentUser?.getIdToken();
@@ -74,7 +72,7 @@ export default function NewMemberPage() {
                       value={(form as Record<string, string | number>)[row.key] as string}
                       onChange={e => set(row.key, e.target.value)}
                       required={row.required}
-                      className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-64"
+                      className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-72"
                     />
                   </td>
                 </tr>

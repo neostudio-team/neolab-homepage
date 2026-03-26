@@ -7,7 +7,6 @@ import { auth } from "@/lib/firebase";
 interface Member {
   id: string;
   seq: number;
-  username: string;
   name: string;
   level: number;
   group: string;
@@ -79,7 +78,6 @@ export default function AdminMembersPage() {
     if (!activeKeyword.value) return members;
     const kw = activeKeyword.value.toLowerCase();
     return members.filter(m => {
-      if (activeKeyword.field === "username") return m.username?.toLowerCase().includes(kw);
       if (activeKeyword.field === "name") return m.name?.toLowerCase().includes(kw);
       if (activeKeyword.field === "email") return m.email?.toLowerCase().includes(kw);
       return true;
@@ -147,7 +145,6 @@ export default function AdminMembersPage() {
         <div className="flex items-center gap-2">
           <select value={searchField} onChange={e => setSearchField(e.target.value)}
             className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]">
-            <option value="username">아이디</option>
             <option value="name">이름</option>
             <option value="email">이메일</option>
           </select>
@@ -174,8 +171,7 @@ export default function AdminMembersPage() {
                     className="w-4 h-4 rounded accent-[#1a1a2e]" />
                 </th>
                 <th className="px-3 py-3 w-12 text-center font-medium">번호</th>
-                <th className="px-3 py-3 w-28 text-center font-medium">아이디</th>
-                <th className="px-3 py-3 w-24 text-center font-medium">이름</th>
+                <th className="px-3 py-3 w-28 text-center font-medium">이름</th>
                 <th className="px-3 py-3 w-24 text-center font-medium">레벨</th>
                 <th className="px-3 py-3 w-20 text-center font-medium">그룹</th>
                 <th className="px-3 py-3 text-center font-medium">이메일</th>
@@ -190,7 +186,7 @@ export default function AdminMembersPage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.length === 0 ? (
-                <tr><td colSpan={14} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
+                <tr><td colSpan={13} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
               ) : filtered.map(m => (
                 <tr key={m.id} className={`hover:bg-gray-50 transition-colors ${selected.has(m.id) ? "bg-blue-50/60" : ""}`}>
                   <td className="px-3 py-2.5 text-center">
@@ -198,10 +194,7 @@ export default function AdminMembersPage() {
                       className="w-4 h-4 rounded accent-[#1a1a2e]" />
                   </td>
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.seq}</td>
-                  <td className="px-3 py-2.5 text-center text-gray-700 font-medium">{m.username}</td>
-                  <td className="px-3 py-2.5 text-center">
-                    <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs">{m.name}</span>
-                  </td>
+                  <td className="px-3 py-2.5 text-center text-gray-700 font-medium">{m.name}</td>
                   <td className="px-3 py-2.5 text-center">
                     <select value={m.level}
                       onChange={e => handleLevelChange(m.id, Number(e.target.value))}

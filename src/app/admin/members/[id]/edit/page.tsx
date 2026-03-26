@@ -5,10 +5,9 @@ import { auth } from "@/lib/firebase";
 import Link from "next/link";
 
 const FIELD_ROWS = [
-  { key: "username", label: "아이디", required: true, type: "text" },
   { key: "name", label: "이름", required: true, type: "text" },
+  { key: "email", label: "이메일", required: true, type: "email" },
   { key: "group", label: "그룹", required: false, type: "text" },
-  { key: "email", label: "이메일", required: false, type: "email" },
   { key: "phone", label: "핸드폰", required: false, type: "text" },
   { key: "birthday", label: "생년월일", required: false, type: "text" },
   { key: "messenger", label: "메신저", required: false, type: "text" },
@@ -24,8 +23,8 @@ export default function EditMemberPage() {
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
-    username: "", name: "", group: "home", level: 2,
-    email: "", phone: "", birthday: "", messenger: "",
+    name: "", email: "", group: "home", level: 2,
+    phone: "", birthday: "", messenger: "",
     homepage: "", blog: "", homePhone: "", statusMessage: "",
     memberMemo: "", adminMemo: "",
   });
@@ -39,11 +38,10 @@ export default function EditMemberPage() {
       if (res.ok) {
         const data = await res.json();
         setForm({
-          username: data.username ?? "",
           name: data.name ?? "",
+          email: data.email ?? "",
           group: data.group ?? "home",
           level: Number(data.level) || 2,
-          email: data.email ?? "",
           phone: data.phone ?? "",
           birthday: data.birthday ?? "",
           messenger: data.messenger ?? "",
@@ -104,7 +102,7 @@ export default function EditMemberPage() {
                       value={(form as Record<string, string | number>)[row.key] as string}
                       onChange={e => set(row.key, e.target.value)}
                       required={row.required}
-                      className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-64"
+                      className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-72"
                     />
                   </td>
                 </tr>
