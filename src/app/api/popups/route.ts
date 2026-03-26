@@ -60,6 +60,13 @@ export async function POST(request: NextRequest) {
       updatedAt: FieldValue.serverTimestamp(),
     });
 
+    if (user.email) {
+      const memberSnap = await adminDb.collection("admin_members").where("email", "==", user.email).limit(1).get();
+      if (!memberSnap.empty) {
+        await memberSnap.docs[0].ref.update({ postCount: FieldValue.increment(1) });
+      }
+    }
+
     return NextResponse.json({ id: docRef.id }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: "Failed to create popup" }, { status: 500 });

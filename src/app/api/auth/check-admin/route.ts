@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { adminDb, adminAuth } from "@/lib/firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 
 /**
  * GET /api/auth/check-admin
@@ -46,7 +47,15 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ allowed: false, firstSetup: false, member: null });
     }
 
-    const data = snap.docs[0].data();
+    const doc = snap.docs[0];
+    const data = doc.data();
+
+    // 로그인 횟수 및 방문일자 업데이트
+    await doc.ref.update({
+      loginCount: FieldValue.increment(1),
+      lastLoginAt: FieldValue.serverTimestamp(),
+    });
+
     return NextResponse.json({
       allowed: true,
       firstSetup: false,
