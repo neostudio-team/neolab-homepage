@@ -185,7 +185,7 @@ export default function AdminLegalPage() {
       ) : mode === "list" ? (
         <>
           <div className="flex justify-between items-center mb-4">
-            <p className="text-sm text-gray-500">총 {tabVersions.length}개 버전 | 발행 중인 버전만 홈페이지에 표시됩니다.</p>
+            <p className="text-sm text-gray-500">총 {tabVersions.length}개 버전 | <span className="text-green-600 font-medium">●  발행 중</span> 버전만 실제 홈페이지에 노출됩니다.</p>
             <button onClick={() => { setEditContent(""); setEditNote(""); setEditVersion(null); setMode("new"); }}
               className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs font-semibold hover:bg-[#16213e] transition-colors">
               + 새 버전 작성
