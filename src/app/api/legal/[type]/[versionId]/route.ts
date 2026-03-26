@@ -40,6 +40,36 @@ export async function GET(
   }
 }
 
+// PATCH /api/legal/[type]/[versionId] - admin: edit version content and note
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ type: string; versionId: string }> }
+) {
+  const user = await verifyAdmin(request);
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { type, versionId } = await params;
+
+  try {
+    const doc = await adminDb.collection("legal_versions").doc(versionId).get();
+    if (!doc.exists || doc.data()?.type !== type) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    const body = await request.json();
+    const updateData: Record<string, unknown> = {};
+    if (body.content !== undefined) updateData.content = body.content;
+    if (body.note !== undefined) updateData.note = body.note;
+    updateData.updatedAt = FieldValue.serverTimestamp();
+    updateData.updatedBy = user.email ?? "";
+
+    await adminDb.collection("legal_versions").doc(versionId).update(updateData);
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json({ error: "Failed to update" }, { status: 500 });
+  }
+}
+
 // PUT /api/legal/[type]/[versionId] - admin: activate this version
 export async function PUT(
   request: NextRequest,
