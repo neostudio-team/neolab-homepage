@@ -45,7 +45,7 @@ export default async function CustomerNoticeDetailPage({
             <span>{new Date(notice.createdAt as string).toLocaleDateString("ko-KR")}</span>
             <span>{lang === "en" ? "Views" : lang === "ja" ? "閲覧数" : "조회"} {notice.views as number}</span>
           </div>
-          <div className="text-[15px] text-gray-700 leading-[1.8] whitespace-pre-wrap">{content as string}</div>
+          <div className="prose prose-gray max-w-none text-[15px] leading-[1.8] [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-blue-600 [&_a]:underline [&_img]:max-w-full [&_img]:rounded [&_h1]:text-2xl [&_h1]:font-bold [&_h2]:text-xl [&_h2]:font-bold [&_h3]:text-lg [&_h3]:font-semibold [&_strong]:font-bold [&_em]:italic [&_blockquote]:border-l-4 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_blockquote]:text-gray-500" dangerouslySetInnerHTML={{ __html: content as string }} />
           <div className="mt-16 pt-8 border-t border-gray-100">
             <Link href={`/${lang}/customer`} className="inline-block border border-gray-300 text-gray-600 text-sm px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors">
               {lang === "en" ? "Back to list" : lang === "ja" ? "一覧へ戻る" : "목록으로"}

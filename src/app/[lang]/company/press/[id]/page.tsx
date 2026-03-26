@@ -34,13 +34,8 @@ export default async function PressDetailPage({
     lang === "ja" ? press.titleJa || press.titleKo :
     press.titleKo;
 
-  // HTML 본문 우선 사용, 없으면 평문
-  const contentHtml =
-    lang === "en" ? press.contentHtmlEn || press.contentHtmlKo :
-    lang === "ja" ? press.contentHtmlJa || press.contentHtmlKo :
-    press.contentHtmlKo;
-
-  const contentPlain =
+  // contentKo 필드에 HTML이 저장됨 (Quill 에디터)
+  const content =
     lang === "en" ? press.contentEn || press.contentKo :
     lang === "ja" ? press.contentJa || press.contentKo :
     press.contentKo;
@@ -73,15 +68,8 @@ export default async function PressDetailPage({
           )}
 
           {/* 본문 */}
-          {contentHtml ? (
-            <div
-              className="press-content"
-              dangerouslySetInnerHTML={{ __html: contentHtml }}
-            />
-          ) : contentPlain ? (
-            <div className="text-[15px] text-gray-700 leading-[1.8] whitespace-pre-wrap">
-              {contentPlain}
-            </div>
+          {content ? (
+            <div className="prose prose-gray max-w-none text-[15px] leading-[1.8] [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-blue-600 [&_a]:underline [&_img]:max-w-full [&_img]:rounded [&_h1]:text-2xl [&_h1]:font-bold [&_h2]:text-xl [&_h2]:font-bold [&_h3]:text-lg [&_h3]:font-semibold [&_strong]:font-bold [&_em]:italic [&_blockquote]:border-l-4 [&_blockquote]:border-gray-300 [&_blockquote]:pl-4 [&_blockquote]:text-gray-500" dangerouslySetInnerHTML={{ __html: content }} />
           ) : (
             <p className="text-gray-400 text-sm">본문 내용이 없습니다.</p>
           )}
