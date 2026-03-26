@@ -15,7 +15,7 @@ interface Member {
   postCount: number;
   replyCount: number;
   commentCount: number;
-  points: number;
+
   createdAt: string;
   lastLoginAt: string;
 }
@@ -179,7 +179,7 @@ export default function AdminMembersPage() {
                 <th className="px-3 py-3 w-14 text-center font-medium">글쓰기</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">답변</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">댓글</th>
-                <th className="px-3 py-3 w-14 text-center font-medium">포인트</th>
+
                 <th className="px-3 py-3 w-44 text-center font-medium">가입/최종 접속일</th>
                 <th className="px-3 py-3 w-14 text-center font-medium"></th>
               </tr>
@@ -212,7 +212,7 @@ export default function AdminMembersPage() {
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.postCount ?? 0}</td>
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.replyCount ?? 0}</td>
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.commentCount ?? 0}</td>
-                  <td className="px-3 py-2.5 text-center text-gray-500">{m.points ?? 0}</td>
+
                   <td className="px-3 py-2.5 text-center text-gray-500 leading-snug">
                     <div>{fmtDatetime(m.createdAt)}</div>
                     <div className="text-gray-400 text-[10px]">({fmtDatetime(m.lastLoginAt)})</div>
