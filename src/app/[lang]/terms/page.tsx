@@ -11,18 +11,16 @@ async function getData() {
     const snapshot = await adminDb
       .collection("legal_versions")
       .where("type", "==", "terms")
-      .orderBy("versionNumber", "desc")
       .get();
 
     if (snapshot.empty) {
       return { activeContent: DEFAULT_TERMS, activeVersionId: null, versions: [] };
     }
 
-    const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() })) as Array<{
-      id: string; versionNumber: number; note: string;
-      createdAt: { toDate: () => Date } | null; isActive: boolean;
-      content: string; createdBy: string;
-    }>;
+    type DocData = { id: string; versionNumber: number; note: string; createdAt: { toDate: () => Date } | null; isActive: boolean; content: string; createdBy: string; };
+    const docs = snapshot.docs
+      .map(d => ({ id: d.id, ...d.data() } as DocData))
+      .sort((a, b) => (b.versionNumber ?? 0) - (a.versionNumber ?? 0));
 
     const active = docs.find(d => d.isActive) ?? docs[0];
     return {

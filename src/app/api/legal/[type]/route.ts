@@ -31,14 +31,13 @@ export async function GET(
   }
 
   try {
+    // Only filter by type (no orderBy to avoid composite index requirement)
     const snapshot = await adminDb
       .collection("legal_versions")
       .where("type", "==", type)
-      .orderBy("versionNumber", "desc")
       .get();
 
     if (snapshot.empty) {
-      // Return default content if no versions exist
       return NextResponse.json({
         activeContent: DEFAULTS[type],
         activeVersionId: null,
@@ -46,8 +45,7 @@ export async function GET(
       });
     }
 
-    // Find active version
-    const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() })) as Array<{
+    type DocData = {
       id: string;
       type: string;
       content: string;
@@ -56,7 +54,12 @@ export async function GET(
       createdAt: { toDate: () => Date } | null;
       createdBy: string;
       isActive: boolean;
-    }>;
+    };
+
+    // Sort client-side by versionNumber desc
+    const docs = snapshot.docs
+      .map(d => ({ id: d.id, ...d.data() } as DocData))
+      .sort((a, b) => (b.versionNumber ?? 0) - (a.versionNumber ?? 0));
 
     const active = docs.find(d => d.isActive) ?? docs[0];
 
@@ -75,7 +78,7 @@ export async function GET(
       versions,
     });
   } catch (e) {
-    console.error(e);
+    console.error("GET /api/legal error:", e);
     return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
   }
 }
@@ -96,15 +99,18 @@ export async function POST(
   try {
     const body = await request.json();
 
-    // Get next version number
+    // Get all versions, sort by versionNumber in JS to avoid composite index
     const existing = await adminDb
       .collection("legal_versions")
       .where("type", "==", type)
-      .orderBy("versionNumber", "desc")
-      .limit(1)
       .get();
 
-    const nextVersion = existing.empty ? 1 : (existing.docs[0].data().versionNumber ?? 0) + 1;
+    const existingDocs = existing.docs.map(d => d.data());
+    const maxVersion = existingDocs.reduce(
+      (max, d) => Math.max(max, d.versionNumber ?? 0),
+      0
+    );
+    const nextVersion = maxVersion + 1;
     const isFirst = existing.empty;
 
     const docRef = await adminDb.collection("legal_versions").add({
@@ -117,10 +123,9 @@ export async function POST(
       createdBy: user.email ?? "",
     });
 
-    // If auto-publishing (first version), also mark old active as inactive (though there are none)
     return NextResponse.json({ id: docRef.id, versionNumber: nextVersion, isActive: isFirst }, { status: 201 });
   } catch (e) {
-    console.error(e);
+    console.error("POST /api/legal error:", e);
     return NextResponse.json({ error: "Failed to create version" }, { status: 500 });
   }
 }
