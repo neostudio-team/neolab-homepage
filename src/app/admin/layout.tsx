@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import "../globals.css";
 
 const BADGE_COLORS = ["#3b82f6","#10b981","#8b5cf6","#f97316","#ef4444","#14b8a6","#ec4899","#6366f1"];
@@ -11,7 +11,27 @@ function badgeColor(name: string) {
   return BADGE_COLORS[(name?.charCodeAt(0) || 0) % BADGE_COLORS.length];
 }
 
-interface MemberProfile { name: string; level: number; username: string; }
+interface MemberProfile { name: string; level: number; username: string; email: string; }
+
+async function fetchProfile(user: User): Promise<MemberProfile | null> {
+  try {
+    const token = await user.getIdToken();
+    const res = await fetch("/api/auth/check-admin", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data.allowed) return null;
+    return {
+      name: data.member?.name || user.displayName || user.email?.split("@")[0] || "관리자",
+      level: Number(data.member?.level) || 0,
+      username: data.member?.username || user.email?.split("@")[0] || "",
+      email: user.email ?? "",
+    };
+  } catch {
+    return null;
+  }
+}
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -21,23 +41,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
-      if (!user && pathname !== "/admin/login") {
-        router.replace("/admin/login");
-      } else {
+      // 로그인 페이지
+      if (pathname === "/admin/login") {
         setLoading(false);
-        if (user?.email) {
-          try {
-            const token = await user.getIdToken();
-            const res = await fetch(`/api/admin-members?email=${encodeURIComponent(user.email)}`, {
-              headers: { Authorization: `Bearer ${token}` },
-            });
-            if (res.ok) {
-              const data = await res.json();
-              if (data) setProfile({ name: data.name, level: Number(data.level), username: data.username });
-            }
-          } catch { /* ignore */ }
-        }
+        if (user) router.replace("/admin"); // 이미 로그인 상태면 대시보드로
+        return;
       }
+
+      // 비로그인 → 로그인 페이지로
+      if (!user) {
+        router.replace("/admin/login");
+        return;
+      }
+
+      // 로그인 상태 → admin_members 등록 여부 확인
+      const p = await fetchProfile(user);
+      if (!p) {
+        await signOut(auth);
+        document.cookie = "admin_logged_in=; path=/; max-age=0";
+        router.replace("/admin/login");
+        return;
+      }
+
+      setProfile(p);
+      setLoading(false);
     });
     return () => unsub();
   }, [pathname, router]);
@@ -100,19 +127,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
             {/* 프로필 */}
             {profile && (
-              <div className="px-4 py-4 border-t border-white/10">
-                <div className="flex items-center gap-3 px-2 py-2">
+              <div className="px-4 py-3 border-t border-white/10">
+                <div className="flex items-center gap-3 px-2 py-2 rounded-lg bg-white/5">
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 uppercase"
                     style={{ backgroundColor: badgeColor(profile.name) }}
                   >
                     {profile.name?.charAt(0) || "?"}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-white text-sm font-medium truncate">{profile.name}</p>
-                    <p className="text-white/40 text-xs">
-                      {profile.level === 1 ? "최고관리자" : "일반관리자"}
-                    </p>
+                    <p className="text-white text-sm font-semibold truncate">{profile.name}</p>
+                    <p className="text-white/50 text-[10px] truncate">{profile.email}</p>
+                    {profile.level > 0 && (
+                      <span className={`inline-block text-[9px] font-bold px-1.5 py-0.5 rounded mt-0.5 ${
+                        profile.level === 1 ? "bg-red-500/80 text-white" : "bg-blue-500/80 text-white"
+                      }`}>
+                        {profile.level === 1 ? "최고관리자" : "일반관리자"}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
