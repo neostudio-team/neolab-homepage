@@ -70,9 +70,25 @@ export default function Footer({ lang, dict }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p>{dict.address}</p>
-          <p>{dict.copyright}</p>
+        <div className="mt-10 pt-6 border-t border-gray-200">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <p className="text-sm text-gray-500">{dict.address}</p>
+            <div className="flex items-center gap-4 text-sm">
+              {lang === 'ko' && (
+                <>
+                  <Link href="/ko/privacy" className="text-gray-500 hover:text-gray-800 transition-colors hover:underline">
+                    개인정보처리방침
+                  </Link>
+                  <span className="text-gray-300">|</span>
+                  <Link href="/ko/terms" className="text-gray-500 hover:text-gray-800 transition-colors hover:underline">
+                    이용약관
+                  </Link>
+                  <span className="text-gray-300">|</span>
+                </>
+              )}
+              <p className="text-gray-500">{dict.copyright}</p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
