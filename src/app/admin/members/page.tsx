@@ -9,6 +9,7 @@ interface Member {
   seq: number;
   name: string;
   level: number;
+  group: string;
   email: string;
   loginCount: number;
   postCount: number;
@@ -196,12 +197,12 @@ export default function AdminMembersPage() {
                 <th className="px-3 py-3 w-12 text-center font-medium">번호</th>
                 <th className="px-3 py-3 w-40 text-center font-medium">이름</th>
                 <th className="px-3 py-3 w-36 text-center font-medium">레벨</th>
+                <th className="px-3 py-3 w-24 text-center font-medium">그룹</th>
                 <th className="px-3 py-3 w-56 text-center font-medium">이메일</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">로그인</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">글쓰기</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">답변</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">댓글</th>
-
                 <th className="px-3 py-3 w-44 text-center font-medium">가입/최종 접속일</th>
                 <th className="px-3 py-3 w-14 text-center font-medium"></th>
               </tr>
@@ -225,6 +226,9 @@ export default function AdminMembersPage() {
                       <option value={1} style={{ color: "#ef4444" }}>1 (최고관리자)</option>
                       <option value={2} style={{ color: "#3b82f6" }}>2 (일반관리자)</option>
                     </select>
+                  </td>
+                  <td className="px-3 py-2.5 text-center">
+                    <span className="inline-block px-2 py-0.5 bg-gray-100 text-gray-500 text-[10px] rounded font-medium">{m.group || "home"}</span>
                   </td>
                   <td className="px-3 py-2.5 text-center text-gray-600 truncate max-w-[14rem]">{m.email}</td>
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.loginCount ?? 0}</td>
