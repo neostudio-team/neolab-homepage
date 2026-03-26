@@ -127,7 +127,6 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
         { label: dict.aigle, href: "https://aigle.neolab.net", external: true },
         { label: dict.gridaboard, href: `/${lang}/apps/gridaboard` },
         { label: dict.penManager, href: `/${lang}/apps/penmanager` },
-        { label: dict.paperTube, href: `/${lang}/apps/papertube` },
       ],
     },
     {

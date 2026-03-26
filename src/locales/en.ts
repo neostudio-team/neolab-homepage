@@ -97,7 +97,7 @@ const en = {
       title: "The Digital World Meets a Smart Analog",
       naturalInterface: "Natural Interface",
       naturalInterfaceDesc: "NeoLAB Convergence offers technology that can digitize handwriting on any surface. Our solutions integrate seamlessly with software through input devices like smartpens and optical readers.",
-      convergedAnalog: "Converged Analog",
+      convergedAnalog: "Smart Analog",
       convergedAnalogDesc: "Paper is the most familiar and widely used analog medium. It's where we write, think, and share information. We make paper smart so that your handwritten content flows directly into your digital workflows.",
     },
     coreSolutions: {

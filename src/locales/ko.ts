@@ -192,7 +192,7 @@ const ko = {
     },
     hero: {
       title: "TEAM\nNEOLAB",
-      subtitle: "물리 세계과 디지털 세상을 연결하는 게이트웨이 회사",
+      subtitle: "아날로그와 디지털을 연결하는 새로운 차원의 솔루션",
     },
     moonShot: {
       title: "MOON SHOT THINKERS",

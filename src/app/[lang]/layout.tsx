@@ -3,6 +3,7 @@ import { Open_Sans } from "next/font/google";
 import Script from "next/script";
 import "../globals.css";
 import { i18n, Locale } from "@/i18n/config";
+import GlobalPopups from "@/components/GlobalPopups";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -46,6 +47,7 @@ export default async function RootLayout({
         </Script>
       </head>
       <body className={`${openSans.variable} antialiased`}>
+        <GlobalPopups />
         {children}
       </body>
     </html>

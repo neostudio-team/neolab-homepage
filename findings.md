@@ -1,154 +1,34 @@
-# Findings – 관리자 페이지 CMS 구축
+# Findings – 고객지원 제품군 섹션 복사
 
-> 수집일: 2026-03-25
+## 원본 (www.neolab.kr/customer/) 조사 결과
 
-## 현재 상태 분석
+### 각 제품군의 상세 설명 섹션
 
-### 공지사항 페이지 (`/[lang]/company/news/page.tsx`)
-- notices 배열 하드코딩 (11개 항목)
-- 필드: id, isNotice, title, author, date, views
-- 상세 페이지 없음 (Link href="#")
-- 검색 UI 있으나 기능 없음 (정적)
-- 국문 전용 UI (영문/일문 번역 없음)
+| 순서 | 제품명 | 이미지 URL | 링크 URL | 버튼 |
+|------|--------|-----------|---------|------|
+| 1 | 소리펜 | https://www.neolab.kr/wp-content/uploads/2022/02/Neo-soripen.png | https://www.neolab.kr/support-sori | 자세히 알아보기 |
+| 2 | 미디어플레이어 | https://www.neolab.kr/wp-content/uploads/2022/02/Neo-mediaplayer.png | https://www.neolab.kr/support-mediaplayer | 자세히 알아보기 |
+| 3 | 빔프로젝터 | https://www.neolab.kr/wp-content/uploads/2022/02/Neo-beam.png | https://www.neolab.kr/support-beam | 자세히 알아보기 |
+| 4 | 네오스마트펜 | https://www.neolab.kr/wp-content/uploads/2022/02/Neo-smartpen.png | https://www.neolab.kr/support-smartpen | 자세히 알아보기 |
 
-### 기업뉴스 페이지 (`/[lang]/company/press/page.tsx`)
-- pressReleases 배열 하드코딩 (7개 항목)
-- 필드: title, author, date, category, excerpt
-- 상세 페이지 없음 (Link href="#")
-- 국문 전용 (영문/일문 미적용)
+### 레이아웃
+- 4컬럼 그리드 (각 25%)
+- 이미지 크기: 150px, border-radius: 0px (직사각형, 원형 아님)
+- 배경: 흰색 (#fff) 아님 → 원본은 연한 회색빛 배경 (현재 코드는 bg-[#F5F8F8])
+- 이미지 아래 제목(h4), 그 아래 링크 버튼
 
-## DB 스키마 설계
+## 현재 코드의 문제점 (customer/page.tsx)
 
-### notices 테이블
-```sql
-create table notices (
-  id uuid default gen_random_uuid() primary key,
-  is_pinned boolean default false,
-  title_ko text not null,
-  title_en text,
-  title_ja text,
-  content_ko text,
-  content_en text,
-  content_ja text,
-  author text default 'NeoLAB',
-  views integer default 0,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
-);
-```
+| 제품 | 현재 이미지 | 현재 링크 | 상태 |
+|------|-----------|---------|------|
+| 소리펜 | /images/soundpen/poppen_soundpen_001.png (제품 사진) | /{lang}/soundpen | ❌ 둘다 틀림 |
+| 미디어플레이어 | /images/pokoro/sec01-img01.png | /{lang}/pokoro | ❌ 둘다 틀림 |
+| 빔프로젝터 | /images/technology/Neo-02.png | neolab.kr/customer/ | ❌ 이미지 틀림, 링크 틀림 |
+| 네오스마트펜 | /images/neosmartpen/main/hero_bg.jpg | /{lang}/neosmartpen | ❌ 둘다 틀림 |
 
-### press_releases 테이블
-```sql
-create table press_releases (
-  id uuid default gen_random_uuid() primary key,
-  title_ko text not null,
-  title_en text,
-  title_ja text,
-  excerpt_ko text,
-  excerpt_en text,
-  excerpt_ja text,
-  content_ko text,
-  content_en text,
-  content_ja text,
-  author text default 'NeoLAB',
-  category text default 'press',
-  external_url text,
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
-);
-```
+또한 현재 이미지가 원형(rounded-full)으로 표시되고 있어서 원본과 다름.
 
-## Supabase 환경변수 목록
-```
-NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...  (서버 전용, 절대 클라이언트 노출 금지)
-ADMIN_EMAIL=admin@neolab.net  (관리자 로그인 이메일)
-```
-
-## 패키지
-- @supabase/supabase-js: ^2
-- @supabase/ssr: ^0.6 (Next.js SSR용 쿠키 기반 세션)
-
----
-# (이전) Findings – shop.neosmartpen.com/products/neo-smartpen-r1 분석
-
-## 페이지 섹션 순서 (top → bottom)
-1. Hero: 이미지 갤러리 + 제품 정보 (제목/태그라인/가격/색상/구매버튼)
-2. "Experience the freedom" - 다크 bg, 4가지 기능 불릿
-3. "Feature Rich Smartpen, For Less" - 배경이미지 오버레이
-4. "About R1" - 3개 이미지 카드 (Bluetooth / Battery / Storage)
-5. "Digitize your handwriting and beyond!" - 텍스트 + 3 블록
-6. "What You Can Do with R1" - 4개 기능 리스트
-7. Sync handwriting - 큰 이미지 + 텍스트
-8. Edit The Way You Like It - 이미지 + 텍스트
-9. Transcribe & Export - 이미지 + 텍스트
-10. "Search & Organize" - 배경이미지 fullscreen
-11. "NEO Smart Planner" - 회색 bg
-12. "Notebooks for Neo Smartpen" - 섹션 + 이미지
-13. Notebooks 8종 그리드
-14. Apps (Neo Studio2 + Grida Board)
-15. Specification - 이미지 + 스펙 테이블
-16. "What's Inside The Box" - 박스 이미지 + 목록
-17. Product Comparison Table
-18. User Manual - 다운로드 링크
-
-## 이미지 URL 매핑
-| 섹션 | 이미지 URL |
-|------|-----------|
-| Hero main (Black) | https://shop.neosmartpen.com/cdn/shop/files/F45.png?v=1748305970 |
-| Hero Sky Blue | https://shop.neosmartpen.com/cdn/shop/files/KakaoTalk_20250103_114024634.png?v=1756790863 |
-| Hero photo 1 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2147-278110.jpg?v=1756790863 |
-| Hero photo 2 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2171-592434.jpg?v=1756790863 |
-| Hero photo 3 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2216-408424.jpg?v=1756790863 |
-| Hero photo 4 | https://shop.neosmartpen.com/cdn/shop/products/221104-neolab_smartpen_-2459.jpg?v=1756790863 |
-| Hero extra 1 | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-extra-001.png?v=1756790863 |
-| Hero extra 2 | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-extra-002.png?v=1756790863 |
-| Hero extra 3 | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-extra-003.png?v=1756790863 |
-| Feature Rich BG | https://shop.neosmartpen.com/cdn/shop/files/neo-smartpen-r1-img.png?v=1756778721 |
-| About R1 - Bluetooth | https://shop.neosmartpen.com/cdn/shop/files/25.png?v=1756700568 |
-| About R1 - Battery | https://shop.neosmartpen.com/cdn/shop/files/26.png?v=1756700529 |
-| About R1 - Storage | https://shop.neosmartpen.com/cdn/shop/files/27.png?v=1756700645 |
-| Sync section img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2234_1.png?v=1756790290 |
-| Edit section img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2378_1.png?v=1756790344 |
-| Transcribe img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2396_1.png?v=1756790387 |
-| Pen Mouse img | https://shop.neosmartpen.com/cdn/shop/files/221104-neolab_smartpen_-2408_1.png?v=1756790437 |
-| Search BG | https://shop.neosmartpen.com/cdn/shop/files/14.png?v=1756693263 |
-| Notebooks section | https://shop.neosmartpen.com/cdn/shop/files/11_a0ab5ef5-fed0-4e2d-a0f3-676cce04e21e.jpg?v=1756697566 |
-| Neo Studio2 app | https://shop.neosmartpen.com/cdn/shop/files/16.png?v=1756698404 |
-| Grida Board app | https://shop.neosmartpen.com/cdn/shop/files/12.jpg?v=1756698417 |
-| Spec image | https://shop.neosmartpen.com/cdn/shop/files/28.png?v=1756701172 |
-| Box contents | https://shop.neosmartpen.com/cdn/shop/files/1_bf147d36-cecc-47e6-89bc-d6bd0c372927.jpg?v=1756790863 |
-
-## 노트북 8종
-| 제품명 | 이미지 | 가격 | 링크 |
-|--------|--------|------|------|
-| NEO SMART PLANNER 2026 Pro | NEOSMARTPLANNER2026Pro_001.jpg | $20.00 | /products/neo-smart-planner-2026 |
-| 100 DAY COUNTDOWN PLANNER | 1-437017.png | $9.50 | /products/100-day-countdown-planner |
-| N PROFESSIONAL NOTEBOOK | n-professional-notebook...798281.jpg | $19.00 | /products/n-professional-notebook-1 |
-| N MOLESKINE NOTEBOOK | n-moleskine-notebook...509125.jpg | $29.00 | /products/n-moleskine-notebook |
-| N RING NOTEBOOK 5-PACK | n-ring-notebook-5-pack...197592.jpg | $19.90 | /products/n-ring-notebook-5-pack |
-| N POCKET NOTEBOOKS 5-PACK | N-730011.jpg | $14.90 | /products/n-pocket-notebooks-5-pack |
-| N MEMO NOTEBOOKS 5-PACK | MEMO-NOTEBOOKS-766389.jpg | $14.90 | /products/n-memo-notebooks-5-pack |
-| N HANDY NOTEBOOK (BLUE) | n-handy-notebook...light-blue...jpg | $15.00 | /products/n-handy-notebook-blue |
-
-## 비교표 데이터
-| 스펙 | Lamy Safari | A1 | M1+ | R1 | Dimo |
-|------|------------|-----|-----|-----|------|
-| Model | NWP-F80 | NWP-F151 | NWP-F55 | NWP-F45 | NWP-F30 |
-| Storage | 160pgs | 160pgs | 1000pgs | 20pgs | 20pgs |
-| Battery | 180mA | 130mAh | 280mAh | 180mAh | AAA×1 |
-| Battery Life | 11h | 14h | 14h | 14h | 9.5h |
-| Charging | 5 Pin | USB-C | USB-C | USB-C | — |
-| Size | 144×16mm | 139×13.9mm | 149.6×10.9mm | 149×11mm | 140×14.7mm |
-| Weight | 28g | 20g | 22g | 18g | 26.5g |
-
-## 색상
-- Primary text: #171717 (rgb 23,23,23)
-- Accent: standard (no brand orange - shop uses black as primary)
-- Background variations: white, #ECECEC (light gray), #1F1F1F (footer dark)
-- Buy button: dark (#171717) with white text, rounded-full
-
-## 가격/구매 정보
-- 가격: $89.00 USD (en), 구매하기 버튼 → store URL
-- 색상: Black (NWP-F45-NC-BK), Sky Blue (NWP-F45-NC-SB)
+## 수정 계획
+1. 원본 이미지 4개를 public/images/customer/ 에 다운로드
+2. 이미지 원형 → 직사각형으로 변경
+3. 링크를 원본 외부 링크로 교체

@@ -83,7 +83,7 @@ export default async function SoundPenPage({
         <LazySection>
         <section className="py-[54px] bg-[#f1f1f1]">
           <div className="max-w-[1080px] mx-auto px-4">
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {t.products.map((product, i) => (
                 <div key={product.name} className="bg-white rounded-xl p-8 text-center shadow-sm">
                   <div className="mb-6 flex justify-center">
