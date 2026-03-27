@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import Link from "next/link";
@@ -12,6 +12,23 @@ const FIELD_ROWS = [
 export default function NewMemberPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [permitted, setPermitted] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const user = auth.currentUser;
+      if (!user) { router.replace("/admin/members"); return; }
+      const token = await user.getIdToken();
+      const res = await fetch(`/api/admin-members?email=${encodeURIComponent(user.email ?? "")}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Number(data?.level) === 1) setPermitted(true);
+        else { alert("최고관리자만 접근할 수 있습니다."); router.replace("/admin/members"); }
+      }
+    })();
+  }, [router]);
   const [form, setForm] = useState({
     name: "", email: "", level: 2,
     memberMemo: "", adminMemo: "",
@@ -39,6 +56,8 @@ export default function NewMemberPage() {
       setSaving(false);
     }
   }
+
+  if (permitted === null) return <div className="p-8 text-gray-400 text-sm">권한 확인 중...</div>;
 
   return (
     <div className="p-8 max-w-3xl">

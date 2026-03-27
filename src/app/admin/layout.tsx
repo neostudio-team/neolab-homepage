@@ -127,9 +127,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link href="/admin/popups" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/popups") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
                 <span className="text-base">🖼️</span> 팝업 관리
               </Link>
-              <Link href="/admin/legal" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/legal") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
-                <span className="text-base">📄</span> 약관 관리
-              </Link>
+              {profile && profile.level === 1 && (
+                <Link href="/admin/legal" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/legal") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
+                  <span className="text-base">📄</span> 약관 관리
+                </Link>
+              )}
               <Link href="/admin/members" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/members") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
                 <span className="text-base">👥</span> 회원 관리
               </Link>

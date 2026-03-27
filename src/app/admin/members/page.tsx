@@ -197,7 +197,6 @@ export default function AdminMembersPage() {
                 <th className="px-3 py-3 w-12 text-center font-medium">번호</th>
                 <th className="px-3 py-3 w-40 text-center font-medium">이름</th>
                 <th className="px-3 py-3 w-36 text-center font-medium">레벨</th>
-                <th className="px-3 py-3 w-24 text-center font-medium">그룹</th>
                 <th className="px-3 py-3 w-56 text-center font-medium">이메일</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">로그인</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">글쓰기</th>
@@ -209,7 +208,7 @@ export default function AdminMembersPage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {paged.length === 0 ? (
-                <tr><td colSpan={10} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
+                <tr><td colSpan={myLevel === 1 ? 10 : 9} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
               ) : paged.map(m => (
                 <tr key={m.id} className={`hover:bg-gray-50 transition-colors ${selected.has(m.id) ? "bg-blue-50/60" : ""}`}>
                   <td className="px-3 py-2.5 text-center">
@@ -219,16 +218,19 @@ export default function AdminMembersPage() {
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.seq}</td>
                   <td className="px-3 py-2.5 text-center text-gray-700 font-medium">{m.name}</td>
                   <td className="px-3 py-2.5 text-center">
-                    <select value={m.level}
-                      onChange={e => handleLevelChange(m.id, Number(e.target.value))}
-                      className="border border-gray-200 rounded px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#1a1a2e]"
-                      style={{ color: LEVEL_LABELS[m.level]?.color ?? "#374151" }}>
-                      <option value={1} style={{ color: "#ef4444" }}>1 (최고관리자)</option>
-                      <option value={2} style={{ color: "#3b82f6" }}>2 (일반관리자)</option>
-                    </select>
-                  </td>
-                  <td className="px-3 py-2.5 text-center">
-                    <span className="inline-block px-2 py-0.5 bg-gray-100 text-gray-500 text-[10px] rounded font-medium">{m.group || "home"}</span>
+                    {myLevel === 1 ? (
+                      <select value={m.level}
+                        onChange={e => handleLevelChange(m.id, Number(e.target.value))}
+                        className="border border-gray-200 rounded px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#1a1a2e]"
+                        style={{ color: LEVEL_LABELS[m.level]?.color ?? "#374151" }}>
+                        <option value={1} style={{ color: "#ef4444" }}>1 (최고관리자)</option>
+                        <option value={2} style={{ color: "#3b82f6" }}>2 (일반관리자)</option>
+                      </select>
+                    ) : (
+                      <span className="text-xs font-medium" style={{ color: LEVEL_LABELS[m.level]?.color ?? "#374151" }}>
+                        {m.level} ({LEVEL_LABELS[m.level]?.label ?? "관리자"})
+                      </span>
+                    )}
                   </td>
                   <td className="px-3 py-2.5 text-center text-gray-600 truncate max-w-[14rem]">{m.email}</td>
                   <td className="px-3 py-2.5 text-center text-gray-500">{m.loginCount ?? 0}</td>
@@ -240,12 +242,14 @@ export default function AdminMembersPage() {
                     <div>{fmtDatetime(m.createdAt)}</div>
                     <div className="text-gray-400 text-[10px]">({fmtDatetime(m.lastLoginAt)})</div>
                   </td>
-                  <td className="px-3 py-2.5 text-center">
-                    <Link href={`/admin/members/${m.id}/edit`}
-                      className="px-2.5 py-1 border border-gray-200 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">
-                      수정
-                    </Link>
-                  </td>
+                  {myLevel === 1 && (
+                    <td className="px-3 py-2.5 text-center">
+                      <Link href={`/admin/members/${m.id}/edit`}
+                        className="px-2.5 py-1 border border-gray-200 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">
+                        수정
+                      </Link>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -283,33 +287,33 @@ export default function AdminMembersPage() {
         </div>
       )}
 
-      {/* 하단 툴바 */}
-      <div className="mt-4 flex items-center justify-between">
-        <div>
-          <button
-            onClick={() => {
-              if (selected.size === 0) { alert("수정할 회원을 선택해 주세요."); return; }
-              const firstId = [...selected][0];
-              router.push(`/admin/members/${firstId}/edit`);
-            }}
-            className="px-4 py-2 border border-gray-200 rounded-lg text-xs text-gray-600 bg-white hover:bg-gray-50 transition-colors">
-            수정
-          </button>
-        </div>
-        <div className="flex items-center gap-2">
-          {myLevel === 1 && (
+      {/* 하단 툴바 — 최고관리자만 표시 */}
+      {myLevel === 1 && (
+        <div className="mt-4 flex items-center justify-between">
+          <div>
+            <button
+              onClick={() => {
+                if (selected.size === 0) { alert("수정할 회원을 선택해 주세요."); return; }
+                const firstId = [...selected][0];
+                router.push(`/admin/members/${firstId}/edit`);
+              }}
+              className="px-4 py-2 border border-gray-200 rounded-lg text-xs text-gray-600 bg-white hover:bg-gray-50 transition-colors">
+              수정
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
             <button
               onClick={() => { if (selected.size === 0) { alert("삭제할 회원을 선택해 주세요."); return; } setShowDeleteModal(true); }}
               className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
               삭제
             </button>
-          )}
-          <Link href="/admin/members/new"
-            className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
-            회원 등록
-          </Link>
+            <Link href="/admin/members/new"
+              className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
+              회원 등록
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

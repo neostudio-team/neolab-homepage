@@ -21,7 +21,23 @@ export default function EditMemberPage() {
 
   useEffect(() => {
     (async () => {
-      const token = await auth.currentUser?.getIdToken();
+      const user = auth.currentUser;
+      if (!user) { router.replace("/admin/members"); return; }
+      const token = await user.getIdToken();
+
+      // 권한 확인
+      const meRes = await fetch(`/api/admin-members?email=${encodeURIComponent(user.email ?? "")}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (meRes.ok) {
+        const me = await meRes.json();
+        if (Number(me?.level) !== 1) {
+          alert("최고관리자만 접근할 수 있습니다.");
+          router.replace("/admin/members");
+          return;
+        }
+      }
+
       const res = await fetch(`/api/admin-members/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -37,7 +53,7 @@ export default function EditMemberPage() {
       }
       setLoading(false);
     })();
-  }, [id]);
+  }, [id, router]);
 
   function set(key: string, value: string | number) {
     setForm(f => ({ ...f, [key]: value }));
