@@ -409,7 +409,11 @@ export default function AdminDashboard() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-semibold text-gray-700">인기 페이지 Top 10</h3>
-                  <span className="text-xs text-gray-400">최근 30일 기준</span>
+                  <span className="text-xs text-gray-400">
+                    {gaPreset === "today" ? "오늘 기준" : gaPreset === "yesterday" ? "어제 기준" :
+                     gaPreset === "custom" && customStart && customEnd ? `${customStart} ~ ${customEnd}` :
+                     `최근 ${gaPreset === "7" ? "7일" : gaPreset === "14" ? "14일" : gaPreset === "30" ? "30일" : gaPreset === "90" ? "90일" : gaPreset === "180" ? "6개월" : "1년"} 기준`}
+                  </span>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs">
