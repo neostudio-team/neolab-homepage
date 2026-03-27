@@ -20,7 +20,6 @@ export default function AdminLoginPage() {
       const result = await signInWithPopup(auth, googleProvider);
       const token = await result.user.getIdToken();
 
-      // admin_members 등록 여부 확인
       const res = await fetch("/api/auth/check-admin", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -35,7 +34,6 @@ export default function AdminLoginPage() {
       setLoginCookie();
       router.replace("/admin");
     } catch (err: unknown) {
-      // 팝업 닫기 등 사용자 취소는 에러 표시 안 함
       const code = (err as { code?: string })?.code;
       if (code !== "auth/popup-closed-by-user" && code !== "auth/cancelled-popup-request") {
         setError("Google 로그인에 실패했습니다. 다시 시도해 주세요.");
@@ -46,42 +44,35 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      {/* Left panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#1a1a2e] flex-col justify-between p-12">
-        <div>
-          <p className="text-white/40 text-xs uppercase tracking-widest">NeoLAB Convergence</p>
-        </div>
-        <div>
-          <h1 className="text-4xl font-bold text-white leading-tight mb-4">
-            콘텐츠 관리<br />시스템
-          </h1>
-          <p className="text-white/50 text-sm leading-relaxed">
-            공지사항과 기업뉴스를 쉽게 작성하고<br />홈페이지에 반영하세요.
-          </p>
-        </div>
-        <p className="text-white/20 text-xs">© 2025 NeoLAB Convergence Inc.</p>
+    <div className="min-h-screen flex">
+      {/* Left — white panel */}
+      <div className="hidden lg:flex lg:w-1/2 bg-white flex-col items-center justify-center p-16">
+        <img
+          src="/images/NeoLAB-CI_01.png"
+          alt="NeoLAB Convergence"
+          className="w-64 mb-8"
+        />
+        <p className="text-[#1a1a2e] text-3xl font-bold tracking-tight">홈페이지 관리자</p>
       </div>
 
-      {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-sm">
-          <div className="mb-10">
-            <p className="text-xs text-gray-400 uppercase tracking-widest mb-2">NeoLAB Admin</p>
-            <h2 className="text-3xl font-bold text-gray-900">로그인</h2>
-            <p className="text-sm text-gray-400 mt-2">NeoLAB 구글 워크스페이스 계정으로 로그인하세요.</p>
-          </div>
+      {/* Right — dark panel */}
+      <div className="flex-1 bg-[#1a1a2e] flex flex-col items-center justify-center p-12">
+        <div className="w-full max-w-md">
+          <h2 className="text-5xl font-bold text-white mb-4">로그인</h2>
+          <p className="text-white/60 text-base mb-10">
+            NeoLAB 구글 워크스페이스 계정으로 로그인하세요.
+          </p>
 
           {error && (
-            <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 mb-6">
-              <p className="text-red-600 text-xs whitespace-pre-line">{error}</p>
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 mb-6">
+              <p className="text-red-400 text-sm whitespace-pre-line">{error}</p>
             </div>
           )}
 
           <button
             onClick={handleGoogle}
             disabled={loading}
-            className="w-full border border-gray-200 bg-white rounded-xl py-3.5 text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-3 disabled:opacity-50 shadow-sm"
+            className="w-full bg-white rounded-xl py-4 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors flex items-center justify-center gap-3 disabled:opacity-50 shadow-lg"
           >
             {loading ? (
               <span className="text-gray-500">확인 중...</span>
@@ -98,8 +89,8 @@ export default function AdminLoginPage() {
             )}
           </button>
 
-          <p className="text-center text-xs text-gray-400 mt-6">
-            @neolab.net 계정만 접근 가능합니다.
+          <p className="text-center text-sm text-white/30 mt-6">
+            승인된 @neolab.net 계정만 접근 가능합니다.
           </p>
         </div>
       </div>
