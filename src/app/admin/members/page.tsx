@@ -152,8 +152,12 @@ export default function AdminMembersPage() {
         </div>
       )}
 
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">회원 관리</h1>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-1">회원 관리</h1>
+        <p className="text-sm text-gray-400">NeoLAB Convergence 홈페이지 관리자 계정 목록</p>
+      </div>
+
+      <div className="flex items-center justify-between mb-4">
         {/* 검색 */}
         <div className="flex items-center gap-2">
           <select value={searchField} onChange={e => setSearchField(e.target.value)}
