@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
       </div>
 
       {/* Right — dark panel */}
-      <div className="flex-1 bg-[#1a1a2e] flex flex-col items-center justify-center p-12">
+      <div className="flex-1 bg-[#1a1a2e] flex flex-col items-center justify-center p-12 pt-32">
         <div className="w-full max-w-md">
           <h2 className="text-5xl font-bold text-white mb-4">로그인</h2>
           <p className="text-white/60 text-base mb-10">
