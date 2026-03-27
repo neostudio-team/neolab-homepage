@@ -178,6 +178,25 @@ export default function AdminMembersPage() {
             </select>
             <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">▾</span>
           </div>
+          {/* 최고관리자 전용 버튼 */}
+          {myLevel === 1 && (
+            <>
+              <button
+                onClick={() => { if (selected.size === 0) { alert("수정할 회원을 선택해 주세요."); return; } const firstId = [...selected][0]; router.push(`/admin/members/${firstId}/edit`); }}
+                className="px-4 py-1.5 border border-gray-200 rounded-lg text-xs text-gray-600 bg-white hover:bg-gray-50 transition-colors">
+                수정
+              </button>
+              <button
+                onClick={() => { if (selected.size === 0) { alert("삭제할 회원을 선택해 주세요."); return; } setShowDeleteModal(true); }}
+                className="px-4 py-1.5 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
+                삭제
+              </button>
+              <Link href="/admin/members/new"
+                className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
+                회원 등록
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
@@ -287,33 +306,6 @@ export default function AdminMembersPage() {
         </div>
       )}
 
-      {/* 하단 툴바 — 최고관리자만 표시 */}
-      {myLevel === 1 && (
-        <div className="mt-4 flex items-center justify-between">
-          <div>
-            <button
-              onClick={() => {
-                if (selected.size === 0) { alert("수정할 회원을 선택해 주세요."); return; }
-                const firstId = [...selected][0];
-                router.push(`/admin/members/${firstId}/edit`);
-              }}
-              className="px-4 py-2 border border-gray-200 rounded-lg text-xs text-gray-600 bg-white hover:bg-gray-50 transition-colors">
-              수정
-            </button>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => { if (selected.size === 0) { alert("삭제할 회원을 선택해 주세요."); return; } setShowDeleteModal(true); }}
-              className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
-              삭제
-            </button>
-            <Link href="/admin/members/new"
-              className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
-              회원 등록
-            </Link>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -164,13 +164,23 @@ export default function AdminNoticesPage() {
         <button onClick={doSearch} className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">검색</button>
       </div>
 
-      {/* 총 개수 + 페이지당 행 수 */}
+      {/* 총 개수 + 페이지당 행 수 + 버튼 */}
       <div className="flex items-center justify-between mb-2 px-1">
         <span className="text-xs text-gray-500">총 <strong className="text-gray-800">{filtered.length}</strong>개</span>
-        <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}
-          className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] bg-white">
-          {PAGE_SIZE_OPTIONS.map(n => <option key={n} value={n}>{n}개씩 보기</option>)}
-        </select>
+        <div className="flex items-center gap-2">
+          <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}
+            className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] bg-white">
+            {PAGE_SIZE_OPTIONS.map(n => <option key={n} value={n}>{n}개씩 보기</option>)}
+          </select>
+          <button
+            onClick={() => { if (selected.size === 0) { alert("삭제할 게시글을 선택해 주세요."); return; } setShowDeleteModal(true); }}
+            className="px-4 py-1.5 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
+            삭제
+          </button>
+          <Link href="/admin/notices/new" className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
+            글쓰기
+          </Link>
+        </div>
       </div>
 
       {/* 테이블 */}
@@ -242,17 +252,6 @@ export default function AdminNoticesPage() {
         </div>
       )}
 
-      {/* 하단 툴바 */}
-      <div className="mt-4 flex items-center justify-end gap-2">
-        <button
-          onClick={() => { if (selected.size === 0) { alert("삭제할 게시글을 선택해 주세요."); return; } setShowDeleteModal(true); }}
-          className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
-          삭제
-        </button>
-        <Link href="/admin/notices/new" className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
-          글쓰기
-        </Link>
-      </div>
     </div>
   );
 }
