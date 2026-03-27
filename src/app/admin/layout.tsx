@@ -96,15 +96,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Sidebar */}
           <aside className="w-60 bg-[#1a1a2e] text-white flex flex-col fixed h-full z-10">
             <Link href="/admin" className="block px-6 py-5 border-b border-white/10 hover:bg-white/5 transition-colors group">
-              {/* neo.LAB convergence 로고 */}
-              <div className="mb-2">
-                <div className="flex items-baseline gap-0 leading-none">
-                  <span className="text-[22px] font-black italic text-[#9ca3af] tracking-tight">neo</span>
-                  <span className="text-[22px] font-black italic text-[#f97316] tracking-tight">.LAB</span>
-                </div>
-                <div className="text-[11px] font-bold text-[#f97316] tracking-[0.15em] uppercase -mt-0.5">convergence</div>
-              </div>
-              <p className="text-[15px] font-bold text-white tracking-wide group-hover:text-white/80 transition-colors">홈페이지 관리자</p>
+              <img
+                src="/images/NeoLAB-CI_01.png"
+                alt="NeoLAB Convergence"
+                className="h-9 w-auto block mb-2"
+              />
+              <p className="text-[13px] font-semibold text-white/60 tracking-wide group-hover:text-white/80 transition-colors">홈페이지 관리자</p>
             </Link>
             <nav className="flex-1 px-4 py-5 space-y-1 text-sm overflow-y-auto">
               <Link href="/admin" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname === "/admin" ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
