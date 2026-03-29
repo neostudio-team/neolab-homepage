@@ -220,6 +220,7 @@ export default function AdminMembersPage() {
                 <th className="px-3 py-3 w-14 text-center font-medium">답변</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">댓글</th>
                 <th className="px-3 py-3 w-44 text-center font-medium">가입/최종 접속일</th>
+                <th className="px-3 py-3 w-14 text-center font-medium">수정</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -257,6 +258,14 @@ export default function AdminMembersPage() {
                   <td className="px-3 py-2.5 text-center text-gray-500 leading-snug">
                     <div>{fmtDatetime(m.createdAt)}</div>
                     <div className="text-gray-400 text-[10px]">({fmtDatetime(m.lastLoginAt)})</div>
+                  </td>
+                  <td className="px-3 py-2.5 text-center">
+                    {myLevel === 1 && (
+                      <Link href={`/admin/members/${m.id}/edit`}
+                        className="px-2.5 py-1 border border-gray-200 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">
+                        수정
+                      </Link>
+                    )}
                   </td>
                 </tr>
               ))}
