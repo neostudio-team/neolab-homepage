@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
 
 interface Member {
@@ -33,7 +32,6 @@ function fmtDatetime(iso: string) {
 }
 
 export default function AdminMembersPage() {
-  const router = useRouter();
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -152,57 +150,51 @@ export default function AdminMembersPage() {
         </div>
       )}
 
-      {/* 헤더: 제목 + 최고관리자 전용 버튼 */}
-      <div className="flex items-start justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-1">회원 관리</h1>
-          <p className="text-sm text-gray-400">NeoLAB Convergence 홈페이지 관리자 계정 목록</p>
-        </div>
-        {myLevel === 1 && (
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => { if (selected.size === 0) { alert("수정할 회원을 선택해 주세요."); return; } const firstId = [...selected][0]; router.push(`/admin/members/${firstId}/edit`); }}
-              className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 bg-white hover:bg-gray-50 transition-colors">
-              수정
-            </button>
-            <button
-              onClick={() => { if (selected.size === 0) { alert("삭제할 회원을 선택해 주세요."); return; } setShowDeleteModal(true); }}
-              className="px-4 py-2 border border-red-200 text-red-500 rounded-lg text-sm bg-white hover:bg-red-50 transition-colors">
-              삭제
-            </button>
-            <Link href="/admin/members/new"
-              className="px-4 py-2 bg-[#1a1a2e] text-white rounded-lg text-sm hover:bg-[#16213e] transition-colors">
-              회원 등록
-            </Link>
-          </div>
-        )}
+      {/* 헤더: 제목 */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-1">회원 관리</h1>
+        <p className="text-sm text-gray-400">NeoLAB Convergence 홈페이지 관리자 계정 목록</p>
       </div>
 
-      <div className="flex items-center justify-between mb-4">
-        {/* 검색 */}
+      {/* 검색 */}
+      <div className="flex items-center gap-2 mb-3">
+        <select value={searchField} onChange={e => setSearchField(e.target.value)}
+          className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]">
+          <option value="name">이름</option>
+          <option value="email">이메일</option>
+        </select>
+        <input value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && handleKeywordChange()}
+          placeholder="검색어 입력"
+          className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-40" />
+        <button onClick={handleKeywordChange}
+          className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">검색</button>
+      </div>
+
+      {/* 총 개수 + 페이지당 행 수 + 버튼 */}
+      <div className="flex items-center justify-between mb-2 px-1">
+        <span className="text-xs text-gray-500">총 <strong className="text-gray-800">{filtered.length}</strong>명</span>
         <div className="flex items-center gap-2">
-          <select value={searchField} onChange={e => setSearchField(e.target.value)}
-            className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]">
-            <option value="name">이름</option>
-            <option value="email">이메일</option>
+          <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}
+            className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] bg-white">
+            <option value={10}>10개씩 보기</option>
+            <option value={20}>20개씩 보기</option>
+            <option value={50}>50개씩 보기</option>
+            <option value={100}>100개씩 보기</option>
           </select>
-          <input value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && handleKeywordChange()}
-            placeholder="검색어 입력"
-            className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-40" />
-          <button onClick={handleKeywordChange}
-            className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">검색</button>
-          {/* 페이지당 개수 */}
-          <div className="relative ml-2">
-            <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}
-              className="border border-gray-200 rounded-lg px-3 py-1.5 pr-7 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] appearance-none cursor-pointer">
-              <option value={10}>10개씩 보기</option>
-              <option value={20}>20개씩 보기</option>
-              <option value={50}>50개씩 보기</option>
-              <option value={100}>100개씩 보기</option>
-            </select>
-            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[10px]">▾</span>
-          </div>
+          {myLevel === 1 && (
+            <>
+              <button
+                onClick={() => { if (selected.size === 0) { alert("삭제할 회원을 선택해 주세요."); return; } setShowDeleteModal(true); }}
+                className="px-4 py-1.5 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
+                삭제
+              </button>
+              <Link href="/admin/members/new"
+                className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
+                회원 등록
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
@@ -228,12 +220,11 @@ export default function AdminMembersPage() {
                 <th className="px-3 py-3 w-14 text-center font-medium">답변</th>
                 <th className="px-3 py-3 w-14 text-center font-medium">댓글</th>
                 <th className="px-3 py-3 w-44 text-center font-medium">가입/최종 접속일</th>
-                <th className="px-3 py-3 w-14 text-center font-medium"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {paged.length === 0 ? (
-                <tr><td colSpan={myLevel === 1 ? 10 : 9} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
+                <tr><td colSpan={10} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
               ) : paged.map(m => (
                 <tr key={m.id} className={`hover:bg-gray-50 transition-colors ${selected.has(m.id) ? "bg-blue-50/60" : ""}`}>
                   <td className="px-3 py-2.5 text-center">
@@ -267,14 +258,6 @@ export default function AdminMembersPage() {
                     <div>{fmtDatetime(m.createdAt)}</div>
                     <div className="text-gray-400 text-[10px]">({fmtDatetime(m.lastLoginAt)})</div>
                   </td>
-                  {myLevel === 1 && (
-                    <td className="px-3 py-2.5 text-center">
-                      <Link href={`/admin/members/${m.id}/edit`}
-                        className="px-2.5 py-1 border border-gray-200 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">
-                        수정
-                      </Link>
-                    </td>
-                  )}
                 </tr>
               ))}
             </tbody>
