@@ -12,6 +12,23 @@ const ReactQuill = dynamic(() => import("react-quill-new"), {
   ),
 });
 
+/** 프로토콜 없는 href에 https:// 자동 추가 */
+function sanitizeLinks(html: string): string {
+  return html.replace(/href="([^"]+)"/g, (_match, url: string) => {
+    if (
+      /^[a-z][a-z\d+\-.]*:\/\//i.test(url) || // http:// https:// ftp:// 등
+      url.startsWith("//") ||
+      url.startsWith("#") ||
+      url.startsWith("/") ||
+      url.startsWith("mailto:") ||
+      url.startsWith("tel:")
+    ) {
+      return `href="${url}"`;
+    }
+    return `href="https://${url}"`;
+  });
+}
+
 const MODULES = {
   toolbar: [
     [{ font: [] }, { size: ["small", false, "large", "huge"] }],
@@ -57,7 +74,7 @@ export default function RichEditor({ value, onChange }: Props) {
         <ReactQuill
           theme="snow"
           value={value}
-          onChange={onChange}
+          onChange={(val) => onChange(sanitizeLinks(val))}
           modules={MODULES}
           formats={FORMATS}
         />
