@@ -108,13 +108,13 @@ export default function HeroSection({ dict }: HeroSectionProps) {
     };
 
     window.addEventListener("resize", resize);
-    canvas.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mousemove", onMouseMove);
     resize();
     loop();
 
     return () => {
       window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mousemove", onMouseMove);
       cancelAnimationFrame(animId);
     };
   }, []);
@@ -126,19 +126,23 @@ export default function HeroSection({ dict }: HeroSectionProps) {
     >
       {/* Video background */}
       <div className="absolute inset-0 z-[1] bg-black overflow-hidden">
-        <iframe
-          src="https://drive.google.com/file/d/1EDgymqWkXqYZw_zSSNJFzASSLDdhv2l2/preview"
-          allow="autoplay; encrypted-media"
-          title="NeoLAB Brand Video"
-          className="absolute top-1/2 left-1/2 border-0 pointer-events-none"
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute top-1/2 left-1/2 pointer-events-none"
           style={{
             width: "100vw",
             height: "56.25vw",
             minHeight: "100vh",
             minWidth: "177.78vh",
             transform: "translate(-50%, -50%)",
+            objectFit: "cover",
           }}
-        />
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* Dark overlay */}
