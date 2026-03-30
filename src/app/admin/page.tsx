@@ -369,36 +369,94 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                {/* 7일 트렌드 */}
+                {/* 트렌드 차트 */}
                 {gaData.trend.length > 0 && (
                   <div>
                     <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                    {gaPreset === "today" || gaPreset === "yesterday" ? "시간별 세션" :
-                     gaPreset === "7" ? "최근 7일 일별 세션" :
-                     gaPreset === "14" ? "최근 14일 일별 세션" :
-                     gaPreset === "30" ? "최근 30일 일별 세션" :
-                     gaPreset === "90" ? "최근 90일 일별 세션" :
-                     gaPreset === "180" ? "최근 90일 일별 세션 (최근 90일)" :
-                     gaPreset === "365" ? "최근 90일 일별 세션 (최근 90일)" :
-                     "일별 세션"}
-                  </h3>
-                    <div className="flex items-end gap-1.5 h-20 px-1">
-                      {(() => {
-                        const max = Math.max(...gaData.trend.map(t => t.sessions), 1);
-                        return gaData.trend.map(t => {
-                          const h = Math.max(4, Math.round((t.sessions / max) * 72));
-                          const d = t.date;
-                          const label = `${parseInt(d.slice(4, 6))}.${parseInt(d.slice(6, 8))}`;
-                          return (
-                            <div key={t.date} className="flex-1 flex flex-col items-center gap-0.5">
-                              <span className="text-[9px] text-gray-400 leading-none">{t.sessions}</span>
-                              <div className="w-full rounded-t-sm bg-blue-400 hover:bg-blue-500 transition-colors" style={{ height: `${h}px` }} title={`${label}: ${t.sessions}세션`} />
-                              <span className="text-[9px] text-gray-400 leading-none">{label}</span>
-                            </div>
-                          );
-                        });
-                      })()}
-                    </div>
+                      {gaPreset === "today" || gaPreset === "yesterday" ? "시간별 세션" :
+                       gaPreset === "7" ? "최근 7일 일별 세션" :
+                       gaPreset === "14" ? "최근 14일 일별 세션" :
+                       gaPreset === "30" ? "최근 30일 일별 세션" :
+                       gaPreset === "90" ? "최근 90일 일별 세션" :
+                       gaPreset === "180" ? "최근 90일 일별 세션" :
+                       gaPreset === "365" ? "최근 90일 일별 세션" :
+                       "일별 세션"}
+                    </h3>
+                    {(() => {
+                      const data = gaData.trend;
+                      const W = 560, H = 110;
+                      const pad = { top: 18, right: 4, bottom: 18, left: 4 };
+                      const cW = W - pad.left - pad.right;
+                      const cH = H - pad.top - pad.bottom;
+                      const max = Math.max(...data.map(t => t.sessions), 1);
+                      const label = (d: string) =>
+                        `${parseInt(d.slice(4, 6))}.${parseInt(d.slice(6, 8))}`;
+
+                      if (data.length <= 14) {
+                        /* ── 바 차트 (≤14일) ── */
+                        const bw = cW / data.length;
+                        const gap = Math.max(1, bw * 0.25);
+                        return (
+                          <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
+                            {data.map((t, i) => {
+                              const bh = t.sessions > 0 ? Math.max(2, (t.sessions / max) * cH) : 0;
+                              const x = pad.left + i * bw + gap / 2;
+                              const y = pad.top + cH - bh;
+                              return (
+                                <g key={t.date}>
+                                  <rect x={x} y={y} width={bw - gap} height={bh} rx="1.5" fill="#60a5fa" />
+                                  <text x={x + (bw - gap) / 2} y={pad.top + cH - bh - 3}
+                                    textAnchor="middle" fontSize="8" fill="#9ca3af">
+                                    {t.sessions > 0 ? t.sessions : ""}
+                                  </text>
+                                  <text x={x + (bw - gap) / 2} y={H - 2}
+                                    textAnchor="middle" fontSize="7.5" fill="#9ca3af">
+                                    {label(t.date)}
+                                  </text>
+                                </g>
+                              );
+                            })}
+                          </svg>
+                        );
+                      } else {
+                        /* ── 영역 라인 차트 (>14일) ── */
+                        const n = data.length;
+                        const xs = data.map((_, i) => pad.left + (i / (n - 1)) * cW);
+                        const ys = data.map(t => pad.top + cH - (t.sessions / max) * cH);
+                        const polyline = data.map((_, i) => `${xs[i]},${ys[i]}`).join(" ");
+                        const area = `M${xs[0]},${pad.top + cH} ` +
+                          data.map((_, i) => `L${xs[i]},${ys[i]}`).join(" ") +
+                          ` L${xs[n - 1]},${pad.top + cH} Z`;
+                        /* 레이블: 첫·마지막·N 간격마다 */
+                        const every = n <= 30 ? 6 : n <= 60 ? 10 : 15;
+                        return (
+                          <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
+                            <defs>
+                              <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.35" />
+                                <stop offset="100%" stopColor="#60a5fa" stopOpacity="0.03" />
+                              </linearGradient>
+                            </defs>
+                            <path d={area} fill="url(#trendGrad)" />
+                            <polyline points={polyline} fill="none" stroke="#3b82f6" strokeWidth="1.5" strokeLinejoin="round" />
+                            {data.map((t, i) => {
+                              const showDot = t.sessions > 0;
+                              const showLabel = i === 0 || i === n - 1 || i % every === 0;
+                              return (
+                                <g key={t.date}>
+                                  {showDot && <circle cx={xs[i]} cy={ys[i]} r="2" fill="#3b82f6" />}
+                                  {showLabel && (
+                                    <text x={xs[i]} y={H - 2} textAnchor="middle" fontSize="7.5" fill="#9ca3af">
+                                      {label(t.date)}
+                                    </text>
+                                  )}
+                                </g>
+                              );
+                            })}
+                          </svg>
+                        );
+                      }
+                    })()}
                   </div>
                 )}
               </div>
