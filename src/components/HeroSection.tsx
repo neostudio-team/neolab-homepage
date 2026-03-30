@@ -23,9 +23,9 @@ export default function HeroSection({ dict }: HeroSectionProps) {
     let W = 0,
       H = 0;
     const SPACING = 28,
-      BASE_R = 1.2,
-      GLOW_R = 5,
-      REPEL = 100;
+      BASE_R = 2.2,
+      GLOW_R = 8,
+      REPEL = 120;
     let dots: {
       gx: number;
       gy: number;
@@ -83,7 +83,7 @@ export default function HeroSection({ dict }: HeroSectionProps) {
           dy = d.y - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         let r = BASE_R,
-          alpha = d.isRed ? 0.35 : 0.22;
+          alpha = d.isRed ? 0.7 : 0.45;
         if (dist < REPEL) {
           const f = 1 - dist / REPEL;
           const ang = Math.atan2(dy, dx);
@@ -158,7 +158,7 @@ export default function HeroSection({ dict }: HeroSectionProps) {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full z-[3] pointer-events-none"
-        style={{ opacity: 0.35, mixBlendMode: "screen" }}
+        style={{ opacity: 0.7, mixBlendMode: "screen" }}
       />
 
       {/* Hero text */}
