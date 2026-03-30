@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface HeroSectionProps {
   dict: {
@@ -13,28 +13,24 @@ interface HeroSectionProps {
 
 export default function HeroSection({ dict }: HeroSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  // 0 = 완전 검정(페이드 아웃), 1 = 완전 투명(영상 노출)
+  const [fadeOpacity, setFadeOpacity] = useState(0);
 
+  /* ── Ncode 도트 캔버스 ── */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let W = 0,
-      H = 0;
-    const SPACING = 28,
-      BASE_R = 2.2,
-      GLOW_R = 8,
-      REPEL = 120;
+    let W = 0, H = 0;
+    const SPACING = 28, BASE_R = 1.2, GLOW_R = 5, REPEL = 100;
     let dots: {
-      gx: number;
-      gy: number;
-      encX: number;
-      encY: number;
-      x: number;
-      y: number;
-      phase: number;
-      isRed: boolean;
+      gx: number; gy: number;
+      encX: number; encY: number;
+      x: number; y: number;
+      phase: number; isRed: boolean;
     }[] = [];
     let mouse = { x: -9999, y: -9999 };
     let animId: number;
@@ -52,20 +48,12 @@ export default function HeroSection({ dict }: HeroSectionProps) {
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const enc = (r * cols + c) % 4;
-          const offsets: [number, number][] = [
-            [1, 1],
-            [-1, 1],
-            [1, -1],
-            [-1, -1],
-          ];
+          const offsets: [number, number][] = [[1,1],[-1,1],[1,-1],[-1,-1]];
           const [ox, oy] = offsets[enc];
           dots.push({
-            gx: c * SPACING - SPACING,
-            gy: r * SPACING - SPACING,
-            encX: ox * 2.2,
-            encY: oy * 2.2,
-            x: 0,
-            y: 0,
+            gx: c * SPACING - SPACING, gy: r * SPACING - SPACING,
+            encX: ox * 2.2, encY: oy * 2.2,
+            x: 0, y: 0,
             phase: Math.random() * Math.PI * 2,
             isRed: Math.random() < 0.04,
           });
@@ -79,11 +67,9 @@ export default function HeroSection({ dict }: HeroSectionProps) {
       for (const d of dots) {
         d.x = d.gx + d.encX + Math.sin(t * 0.3 + d.phase) * 0.6;
         d.y = d.gy + d.encY + Math.cos(t * 0.25 + d.phase * 0.7) * 0.6;
-        const dx = d.x - mouse.x,
-          dy = d.y - mouse.y;
+        const dx = d.x - mouse.x, dy = d.y - mouse.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        let r = BASE_R,
-          alpha = d.isRed ? 0.7 : 0.45;
+        let r = BASE_R, alpha = d.isRed ? 0.35 : 0.22;
         if (dist < REPEL) {
           const f = 1 - dist / REPEL;
           const ang = Math.atan2(dy, dx);
@@ -119,6 +105,47 @@ export default function HeroSection({ dict }: HeroSectionProps) {
     };
   }, []);
 
+  /* ── 영상 속도 + Fade in/out ── */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // 1.5배 느리게 (재생 속도 = 1/1.5)
+    const SLOW = 1 / 1.5;
+    const FADE_SEC = 1.5; // 페이드 구간 (영상 시간 기준 초)
+
+    const onCanPlay = () => {
+      video.playbackRate = SLOW;
+    };
+
+    const onTimeUpdate = () => {
+      const t = video.currentTime;
+      const dur = video.duration;
+      if (!dur) return;
+
+      if (t < FADE_SEC) {
+        // Fade in
+        setFadeOpacity(t / FADE_SEC);
+      } else if (t > dur - FADE_SEC) {
+        // Fade out
+        setFadeOpacity((dur - t) / FADE_SEC);
+      } else {
+        setFadeOpacity(1);
+      }
+    };
+
+    video.addEventListener("canplay", onCanPlay);
+    video.addEventListener("timeupdate", onTimeUpdate);
+
+    // 이미 로드된 경우 바로 적용
+    if (video.readyState >= 3) video.playbackRate = SLOW;
+
+    return () => {
+      video.removeEventListener("canplay", onCanPlay);
+      video.removeEventListener("timeupdate", onTimeUpdate);
+    };
+  }, []);
+
   return (
     <section
       className="relative w-full bg-black overflow-hidden flex items-end"
@@ -127,6 +154,7 @@ export default function HeroSection({ dict }: HeroSectionProps) {
       {/* Video background */}
       <div className="absolute inset-0 z-[1] bg-black overflow-hidden">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
@@ -145,23 +173,29 @@ export default function HeroSection({ dict }: HeroSectionProps) {
         </video>
       </div>
 
-      {/* Dark overlay */}
+      {/* Fade in/out 오버레이 — 영상 위, 그라데이션 아래 */}
       <div
-        className="absolute inset-0 z-[2] pointer-events-none"
+        className="absolute inset-0 z-[2] pointer-events-none bg-black transition-none"
+        style={{ opacity: 1 - fadeOpacity }}
+      />
+
+      {/* 다크 그라데이션 오버레이 */}
+      <div
+        className="absolute inset-0 z-[3] pointer-events-none"
         style={{
           background:
             "linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 40%, rgba(0,0,0,.45) 75%, rgba(0,0,0,.85) 100%), linear-gradient(to right, rgba(0,0,0,.4) 0%, transparent 60%)",
         }}
       />
 
-      {/* Ncode dot canvas */}
+      {/* Ncode 도트 캔버스 */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full z-[3] pointer-events-none"
-        style={{ opacity: 0.7, mixBlendMode: "screen" }}
+        className="absolute inset-0 w-full h-full z-[4] pointer-events-none"
+        style={{ opacity: 0.35, mixBlendMode: "screen" }}
       />
 
-      {/* Hero text */}
+      {/* 히어로 텍스트 */}
       <div
         className="relative z-[10] flex flex-col justify-end max-w-[700px]"
         style={{ padding: "0 80px 160px" }}
@@ -208,7 +242,7 @@ export default function HeroSection({ dict }: HeroSectionProps) {
         </p>
       </div>
 
-      {/* Bottom strip */}
+      {/* 바텀 스트립 */}
       <div
         className="absolute bottom-0 left-0 right-0 z-[10] flex items-center justify-between"
         style={{
@@ -220,11 +254,7 @@ export default function HeroSection({ dict }: HeroSectionProps) {
         <div>
           <div
             className="font-medium uppercase mb-[5px]"
-            style={{
-              fontSize: "10px",
-              letterSpacing: "2px",
-              color: "rgba(255,255,255,.25)",
-            }}
+            style={{ fontSize: "10px", letterSpacing: "2px", color: "rgba(255,255,255,.25)" }}
           >
             {dict.visionLabel}
           </div>
@@ -249,18 +279,11 @@ export default function HeroSection({ dict }: HeroSectionProps) {
         <div className="flex flex-col items-center gap-2">
           <div
             className="w-px h-12"
-            style={{
-              background:
-                "linear-gradient(to bottom, transparent, rgba(255,255,255,.25))",
-            }}
+            style={{ background: "linear-gradient(to bottom, transparent, rgba(255,255,255,.25))" }}
           />
           <span
             className="uppercase"
-            style={{
-              fontSize: "9px",
-              letterSpacing: "2px",
-              color: "rgba(255,255,255,.2)",
-            }}
+            style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,.2)" }}
           >
             Scroll
           </span>
