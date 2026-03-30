@@ -55,6 +55,44 @@ function resolveRange(preset: string, customStart?: string, customEnd?: string) 
   }
 }
 
+/** 상대 날짜 문자열을 절대 YYYY-MM-DD로 변환 */
+function relativeToAbsolute(dateStr: string): string {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (dateStr === "today") return today.toISOString().slice(0, 10);
+  if (dateStr === "yesterday") {
+    const d = new Date(today);
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().slice(0, 10);
+  }
+  const m = dateStr.match(/^(\d+)daysAgo$/);
+  if (m) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - parseInt(m[1]));
+    return d.toISOString().slice(0, 10);
+  }
+  return dateStr; // 이미 절대 날짜
+}
+
+/** GA가 세션 없는 날을 생략하므로, 전체 기간의 빈 날짜를 0으로 채움 */
+function fillTrendGaps(
+  trend: { date: string; sessions: number; users: number }[],
+  startDate: string,
+  endDate: string
+): { date: string; sessions: number; users: number }[] {
+  const map = new Map(trend.map(t => [t.date, t]));
+  const result: { date: string; sessions: number; users: number }[] = [];
+  const cur = new Date(startDate);
+  const end = new Date(endDate);
+  while (cur <= end) {
+    // GA 날짜 포맷: YYYYMMDD
+    const key = cur.toISOString().slice(0, 10).replace(/-/g, "");
+    result.push(map.get(key) ?? { date: key, sessions: 0, users: 0 });
+    cur.setDate(cur.getDate() + 1);
+  }
+  return result;
+}
+
 /** 기간 일수에 따라 트렌드 차트에 쓸 범위 결정 (최대 90일 일별) */
 function trendRange(preset: string, customStart?: string, customEnd?: string) {
   if (preset === "custom" && customStart && customEnd) {
@@ -167,11 +205,14 @@ export async function GET(request: NextRequest) {
       pct:     totalCountryUsers > 0 ? Math.round(parseInt(r.metricValues[0].value) / totalCountryUsers * 100) : 0,
     }));
 
-    const trend = (trendData.rows || []).map((r: { dimensionValues: { value: string }[]; metricValues: { value: string }[] }) => ({
+    const rawTrend = (trendData.rows || []).map((r: { dimensionValues: { value: string }[]; metricValues: { value: string }[] }) => ({
       date:     r.dimensionValues[0].value,
       sessions: parseInt(r.metricValues[0].value),
       users:    parseInt(r.metricValues[1].value),
     }));
+    const absStart = relativeToAbsolute(chartRange.startDate);
+    const absEnd   = relativeToAbsolute(chartRange.endDate);
+    const trend = fillTrendGaps(rawTrend, absStart, absEnd);
 
     const totalPageViews = (topPagesData.rows || []).reduce(
       (sum: number, r: { metricValues: { value: string }[] }) => sum + parseInt(r.metricValues[0].value), 0
