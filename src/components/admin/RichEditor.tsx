@@ -68,7 +68,7 @@ export default function RichEditor({ value, onChange }: Props) {
   }
 
   return (
-    <div className="rich-editor-container border border-gray-200 rounded-lg overflow-hidden">
+    <div className="rich-editor-container border border-gray-200 rounded-lg">
       {/* Editor area */}
       <div className={tab === "editor" ? "block" : "hidden"}>
         <ReactQuill

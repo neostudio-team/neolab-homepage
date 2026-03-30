@@ -101,6 +101,13 @@ html {
   color: #d1d5db;
   font-style: normal;
 }
+.rich-editor-container .ql-tooltip {
+  white-space: nowrap;
+  left: 0 !important;
+}
+.rich-editor-container .ql-tooltip input[type="text"] {
+  width: 220px;
+}
 
 /* ── Partner logo animation ───────────────────────────────────────────── */
 /* Partner logo animation */
