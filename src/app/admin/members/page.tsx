@@ -42,6 +42,7 @@ export default function AdminMembersPage() {
   const [myLevel, setMyLevel] = useState<number>(99);
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
+  const [showPermModal, setShowPermModal] = useState(false);
 
   async function fetchMembers() {
     setLoading(true);
@@ -133,6 +134,58 @@ export default function AdminMembersPage() {
 
   return (
     <div className="p-8 max-w-7xl">
+      {/* 권한 비교 모달 */}
+      {showPermModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setShowPermModal(false)}>
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-[520px] max-w-[90vw]" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-base font-bold text-gray-800">관리자 권한 비교</h2>
+              <button onClick={() => setShowPermModal(false)} className="text-gray-400 hover:text-gray-600 text-lg leading-none">✕</button>
+            </div>
+            <table className="w-full text-xs border-collapse">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="border border-gray-200 px-4 py-2.5 text-left font-semibold text-gray-600 w-1/2">기능</th>
+                  <th className="border border-gray-200 px-4 py-2.5 text-center font-semibold w-1/4" style={{ color: "#ef4444" }}>최고관리자</th>
+                  <th className="border border-gray-200 px-4 py-2.5 text-center font-semibold w-1/4" style={{ color: "#3b82f6" }}>일반관리자</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {[
+                  ["대시보드 조회", true, true],
+                  ["공지사항 관리", true, true],
+                  ["기업뉴스 관리", true, true],
+                  ["고객지원 관리", true, true],
+                  ["팝업 관리", true, true],
+                  ["회원 목록 조회", true, true],
+                  ["회원 등록", true, false],
+                  ["회원 수정", true, false],
+                  ["회원 삭제", true, false],
+                  ["회원 레벨 변경", true, false],
+                  ["약관 관리", true, false],
+                ].map(([label, admin, normal], i) => (
+                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
+                    <td className="border border-gray-200 px-4 py-2.5 text-gray-700">{label as string}</td>
+                    <td className="border border-gray-200 px-4 py-2.5 text-center">
+                      {admin ? <span className="text-green-500 font-bold text-sm">✓</span> : <span className="text-gray-300 text-sm">—</span>}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2.5 text-center">
+                      {normal ? <span className="text-green-500 font-bold text-sm">✓</span> : <span className="text-gray-300 text-sm">—</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="mt-5 flex justify-end">
+              <button onClick={() => setShowPermModal(false)}
+                className="px-5 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
+                닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 삭제 확인 모달 */}
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
@@ -152,7 +205,18 @@ export default function AdminMembersPage() {
 
       {/* 헤더: 제목 */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-1">회원 관리</h1>
+        <div className="flex items-center gap-2 mb-1">
+          <h1 className="text-2xl font-bold text-gray-800">회원 관리</h1>
+          {myLevel === 1 && (
+            <button
+              onClick={() => setShowPermModal(true)}
+              title="권한 비교 보기"
+              className="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-500 hover:text-gray-700 text-[11px] font-bold flex items-center justify-center transition-colors leading-none"
+            >
+              ?
+            </button>
+          )}
+        </div>
         <p className="text-sm text-gray-400">NeoLAB Convergence 홈페이지 관리자 계정 목록</p>
       </div>
 
