@@ -107,10 +107,11 @@ const ja = {
       viewAll: "すべての製品を見る",
       viewDetail: "詳細を見る",
       items: [
+        { category: "サウンドペン", name: "サウンドペン (PoPPen)", desc: "本を聴く最高の方法。タップするだけで聴けるスマートサウンドペン。", href: "/ja/soundpen", image: "/images/soundpen/Neo_poppen.png" },
         { category: "スマートペン", name: "Neo smartpen M1+", desc: "比類なきパフォーマンス。手書きをリアルタイムでデジタル化するスマートペン。", href: "/ja/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
+        { category: "AI学習デバイス", name: "POKORO", desc: "AI Learning Mate。すべてのデータを一元管理するAI学習アシスタント。", href: "/ja/pokoro", image: "/images/pokoro/Group39.png" },
         { category: "スマートペン", name: "Neo smartpen N2", desc: "高性能スマートペンの新基準。強力な機能と洗練されたデザイン。", href: "/ja/neosmartpen/product-n2", image: "/images/neosmartpen/products/n2/img-copy.png" },
         { category: "スマートペン", name: "LAMY safari Ncode", desc: "世界的名門LAMYとNcode技術の出会い。", href: "/ja/neosmartpen/product-lamy", image: "/images/neosmartpen/products/lamy/lamy.png" },
-        { category: "AI学習デバイス", name: "POKORO", desc: "スマートなクレードル。すべてのデータを一元管理するAI学習アシスタント。", href: "/ja/pokoro", image: "/images/pokoro/Group39.png" },
       ],
     },
     tech: {

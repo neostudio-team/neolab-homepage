@@ -21,82 +21,88 @@ interface ProductsSectionProps {
 
 export default function ProductsSection({ dict }: ProductsSectionProps) {
   return (
-    <section className="bg-white text-[#0a0a0a]" style={{ padding: "100px 80px" }}>
+    <section className="bg-white" style={{ padding: "100px 80px" }}>
       {/* Header */}
-      <div className="flex justify-between items-end mb-14">
-        <div>
-          <div className="inline-flex items-center gap-2.5 mb-5">
-            <div className="w-6 h-0.5 bg-[#E63B2E]" />
-            <span
-              className="font-semibold uppercase text-[#E63B2E]"
-              style={{ fontSize: "11px", letterSpacing: "2.5px" }}
-            >
-              {dict.tag}
-            </span>
-          </div>
+      <div className="flex justify-between items-center mb-14">
+        <div className="flex items-center gap-4">
+          {/* Orange circle accent */}
+          <div
+            className="rounded-full flex-shrink-0"
+            style={{ width: 20, height: 20, background: "#F5A623" }}
+          />
           <h2
-            className="font-bold"
+            className="font-bold text-[#0a0a0a]"
             style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "clamp(32px, 3.2vw, 52px)",
-              letterSpacing: "-1px",
+              fontSize: "clamp(28px, 3vw, 48px)",
+              letterSpacing: "-0.5px",
               lineHeight: 1.1,
-              color: "#0a0a0a",
             }}
           >
-            {dict.title}
+            {dict.tag}
           </h2>
         </div>
         <Link
           href="#"
-          className="flex items-center gap-1.5 font-medium text-[#E63B2E] transition-all hover:gap-3"
-          style={{ fontSize: "13px", letterSpacing: ".3px" }}
+          className="flex items-center gap-1.5 font-medium text-[#0a0a0a] transition-all hover:text-[#F5A623]"
+          style={{ fontSize: "14px", letterSpacing: ".3px" }}
         >
           {dict.viewAll} →
         </Link>
       </div>
 
-      {/* Grid */}
+      {/* Horizontal scroll card row */}
       <div
-        className="grid"
-        style={{ gridTemplateColumns: "repeat(4, 1fr)", gap: "2px" }}
+        className="flex gap-5 overflow-x-auto pb-4"
+        style={{ scrollbarWidth: "none" }}
       >
         {dict.items.map((product, i) => (
           <Link
             key={i}
             href={product.href}
-            className="group bg-[#f5f5f3] overflow-hidden relative block transition-transform duration-300 hover:-translate-y-1"
+            className="group flex-shrink-0 rounded-2xl overflow-hidden relative block transition-transform duration-300 hover:-translate-y-2"
+            style={{
+              background: "#F5F5F5",
+              width: "clamp(200px, 22vw, 280px)",
+              minWidth: 200,
+            }}
           >
-            {/* Image */}
-            <div className="overflow-hidden aspect-[3/4] bg-[#ebebea] flex items-center justify-center">
+            {/* Image area */}
+            <div
+              className="flex items-center justify-center overflow-hidden"
+              style={{
+                background: "#F5F5F5",
+                height: "clamp(180px, 20vw, 260px)",
+                padding: "24px",
+              }}
+            >
               <Image
                 src={product.image}
                 alt={product.name}
-                width={320}
-                height={427}
-                className="w-full h-full object-contain p-8 transition-transform duration-500 group-hover:scale-105"
+                width={240}
+                height={240}
+                className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
               />
             </div>
             {/* Info */}
-            <div className="p-5 pb-6">
+            <div
+              className="p-5"
+              style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}
+            >
               <div
-                className="font-semibold uppercase text-[#E63B2E] mb-1.5"
-                style={{ fontSize: "10px", letterSpacing: "2px" }}
-              >
-                {product.category}
-              </div>
-              <div
-                className="font-bold text-[#0a0a0a] mb-1.5"
-                style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "18px" }}
+                className="font-bold text-[#0a0a0a] mb-1"
+                style={{ fontSize: "17px", letterSpacing: "-0.3px" }}
               >
                 {product.name}
               </div>
-              <p className="text-[#666] leading-[1.6]" style={{ fontSize: "13px" }}>
-                {product.desc}
-              </p>
               <div
-                className="inline-flex items-center gap-2 mt-4 font-semibold text-[#0a0a0a] border-b border-[#0a0a0a] pb-px transition-colors duration-200 group-hover:text-[#E63B2E] group-hover:border-[#E63B2E]"
-                style={{ fontSize: "12px", letterSpacing: ".5px" }}
+                className="text-[#666] leading-[1.5] mb-4"
+                style={{ fontSize: "13px" }}
+              >
+                {product.desc}
+              </div>
+              <div
+                className="inline-flex items-center gap-2 font-semibold text-[#0a0a0a] border-b border-[#0a0a0a] pb-px transition-colors duration-200 group-hover:text-[#F5A623] group-hover:border-[#F5A623]"
+                style={{ fontSize: "12px", letterSpacing: ".3px" }}
               >
                 {dict.viewDetail} →
               </div>

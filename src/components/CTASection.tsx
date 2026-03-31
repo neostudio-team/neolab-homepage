@@ -11,35 +11,44 @@ interface CTASectionProps {
 
 export default function CTASection({ dict }: CTASectionProps) {
   return (
-    <section className="bg-[#E63B2E] text-white px-[80px] py-[100px] grid grid-cols-[1fr_auto] items-center gap-[80px]">
-      <div>
+    <section
+      className="relative overflow-hidden"
+      style={{ background: "#F5A623" }}
+    >
+      {/* Main CTA band */}
+      <div
+        className="flex items-center justify-between"
+        style={{ padding: "80px 80px" }}
+      >
+        {/* Left: headline */}
         <h2
-          className="font-bold leading-[1.05] text-white"
+          className="font-bold text-white"
           style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "clamp(36px, 4vw, 64px)",
-            letterSpacing: "-1.5px",
+            fontSize: "clamp(36px, 4.5vw, 68px)",
+            letterSpacing: "-2px",
+            lineHeight: 1.05,
             whiteSpace: "pre-line",
           }}
         >
           {dict.title}
         </h2>
-        <p className="font-light mt-3 text-[15px] text-white/65">
-          {dict.subtitle}
-        </p>
-      </div>
-      <div className="flex flex-col gap-3.5 items-end">
+
+        {/* Right: circular contact button */}
         <Link
           href="mailto:biz@neolab.net"
-          className="inline-flex items-center gap-2.5 font-bold whitespace-nowrap text-[13px] tracking-[.5px] px-9 py-4 bg-white text-[#E63B2E] hover:bg-[#0a0a0a] hover:text-white transition-colors"
+          className="flex-shrink-0 flex flex-col items-center justify-center text-white font-bold text-center transition-all hover:bg-white hover:text-[#F5A623]"
+          style={{
+            width: "clamp(140px, 14vw, 200px)",
+            height: "clamp(140px, 14vw, 200px)",
+            borderRadius: "50%",
+            border: "2px solid rgba(255,255,255,0.8)",
+            fontSize: "clamp(13px, 1.2vw, 16px)",
+            letterSpacing: ".3px",
+            padding: "20px",
+          }}
         >
-          {dict.button}
-        </Link>
-        <Link
-          href="/partnership"
-          className="inline-flex items-center gap-2 font-medium whitespace-nowrap text-[13px] px-8 py-[15px] border border-white/35 text-white/70 hover:border-white hover:text-white transition-colors"
-        >
-          {dict.secondButton}
+          <span className="leading-tight">{dict.button.replace(" →", "")}</span>
+          <span style={{ fontSize: "1.4em", marginTop: 4 }}>→</span>
         </Link>
       </div>
     </section>

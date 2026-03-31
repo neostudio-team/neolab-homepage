@@ -52,32 +52,32 @@ function StatCard({ item }: { item: StatItem }) {
   return (
     <div
       ref={ref}
-      className="relative overflow-hidden text-center group"
+      className="flex flex-col items-start"
       style={{
-        background: "#f7f7f5",
-        padding: "48px 40px",
-        borderLeft: "1px solid rgba(0,0,0,.06)",
+        border: "1px solid #DDDDDD",
+        borderRadius: "50px",
+        padding: "40px 48px",
+        background: "#fff",
       }}
     >
+      {/* Label */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#E63B2E] origin-left transition-transform duration-500 scale-x-0 group-hover:scale-x-100"
-      />
-      <div
-        className="font-medium uppercase mb-4"
+        className="font-medium mb-4"
         style={{
-          fontSize: "11px",
-          letterSpacing: "2px",
-          color: "rgba(0,0,0,.35)",
+          fontSize: "12px",
+          letterSpacing: "1.5px",
+          color: "rgba(0,0,0,0.4)",
+          textTransform: "uppercase",
         }}
       >
         {item.label}
       </div>
-      <div className="flex items-end justify-center gap-1">
+      {/* Big number + unit */}
+      <div className="flex items-end gap-1 mb-2">
         <span
           className="font-bold leading-none"
           style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "clamp(40px, 5vw, 72px)",
+            fontSize: "clamp(44px, 5vw, 72px)",
             letterSpacing: "-2px",
             color: "#0a0a0a",
           }}
@@ -85,19 +85,20 @@ function StatCard({ item }: { item: StatItem }) {
           {count}
         </span>
         <span
-          className="font-normal mb-1"
+          className="font-semibold mb-1"
           style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "24px",
-            color: "rgba(0,0,0,.3)",
+            fontSize: "clamp(18px, 2vw, 26px)",
+            color: "#0a0a0a",
+            letterSpacing: "-0.5px",
           }}
         >
           {item.unit}
         </span>
       </div>
+      {/* Desc */}
       <div
-        className="mt-3 leading-[1.5]"
-        style={{ fontSize: "12px", color: "rgba(0,0,0,.35)" }}
+        className="leading-[1.5]"
+        style={{ fontSize: "13px", color: "rgba(0,0,0,0.4)" }}
       >
         {item.desc}
       </div>
@@ -105,51 +106,69 @@ function StatCard({ item }: { item: StatItem }) {
   );
 }
 
+// Vertical stripe background pattern
+function VerticalStripes() {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        backgroundImage: `repeating-linear-gradient(
+          to right,
+          rgba(0,0,0,0.035) 0px,
+          rgba(0,0,0,0.035) 1px,
+          transparent 1px,
+          transparent 60px
+        )`,
+      }}
+    />
+  );
+}
+
 export default function StatsSection({ dict }: StatsSectionProps) {
   return (
     <section
-      className="bg-white text-[#0a0a0a]"
-      style={{ padding: "80px 80px 0", borderTop: "1px solid rgba(0,0,0,.06)" }}
+      className="relative bg-white text-[#0a0a0a] overflow-hidden"
+      style={{ padding: "100px 80px" }}
     >
-      <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2.5 mb-5">
-          <div className="w-6 h-0.5 bg-[#E63B2E]" />
-          <span
-            className="font-semibold uppercase text-[#E63B2E]"
-            style={{ fontSize: "11px", letterSpacing: "2.5px" }}
-          >
-            {dict.tag}
-          </span>
-        </div>
-        <h2
-          className="font-bold mx-auto"
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "clamp(32px, 3.2vw, 52px)",
-            letterSpacing: "-1px",
-            lineHeight: 1.1,
-            color: "#0a0a0a",
-          }}
-        >
-          {dict.title}
-        </h2>
-        <p
-          className="font-light mx-auto mt-3.5"
-          style={{ fontSize: "15px", color: "rgba(0,0,0,.4)", maxWidth: "520px" }}
-        >
-          {dict.subtitle}
-        </p>
-      </div>
+      <VerticalStripes />
 
-      <div
-        className="grid"
-        style={{ gridTemplateColumns: "repeat(4, 1fr)", gap: "2px" }}
-      >
-        {dict.items.map((item, i) => (
-          <div key={i} style={i === 0 ? { borderLeft: "none" } : {}}>
-            <StatCard item={item} />
-          </div>
-        ))}
+      <div className="relative grid items-center" style={{ gridTemplateColumns: "1fr 1fr", gap: "80px" }}>
+        {/* Left: title */}
+        <div>
+          <h2
+            className="font-bold"
+            style={{
+              fontSize: "clamp(32px, 3.5vw, 56px)",
+              letterSpacing: "-1.5px",
+              lineHeight: 1.15,
+              color: "#0a0a0a",
+              whiteSpace: "pre-line",
+            }}
+          >
+            {dict.title}
+          </h2>
+          <p
+            className="mt-5 font-light"
+            style={{
+              fontSize: "15px",
+              color: "rgba(0,0,0,0.45)",
+              lineHeight: 1.7,
+            }}
+          >
+            {dict.subtitle}
+          </p>
+        </div>
+
+        {/* Right: 2x2 grid of pill stat boxes */}
+        <div
+          className="grid"
+          style={{ gridTemplateColumns: "1fr 1fr", gap: "16px" }}
+        >
+          {dict.items.map((item, i) => (
+            <StatCard key={i} item={item} />
+          ))}
+        </div>
       </div>
     </section>
   );
