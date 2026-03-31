@@ -103,15 +103,11 @@ const ja = {
     },
     products: {
       tag: "Our Products",
-      title: "製品ラインナップ",
-      viewAll: "すべての製品を見る",
-      viewDetail: "詳細を見る",
       items: [
-        { category: "サウンドペン", name: "サウンドペン (PoPPen)", desc: "本を聴く最高の方法。タップするだけで聴けるスマートサウンドペン。", href: "/ja/soundpen", image: "/images/soundpen/Neo_poppen.png" },
-        { category: "スマートペン", name: "Neo smartpen M1+", desc: "比類なきパフォーマンス。手書きをリアルタイムでデジタル化するスマートペン。", href: "/ja/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
-        { category: "AI学習デバイス", name: "POKORO", desc: "AI Learning Mate。すべてのデータを一元管理するAI学習アシスタント。", href: "/ja/pokoro", image: "/images/pokoro/Group39.png" },
-        { category: "スマートペン", name: "Neo smartpen N2", desc: "高性能スマートペンの新基準。強力な機能と洗練されたデザイン。", href: "/ja/neosmartpen/product-n2", image: "/images/neosmartpen/products/n2/img-copy.png" },
-        { category: "スマートペン", name: "LAMY safari Ncode", desc: "世界的名門LAMYとNcode技術の出会い。", href: "/ja/neosmartpen/product-lamy", image: "/images/neosmartpen/products/lamy/lamy.png" },
+        { name: "サウンドペン", desc: "本を聴く最高の方法", href: "/ja/soundpen", image: "/images/soundpen/Neo_poppen.png" },
+        { name: "Neo Smartpen", desc: "比類なきパフォーマンス", href: "/ja/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
+        { name: "POKORO", desc: "AI Learning Mate", href: "/ja/pokoro", image: "/images/pokoro/Group39.png" },
+        { name: "Service", desc: "AiGLE AIサービス", href: "https://aigle.neolab.net", image: "/images/home/aigle-service.jpg" },
       ],
     },
     tech: {

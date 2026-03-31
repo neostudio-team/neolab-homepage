@@ -97,15 +97,11 @@ const en = {
     },
     products: {
       tag: "Our Products",
-      title: "Product Lineup",
-      viewAll: "View All Products",
-      viewDetail: "Learn More",
       items: [
-        { category: "Sound Pen", name: "Sound Pen (PoPPen)", desc: "The best way to listen to books. Tap and hear — the smart sound pen.", href: "/en/soundpen", image: "/images/soundpen/Neo_poppen.png" },
-        { category: "Smartpen", name: "Neo smartpen M1+", desc: "Unparalleled performance. A smartpen that digitizes your handwriting in real time.", href: "/en/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
-        { category: "AI Learning Device", name: "POKORO", desc: "AI Learning Mate. An AI learning assistant that manages all your data in one place.", href: "/en/pokoro", image: "/images/pokoro/Group39.png" },
-        { category: "Smartpen", name: "Neo smartpen N2", desc: "A new standard in high-performance smartpens. Powerful features with a refined design.", href: "/en/neosmartpen/product-n2", image: "/images/neosmartpen/products/n2/img-copy.png" },
-        { category: "Smartpen", name: "LAMY safari Ncode", desc: "Where the world-renowned LAMY pen meets Ncode technology.", href: "/en/neosmartpen/product-lamy", image: "/images/neosmartpen/products/lamy/lamy.png" },
+        { name: "Sound Pen", desc: "The best way to listen to books", href: "/en/soundpen", image: "/images/soundpen/Neo_poppen.png" },
+        { name: "Neo Smartpen", desc: "Unparalleled performance", href: "/en/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
+        { name: "POKORO", desc: "AI Learning Mate", href: "/en/pokoro", image: "/images/pokoro/Group39.png" },
+        { name: "Service", desc: "AiGLE AI Grading Service", href: "https://aigle.neolab.net", image: "/images/home/aigle-service.jpg" },
       ],
     },
     tech: {

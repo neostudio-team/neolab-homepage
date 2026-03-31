@@ -98,15 +98,11 @@ const ko = {
     },
     products: {
       tag: "Our Products",
-      title: "제품 라인업",
-      viewAll: "전체 제품 보기",
-      viewDetail: "자세히 보기",
       items: [
-        { category: "소리펜", name: "소리펜 (팝펜)", desc: "책을 듣는 가장 훌륭한 방법. 콕 찍으면 바로 들리는 스마트 소리펜.", href: "/ko/soundpen", image: "/images/soundpen/Neo_poppen.png" },
-        { category: "스마트펜", name: "네오스마트펜 M1+", desc: "더할 나위 없는 퍼포먼스. 필기를 실시간으로 디지털화하는 스마트펜.", href: "/ko/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
-        { category: "AI 교육기기", name: "POKORO", desc: "AI Learning Mate. 데이터를 한번에 관리하는 AI 학습 도우미.", href: "/ko/pokoro", image: "/images/pokoro/Group39.png" },
-        { category: "스마트펜", name: "네오스마트펜 N2", desc: "고성능 스마트펜의 새로운 기준. 강력한 기능과 세련된 디자인.", href: "/ko/neosmartpen/product-n2", image: "/images/neosmartpen/products/n2/img-copy.png" },
-        { category: "스마트펜", name: "LAMY safari Ncode", desc: "세계적인 명품 펜 LAMY와 Ncode 기술의 만남.", href: "/ko/neosmartpen/product-lamy", image: "/images/neosmartpen/products/lamy/lamy.png" },
+        { name: "소리펜", desc: "책을 듣는 가장 훌륭한 방법", href: "/ko/soundpen", image: "/images/soundpen/Neo_poppen.png" },
+        { name: "네오스마트펜", desc: "더할 나위 없는 퍼포먼스", href: "/ko/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
+        { name: "POKORO", desc: "AI Learning Mate", href: "/ko/pokoro", image: "/images/pokoro/Group39.png" },
+        { name: "Service", desc: "아이글 AI 채점 서비스", href: "https://aigle.neolab.net", image: "/images/home/aigle-service.jpg" },
       ],
     },
     tech: {
