@@ -100,6 +100,79 @@ const ja = {
       visionTitle: "Moving from Analog to Digital",
       visionDesc: "物理世界とデジタル世界をつなぐゲートウェイ",
     },
+    products: {
+      tag: "Our Products",
+      title: "製品ラインナップ",
+      viewAll: "すべての製品を見る",
+      viewDetail: "詳細を見る",
+      items: [
+        { category: "スマートペン", name: "Neo smartpen M1+", desc: "比類なきパフォーマンス。手書きをリアルタイムでデジタル化するスマートペン。", href: "/ja/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
+        { category: "スマートペン", name: "Neo smartpen N2", desc: "高性能スマートペンの新基準。強力な機能と洗練されたデザイン。", href: "/ja/neosmartpen/product-n2", image: "/images/neosmartpen/products/n2/img-copy.png" },
+        { category: "スマートペン", name: "LAMY safari Ncode", desc: "世界的名門LAMYとNcode技術の出会い。", href: "/ja/neosmartpen/product-lamy", image: "/images/neosmartpen/products/lamy/lamy.png" },
+        { category: "AI学習デバイス", name: "POKORO", desc: "スマートなクレードル。すべてのデータを一元管理するAI学習アシスタント。", href: "/ja/pokoro", image: "/images/pokoro/Group39.png" },
+      ],
+    },
+    tech: {
+      tag: "Technology",
+      title: "あらゆる平面を\nデジタル化できる技術",
+      subtitle: "Ncode™はすべての平面に固有のデジタルアドレスを付与します。\nアナログ情報が即座にデジタル世界とつながります。",
+      learnMore: "詳細を見る",
+      items: [
+        { title: "Digitalization", description: "Ncode™マイクロドットパターンにより、2mm²以内の精度で位置を認識します。あらゆる紙がスマートなデジタルインターフェースに変換されます。" },
+        { title: "Engagement", description: "自然な筆記動作のままソフトウェアと連携します。ユーザーとコンテンツの間で最も直感的なインターフェースを提供します。" },
+        { title: "Integration", description: "PowerPoint、Word、Excelなど多様なソフトウェアとスムーズに連携。標準化されたデータフォーマットでAIとの連携も容易です。" },
+        { title: "Scalability", description: "76カ国で実証された拡張性。教育、文具、エンタープライズなど多様な産業分野に展開可能なB2Bソリューションです。" },
+      ],
+    },
+    business: {
+      tag: "Business",
+      title: "ビジネスとの連携",
+      learnMore: "詳細を見る",
+      tabs: [
+        {
+          id: "study", label: "Smart Study", badge: "Smart Study",
+          title: "真の融合と\n効率的な教育",
+          description: "AIとデジタルの力で学習への興味を引き出し、段階的な学習を可能にします。NeoLABは集中して学習できるソリューションを提供しています。",
+          cases: [
+            { label: "Megastudy — Smart Mbest", href: "https://www.mbest.co.kr/" },
+            { label: "Kyowon Kumon — Smart Kumon", href: "https://www.kumon.co.kr/" },
+            { label: "Hybe Edu — Learn Korean with BTS", href: "https://weverseshop.io/" },
+          ],
+          image: "/images/home/connect1-edu.png", imageAlt: "Smart Study",
+        },
+        {
+          id: "digital", label: "Digital Transform", badge: "Digital Transform",
+          title: "文具産業の\n新たな出発点",
+          description: "紙とペンを基盤とする文具事業のデジタルトランスフォームを支援します。ブランド固有のアナログDNAをデジタルと自然につなぐソリューションを提供します。",
+          cases: [
+            { label: "LAMY — Safari Ncodeエディション", href: "https://shop.lamy.com/" },
+            { label: "Moleskine — スマートダイアリー", href: "https://www.moleskine.com/" },
+            { label: "MONAMI — デジタル文具コラボ", href: "#" },
+          ],
+          image: "/images/home/connect2-stationery.png", imageAlt: "Digital Transform",
+        },
+        {
+          id: "doc", label: "Document Mgmt", badge: "Document Mgmt",
+          title: "スマートな\n文書管理システム",
+          description: "手書き文書を即座にデジタル化してクラウドに保存。企業の文書管理プロセスを革新するB2Bソリューションを提供します。",
+          cases: [
+            { label: "LG Chem — 現場文書デジタル化", href: "#" },
+            { label: "INFORM DS — 医療処方箋ソリューション", href: "#" },
+          ],
+          image: "/images/home/connect3-form.png", imageAlt: "Document Management",
+        },
+        {
+          id: "collab", label: "Collaboration", badge: "Collaboration",
+          title: "アナログ感覚の\nデジタルコラボ",
+          description: "会議室のホワイトボードやノート筆記をデジタルチームワークスペースと同期。リモート・ハイブリッド環境でも自然なコラボレーションが可能です。",
+          cases: [
+            { label: "Gridaboard — リアルタイム協働ホワイトボード", href: "https://gridaboard.io/" },
+            { label: "Neo studio — クラウド筆記同期", href: "#" },
+          ],
+          image: "/images/home/connect4-collab.png", imageAlt: "Collaboration",
+        },
+      ],
+    },
     digitalAnalog: {
       title: "デジタル世界、新しいアナログとの出会い",
       naturalInterface: "Natural Interface",

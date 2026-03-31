@@ -94,6 +94,79 @@ const en = {
       visionTitle: "Moving from Analog to Digital",
       visionDesc: "A gateway bridging the physical and virtual worlds",
     },
+    products: {
+      tag: "Our Products",
+      title: "Product Lineup",
+      viewAll: "View All Products",
+      viewDetail: "Learn More",
+      items: [
+        { category: "Smartpen", name: "Neo smartpen M1+", desc: "Unparalleled performance. A smartpen that digitizes your handwriting in real time.", href: "/en/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
+        { category: "Smartpen", name: "Neo smartpen N2", desc: "A new standard in high-performance smartpens. Powerful features with a refined design.", href: "/en/neosmartpen/product-n2", image: "/images/neosmartpen/products/n2/img-copy.png" },
+        { category: "Smartpen", name: "LAMY safari Ncode", desc: "Where the world-renowned LAMY pen meets Ncode technology.", href: "/en/neosmartpen/product-lamy", image: "/images/neosmartpen/products/lamy/lamy.png" },
+        { category: "AI Learning Device", name: "POKORO", desc: "Your smart cradle. An AI learning assistant that manages all your data in one place.", href: "/en/pokoro", image: "/images/pokoro/Group39.png" },
+      ],
+    },
+    tech: {
+      tag: "Technology",
+      title: "Technology that digitizes\nany surface",
+      subtitle: "Ncode™ assigns a unique digital address to every surface.\nAnalog information connects instantly to the digital world.",
+      learnMore: "Learn more",
+      items: [
+        { title: "Digitalization", description: "Ncode™ micro-dot patterns recognize position within 2mm² accuracy. Any paper can be transformed into a smart digital interface." },
+        { title: "Engagement", description: "Connects seamlessly to software with natural handwriting motions. Provides the most intuitive interface between users and content." },
+        { title: "Integration", description: "Works smoothly with PowerPoint, Word, Excel and many more. Standardized data formats make AI integration easy." },
+        { title: "Scalability", description: "Proven scalability deployed in 76 countries. A B2B solution expandable across education, stationery, and enterprise sectors." },
+      ],
+    },
+    business: {
+      tag: "Business",
+      title: "Connect with Businesses",
+      learnMore: "Learn more",
+      tabs: [
+        {
+          id: "study", label: "Smart Study", badge: "Smart Study",
+          title: "True Convergence &\nEfficient Education",
+          description: "With the help of AI and digital tools, we inspire interest in learning and enable step-by-step education. NeoLAB provides solutions to help students focus and study effectively.",
+          cases: [
+            { label: "Megastudy — Smart Mbest", href: "https://www.mbest.co.kr/" },
+            { label: "Kyowon Kumon — Smart Kumon", href: "https://www.kumon.co.kr/" },
+            { label: "Hybe Edu — Learn Korean with BTS", href: "https://weverseshop.io/" },
+          ],
+          image: "/images/home/connect1-edu.png", imageAlt: "Smart Study",
+        },
+        {
+          id: "digital", label: "Digital Transform", badge: "Digital Transform",
+          title: "A New Starting Point\nfor Stationery",
+          description: "We help stationery businesses undergo digital transformation. NeoLAB provides solutions to naturally connect a brand's unique analog DNA to the digital world.",
+          cases: [
+            { label: "LAMY — Safari Ncode Edition", href: "https://shop.lamy.com/" },
+            { label: "Moleskine — Smart Diary", href: "https://www.moleskine.com/" },
+            { label: "MONAMI — Digital Stationery", href: "#" },
+          ],
+          image: "/images/home/connect2-stationery.png", imageAlt: "Digital Transform",
+        },
+        {
+          id: "doc", label: "Document Mgmt", badge: "Document Mgmt",
+          title: "Smart Document\nManagement System",
+          description: "Instantly digitize handwritten documents and store them in the cloud. We offer B2B solutions that revolutionize corporate document management processes.",
+          cases: [
+            { label: "LG Chem — Field Document Digitization", href: "#" },
+            { label: "INFORM DS — Medical Prescription Solution", href: "#" },
+          ],
+          image: "/images/home/connect3-form.png", imageAlt: "Document Management",
+        },
+        {
+          id: "collab", label: "Collaboration", badge: "Collaboration",
+          title: "Analog-feel\nDigital Collaboration",
+          description: "Sync whiteboard sessions and note-taking directly with your digital team workspace. Natural collaboration is possible even in remote and hybrid work environments.",
+          cases: [
+            { label: "Gridaboard — Real-time Collaborative Whiteboard", href: "https://gridaboard.io/" },
+            { label: "Neo studio — Cloud Handwriting Sync", href: "#" },
+          ],
+          image: "/images/home/connect4-collab.png", imageAlt: "Collaboration",
+        },
+      ],
+    },
     digitalAnalog: {
       title: "The Digital World Meets a Smart Analog",
       naturalInterface: "Natural Interface",

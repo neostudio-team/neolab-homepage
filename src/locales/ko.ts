@@ -95,6 +95,79 @@ const ko = {
       visionTitle: "Moving from Analog to Digital",
       visionDesc: "물리 세상과 가상 세계를 연결하는 게이트웨이",
     },
+    products: {
+      tag: "Our Products",
+      title: "제품 라인업",
+      viewAll: "전체 제품 보기",
+      viewDetail: "자세히 보기",
+      items: [
+        { category: "스마트펜", name: "네오스마트펜 M1+", desc: "더할 나위 없는 퍼포먼스. 필기를 실시간으로 디지털화하는 스마트펜.", href: "/ko/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
+        { category: "스마트펜", name: "네오스마트펜 N2", desc: "고성능 스마트펜의 새로운 기준. 강력한 기능과 세련된 디자인.", href: "/ko/neosmartpen/product-n2", image: "/images/neosmartpen/products/n2/img-copy.png" },
+        { category: "스마트펜", name: "LAMY safari Ncode", desc: "세계적인 명품 펜 LAMY와 Ncode 기술의 만남.", href: "/ko/neosmartpen/product-lamy", image: "/images/neosmartpen/products/lamy/lamy.png" },
+        { category: "AI 교육기기", name: "POKORO", desc: "똑똑한 우리 크래들. 데이터를 한번에 관리하는 AI 학습 도우미.", href: "/ko/pokoro", image: "/images/pokoro/Group39.png" },
+      ],
+    },
+    tech: {
+      tag: "Technology",
+      title: "어떠한 평면이라도\n디지털화 할 수 있는 기술",
+      subtitle: "Ncode™ 기술을 통해 모든 평면에 고유한 디지털 주소를 부여합니다.\n아날로그 정보가 즉시 디지털 세계로 연결됩니다.",
+      learnMore: "더 알아보기",
+      items: [
+        { title: "Digitalization", description: "Ncode™ 마이크로 도트 패턴으로 2mm² 이내의 정밀도로 위치를 인식합니다. 어떤 종이도 스마트한 디지털 인터페이스로 변환됩니다." },
+        { title: "Engagement", description: "자연스러운 필기 동작 그대로 소프트웨어와 연결됩니다. 사용자와 콘텐츠 사이의 가장 직관적인 인터페이스를 제공합니다." },
+        { title: "Integration", description: "PowerPoint, Word, Excel 등 다양한 소프트웨어와 원활하게 연동됩니다. 표준화된 데이터 포맷으로 AI와의 접목도 손쉽게 가능합니다." },
+        { title: "Scalability", description: "전 세계 76개국에서 활용 중인 검증된 확장성. 교육, 문구, 엔터프라이즈 등 다양한 산업 분야로 확장 가능한 B2B 솔루션입니다." },
+      ],
+    },
+    business: {
+      tag: "Business",
+      title: "비즈니스와의 연결",
+      learnMore: "더 알아보기",
+      tabs: [
+        {
+          id: "study", label: "Smart Study", badge: "Smart Study",
+          title: "진정한 융합과\n효율적 교육",
+          description: "AI와 디지털의 도움으로 학습에 흥미를 유발하고, 단계별 학습이 가능하게 되었습니다. 네오랩컨버전스는 제대로 집중해서 공부할 수 있는 솔루션을 제공하고 있습니다.",
+          cases: [
+            { label: "메가스터디 중등 — 스마트 엠베스트", href: "https://www.mbest.co.kr/" },
+            { label: "교원 구몬 — 스마트 구몬", href: "https://www.kumon.co.kr/" },
+            { label: "하이브 에듀 — Learn Korean with BTS", href: "https://weverseshop.io/" },
+          ],
+          image: "/images/home/connect1-edu.png", imageAlt: "Smart Study",
+        },
+        {
+          id: "digital", label: "Digital Transform", badge: "Digital Transform",
+          title: "문구산업의\n새로운 출발점",
+          description: "전통적인 지류와 펜을 기반으로 하는 문구 사업의 디지털 트랜스폼을 도와줍니다. 고유의 감성적인 DNA를 자연스럽게 디지털과 연결합니다.",
+          cases: [
+            { label: "LAMY — 라미 사파리 Ncode 에디션", href: "https://shop.lamy.com/" },
+            { label: "Moleskine — 스마트 다이어리", href: "https://www.moleskine.com/" },
+            { label: "모나미 — 디지털 문구 협업", href: "#" },
+          ],
+          image: "/images/home/connect2-stationery.png", imageAlt: "Digital Transform",
+        },
+        {
+          id: "doc", label: "Document Mgmt", badge: "Document Mgmt",
+          title: "스마트한\n문서 관리 시스템",
+          description: "손으로 작성한 문서를 즉시 디지털화하고 클라우드에 저장합니다. 기업의 문서 관리 프로세스를 혁신하는 B2B 솔루션을 제공합니다.",
+          cases: [
+            { label: "LG화학 — 현장 문서 디지털화", href: "#" },
+            { label: "INFORM DS — 의료 처방전 솔루션", href: "#" },
+          ],
+          image: "/images/home/connect3-form.png", imageAlt: "Document Management",
+        },
+        {
+          id: "collab", label: "Collaboration", badge: "Collaboration",
+          title: "아날로그 감성의\n디지털 협업",
+          description: "회의실의 화이트보드, 노트 필기를 그대로 디지털 팀 워크스페이스와 동기화합니다. 원격/하이브리드 업무 환경에서도 자연스러운 협업이 가능합니다.",
+          cases: [
+            { label: "그리다보드 — 실시간 협업 화이트보드", href: "https://gridaboard.io/" },
+            { label: "네오스튜디오 — 클라우드 필기 동기화", href: "#" },
+          ],
+          image: "/images/home/connect4-collab.png", imageAlt: "Collaboration",
+        },
+      ],
+    },
     digitalAnalog: {
       title: "디지털 세상, 새로운 아날로그를 만나다",
       naturalInterface: "Natural Interface",
