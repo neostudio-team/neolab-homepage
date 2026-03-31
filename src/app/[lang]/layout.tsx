@@ -10,13 +10,30 @@ const openSans = Open_Sans({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Home - NeoLAB Convergence Inc.",
-  description: "A Gateway Bridging the Physical and Virtual Worlds. We help you turn handwritten notes, paper documents, and real-world inputs into digital data easily and accurately.",
-  icons: {
-    icon: "/favicon.ico",
-  },
+const siteTitle: Record<string, string> = {
+  ko: "NeoLab Convergence",
+  en: "NeoLab Convergence",
+  ja: "NeoLab Convergence",
 };
+
+const siteDescription: Record<string, string> = {
+  ko: "아날로그와 디지털을 잇는 네오랩 컨버전스입니다.",
+  en: "A Gateway Bridging the Physical and Virtual Worlds.",
+  ja: "アナログとデジタルをつなぐNeoLab Convergenceです。",
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return {
+    title: siteTitle[lang] ?? "NeoLab Convergence",
+    description: siteDescription[lang] ?? siteDescription.en,
+    icons: { icon: "/favicon.ico" },
+  };
+}
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
