@@ -45,6 +45,7 @@ const en = {
       inquiry: "Inquiry/Bulk Purchase",
 
       career: "Career",
+      customerSupport: "Customer Support",
     },
     footer: {
       links: "Links",

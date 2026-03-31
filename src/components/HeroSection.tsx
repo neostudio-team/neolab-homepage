@@ -11,6 +11,7 @@ interface HeroSectionProps {
   };
 }
 
+
 export default function HeroSection({ dict }: HeroSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -210,16 +211,15 @@ export default function HeroSection({ dict }: HeroSectionProps) {
           </span>
         </div>
         <h1
-          className="font-bold text-white mb-5"
+          className="font-bold text-white"
           style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: "clamp(52px, 5.6vw, 100px)",
-            lineHeight: 0.96,
+            fontSize: "clamp(40px, 4.8vw, 88px)",
+            lineHeight: 1.05,
             letterSpacing: "-2px",
           }}
         >
-          Write the
-          <br />
+          Write the{" "}
           <em
             style={{
               fontStyle: "italic",
@@ -230,64 +230,24 @@ export default function HeroSection({ dict }: HeroSectionProps) {
             Future,
           </em>
           <br />
-          Connect the
-          <br />
-          World.
+          Connect the World.
         </h1>
-        <p
-          className="font-light leading-[1.7]"
-          style={{ fontSize: "16px", color: "rgba(255,255,255,.65)" }}
-        >
-          {dict.subtitle}
-        </p>
       </div>
 
-      {/* 바텀 스트립 */}
+      {/* 스크롤 인디케이터 */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-[10] flex items-center justify-between"
-        style={{
-          padding: "24px 80px",
-          borderTop: "1px solid rgba(255,255,255,.1)",
-          background: "linear-gradient(to top, rgba(0,0,0,.7), transparent)",
-        }}
+        className="absolute bottom-8 right-[80px] z-[10] flex flex-col items-center gap-2"
       >
-        <div>
-          <div
-            className="font-medium uppercase mb-[5px]"
-            style={{ fontSize: "10px", letterSpacing: "2px", color: "rgba(255,255,255,.25)" }}
-          >
-            {dict.visionLabel}
-          </div>
-          <div
-            className="font-bold"
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "clamp(20px, 2.2vw, 32px)",
-              letterSpacing: "-0.5px",
-              color: "rgba(255,255,255,.5)",
-            }}
-          >
-            {dict.visionTitle}
-          </div>
-          <div
-            className="font-light mt-1.5"
-            style={{ fontSize: "13px", color: "rgba(255,255,255,.3)" }}
-          >
-            {dict.visionDesc}
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <div
-            className="w-px h-12"
-            style={{ background: "linear-gradient(to bottom, transparent, rgba(255,255,255,.25))" }}
-          />
-          <span
-            className="uppercase"
-            style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,.2)" }}
-          >
-            Scroll
-          </span>
-        </div>
+        <div
+          className="w-px h-12"
+          style={{ background: "linear-gradient(to bottom, transparent, rgba(255,255,255,.25))" }}
+        />
+        <span
+          className="uppercase"
+          style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,.2)" }}
+        >
+          Scroll
+        </span>
       </div>
     </section>
   );

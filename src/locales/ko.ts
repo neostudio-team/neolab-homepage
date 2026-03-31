@@ -46,6 +46,7 @@ const ko = {
       inquiry: "제휴/대량구매 문의",
 
       career: "채용정보",
+      customerSupport: "고객지원",
     },
     footer: {
       links: "바로가기",

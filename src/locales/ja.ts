@@ -50,6 +50,7 @@ const ja = {
       inquiry: "お問い合わせ/大口購入",
 
       career: "採用情報",
+      customerSupport: "カスタマーサポート",
     },
     footer: {
       ...en.common.footer,

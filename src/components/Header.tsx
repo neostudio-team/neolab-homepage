@@ -63,6 +63,7 @@ interface HeaderProps {
     inquiry: string;
 
     career: string;
+    customerSupport: string;
   };
 }
 
@@ -137,6 +138,10 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       label: dict.career,
       href: "https://neolab.career.greetinghr.com/ko/intro",
       external: true,
+    }] : []),
+    ...(lang === "ko" ? [{
+      label: dict.customerSupport,
+      href: `/${lang}/customer`,
     }] : []),
   ];
 }
