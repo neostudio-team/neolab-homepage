@@ -26,7 +26,7 @@ export default function TechSection({ dict }: TechSectionProps) {
         {/* See more 버튼 — 이미지 위에 실제 버튼으로 덮어씌움 */}
         <div
           className="absolute left-1/2 -translate-x-1/2"
-          style={{ bottom: "6.5%" }}
+          style={{ top: "41%" }}
         >
           <Link
             href="/ko/technology"
