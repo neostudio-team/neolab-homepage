@@ -23,10 +23,10 @@ export default function TechSection({ dict }: TechSectionProps) {
           priority={false}
         />
 
-        {/* See more 버튼 — 이미지 위에 실제 버튼으로 덮어씌움 */}
+        {/* See more 버튼 — 이미지 원본 버튼 위치(top 34.93%, center)에 정확히 오버레이 */}
         <div
-          className="absolute left-1/2 -translate-x-1/2"
-          style={{ top: "41%" }}
+          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{ top: "34.93%" }}
         >
           <Link
             href="/ko/technology"
