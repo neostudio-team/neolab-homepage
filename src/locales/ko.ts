@@ -138,11 +138,11 @@ const ko = {
           title: "문구산업의\n새로운 출발점",
           description: "전통적인 지류와 펜을 기반으로 하는 문구 사업의 디지털 트랜스폼을 도와줍니다. 고유의 감성적인 DNA를 자연스럽게 디지털과 연결합니다.",
           cases: [
-            { label: "LAMY — 라미 사파리 Ncode 에디션", href: "https://shop.lamy.com/" },
-            { label: "Moleskine — 스마트 다이어리", href: "https://www.moleskine.com/" },
-            { label: "모나미 — 디지털 문구 협업", href: "#" },
+            { label: "LAMY", href: "https://www.lamy.com/de-de/digital-writing/digital-paper", image: "/images/home/business-lamy.jpg" },
+            { label: "Moleskine", href: "https://www.moleskine.com/en-us/shop/moleskine-smart/", image: "/images/home/business-moleskine.jpg" },
+            { label: "양지사", href: "https://yangjisa.com/", image: "/images/home/business-yangjisa.jpg" },
           ],
-          image: "/images/home/connect2-stationery.png", imageAlt: "Digital Transform",
+          image: "/images/home/business-lamy.jpg", imageAlt: "Digital Transform",
         },
         {
           id: "doc", label: "Document Mgmt", badge: "Document Mgmt",

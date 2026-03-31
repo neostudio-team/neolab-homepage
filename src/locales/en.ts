@@ -137,11 +137,11 @@ const en = {
           title: "A New Starting Point\nfor Stationery",
           description: "We help stationery businesses undergo digital transformation. NeoLAB provides solutions to naturally connect a brand's unique analog DNA to the digital world.",
           cases: [
-            { label: "LAMY — Safari Ncode Edition", href: "https://shop.lamy.com/" },
-            { label: "Moleskine — Smart Diary", href: "https://www.moleskine.com/" },
-            { label: "MONAMI — Digital Stationery", href: "#" },
+            { label: "LAMY", href: "https://www.lamy.com/de-de/digital-writing/digital-paper", image: "/images/home/business-lamy.jpg" },
+            { label: "Moleskine", href: "https://www.moleskine.com/en-us/shop/moleskine-smart/", image: "/images/home/business-moleskine.jpg" },
+            { label: "양지사", href: "https://yangjisa.com/", image: "/images/home/business-yangjisa.jpg" },
           ],
-          image: "/images/home/connect2-stationery.png", imageAlt: "Digital Transform",
+          image: "/images/home/business-lamy.jpg", imageAlt: "Digital Transform",
         },
         {
           id: "doc", label: "Document Mgmt", badge: "Document Mgmt",

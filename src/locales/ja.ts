@@ -143,11 +143,11 @@ const ja = {
           title: "文具産業の\n新たな出発点",
           description: "紙とペンを基盤とする文具事業のデジタルトランスフォームを支援します。ブランド固有のアナログDNAをデジタルと自然につなぐソリューションを提供します。",
           cases: [
-            { label: "LAMY — Safari Ncodeエディション", href: "https://shop.lamy.com/" },
-            { label: "Moleskine — スマートダイアリー", href: "https://www.moleskine.com/" },
-            { label: "MONAMI — デジタル文具コラボ", href: "#" },
+            { label: "LAMY", href: "https://www.lamy.com/de-de/digital-writing/digital-paper", image: "/images/home/business-lamy.jpg" },
+            { label: "Moleskine", href: "https://www.moleskine.com/en-us/shop/moleskine-smart/", image: "/images/home/business-moleskine.jpg" },
+            { label: "양지사", href: "https://yangjisa.com/", image: "/images/home/business-yangjisa.jpg" },
           ],
-          image: "/images/home/connect2-stationery.png", imageAlt: "Digital Transform",
+          image: "/images/home/business-lamy.jpg", imageAlt: "Digital Transform",
         },
         {
           id: "doc", label: "Document Mgmt", badge: "Document Mgmt",
