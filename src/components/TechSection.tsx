@@ -8,7 +8,7 @@ interface TechSectionProps {
 }
 
 export default function TechSection({ dict }: TechSectionProps) {
-  void dict; // learnMore 키 유지 (locale 호환)
+  void dict;
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -23,19 +23,26 @@ export default function TechSection({ dict }: TechSectionProps) {
           priority={false}
         />
 
-        {/* See more → 버튼 위에 투명 클릭 영역 오버레이 */}
-        <Link
-          href="/ko/technology"
-          aria-label="See more about NeoLab Technology"
+        {/* See more 버튼 — 이미지 위에 실제 버튼으로 덮어씌움 */}
+        <div
           className="absolute left-1/2 -translate-x-1/2"
-          style={{
-            bottom: "6.5%",
-            width: "clamp(140px, 14%, 200px)",
-            height: "clamp(36px, 5%, 56px)",
-            borderRadius: "100px",
-            display: "block",
-          }}
-        />
+          style={{ bottom: "6.5%" }}
+        >
+          <Link
+            href="/ko/technology"
+            className="inline-flex items-center gap-2 font-semibold text-white hover:brightness-110 active:scale-95 transition-all"
+            style={{
+              background: "#F5A623",
+              fontSize: "clamp(13px, 1.1vw, 16px)",
+              padding: "clamp(10px, 1vw, 14px) clamp(22px, 2vw, 32px)",
+              borderRadius: "100px",
+              whiteSpace: "nowrap",
+              letterSpacing: "0.2px",
+            }}
+          >
+            See more →
+          </Link>
+        </div>
       </div>
     </section>
   );
