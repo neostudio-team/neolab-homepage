@@ -230,7 +230,16 @@ export default function HeroSection({ dict }: HeroSectionProps) {
             Future,
           </em>
           <br />
-          Connect the World.
+          Connect the{" "}
+          <em
+            style={{
+              fontStyle: "italic",
+              color: "transparent",
+              WebkitTextStroke: "1.5px rgba(255,255,255,.5)",
+            }}
+          >
+            World.
+          </em>
         </h1>
       </div>
 
