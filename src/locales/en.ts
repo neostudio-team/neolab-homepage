@@ -126,11 +126,11 @@ const en = {
           title: "True Convergence &\nEfficient Education",
           description: "With the help of AI and digital tools, we inspire interest in learning and enable step-by-step education. NeoLAB provides solutions to help students focus and study effectively.",
           cases: [
-            { label: "Megastudy — Smart Mbest", href: "https://www.mbest.co.kr/" },
-            { label: "Kyowon Kumon — Smart Kumon", href: "https://www.kumon.co.kr/" },
-            { label: "Hybe Edu — Learn Korean with BTS", href: "https://weverseshop.io/" },
+            { label: "Mbest", href: "https://www.mbest.co.kr/pub_event/event/00000233/event_main.asp?partnerad=C3491&utm_source=google&utm_medium=sa&utm_campaign=mb_pc_keyword&utm_content=midkeyword_mbestbrand_free&utm_term=%EC%A4%91%ED%95%99&gad_source=1&gad_campaignid=22691521377&gbraid=0AAAAAD8SkedVhngZOOJITWREVwfLF4PSt&gclid=Cj0KCQjw4a3OBhCHARIsAChaqJPItBO0jeziL-keMBwRXpGRXSj3VZK18xt56C8_yvgXJmAb2SAlPQMaAn_dEALw_wcB", image: "/images/home/business-mbest.jpg" },
+            { label: "Kumon", href: "https://www.kumon.co.kr/", image: "/images/home/business-kumon.jpg" },
+            { label: "CAKE(HYBE EDU)", href: "https://www.cakecorp.com/", image: "/images/home/business-cake.jpg" },
           ],
-          image: "/images/home/connect1-edu.png", imageAlt: "Smart Study",
+          image: "/images/home/business-mbest.jpg", imageAlt: "Smart Study",
         },
         {
           id: "digital", label: "Digital Transform", badge: "Digital Transform",

@@ -127,11 +127,11 @@ const ko = {
           title: "진정한 융합과\n효율적 교육",
           description: "AI와 디지털의 도움으로 학습에 흥미를 유발하고, 단계별 학습이 가능하게 되었습니다. 네오랩컨버전스는 제대로 집중해서 공부할 수 있는 솔루션을 제공하고 있습니다.",
           cases: [
-            { label: "메가스터디 중등 — 스마트 엠베스트", href: "https://www.mbest.co.kr/" },
-            { label: "교원 구몬 — 스마트 구몬", href: "https://www.kumon.co.kr/" },
-            { label: "하이브 에듀 — Learn Korean with BTS", href: "https://weverseshop.io/" },
+            { label: "엠베스트", href: "https://www.mbest.co.kr/pub_event/event/00000233/event_main.asp?partnerad=C3491&utm_source=google&utm_medium=sa&utm_campaign=mb_pc_keyword&utm_content=midkeyword_mbestbrand_free&utm_term=%EC%A4%91%ED%95%99&gad_source=1&gad_campaignid=22691521377&gbraid=0AAAAAD8SkedVhngZOOJITWREVwfLF4PSt&gclid=Cj0KCQjw4a3OBhCHARIsAChaqJPItBO0jeziL-keMBwRXpGRXSj3VZK18xt56C8_yvgXJmAb2SAlPQMaAn_dEALw_wcB", image: "/images/home/business-mbest.jpg" },
+            { label: "구몬 학습", href: "https://www.kumon.co.kr/", image: "/images/home/business-kumon.jpg" },
+            { label: "CAKE(HYBE EDU)", href: "https://www.cakecorp.com/", image: "/images/home/business-cake.jpg" },
           ],
-          image: "/images/home/connect1-edu.png", imageAlt: "Smart Study",
+          image: "/images/home/business-mbest.jpg", imageAlt: "Smart Study",
         },
         {
           id: "digital", label: "Digital Transform", badge: "Digital Transform",
