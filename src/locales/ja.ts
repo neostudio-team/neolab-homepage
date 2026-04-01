@@ -151,13 +151,15 @@ const ja = {
         },
         {
           id: "doc", label: "Document Mgmt", badge: "Document Mgmt",
-          title: "スマートな\n文書管理システム",
-          description: "手書き文書を即座にデジタル化してクラウドに保存。企業の文書管理プロセスを革新するB2Bソリューションを提供します。",
+          title: "非構造化データの\nデジタル資産化",
+          description: "現場での手書きデータを即座にデジタル化し、企業システムと連携します。データの正確性・速度・セキュリティが重要な産業現場に最適なソリューションです。",
           cases: [
-            { label: "LG Chem — 現場文書デジタル化", href: "#" },
-            { label: "INFORM DS — 医療処方箋ソリューション", href: "#" },
+            { label: "現代自動車", href: "#", image: "/images/home/doc-hyundai.jpg", description: "完成車品質検査システム向けスマートペンソリューション。Ncode技術を活用した専用フォームとデータインフラを構築。", badge: "製造業", system: "現代自動車 品質システム / MES連携" },
+            { label: "LG化学", href: "#", image: "/images/home/doc-lgchem.jpg", description: "化学工場内の環境安全予防保全点検スマートペンソリューション。設備点検の専用フォーム出力とデータインフラを構築。", badge: "予防保全", system: "LG化学 環境安全 Portal 2.0連携" },
+            { label: "現代 BNG Steel", href: "#", image: "/images/home/doc-bngsteel.jpg", description: "デジタル機器使用が制限される爆発危険区域でのハイブリッドシステム構築。", badge: "製造業", system: "現代 BNG Steel システム連携" },
+            { label: "APFS", href: "#", image: "/images/home/doc-apfs.jpg", description: "農業損害評価調査の手書き記録をデジタル化。現場評価担当者の多様な手書き調査記録を簡便にデジタル転換。", badge: "保険", system: "APFS DB連携" },
           ],
-          image: "/images/home/connect3-form.png", imageAlt: "Document Management",
+          image: "/images/home/doc-hyundai.jpg", imageAlt: "Document Management",
         },
         {
           id: "collab", label: "Collaboration", badge: "Collaboration",

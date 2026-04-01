@@ -146,13 +146,15 @@ const ko = {
         },
         {
           id: "doc", label: "Document Mgmt", badge: "Document Mgmt",
-          title: "스마트한\n문서 관리 시스템",
-          description: "손으로 작성한 문서를 즉시 디지털화하고 클라우드에 저장합니다. 기업의 문서 관리 프로세스를 혁신하는 B2B 솔루션을 제공합니다.",
+          title: "비정형 정보의\n자산화",
+          description: "현장에서 손으로 작성한 데이터를 즉시 디지털화하고 기업 시스템과 연동합니다. 데이터 정확성, 속도, 보안이 중요한 산업 현장을 위한 최적의 솔루션입니다.",
           cases: [
-            { label: "LG화학 — 현장 문서 디지털화", href: "#" },
-            { label: "INFORM DS — 의료 처방전 솔루션", href: "#" },
+            { label: "현대자동차", href: "#", image: "/images/home/doc-hyundai.jpg", description: "완성차 품질완결시스템용 스마트펜 솔루션. Ncode 기술이 적용된 전용 검품 양식지 및 스마트펜 데이터 인프라 구축 완료.", badge: "제조업", system: "현대자동차 품질완결시스템 / MES 연동" },
+            { label: "LG화학", href: "#", image: "/images/home/doc-lgchem.jpg", description: "환경안전 예방정비점검 스마트펜 솔루션. 화학공장 내 환경전관련 주요 설비점검을 위한 전용 양식출력 및 스마트펜 데이터 인프라 구축 완료.", badge: "예방정비", system: "LG화학 환경안전 Portal 2.0 연동" },
+            { label: "현대 BNG Steel", href: "#", image: "/images/home/doc-bngsteel.jpg", description: "폭발위험구역 등 디지털 기기 사용이 제한된 현장에서의 하이브리드 시스템 구축.", badge: "제조업", system: "현대 BNG Steel 시스템 연동" },
+            { label: "농업정책보험금융원", href: "#", image: "/images/home/doc-apfs.jpg", description: "손해평가조사 수기 기록의 디지털 전환. 농업분야 손해평가사들의 현장 평가과정에서 발생하는 다양한 수기 조사기록을 간편하게 디지털 전환.", badge: "손해평가", system: "농업정책보험금융원 DB 연동" },
           ],
-          image: "/images/home/connect3-form.png", imageAlt: "Document Management",
+          image: "/images/home/doc-hyundai.jpg", imageAlt: "Document Management",
         },
         {
           id: "collab", label: "Collaboration", badge: "Collaboration",

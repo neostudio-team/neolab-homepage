@@ -145,13 +145,15 @@ const en = {
         },
         {
           id: "doc", label: "Document Mgmt", badge: "Document Mgmt",
-          title: "Smart Document\nManagement System",
-          description: "Instantly digitize handwritten documents and store them in the cloud. We offer B2B solutions that revolutionize corporate document management processes.",
+          title: "Unstructured Data\nas a Digital Asset",
+          description: "Instantly digitize handwritten field data and integrate it with enterprise systems. The optimal solution for industrial sites where data accuracy, speed, and security matter.",
           cases: [
-            { label: "LG Chem — Field Document Digitization", href: "#" },
-            { label: "INFORM DS — Medical Prescription Solution", href: "#" },
+            { label: "Hyundai Motor", href: "#", image: "/images/home/doc-hyundai.jpg", description: "Smart pen solution for vehicle quality inspection. Built Ncode-based custom form printing and smartpen data infrastructure.", badge: "Manufacturing", system: "Hyundai QMS / MES Integration" },
+            { label: "LG Chem", href: "#", image: "/images/home/doc-lgchem.jpg", description: "Smart pen solution for environmental safety preventive maintenance inspection in chemical plants.", badge: "Maintenance", system: "LG Chem Environmental Safety Portal 2.0" },
+            { label: "Hyundai BNG Steel", href: "#", image: "/images/home/doc-bngsteel.jpg", description: "Hybrid system in explosion-risk plant areas where digital devices are restricted.", badge: "Manufacturing", system: "Hyundai BNG Steel System Integration" },
+            { label: "APFS", href: "#", image: "/images/home/doc-apfs.jpg", description: "Digitizing agricultural insurance field survey records. Streamlining manual assessment records for APFS evaluators.", badge: "Insurance", system: "APFS DB Integration" },
           ],
-          image: "/images/home/connect3-form.png", imageAlt: "Document Management",
+          image: "/images/home/doc-hyundai.jpg", imageAlt: "Document Management",
         },
         {
           id: "collab", label: "Collaboration", badge: "Collaboration",
