@@ -107,7 +107,8 @@ const ja = {
         { name: "サウンドペン", desc: "本を聴く最高の方法", href: "/ja/soundpen", image: "/images/soundpen/Neo_poppen.png" },
         { name: "Neo Smartpen", desc: "比類なきパフォーマンス", href: "/ja/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
         { name: "POKORO", desc: "AI Learning Mate", href: "/ja/pokoro", image: "/images/pokoro/Group39.png" },
-        { name: "Service", desc: "AiGLE AIサービス", href: "https://aigle.neolab.net", image: "/images/home/aigle-service.jpg" },
+        { name: "AiGLE", desc: "AI 記述式評価ソリューション", href: "https://aigle.neolab.net", image: "/images/home/product-aigle.jpg" },
+        { name: "Neo Studio 2", desc: "すべてのデバイスで手書きを共有", href: "/ja/neosmartpen/neo-studio", image: "/images/neosmartpen/apps/neo-studio/NeoStudio_landing01.jpg" },
       ],
     },
     tech: {

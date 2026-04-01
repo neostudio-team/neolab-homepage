@@ -112,8 +112,8 @@ export default function ProductsSection({ dict }: ProductsSectionProps) {
                 className="flex items-center justify-center overflow-hidden"
                 style={{
                   height: isCenter ? "clamp(220px, 22vw, 320px)" : "clamp(180px, 18vw, 260px)",
-                  padding: product.name === "Service" ? "0" : "20px",
-                  background: product.name === "Service" ? "#3880EF" : "#F5F5F5",
+                  padding: "20px",
+                  background: "#F5F5F5",
                 }}
               >
                 <Image
@@ -122,9 +122,7 @@ export default function ProductsSection({ dict }: ProductsSectionProps) {
                   width={320}
                   height={320}
                   className="w-full h-full transition-transform duration-500"
-                  style={{
-                    objectFit: product.name === "Service" ? "cover" : "contain",
-                  }}
+                  style={{ objectFit: "contain" }}
                 />
               </div>
             </div>

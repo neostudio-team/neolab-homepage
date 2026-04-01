@@ -101,7 +101,8 @@ const en = {
         { name: "Sound Pen", desc: "The best way to listen to books", href: "/en/soundpen", image: "/images/soundpen/Neo_poppen.png" },
         { name: "Neo Smartpen", desc: "Unparalleled performance", href: "/en/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
         { name: "POKORO", desc: "AI Learning Mate", href: "/en/pokoro", image: "/images/pokoro/Group39.png" },
-        { name: "Service", desc: "AiGLE AI Grading Service", href: "https://aigle.neolab.net", image: "/images/home/aigle-service.jpg" },
+        { name: "AiGLE", desc: "AI Essay & Short-Answer Grading", href: "https://aigle.neolab.net", image: "/images/home/product-aigle.jpg" },
+        { name: "Neo Studio 2", desc: "Your handwriting, on every device", href: "/en/neosmartpen/neo-studio", image: "/images/neosmartpen/apps/neo-studio/NeoStudio_landing01.jpg" },
       ],
     },
     tech: {

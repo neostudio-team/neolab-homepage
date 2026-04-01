@@ -102,7 +102,8 @@ const ko = {
         { name: "소리펜", desc: "책을 듣는 가장 훌륭한 방법", href: "/ko/soundpen", image: "/images/soundpen/Neo_poppen.png" },
         { name: "네오스마트펜", desc: "더할 나위 없는 퍼포먼스", href: "/ko/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
         { name: "POKORO", desc: "AI Learning Mate", href: "/ko/pokoro", image: "/images/pokoro/Group39.png" },
-        { name: "Service", desc: "아이글 AI 채점 서비스", href: "https://aigle.neolab.net", image: "/images/home/aigle-service.jpg" },
+        { name: "AiGLE (아이글)", desc: "AI 서논술형 평가 솔루션", href: "https://aigle.neolab.net", image: "/images/home/product-aigle.jpg" },
+        { name: "Neo Studio 2", desc: "필기 데이터를 모든 기기로", href: "/ko/neosmartpen/neo-studio", image: "/images/neosmartpen/apps/neo-studio/NeoStudio_landing01.jpg" },
       ],
     },
     tech: {
