@@ -27,7 +27,7 @@ export default function Footer({ lang, dict }: FooterProps) {
   return (
     <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="md:col-span-1">
             <Image
               src="/images/NeoLAB-CI-2.png"
@@ -35,17 +35,6 @@ export default function Footer({ lang, dict }: FooterProps) {
               width={160}
               height={62}
             />
-          </div>
-
-          <div className="md:col-span-1">
-            <h3 className="font-bold text-gray-900 mb-4">{dict.links}</h3>
-            <ul className="space-y-3 text-sm text-gray-500">
-              <li><Link href={lang === 'ko' ? 'https://store.neosmartpen.com' : 'https://shop.neosmartpen.com'} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">{dict.shop}</Link></li>
-              <li><Link href={`/${lang}/neosmartpen`} className="hover:text-primary transition-colors">{dict.product}</Link></li>
-              <li><Link href={`/${lang}/soundpen`} className="hover:text-primary transition-colors">{dict.app}</Link></li>
-              <li><Link href={`/${lang}/pokoro`} className="hover:text-primary transition-colors">{dict.notebook}</Link></li>
-              <li><Link href="https://aigle.neolab.net" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">AiGLE</Link></li>
-            </ul>
           </div>
 
           <div className="md:col-span-1">
