@@ -25,10 +25,10 @@ export default async function Home({
       <main>
         <HeroSection dict={dict.home.hero} />
         <LazySection>
-          <ProductsSection dict={dict.home.products} />
+          <TechSection dict={dict.home.tech} />
         </LazySection>
         <LazySection>
-          <TechSection dict={dict.home.tech} />
+          <ProductsSection dict={dict.home.products} />
         </LazySection>
         <LazySection>
           <BusinessSection dict={dict.home.business} />
