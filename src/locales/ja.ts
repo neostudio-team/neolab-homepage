@@ -350,9 +350,10 @@ const ja = {
       p2: "15以上の社内安全テストを実施し、国内外の主要安全基準の認証を取得しています。用途に応じて選べる多彩なサウンドペン製品ラインナップをご用意しています。",
     },
     products: [
-      { name: "Smart Reader", description: "基本に忠実な実用型サウンドペン。シンプルな機能で、お子様でも簡単に使えます。" },
-      { name: "Smart Reader Prime", description: "リピート、録音、再生などの多彩な機能を搭載したプレミアムサウンドペン。64GBの大容量メモリを搭載しています。" },
-      { name: "Smart Reader Video", description: "基本的なスマートリーダー機能に加え、モバイルアプリと連携して動画コンテンツも視聴可能。オーディオとビデオの両方をお楽しみください。" },
+      { name: "Smart Reader", description: "" },
+      { name: "Smart Reader Prime", description: "" },
+      { name: "Smart Reader Video", description: "" },
+      { name: "Pop Pen C72-NC", description: "" },
     ],
     stickerBooks: {
       title: "ステッカー＆ブック",

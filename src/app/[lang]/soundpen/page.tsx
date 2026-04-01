@@ -17,7 +17,7 @@ const productImages = [
   "/images/soundpen/Neo_poppen.png",
   "/images/soundpen/Neo_poppen_prime.png",
   "/images/soundpen/Neo_poppen_video.png",
-  "/images/soundpen/Neo_poppen.png", // Placeholder for Pokoro
+  "/images/soundpen/Neo_c72nc.png",
 ];
 
 export default async function SoundPenPage({
@@ -89,8 +89,7 @@ export default async function SoundPenPage({
                   <div className="mb-6 flex justify-center">
                     <Image src={productImages[i]} alt={product.name} width={200} height={200} className="h-48 w-auto object-contain" />
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-3">{product.name}</h3>
-                  <p className="text-[#666] text-sm leading-[2]">{product.description}</p>
+                  <h3 className="text-xl font-bold text-black">{product.name}</h3>
                 </div>
               ))}
             </div>

@@ -344,10 +344,10 @@ const en = {
       p2: "Over 15 internal safety tests and certified by major domestic and international safety standards. Our diverse sound pen product lineup is customized for different user needs.",
     },
     products: [
-      { name: "Smart Reader", description: "A practical sound pen that stays true to the basics. Simple functions make it easy for children to use." },
-      { name: "Smart Reader Prime", description: "A premium multi-function sound pen with repeat, record, and playback. Equipped with 64GB memory." },
-      { name: "Smart Reader Video", description: "Beyond basic smart reader functions, sync with a mobile app to watch videos. Enjoy both audio and video content." },
-      { name: "Pokoro", description: "An interactive smart AI device for kids without screens, triggering creative thinking." },
+      { name: "Smart Reader", description: "" },
+      { name: "Smart Reader Prime", description: "" },
+      { name: "Smart Reader Video", description: "" },
+      { name: "Pop Pen C72-NC", description: "" },
     ],
     stickerBooks: {
       title: "Sticker & Books",
