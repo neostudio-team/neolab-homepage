@@ -156,16 +156,6 @@ const en = {
           ],
           image: "/images/home/doc-hyundai.jpg", imageAlt: "Document Management",
         },
-        {
-          id: "collab", label: "Collaboration", badge: "Collaboration",
-          title: "Analog-feel\nDigital Collaboration",
-          description: "Sync whiteboard sessions and note-taking directly with your digital team workspace. Natural collaboration is possible even in remote and hybrid work environments.",
-          cases: [
-            { label: "Gridaboard — Real-time Collaborative Whiteboard", href: "https://gridaboard.io/" },
-            { label: "Neo studio — Cloud Handwriting Sync", href: "#" },
-          ],
-          image: "/images/home/connect4-collab.png", imageAlt: "Collaboration",
-        },
       ],
     },
     digitalAnalog: {

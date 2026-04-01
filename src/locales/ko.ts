@@ -157,16 +157,6 @@ const ko = {
           ],
           image: "/images/home/doc-hyundai.jpg", imageAlt: "Document Management",
         },
-        {
-          id: "collab", label: "Collaboration", badge: "Collaboration",
-          title: "아날로그 감성의\n디지털 협업",
-          description: "회의실의 화이트보드, 노트 필기를 그대로 디지털 팀 워크스페이스와 동기화합니다. 원격/하이브리드 업무 환경에서도 자연스러운 협업이 가능합니다.",
-          cases: [
-            { label: "그리다보드 — 실시간 협업 화이트보드", href: "https://gridaboard.io/" },
-            { label: "네오스튜디오 — 클라우드 필기 동기화", href: "#" },
-          ],
-          image: "/images/home/connect4-collab.png", imageAlt: "Collaboration",
-        },
       ],
     },
     digitalAnalog: {

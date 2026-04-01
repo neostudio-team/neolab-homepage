@@ -162,16 +162,6 @@ const ja = {
           ],
           image: "/images/home/doc-hyundai.jpg", imageAlt: "Document Management",
         },
-        {
-          id: "collab", label: "Collaboration", badge: "Collaboration",
-          title: "アナログ感覚の\nデジタルコラボ",
-          description: "会議室のホワイトボードやノート筆記をデジタルチームワークスペースと同期。リモート・ハイブリッド環境でも自然なコラボレーションが可能です。",
-          cases: [
-            { label: "Gridaboard — リアルタイム協働ホワイトボード", href: "https://gridaboard.io/" },
-            { label: "Neo studio — クラウド筆記同期", href: "#" },
-          ],
-          image: "/images/home/connect4-collab.png", imageAlt: "Collaboration",
-        },
       ],
     },
     digitalAnalog: {
