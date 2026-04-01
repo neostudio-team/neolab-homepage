@@ -35,6 +35,7 @@ export default async function PartnershipPage({
     { ...p.monami, image: "/images/partnership/Stationery_monami.jpg" },
     { ...p.lamy, image: "/images/partnership/Stationery_lamy.jpg" },
     { ...p.lineFriends, image: "/images/partnership/line.jpg" },
+    { ...p.yangjisa, image: "/images/partnership/Stationery_yangjisa.jpg" },
   ];
 
   const education: PartnerCard[] = [
@@ -46,6 +47,8 @@ export default async function PartnershipPage({
     { ...p.bts, image: "/images/partnership/edu_BTS.jpg" },
     { ...p.smartssen, image: "/images/partnership/edu_sinsa.jpg" },
     { ...p.echelon, image: "/images/partnership/edu_ech.jpg" },
+    { ...p.chungnamEdu, image: "/images/partnership/edu_chungnam_edu.jpg" },
+    { ...p.jeonbukEdu, image: "/images/partnership/edu_jeonbuk_edu.jpg" },
   ];
 
   const enterprise: PartnerCard[] = [
