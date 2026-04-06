@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ContactForm from "@/components/ContactForm";
 import LazySection from "@/components/LazySection";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
@@ -46,11 +45,6 @@ export default async function SoundPenPage({
                 <h1 className="text-[32px] lg:text-[40px] font-black mb-6 leading-tight">{t.hero.title}</h1>
                 <p className="text-gray-200 text-sm leading-[2] mb-8">{t.hero.description}</p>
                 <div className="flex gap-4 flex-wrap">
-                  {lang === 'ko' && (
-                  <Link href="#enquire" className="inline-block bg-primary text-white px-8 py-3 rounded font-semibold hover:bg-primary-dark transition-colors uppercase tracking-wider text-sm">
-                    {dict.common.enquiry}
-                  </Link>
-                  )}
                   {lang === 'ko' && (
                     <>
                       <Link href="https://smartstore.naver.com/neolab" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-primary border border-primary px-8 py-3 rounded font-semibold hover:bg-gray-50 transition-colors uppercase tracking-wider text-sm">
@@ -179,21 +173,6 @@ export default async function SoundPenPage({
 
         </LazySection>
 
-        {/* Contact */}
-        <LazySection>
-        <section className="py-[54px] bg-[#f1f1f1]" id="enquire">
-          <div className="max-w-[1080px] mx-auto px-4 text-center mb-12">
-            <h2 className="text-[30px] font-medium text-black mb-4">{dict.common.creatingNewValue}</h2>
-            <p className="text-[#666]">
-              {dict.common.contactUsAt}{" "}
-              <a href={`mailto:${lang === 'ko' ? 'bizinquiry@neolab.net' : 'global@neolab.net'}`} className="text-primary hover:underline">{lang === 'ko' ? 'bizinquiry@neolab.net' : 'global@neolab.net'}</a>
-            </p>
-          </div>
-          <div className="max-w-lg mx-auto">
-            <ContactForm dict={dict.common.contactForm} />
-          </div>
-        </section>
-        </LazySection>
       </main>
       <Footer lang={lang} dict={dict.common.footer} />
     </>
