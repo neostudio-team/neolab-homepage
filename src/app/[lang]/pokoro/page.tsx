@@ -55,8 +55,8 @@ export default async function PokoroPage({
             </h1>
             <p className="text-[20px] font-semibold text-black mb-1">{t.hero.subtitle1}</p>
             <p className="text-[28px] font-semibold text-black mb-10">{t.hero.subtitle2}</p>
-            <Link href="#contact" className="inline-block bg-black text-white text-[20px] px-6 py-5 rounded-full font-normal hover:bg-black/80 transition-colors uppercase">
-              {t.hero.contactUs}
+            <Link href="https://smartstore.naver.com/pokoro?n_media=27758&n_query=%ED%8F%AC%EC%BD%94%EB%A1%9C&n_rank=1&n_ad_group=grp-a001-04-000000057244674&n_ad=nad-a001-04-000000479444805&n_keyword_id=nkw-a001-04-000007651633461&n_keyword=%ED%8F%AC%EC%BD%94%EB%A1%9C&n_campaign_type=4&n_contract=tct-a001-04-000000001228285&n_ad_group_type=5&NaPm=ct%3Dmn2obx2f%7Cci%3DER1927f3db%2D266f%2D11f1%2D952e%2D3ac0aae6ed3f%7Ctr%3Dbrnd%7Chk%3D3ed989dad874bfc1fe716527012b0a5af32115ba%7Cnacn%3DMJuAB0AtEIMQ" target="_blank" rel="noopener noreferrer" className="inline-block bg-black text-white text-[20px] px-6 py-5 rounded-full font-normal hover:bg-black/80 transition-colors">
+              포코로 구입하기
             </Link>
           </div>
         </section>
@@ -294,41 +294,16 @@ export default async function PokoroPage({
         </section>
         </LazySection>
 
-        {/* ===== SEC05: Reviews ===== */}
-        <LazySection>
-        <section className="bg-[#f8e581] py-40">
-          <div className="max-w-[1400px] mx-auto px-4 flex flex-col items-center gap-20">
-            <h2 className="text-[40px] font-bold text-black text-center">
-              {t.sec05.heading}
-            </h2>
-            <div className="w-full space-y-4">
-              <Image src="/images/pokoro/sec05-img01.png" alt="Review 1" width={1200} height={291} className="w-full h-auto hidden md:block" />
-              <Image src="/images/pokoro/sec05-img02.png" alt="Review 2" width={1200} height={289} className="w-full h-auto hidden md:block" />
-              <Image src="/images/pokoro/sec05-img03.png" alt="Review 3" width={1200} height={291} className="w-full h-auto hidden md:block" />
-              <Image src="/images/pokoro/sec05-img01_mo.png" alt="Review 1" width={526} height={494} className="w-full h-auto md:hidden" />
-              <Image src="/images/pokoro/sec05-img02_mo.png" alt="Review 2" width={526} height={509} className="w-full h-auto md:hidden" />
-              <Image src="/images/pokoro/sec05-img03_mo.png" alt="Review 3" width={526} height={509} className="w-full h-auto md:hidden" />
-            </div>
-          </div>
-        </section>
-        </LazySection>
-
         {/* ===== SEC06: About NEOLAB ===== */}
         <LazySection>
         <section className="bg-[#a781f8] py-40" id="contact">
           <div className="max-w-[1400px] mx-auto px-4">
             <div className="flex flex-col lg:flex-row gap-10">
-              <div className="w-full lg:w-1/2 flex flex-col gap-20">
-                <div className="flex flex-col gap-4">
-                  <h2 className="text-[40px] font-bold text-black">{t.sec06.aboutNeolab.heading}</h2>
-                  <p className="text-[20px] text-black leading-[28px]">{t.sec06.aboutNeolab.description}</p>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <h2 className="text-[40px] font-bold text-black">{t.sec06.whyPokoro.heading}</h2>
-                  <p className="text-[20px] text-black leading-[28px]">{t.sec06.whyPokoro.p1}</p>
-                  <p className="text-[20px] text-black leading-[28px]">{t.sec06.whyPokoro.p2}</p>
-                  <p className="text-[20px] text-black leading-[28px]">{t.sec06.whyPokoro.p3}</p>
-                </div>
+              <div className="w-full lg:w-1/2 flex flex-col gap-4">
+                <h2 className="text-[40px] font-bold text-black">{t.sec06.whyPokoro.heading}</h2>
+                <p className="text-[20px] text-black leading-[28px]">{t.sec06.whyPokoro.p1}</p>
+                <p className="text-[20px] text-black leading-[28px]">{t.sec06.whyPokoro.p2}</p>
+                <p className="text-[20px] text-black leading-[28px]">{t.sec06.whyPokoro.p3}</p>
               </div>
               <div className="w-full lg:w-1/2 flex flex-col gap-10">
                 <Image src="/images/pokoro/sec06-img.png" alt="POKORO by NEOLAB" width={680} height={596} className="w-full h-auto" />
