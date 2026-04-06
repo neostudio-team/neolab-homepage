@@ -72,9 +72,10 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
   return [
     {
       label: dict.company,
-      href: `/${lang}/company`,
+      href: lang === "ko" ? "#" : `/${lang}/company`,
       ...(lang === "ko" ? {
         children: [
+          { label: "개요", href: `/${lang}/company` },
           { label: dict.cibi, href: `/${lang}/bi` },
           { label: dict.career, href: "https://neolab.career.greetinghr.com/ko/intro", external: true },
         ],
@@ -121,8 +122,9 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
     },
     ...(lang === "ko" ? [{
       label: dict.customerSupport,
-      href: `/${lang}/customer`,
+      href: "#",
       children: [
+        { label: "고객센터", href: `/${lang}/customer` },
         { label: dict.notice, href: `/${lang}/company/news` },
         { label: dict.corporateNews, href: `/${lang}/company/press` },
       ],
@@ -207,23 +209,33 @@ export default function Header({ lang, dict }: HeaderProps) {
                   onMouseEnter={() => setActiveDropdown(item.label)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <Link
-                    href={item.href}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noopener noreferrer" : undefined}
-                    className={`px-3 py-4 text-[14px] font-semibold flex items-center gap-1 transition-colors ${
-                      scrolled
-                        ? "text-black/60 hover:text-primary"
-                        : "text-white/80 hover:text-white"
-                    }`}
-                  >
-                    {item.label}
-                    {item.children && (
+                  {item.children ? (
+                    <span
+                      className={`px-3 py-4 text-[14px] font-semibold flex items-center gap-1 cursor-default select-none transition-colors ${
+                        scrolled
+                          ? "text-black/60"
+                          : "text-white/80"
+                      }`}
+                    >
+                      {item.label}
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
-                    )}
-                  </Link>
+                    </span>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                      className={`px-3 py-4 text-[14px] font-semibold flex items-center gap-1 transition-colors ${
+                        scrolled
+                          ? "text-black/60 hover:text-primary"
+                          : "text-white/80 hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
 
                   {item.children && activeDropdown === item.label && (
                     <div className="absolute top-full left-0 bg-white shadow-lg rounded-md py-2 min-w-[220px] z-50">
