@@ -45,16 +45,12 @@ export default async function SoundPenPage({
                 <h1 className="text-[32px] lg:text-[40px] font-black mb-6 leading-tight">{t.hero.title}</h1>
                 <p className="text-gray-200 text-sm leading-[2] mb-8">{t.hero.description}</p>
                 <div className="flex gap-4 flex-wrap">
-                  {lang === 'ko' && (
-                    <>
-                      <Link href="https://smartstore.naver.com/neolab" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-primary border border-primary px-8 py-3 rounded font-semibold hover:bg-gray-50 transition-colors uppercase tracking-wider text-sm">
-                        팝펜 공식몰
-                      </Link>
-                      <Link href="https://cafe.naver.com/dotcotory" target="_blank" rel="noopener noreferrer" className="inline-block bg-[#03c75a] text-white px-8 py-3 rounded font-semibold hover:opacity-90 transition-opacity uppercase tracking-wider text-sm">
-                        팝펜 팩토리
-                      </Link>
-                    </>
-                  )}
+                  <Link href="https://smartstore.naver.com/neolab" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-primary border border-primary px-8 py-3 rounded font-semibold hover:bg-gray-50 transition-colors uppercase tracking-wider text-sm">
+                    팝펜 공식몰
+                  </Link>
+                  <Link href="https://cafe.naver.com/dotcotory" target="_blank" rel="noopener noreferrer" className="inline-block bg-[#03c75a] text-white px-8 py-3 rounded font-semibold hover:opacity-90 transition-opacity uppercase tracking-wider text-sm">
+                    팝펜 팩토리
+                  </Link>
                 </div>
               </div>
               <div className="w-full lg:w-[50%] flex justify-center">
@@ -115,38 +111,6 @@ export default async function SoundPenPage({
                   <h3 className="text-xl font-bold text-black mb-3">{t.stickerBooks.books}</h3>
                   <p className="text-[#666] text-sm leading-[2]">{t.stickerBooks.booksDesc}</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        </LazySection>
-
-        {/* Software */}
-        <LazySection>
-        <section className="py-[54px] bg-[#f1f1f1]">
-          <div className="max-w-[1080px] mx-auto px-4">
-            <h2 className="text-[30px] font-medium text-center text-black mb-4">{t.software.title}</h2>
-            <p className="text-center text-[#999] text-sm mb-12">{t.software.subtitle}</p>
-            <div className="flex flex-col lg:flex-row gap-12 items-center">
-              <div className="w-full lg:w-[50%] space-y-8">
-                <div className="flex items-start gap-4">
-                  <Image src="/images/soundpen/icon-stamp.png" alt={t.software.smartReaderEditor} width={64} height={64} className="shrink-0" />
-                  <div>
-                    <h3 className="font-bold text-black mb-2">{t.software.smartReaderEditor}</h3>
-                    <p className="text-[#666] text-sm leading-[2]">{t.software.smartReaderEditorDesc}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <Image src="/images/soundpen/icon-moretube02.png" alt={t.software.moreTube} width={64} height={64} className="shrink-0" />
-                  <div>
-                    <h3 className="font-bold text-black mb-2">{t.software.moreTube}</h3>
-                    <p className="text-[#666] text-sm leading-[2]">{t.software.moreTubeDesc}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="w-full lg:w-[50%] flex justify-center">
-                <Image src="/images/soundpen/Neo-05_3-1.png" alt="Companion Apps" width={500} height={500} className="w-full max-w-md h-auto" />
               </div>
             </div>
           </div>
