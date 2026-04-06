@@ -306,7 +306,7 @@ const ko = {
         { title: "Ncode 센서", description: "Ncode를 읽을 수 있는 센서를 자체적으로 개발하여 어떤 조도하에서도 안정된 인식 성능을 보입니다." },
         { title: "우수한 품질의 하드웨어", description: "단순히 얇은 펜을 만든 것 이 아니라, 사람마다 다른 필기 습관에 의한 각도나 뒤틀림에서도 안정된 하드웨어를 제공합니다." },
       ],
-      visitNeoSmartpen: "네오스마트펜 사이트로 가기 →",
+      visitNeoSmartpen: "네오스마트펜 구입하기 →",
     },
     patents: {
       title: "특허로 무장한 기술",

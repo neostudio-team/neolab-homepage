@@ -128,7 +128,7 @@ export default async function TechnologyPage({
             </div>
             <div className="text-center mt-8">
               <Link
-                href={lang === "ko" ? "https://neosmartpen.co.kr/" : lang === "ja" ? "https://neosmartpen.jp/" : "https://neosmartpen.com/"}
+                href={lang === "ko" ? "https://store.neosmartpen.com/" : lang === "ja" ? "https://neosmartpenjp.com/" : "https://shop.neosmartpen.com/"}
                 className="inline-block bg-primary text-white px-8 py-3 rounded font-semibold hover:bg-primary-dark transition-colors uppercase tracking-wider text-sm"
                 target="_blank"
                 rel="noopener noreferrer"

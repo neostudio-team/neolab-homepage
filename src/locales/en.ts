@@ -305,7 +305,7 @@ const en = {
         { title: "Ncode sensor", description: "Self-developed sensor that ensures stable recognition regardless of ambient light conditions." },
         { title: "Superior hardware quality", description: "Angle and distortion correction technology for precise handwriting capture." },
       ],
-      visitNeoSmartpen: "Visit Neo smartpen →",
+      visitNeoSmartpen: "Buy Neo smartpen →",
     },
     patents: {
       title: "Technology Protected by Patents",

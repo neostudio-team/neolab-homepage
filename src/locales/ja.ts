@@ -311,7 +311,7 @@ const ja = {
         { title: "Ncodeセンサー", description: "どのような照度環境下でも安定した認識性能を発揮する自社開発センサーです。" },
         { title: "優れた品質のハードウェア", description: "角度やゆがみの補正技術により、正確な手書きキャプチャを実現します。" },
       ],
-      visitNeoSmartpen: "Neo smartpenサイトへ →",
+      visitNeoSmartpen: "Neo smartpenを購入する →",
     },
     patents: {
       title: "特許で保護された技術",
