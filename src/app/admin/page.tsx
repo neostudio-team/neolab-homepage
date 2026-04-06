@@ -219,7 +219,7 @@ export default function AdminDashboard() {
 
             <div className="px-4 py-3 border-t border-gray-100 flex gap-3">
               <Link href={card.listHref} className="text-xs text-gray-500 hover:text-gray-800 transition-colors">목록보기</Link>
-              {card.key !== "member" && (
+              {card.key !== "member" && card.key !== "contact" && (
                 <>
                   <span className="text-gray-200 select-none">|</span>
                   <Link href={card.newHref} className="text-xs text-blue-500 hover:text-blue-700 font-medium transition-colors">새 글 작성</Link>
