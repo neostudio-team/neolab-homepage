@@ -121,11 +121,7 @@ export default function AdminDashboard() {
 
         const token = await auth.currentUser?.getIdToken();
         if (token) {
-          const [membersRes, contactRes] = await Promise.all([
-            fetch("/api/admin-members", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
-            fetch("/api/contact", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
-          ]);
-          setMembers(Array.isArray(membersRes) ? membersRes : []);
+          const contactRes = await fetch("/api/contact", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json());
           setContacts(Array.isArray(contactRes) ? contactRes : []);
           await fetchGA("30", "", "");
         }
@@ -163,17 +159,6 @@ export default function AdminDashboard() {
       badge: (n: BoardItem) => n.isPinned
         ? <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-red-100 text-red-600 flex-shrink-0">NEW</span>
         : null,
-    },
-    {
-      key: "member", label: "회원 관리", icon: "👥", color: "from-orange-500 to-orange-600",
-      items: members as unknown as BoardItem[],
-      newHref: "/admin/members", listHref: "/admin/members",
-      badge: (n: BoardItem) => {
-        const m = n as unknown as MemberItem;
-        return m.level === 1
-          ? <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-red-100 text-red-500 flex-shrink-0">최고</span>
-          : <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-gray-100 text-gray-400 flex-shrink-0">일반</span>;
-      },
     },
   ];
 
