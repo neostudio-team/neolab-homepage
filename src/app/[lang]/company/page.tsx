@@ -5,6 +5,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import JaCompanyPage from "./JaCompanyPage";
 import CompanyHistoryTimeline from "./CompanyHistoryTimeline";
+import CompanyHeroContent from "./CompanyHeroContent";
 
 export const metadata: Metadata = {
   title: "회사소개 - 네오랩컨버전스",
@@ -80,22 +81,7 @@ export default async function CompanyPage({
               <span className="text-[#f8da2f]">Connect</span> the World
             </h1>
             <div className="w-12 h-px bg-[#f8da2f] mb-10" />
-            <div className="max-w-[640px] space-y-5">
-              <p className="text-gray-200 text-base md:text-lg font-medium leading-[1.85]">
-                아날로그의 익숙함 위에 디지털의 무한한 가능성을 더합니다.
-              </p>
-              <p className="text-gray-400 text-sm md:text-base leading-[2]">
-                네오랩컨버전스는 Ncode™ 기술을 통해 필기를 정교한 데이터로 변환하고,
-                종이 위에서 살아 움직이는 소리로 지식과 정보를 누구나 쉽게 누릴 수 있는 세상을 만듭니다.
-                우리의 기술은 교육의 혁신과 시각의 보완을 넘어, 정확한 기록이 생명인 의료와 법률,
-                안전과 효율이 직결되는 건설 및 산업 현장까지 비즈니스의 신뢰를 높입니다.
-                나아가 AI와 결합한 따뜻한 돌봄으로 유아와 노년층의 다정한 친구가 되어줍니다.
-              </p>
-              <p className="text-gray-400 text-sm md:text-base leading-[2]">
-                우리는 세상의 모든 기록과 소리를 가치 있는 데이터로 연결하여,
-                비즈니스와 라이프스타일의 새로운 기준을 세웁니다.
-              </p>
-            </div>
+            <CompanyHeroContent />
           </div>
         </section>
 
