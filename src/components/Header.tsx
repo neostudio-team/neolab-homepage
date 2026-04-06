@@ -75,6 +75,7 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       ...(lang === "ko" ? {
         children: [
           { label: dict.cibi, href: `/${lang}/bi` },
+          { label: dict.career, href: "https://neolab.career.greetinghr.com/ko/intro", external: true },
         ],
       } : {}),
     },
@@ -90,32 +91,17 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
           label: dict.smartpen,
           href: lang === "ko" ? "https://store.neosmartpen.com/" : lang === "en" ? "https://shop.neosmartpen.com/" : "https://neosmartpenjp.com/",
           external: true,
-          children: [
-            { label: dict.neoSmartpenR1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-r1" : "https://neosmartpenjp.com/products/neo-smartpen-r1", external: true },
-            { label: dict.neoSmartpenA1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=455" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-a1" : "https://neosmartpenjp.com/products/neo-smartpen-a1", external: true },
-            { label: dict.neoSmartpenM1, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=531" : lang === "en" ? "https://shop.neosmartpen.com/products/neo-smartpen-m1-plus" : "https://neosmartpenjp.com/products/neo-smartpen-m1-plus", external: true },
-            { label: dict.neoSmartpenDimo, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=154&mtn=1%5E%7C%5E%EC%B6%94%EC%B2%9C%EC%83%81%ED%92%88%5E%7C%5Ey" : lang === "en" ? "https://shop.neosmartpen.com/collections/all/products/neo-smartpen-dimo" : "https://neosmartpenjp.com/products/neosmartpen-dimo", external: true },
-            { label: dict.lamySafari, href: lang === "ko" ? "https://store.neosmartpen.com/goods/goods_view.php?goodsNo=392" : lang === "en" ? "https://shop.neosmartpen.com/products/lamy-safari-all-black-ncode" : "https://neosmartpenjp.com/products/lamysafari-smartpen", external: true },
-          ],
         },
         {
           label: dict.soundpen,
           href: `/${lang}/soundpen`,
-          ...(lang === 'ko' ? {
-            children: [
-              {
-                label: dict.poppenFactory,
-                href: "https://cafe.naver.com/dotcotory",
-                external: true,
-                children: [
-                  { label: dict.ncpDownload, href: "https://neolabconvergence.notion.site/NCP-254d4c1a42e2805f8ae1cddedadc083e", external: true },
-                ],
-              },
-            ],
-          } : {}),
         },
         { label: dict.pokoro, href: `/${lang}/pokoro` },
-        { label: lang === "ja" ? "ノート" : dict.accessories, href: lang === "ja" ? "https://neosmartpenjp.com/collections/n_note" : lang === "ko" ? "https://store.neosmartpen.com/goods/goods_list.php?cateCd=019" : "https://shop.neosmartpen.com/collections/accessories", external: true },
+        {
+          label: lang === "ja" ? "ノート" : dict.accessories,
+          href: lang === "ja" ? "https://neosmartpenjp.com/collections/n_note" : lang === "ko" ? "https://store.neosmartpen.com/goods/goods_list.php?cateCd=019" : "https://shop.neosmartpen.com/collections/accessories",
+          external: true,
+        },
       ],
     },
     {
@@ -132,11 +118,6 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       label: dict.partnership,
       href: `/${lang}/partnership`,
     },
-    ...(lang === "ko" ? [{
-      label: dict.career,
-      href: "https://neolab.career.greetinghr.com/ko/intro",
-      external: true,
-    }] : []),
     ...(lang === "ko" ? [{
       label: dict.customerSupport,
       href: `/${lang}/customer`,
