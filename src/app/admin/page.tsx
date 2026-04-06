@@ -4,6 +4,7 @@ import Link from "next/link";
 import { auth } from "@/lib/firebase";
 
 interface BoardItem { id: string; titleKo: string; createdAt: string; isPinned?: boolean; }
+interface ContactItem { id: string; name: string; subject: string; createdAt: string; isRead: boolean; category: string; }
 interface MemberItem { id: string; name: string; email: string; level: number; createdAt: string; }
 interface GASummary {
   activeUsers: number; sessions: number; pageViews: number; newUsers: number;
@@ -75,6 +76,7 @@ export default function AdminDashboard() {
   const [notices, setNotices] = useState<BoardItem[]>([]);
   const [press, setPress] = useState<BoardItem[]>([]);
   const [customer, setCustomer] = useState<BoardItem[]>([]);
+  const [contacts, setContacts] = useState<ContactItem[]>([]);
   const [members, setMembers] = useState<MemberItem[]>([]);
   const [gaData, setGaData] = useState<{
     summary: GASummary; countries: GACountry[]; trend: GATrend[];
@@ -119,10 +121,12 @@ export default function AdminDashboard() {
 
         const token = await auth.currentUser?.getIdToken();
         if (token) {
-          const membersRes = await fetch("/api/admin-members", {
-            headers: { Authorization: `Bearer ${token}` },
-          }).then(r => r.json());
+          const [membersRes, contactRes] = await Promise.all([
+            fetch("/api/admin-members", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
+            fetch("/api/contact", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
+          ]);
           setMembers(Array.isArray(membersRes) ? membersRes : []);
+          setContacts(Array.isArray(contactRes) ? contactRes : []);
           await fetchGA("30", "", "");
         }
       } catch (e) { console.error(e); }
@@ -150,6 +154,14 @@ export default function AdminDashboard() {
       items: customer, newHref: "/admin/customer/new", listHref: "/admin/customer",
       badge: (n: BoardItem) => n.isPinned
         ? <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-violet-100 text-violet-600 flex-shrink-0">공지</span>
+        : null,
+    },
+    {
+      key: "contact", label: "문의 관리", icon: "📩", color: "from-rose-500 to-rose-600",
+      items: contacts.map(c => ({ id: c.id, titleKo: c.subject || "(제목 없음)", createdAt: c.createdAt, isPinned: !c.isRead })) as BoardItem[],
+      newHref: "/admin/contact", listHref: "/admin/contact",
+      badge: (n: BoardItem) => n.isPinned
+        ? <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-red-100 text-red-600 flex-shrink-0">NEW</span>
         : null,
     },
     {

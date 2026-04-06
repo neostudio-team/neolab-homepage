@@ -120,13 +120,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Link href="/admin/customer" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/customer") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
                 <span className="text-base">🎧</span> 고객지원
               </Link>
-              <Link href="/admin/contact" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/contact") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
-                <span className="text-base">📩</span> 문의 관리
-              </Link>
 
               <div className="pt-3 pb-1">
                 <p className="px-4 text-[10px] text-white/30 uppercase tracking-widest font-semibold">관리</p>
               </div>
+              <Link href="/admin/contact" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/contact") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
+                <span className="text-base">📩</span> 문의 관리
+              </Link>
               <Link href="/admin/popups" className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${pathname.startsWith("/admin/popups") ? "bg-white/15 text-white" : "text-white/70 hover:bg-white/10 hover:text-white"}`}>
                 <span className="text-base">🖼️</span> 팝업 관리
               </Link>

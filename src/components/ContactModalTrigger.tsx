@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "@/lib/firebase";
 
 const CATEGORIES = [
   { value: "", label: "-선택-" },
@@ -80,12 +78,15 @@ export default function ContactModalTrigger({ buttonText }: Props) {
       let fileUrl = "";
       let fileName = "";
 
-      // 파일 업로드
+      // 파일 업로드 (서버 API 경유)
       if (file) {
-        const storageRef = ref(storage, `contact/${Date.now()}_${file.name}`);
-        await uploadBytes(storageRef, file);
-        fileUrl = await getDownloadURL(storageRef);
-        fileName = file.name;
+        const fd = new FormData();
+        fd.append("file", file);
+        const uploadRes = await fetch("/api/contact/upload", { method: "POST", body: fd });
+        if (!uploadRes.ok) throw new Error("파일 업로드 실패");
+        const uploadData = await uploadRes.json();
+        fileUrl = uploadData.url;
+        fileName = uploadData.name;
       }
 
       const res = await fetch("/api/contact", {
