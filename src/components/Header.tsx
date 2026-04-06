@@ -74,8 +74,6 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       href: `/${lang}/company`,
       ...(lang === "ko" ? {
         children: [
-          { label: dict.notice, href: `/${lang}/company/news` },
-          { label: dict.corporateNews, href: `/${lang}/company/press` },
           { label: dict.cibi, href: `/${lang}/bi` },
         ],
       } : {}),
@@ -142,6 +140,10 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
     ...(lang === "ko" ? [{
       label: dict.customerSupport,
       href: `/${lang}/customer`,
+      children: [
+        { label: dict.notice, href: `/${lang}/company/news` },
+        { label: dict.corporateNews, href: `/${lang}/company/press` },
+      ],
     }] : []),
   ];
 }
