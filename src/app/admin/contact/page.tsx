@@ -10,8 +10,9 @@ interface Inquiry {
   phone: string;
   subject: string;
   message: string;
-  fileUrl: string;
+  fileBase64: string;
   fileName: string;
+  fileType: string;
   isRead: boolean;
   createdAt: string;
 }
@@ -172,13 +173,21 @@ export default function AdminContactPage() {
                 <dt className="text-gray-400 mb-1">내용</dt>
                 <dd className="text-gray-800 bg-gray-50 rounded-lg p-3 whitespace-pre-wrap leading-relaxed">{detailItem.message}</dd>
               </div>
-              {detailItem.fileUrl && (
+              {detailItem.fileName && (
                 <div className="flex gap-3">
                   <dt className="w-20 text-gray-400 shrink-0">첨부파일</dt>
                   <dd>
-                    <a href={detailItem.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-sm">
-                      {detailItem.fileName || "파일 보기"}
-                    </a>
+                    {detailItem.fileBase64 ? (
+                      <a
+                        href={`data:${detailItem.fileType || "application/octet-stream"};base64,${detailItem.fileBase64}`}
+                        download={detailItem.fileName}
+                        className="text-blue-500 underline text-sm"
+                      >
+                        {detailItem.fileName}
+                      </a>
+                    ) : (
+                      <span className="text-gray-400 text-sm">{detailItem.fileName}</span>
+                    )}
                   </dd>
                 </div>
               )}

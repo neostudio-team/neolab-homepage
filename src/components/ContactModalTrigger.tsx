@@ -75,24 +75,31 @@ export default function ContactModalTrigger({ buttonText }: Props) {
     setError("");
 
     try {
-      let fileUrl = "";
+      let fileBase64 = "";
       let fileName = "";
+      let fileType = "";
 
-      // 파일 업로드 (서버 API 경유)
+      // 파일을 base64로 변환 (Storage 불필요, Firestore에 직접 저장)
       if (file) {
-        const fd = new FormData();
-        fd.append("file", file);
-        const uploadRes = await fetch("/api/contact/upload", { method: "POST", body: fd });
-        if (!uploadRes.ok) throw new Error("파일 업로드 실패");
-        const uploadData = await uploadRes.json();
-        fileUrl = uploadData.url;
-        fileName = uploadData.name;
+        if (file.size > 5 * 1024 * 1024) {
+          setError("파일 크기는 5MB 이하만 가능합니다.");
+          setSending(false);
+          return;
+        }
+        const reader = new FileReader();
+        fileBase64 = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve((reader.result as string).split(",")[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        fileName = file.name;
+        fileType = file.type;
       }
 
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, fileUrl, fileName }),
+        body: JSON.stringify({ ...form, fileBase64, fileName, fileType }),
       });
 
       if (!res.ok) throw new Error("서버 오류");

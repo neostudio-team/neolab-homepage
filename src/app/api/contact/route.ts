@@ -47,8 +47,9 @@ export async function POST(request: NextRequest) {
       phone: body.phone ?? "",
       subject: body.subject ?? "",
       message: body.message ?? "",
-      fileUrl: body.fileUrl ?? "",
+      fileBase64: body.fileBase64 ?? "",
       fileName: body.fileName ?? "",
+      fileType: body.fileType ?? "",
       isRead: false,
       createdAt: FieldValue.serverTimestamp(),
     });
