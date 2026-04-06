@@ -309,11 +309,6 @@ export default async function PokoroPage({
                 <Image src="/images/pokoro/sec06-img.png" alt="POKORO by NEOLAB" width={680} height={596} className="w-full h-auto" />
               </div>
             </div>
-            <div className="mt-20">
-              <a href="mailto:leocho@neolab.net" className="block w-full text-center text-[24px] text-white border border-white rounded-2xl py-4 hover:bg-white/10 transition-colors">
-                {t.sec06.b2bInquiry}
-              </a>
-            </div>
           </div>
         </section>
         </LazySection>
