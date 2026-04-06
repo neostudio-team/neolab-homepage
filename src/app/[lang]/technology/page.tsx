@@ -160,20 +160,20 @@ export default async function TechnologyPage({
           </div>
           <div className="max-w-[1080px] mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-8">
-              <Link href="https://www.neosmartpen.com" className="group bg-[#f1f1f1] rounded-lg p-8 flex items-center gap-6 hover:shadow-lg transition-shadow" target="_blank" rel="noopener noreferrer">
+              <div className="bg-[#f1f1f1] rounded-lg p-8 flex items-center gap-6">
                 <Image src="/images/technology/icon-smartpen.png" alt="Neo smartpen" width={80} height={80} className="shrink-0" />
                 <div>
-                  <h3 className="text-xl font-bold text-black group-hover:text-primary transition-colors">{t.applicationFields.neoSmartpen}</h3>
+                  <h3 className="text-xl font-bold text-black">{t.applicationFields.neoSmartpen}</h3>
                   <p className="text-[#666] text-sm mt-2">{t.applicationFields.neoSmartpenDesc}</p>
                 </div>
-              </Link>
-              <Link href={`/${lang}/soundpen`} className="group bg-[#f1f1f1] rounded-lg p-8 flex items-center gap-6 hover:shadow-lg transition-shadow">
+              </div>
+              <div className="bg-[#f1f1f1] rounded-lg p-8 flex items-center gap-6">
                 <Image src="/images/technology/icon-soripen.png" alt="Sound pen" width={80} height={80} className="shrink-0" />
                 <div>
-                  <h3 className="text-xl font-bold text-black group-hover:text-primary transition-colors">{t.applicationFields.soundPen}</h3>
+                  <h3 className="text-xl font-bold text-black">{t.applicationFields.soundPen}</h3>
                   <p className="text-[#666] text-sm mt-2">{t.applicationFields.soundPenDesc}</p>
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
         </section>
