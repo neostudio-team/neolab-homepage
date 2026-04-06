@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import LanguageSwitcher from "./LanguageSwitcher";
+import LangDropdownSwitcher from "./LangDropdownSwitcher";
 
 interface NavChild {
   label: string;
@@ -181,17 +182,6 @@ export default function Header({ lang, dict }: HeaderProps) {
           scrolled ? "bg-white shadow-sm" : "bg-transparent"
         }`}
       >
-        {/* Top bar (Language) — 스크롤 시만 표시 */}
-        <div
-          className={`text-[11px] lg:text-xs py-1.5 w-full transition-all duration-300 overflow-hidden ${
-            scrolled ? "bg-[#0f0000] text-white max-h-8 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="max-w-[1080px] mx-auto px-4 flex items-center justify-end">
-            <LanguageSwitcher lang={lang} linkClassName="hover:text-primary mx-1 opacity-60 hover:opacity-100" />
-          </div>
-        </div>
-
         {/* Main header */}
         <div className="w-full">
           <div className="max-w-[1080px] mx-auto px-4 flex items-center justify-between h-[60px]">
@@ -266,6 +256,7 @@ export default function Header({ lang, dict }: HeaderProps) {
                   )}
                 </div>
               ))}
+              <LangDropdownSwitcher lang={lang} scrolled={scrolled} />
             </nav>
 
             {/* Mobile menu button */}
