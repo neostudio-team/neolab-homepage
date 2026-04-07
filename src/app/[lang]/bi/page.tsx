@@ -129,40 +129,30 @@ export default async function BiPage({ params }: { params: Promise<{ lang: Local
 
         <div>
           <h3 className="text-[24px] font-medium text-[#444] mb-8">LOGO</h3>
-          
-          <div className="flex flex-col gap-6">
-              {/* Type 1 - Horizontal standard */}
-              <div className="grid grid-cols-4 gap-4 p-8 items-center bg-white border border-gray-100 mb-2">
-                 <div className="flex justify-center"><img src="/images/bi/logo_01.png" className="max-h-8" alt="Logo Variant"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_02.png" className="max-h-8" alt="Logo Variant"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_03.png" className="max-h-8" alt="Logo Variant"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_04.png" className="max-h-8" alt="Logo Variant"/></div>
+
+          <div className="flex flex-col gap-1">
+              {/* White background */}
+              <p className="text-[13px] text-[#999] mb-2">White</p>
+              <div className="grid grid-cols-3 gap-4 p-8 items-center bg-white border border-gray-200 mb-4">
+                 <div className="flex justify-center"><img src="/images/bi/logo_01.png" className="max-h-10 w-auto" alt="Logo — Color"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_02.png" className="max-h-10 w-auto" alt="Logo — Gray"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_03.png" className="max-h-10 w-auto" alt="Logo — Black"/></div>
               </div>
 
-              {/* Type 2 - Horizontal inverted */}
-              <div className="grid grid-cols-4 gap-4 p-8 items-center bg-[#53565A]">
-                 <div className="flex justify-center"><img src="/images/bi/logo_05.png" className="max-h-8" alt="Logo Variant"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_06.png" className="max-h-8" alt="Logo Variant"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_07.png" className="max-h-8" alt="Logo Variant"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_08.png" className="max-h-8" alt="Logo Variant"/></div>
+              {/* Gray background */}
+              <p className="text-[13px] text-[#999] mb-2">Gray</p>
+              <div className="grid grid-cols-3 gap-4 p-8 items-center bg-[#53565A] mb-4">
+                 <div className="flex justify-center"><img src="/images/bi/logo_05.png" className="max-h-10 w-auto" alt="Logo — Color on Dark"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_06.png" className="max-h-10 w-auto" alt="Logo — White on Dark"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_07.png" className="max-h-10 w-auto" alt="Logo — Orange on Dark"/></div>
               </div>
 
-              {/* Type 3 - Symbol Only */}
-              <div className="flex justify-between p-8 items-center border border-gray-100 bg-white">
-                 <div className="text-[24px] font-medium text-[#444]">Symbol</div>
-                 <div className="flex gap-24 pr-24">
-                    <img src="/images/bi/logo_09.png" className="max-h-[60px]" alt="Symbol Variant"/>
-                    <img src="/images/bi/logo_10.png" className="max-h-[60px]" alt="Symbol Variant"/>
-                 </div>
-              </div>
-
-              {/* Type 4 - Symbol Only Inverted */}
-              <div className="flex justify-between p-8 items-center bg-[#53565A]">
-                 <div className="text-[24px] font-medium text-white">Symbol</div>
-                 <div className="flex gap-24 pr-24">
-                    <img src="/images/bi/logo_11.png" className="max-h-[60px]" alt="Symbol Variant"/>
-                    <img src="/images/bi/logo_12.png" className="max-h-[60px]" alt="Symbol Variant"/>
-                 </div>
+              {/* Orange background */}
+              <p className="text-[13px] text-[#999] mb-2">Orange</p>
+              <div className="grid grid-cols-3 gap-4 p-8 items-center bg-[#ff6720]">
+                 <div className="flex justify-center"><img src="/images/bi/logo_09.png" className="max-h-10 w-auto" alt="Logo — Dark on Orange"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_10.png" className="max-h-10 w-auto" alt="Logo — White on Orange"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_11.png" className="max-h-10 w-auto" alt="Logo — Orange on Orange"/></div>
               </div>
           </div>
         </div>
