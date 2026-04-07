@@ -1576,9 +1576,9 @@ const ja = {
     },
     target: {
       heading: "対象学年・教科",
-      grades: ["小学校1〜2年", "小学校3〜4年", "小学校5〜6年", "中学校", "高校"],
+      grades: ["小学校", "中学校", "高校"],
       subjects: ["国語", "数学"],
-      env: ["PC（Windows / macOS）", "タブレット", "モバイル（Android / iOS）"],
+      env: ["PC（Windows）"],
     },
     pricing: {
       heading: "料金プラン",

@@ -1578,9 +1578,9 @@ const ko = {
     },
     target: {
       heading: "활용 대상 및 교과",
-      grades: ["초등 1~2학년", "초등 3~4학년", "초등 5~6학년", "중학교", "고등학교"],
+      grades: ["초등학교", "중학교", "고등학교"],
       subjects: ["국어", "수학"],
-      env: ["PC (Windows / macOS)", "태블릿", "모바일 (Android / iOS)"],
+      env: ["PC (Windows)"],
     },
     pricing: {
       heading: "이용 요금",

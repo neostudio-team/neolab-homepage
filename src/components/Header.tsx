@@ -77,7 +77,6 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
         children: [
           { label: "개요", href: `/${lang}/company` },
           { label: dict.cibi, href: `/${lang}/bi` },
-          { label: dict.career, href: "https://neolab.career.greetinghr.com/ko/intro", external: true },
         ],
       } : {}),
     },
@@ -128,6 +127,10 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
         { label: dict.notice, href: `/${lang}/company/news` },
         { label: dict.corporateNews, href: `/${lang}/company/press` },
       ],
+    }, {
+      label: dict.career,
+      href: "https://neolab.career.greetinghr.com/ko/intro",
+      external: true,
     }] : []),
   ];
 }

@@ -1612,9 +1612,9 @@ const en = {
     },
     target: {
       heading: "Target Users & Subjects",
-      grades: ["Elementary (Gr. 1–2)", "Elementary (Gr. 3–4)", "Elementary (Gr. 5–6)", "Middle School", "High School"],
+      grades: ["Elementary School", "Middle School", "High School"],
       subjects: ["Korean Language", "Mathematics"],
-      env: ["PC (Windows / macOS)", "Tablet", "Mobile (Android / iOS)"],
+      env: ["PC (Windows)"],
     },
     pricing: {
       heading: "Pricing",
