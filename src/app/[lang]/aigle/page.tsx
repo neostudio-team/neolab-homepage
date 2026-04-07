@@ -208,9 +208,9 @@ export default async function AiglePage({
                   지원 환경
                 </h3>
                 <ul className="space-y-2">
-                  {t.target.env.map((e) => (
-                    <li key={e} className="flex items-center gap-2 text-white/70 text-[15px]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#4fa8d5] shrink-0" />
+                  {t.target.env.map((e, i) => (
+                    <li key={e} className={`flex items-center gap-2 text-[15px] ${i === 0 ? "text-white/70" : "text-white/50 text-[13px] pl-4"}`}>
+                      <span className={`rounded-full shrink-0 ${i === 0 ? "w-1.5 h-1.5 bg-[#4fa8d5]" : "w-1 h-1 bg-white/30"}`} />
                       {e}
                     </li>
                   ))}

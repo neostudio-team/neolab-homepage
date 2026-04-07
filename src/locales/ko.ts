@@ -1579,8 +1579,8 @@ const ko = {
     target: {
       heading: "활용 대상 및 교과",
       grades: ["초등학교", "중학교", "고등학교"],
-      subjects: ["국어", "수학"],
-      env: ["PC (Windows)"],
+      subjects: ["국어", "수학", "영어", "사회", "과학", "기타 과목"],
+      env: ["PC (Windows)", "Chrome 브라우저 권장"],
     },
     pricing: {
       heading: "이용 요금",

@@ -1577,8 +1577,8 @@ const ja = {
     target: {
       heading: "対象学年・教科",
       grades: ["小学校", "中学校", "高校"],
-      subjects: ["国語", "数学"],
-      env: ["PC（Windows）"],
+      subjects: ["国語", "数学", "英語", "社会", "理科", "その他の科目"],
+      env: ["PC（Windows）", "Chromeブラウザ推奨"],
     },
     pricing: {
       heading: "料金プラン",

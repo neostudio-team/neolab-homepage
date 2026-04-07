@@ -1613,8 +1613,8 @@ const en = {
     target: {
       heading: "Target Users & Subjects",
       grades: ["Elementary School", "Middle School", "High School"],
-      subjects: ["Korean Language", "Mathematics"],
-      env: ["PC (Windows)"],
+      subjects: ["Korean Language", "Mathematics", "English", "Social Studies", "Science", "Other Subjects"],
+      env: ["PC (Windows)", "Chrome browser recommended"],
     },
     pricing: {
       heading: "Pricing",
