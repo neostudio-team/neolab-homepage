@@ -111,7 +111,7 @@ function getNavItems(lang: Locale, dict: HeaderProps["dict"]): NavItem[] {
       href: "#",
       children: [
         { label: dict.neoStudio, href: `/${lang}/apps/neo-studio` },
-        { label: dict.aigle, href: "https://aigle.neolab.net", external: true },
+        { label: dict.aigle, href: `/${lang}/aigle` },
         { label: dict.gridaboard, href: `/${lang}/apps/gridaboard` },
         { label: dict.penManager, href: `/${lang}/apps/penmanager` },
       ],
@@ -171,7 +171,7 @@ export default function Header({ lang, dict }: HeaderProps) {
             <Link href="https://smartstore.naver.com/pokoro?n_media=27758&n_query=%ED%8F%AC%EC%BD%94%EB%A1%9C&n_rank=1&n_ad_group=grp-a001-04-000000057244674&n_ad=nad-a001-04-000000479444805&n_keyword_id=nkw-a001-04-000007651633461&n_keyword=%ED%8F%AC%EC%BD%94%EB%A1%9C&n_campaign_type=4&n_contract=tct-a001-04-000000001228285&n_ad_group_type=5&NaPm=ct%3Dmn2obx2f%7Cci%3DER1927f3db%2D266f%2D11f1%2D952e%2D3ac0aae6ed3f%7Ctr%3Dbrnd%7Chk%3D3ed989dad874bfc1fe716527012b0a5af32115ba%7Cnacn%3DMJuAB0AtEIMQ" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-700 hover:text-[#ff4e00] transition-colors border-b border-gray-50 pb-2">{dict.quickMenu.pokoroShop}</Link>
           )}
           {lang === 'ko' && (
-            <Link href="https://aigle.neolab.net" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-700 hover:text-[#ff4e00] transition-colors border-b border-gray-50 pb-2">{dict.quickMenu.aigleGoto}</Link>
+            <Link href={`/${lang}/aigle`} className="text-sm font-medium text-gray-700 hover:text-[#ff4e00] transition-colors border-b border-gray-50 pb-2">{dict.quickMenu.aigleGoto}</Link>
           )}
           {lang === 'ko' && (
             <Link href={`/${lang}/customer`} className="text-sm font-medium text-gray-700 hover:text-[#ff4e00] transition-colors">{dict.quickMenu.customerSupport}</Link>

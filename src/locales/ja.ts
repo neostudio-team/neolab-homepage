@@ -107,7 +107,7 @@ const ja = {
         { name: "サウンドペン", desc: "本を聴く最高の方法", href: "/ja/soundpen", image: "/images/soundpen/Neo_poppen.png" },
         { name: "Neo Smartpen", desc: "比類なきパフォーマンス", href: "/ja/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
         { name: "POKORO", desc: "AI Learning Mate", href: "/ja/pokoro", image: "/images/pokoro/Group39.png" },
-        { name: "AiGLE", desc: "AI 記述式評価ソリューション", href: "https://aigle.neolab.net", image: "/images/home/product-aigle.jpg" },
+        { name: "AiGLE", desc: "AI 記述式評価ソリューション", href: "/ja/aigle", image: "/images/home/product-aigle.jpg" },
         { name: "Neo Studio 2", desc: "すべてのデバイスで手書きを共有", href: "/ja/neosmartpen/neo-studio", image: "/images/neosmartpen/apps/neo-studio/NeoStudio_landing01.jpg" },
       ],
     },
@@ -1534,6 +1534,69 @@ const ja = {
         p3: "解決策を見つけるという決意のもと、画面なしで子どもたちが夢中になれるAIデバイス、POKOROを開発しました。",
       },
       b2bInquiry: "法人のお問い合わせは leocho@neolab.net までご連絡ください",
+    },
+  },
+  aigle: {
+    hero: {
+      label: "NeoLAB Convergence",
+      title: "AiGLE",
+      subtitle: "手書きで行う記述・論述\nAI評価支援サービス",
+      cta: "今すぐ始める",
+      ctaSub: "導入のお問い合わせ",
+    },
+    intro: {
+      heading: "AiGLE（アイグル）とは？",
+      desc: "NeoLAB Convergenceが開発した紙ベースの記述・論述型AI評価・フィードバックサービスです。スマートペンを使って筆記速度・筆順・筆圧など書くプロセス全体をデジタルデータとして記録し、AIが結果だけでなく思考の流れや考察の痕跡まで分析します。",
+      highlight: "教師は生徒の思考力を立体的に把握し、信頼性の高いプロセス中心の評価と個別成長フィードバックを提供できます。",
+    },
+    features: {
+      heading: "主な機能",
+      items: [
+        {
+          title: "スマートペン接続だけでAI採点完了",
+          desc: "生徒はいつも通り紙に手書きで回答。先生はスマートペンを接続するだけで、複数名の筆記データが自動アップロードされ、AI採点まで一括完了します。",
+        },
+        {
+          title: "AIが評価基準表を即時設計",
+          desc: "先生が問題を入力すると、AIが最適化された評価基準を即座に提案。採点準備にかかる時間を大幅に削減できます。",
+        },
+        {
+          title: "プロセス中心の評価",
+          desc: "単純な結果採点を超え、筆記速度・筆順・筆圧などを分析。生徒の思考の流れや熟考の痕跡まで立体的に把握できます。",
+        },
+      ],
+    },
+    howItWorks: {
+      heading: "活用方法",
+      steps: [
+        { step: "01", title: "手書きで回答を記述", desc: "生徒はいつも通り紙に記述・論述型の回答を手書きします。" },
+        { step: "02", title: "スマートペン接続＆自動アップロード", desc: "スマートペンをPCに接続すると、全筆記データがAiGLEに自動転送されます。" },
+        { step: "03", title: "AI採点＆個別フィードバック", desc: "AIが即座に採点し、教師は結果を確認して生徒ごとに個別フィードバックを提供します。" },
+      ],
+    },
+    target: {
+      heading: "対象学年・教科",
+      grades: ["小学校1〜2年", "小学校3〜4年", "小学校5〜6年", "中学校", "高校"],
+      subjects: ["国語", "数学"],
+      env: ["PC（Windows / macOS）", "タブレット", "モバイル（Android / iOS）"],
+    },
+    pricing: {
+      heading: "料金プラン",
+      desc: "事前クレジット購入後、評価ごとに消費する方式です。スマートペン＋クレードルは別途購入が必要です。",
+      plans: [
+        { name: "AiGLE 30", price: "₩1,000,000", credit: "1,500クレジット付与" },
+        { name: "AiGLE 60", price: "₩1,500,000", credit: "3,000クレジット付与" },
+        { name: "AiGLE 100", price: "₩2,000,000", credit: "4,500クレジット付与" },
+        { name: "AiGLE 150", price: "₩3,000,000", credit: "7,500クレジット付与" },
+      ],
+    },
+    cta: {
+      heading: "今すぐ始めましょう",
+      desc: "導入のお問い合わせ・デモのご依頼はこちらまで。",
+      email: "aigle@neolab.net",
+      phone: "02-3462-2981",
+      btn: "今すぐ始める",
+      btnSub: "デモを依頼する",
     },
   },
 } as const;

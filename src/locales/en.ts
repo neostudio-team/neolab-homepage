@@ -101,7 +101,7 @@ const en = {
         { name: "Sound Pen", desc: "The best way to listen to books", href: "/en/soundpen", image: "/images/soundpen/Neo_poppen.png" },
         { name: "Neo Smartpen", desc: "Unparalleled performance", href: "/en/neosmartpen/product-m1", image: "/images/neosmartpen/products/m1/M1.png" },
         { name: "POKORO", desc: "AI Learning Mate", href: "/en/pokoro", image: "/images/pokoro/Group39.png" },
-        { name: "AiGLE", desc: "AI Essay & Short-Answer Grading", href: "https://aigle.neolab.net", image: "/images/home/product-aigle.jpg" },
+        { name: "AiGLE", desc: "AI Essay & Short-Answer Grading", href: "/en/aigle", image: "/images/home/product-aigle.jpg" },
         { name: "Neo Studio 2", desc: "Your handwriting, on every device", href: "/en/neosmartpen/neo-studio", image: "/images/neosmartpen/apps/neo-studio/NeoStudio_landing01.jpg" },
       ],
     },
@@ -1570,6 +1570,69 @@ const en = {
         p3: "Determined to find a solution, we created POKORO — an AI device that keeps kids engaged without screens.",
       },
       b2bInquiry: "For B2B Inquiry, Please Contact leocho@neolab.net",
+    },
+  },
+  aigle: {
+    hero: {
+      label: "NeoLAB Convergence",
+      title: "AiGLE",
+      subtitle: "AI-Powered Essay & Short-Answer\nAssessment Service",
+      cta: "Get Started",
+      ctaSub: "Contact for Adoption",
+    },
+    intro: {
+      heading: "What is AiGLE?",
+      desc: "AiGLE is a paper-based AI assessment and feedback service developed by NeoLAB Convergence. Using a smart pen, it records the entire writing process—speed, stroke order, pressure—as digital data. AI analyzes not just the result, but the flow of thought and the traces of deliberation.",
+      highlight: "Teachers gain a three-dimensional understanding of students' thinking, enabling reliable process-based evaluation and personalized growth feedback.",
+    },
+    features: {
+      heading: "Key Features",
+      items: [
+        {
+          title: "AI Grading Complete with One Connection",
+          desc: "Students write on paper as usual. Teachers simply connect the smart pen—handwriting data from multiple students uploads automatically and AI grading completes in one step.",
+        },
+        {
+          title: "AI Instantly Designs Rubrics",
+          desc: "When a teacher inputs a question, AI immediately suggests an optimized assessment rubric. Drastically reduce time spent on grading preparation.",
+        },
+        {
+          title: "Process-Centered Assessment",
+          desc: "Beyond simple result grading, AiGLE analyzes the entire writing process—speed, stroke order, and pressure—to capture students' thinking flow and moments of deliberation.",
+        },
+      ],
+    },
+    howItWorks: {
+      heading: "How It Works",
+      steps: [
+        { step: "01", title: "Write Answers by Hand", desc: "Students write essay-style answers on paper with a smart pen as usual." },
+        { step: "02", title: "Connect Pen & Auto-Upload", desc: "Connect the smart pen to a PC and all handwriting data transfers to AiGLE automatically." },
+        { step: "03", title: "AI Grading & Feedback", desc: "AI grades instantly. Teachers review results and provide personalized feedback to each student." },
+      ],
+    },
+    target: {
+      heading: "Target Users & Subjects",
+      grades: ["Elementary (Gr. 1–2)", "Elementary (Gr. 3–4)", "Elementary (Gr. 5–6)", "Middle School", "High School"],
+      subjects: ["Korean Language", "Mathematics"],
+      env: ["PC (Windows / macOS)", "Tablet", "Mobile (Android / iOS)"],
+    },
+    pricing: {
+      heading: "Pricing",
+      desc: "Pre-purchase credits, deducted per assessment. Smart pen + cradle sold separately.",
+      plans: [
+        { name: "AiGLE 30", price: "₩1,000,000", credit: "1,500 credits" },
+        { name: "AiGLE 60", price: "₩1,500,000", credit: "3,000 credits" },
+        { name: "AiGLE 100", price: "₩2,000,000", credit: "4,500 credits" },
+        { name: "AiGLE 150", price: "₩3,000,000", credit: "7,500 credits" },
+      ],
+    },
+    cta: {
+      heading: "Get Started Today",
+      desc: "Contact us for adoption inquiries and demo requests.",
+      email: "aigle@neolab.net",
+      phone: "02-3462-2981",
+      btn: "Get Started",
+      btnSub: "Request a Demo",
     },
   },
 } as const;
