@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ContactForm from "@/components/ContactForm";
+import ContactModalTrigger from "@/components/ContactModalTrigger";
 import LazySection from "@/components/LazySection";
 import PartnershipCategories from "@/components/PartnershipCategories";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -157,15 +157,18 @@ export default async function PartnershipPage({
         {/* Contact */}
         <LazySection>
         <section className="py-[54px] bg-[#f1f1f1]" id="collab">
-          <div className="max-w-[1080px] mx-auto px-4 text-center mb-12">
+          <div className="max-w-[1080px] mx-auto px-4 text-center">
             <h2 className="text-[30px] font-medium text-black mb-4">{dict.common.creatingNewValue}</h2>
-            <p className="text-[#666]">
+            <p className="text-[#666] mb-8">
               {dict.common.contactUsAt}{" "}
               <a href="mailto:korbiz@neolab.net" className="text-primary hover:underline">korbiz@neolab.net</a>
             </p>
-          </div>
-          <div className="max-w-lg mx-auto">
-            <ContactForm dict={dict.common.contactForm} />
+            <ContactModalTrigger
+              buttonText={dict.common.contactUs}
+              variant="pill"
+              defaultCategory="제안사항"
+              pillClassName="inline-block bg-primary text-white px-8 py-3 rounded font-semibold hover:bg-primary-dark transition-colors uppercase tracking-wider text-sm"
+            />
           </div>
         </section>
 
