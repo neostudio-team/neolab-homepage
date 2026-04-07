@@ -11,6 +11,9 @@ const CATEGORIES = [
   { value: "아이글 문의", label: "아이글 문의" },
   { value: "그리다보드 문의", label: "그리다보드 문의" },
   { value: "소리펜 문의", label: "소리펜 문의" },
+  { value: "네오스마트펜 문의", label: "네오스마트펜 문의" },
+  { value: "미디어플레이어 문의", label: "미디어플레이어 문의" },
+  { value: "빔프로젝터 문의", label: "빔프로젝터 문의" },
   { value: "기타문의", label: "기타문의" },
 ];
 

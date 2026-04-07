@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomerInquiryForm from "@/components/CustomerInquiryForm";
+import ContactModalTrigger from "@/components/ContactModalTrigger";
 import SupportFaqAccordion from "@/components/support/SupportFaqAccordion";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
@@ -155,7 +155,19 @@ export default async function SupportMediaplayerPage({ params }: { params: Promi
         </section>
 
         {/* 문의하기 */}
-        <CustomerInquiryForm />
+        <section className="py-16 bg-white">
+          <div className="max-w-[600px] mx-auto px-4 text-center">
+            <p className="text-[#E1A02E] text-sm font-bold tracking-widest uppercase mb-3">Contact Us</p>
+            <h2 className="text-[24px] font-bold text-[#333] mb-3">문의하기</h2>
+            <p className="text-[14px] text-[#666] mb-8">미디어플레이어 관련 문의사항이 있으시면 아래 버튼을 통해 문의해 주세요.<br />담당자 확인 후 빠르게 답변드리겠습니다.</p>
+            <ContactModalTrigger
+              buttonText="문의하기"
+              variant="pill"
+              defaultCategory="미디어플레이어 문의"
+              pillClassName="inline-block bg-black text-white text-sm px-8 py-3 rounded-full hover:opacity-80 transition-opacity"
+            />
+          </div>
+        </section>
 
         {/* 뒤로 가기 */}
         <div className="max-w-[1080px] mx-auto px-4 py-8">

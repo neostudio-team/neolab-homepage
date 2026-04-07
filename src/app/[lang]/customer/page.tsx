@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomerInquiryForm from "@/components/CustomerInquiryForm";
+import ContactModalTrigger from "@/components/ContactModalTrigger";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { adminDb } from "@/lib/firebase-admin";
@@ -227,7 +227,19 @@ export default async function CustomerPage({ params }: { params: Promise<{ lang:
         </section>
 
         {/* Inquiry Form Section */}
-        <CustomerInquiryForm />
+        <section className="py-16 bg-[#FCF9F9]">
+          <div className="max-w-[600px] mx-auto px-4 text-center">
+            <p className="text-[#E1A02E] text-sm font-bold tracking-widest uppercase mb-3">Contact Us</p>
+            <h2 className="text-[24px] font-bold text-[#333] mb-3">문의하기</h2>
+            <p className="text-[14px] text-[#666] mb-8">해당하는 제품의 자주 묻는 질문에서 원하는 답변을 찾을 수 없는 경우,<br />아래 버튼을 통해 문의해 주세요. 담당자 확인 후 빠르게 답변드리겠습니다.</p>
+            <ContactModalTrigger
+              buttonText="문의하기"
+              variant="pill"
+              defaultCategory="제품문의"
+              pillClassName="inline-block bg-black text-white text-sm px-8 py-3 rounded-full hover:opacity-80 transition-opacity"
+            />
+          </div>
+        </section>
 
         {/* Contact Info Section */}
         <section className="py-16 bg-white">
