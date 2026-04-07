@@ -9,6 +9,7 @@ const CATEGORIES = [
   { value: "대량구매문의", label: "대량구매문의" },
   { value: "산업용제품문의", label: "산업용제품문의" },
   { value: "아이글 문의", label: "아이글 문의" },
+  { value: "그리다보드 문의", label: "그리다보드 문의" },
   { value: "기타문의", label: "기타문의" },
 ];
 

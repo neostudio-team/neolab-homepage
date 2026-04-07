@@ -4,6 +4,7 @@ import type { Locale } from "@/i18n/config";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ContactModalTrigger from "@/components/ContactModalTrigger";
 
 const IMG = "/images/neosmartpen/apps/gridaboard";
 
@@ -238,14 +239,12 @@ export default async function GridaBoardPage({ params }: { params: Promise<{ lan
               <p className="text-[15px] text-[#666] mb-8">
                 {(t as { bulkPurchase: { title: string; desc: string; cta: string } }).bulkPurchase.desc}
               </p>
-              <a
-                href="https://gridaboard.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-8 py-3 bg-[#2d2d2d] text-white text-[14px] font-medium hover:bg-[#444] transition-colors uppercase tracking-wider"
-              >
-                {(t as { bulkPurchase: { title: string; desc: string; cta: string } }).bulkPurchase.cta}
-              </a>
+              <ContactModalTrigger
+                buttonText={(t as { bulkPurchase: { title: string; desc: string; cta: string } }).bulkPurchase.cta}
+                variant="pill"
+                defaultCategory="그리다보드 문의"
+                pillClassName="inline-block px-8 py-3 bg-[#2d2d2d] text-white text-[14px] font-medium hover:bg-[#444] transition-colors uppercase tracking-wider rounded-none"
+              />
             </div>
           </section>
         )}
