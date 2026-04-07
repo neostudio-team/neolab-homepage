@@ -59,18 +59,18 @@ export default async function BiPage({ params }: { params: Promise<{ lang: Local
 
         <div>
           <h3 className="text-[24px] font-medium text-[#444] mb-8">LOGO</h3>
-          <div className="grid grid-cols-4 gap-6 items-center">
-            <div className="p-8 flex justify-center items-center">
-               <img src="/images/NeoLAB-CI_01.png" alt="NeoLAB Logo 1" className="max-h-[80px]" />
+          <div className="grid grid-cols-4 gap-4 items-stretch border border-gray-100">
+            <div className="p-8 flex justify-center items-center bg-white">
+               <img src="/images/bi/NeoLAB-CI-2.png" alt="NeoLAB Logo — Gray" className="max-h-[60px] w-auto" />
             </div>
-            <div className="p-8 flex justify-center items-center">
-               <img src="/images/NeoLAB-CI_01.png" alt="NeoLAB Logo 2" className="max-h-[80px]" style={{filter: 'grayscale(100%) contrast(1000%)'}} />
+            <div className="p-8 flex justify-center items-center bg-white">
+               <img src="/images/bi/NeoLAB-CI-4.png" alt="NeoLAB Logo — Dark" className="max-h-[60px] w-auto" />
             </div>
-            <div className="p-8 flex justify-center items-center">
-               <img src="/images/NeoLAB-CI_01.png" alt="NeoLAB Logo 3" className="max-h-[80px]" />
+            <div className="p-8 flex justify-center items-center bg-white">
+               <img src="/images/bi/NeoLAB-CI-3.png" alt="NeoLAB Logo — Color" className="max-h-[60px] w-auto" />
             </div>
-            <div className="bg-[#53565A] p-8 flex justify-center items-center rounded-lg">
-               <img src="/images/NeoLAB-CI_01.png" alt="NeoLAB Logo 4" className="max-h-[40px] opacity-100" style={{filter: 'brightness(0) invert(1)'}} />
+            <div className="p-8 flex justify-center items-center bg-[#53565A]">
+               <img src="/images/bi/NeoLAB-CI-1.png" alt="NeoLAB Logo — White" className="max-h-[60px] w-auto" />
             </div>
           </div>
         </div>
@@ -82,27 +82,8 @@ export default async function BiPage({ params }: { params: Promise<{ lang: Local
         
         <div className="mb-20">
           <h3 className="text-[24px] font-medium text-[#444] mb-8">브랜드 스토리</h3>
-          <div className="flex justify-center items-center py-16">
-            <div className="flex items-center gap-6">
-                <div className="flex flex-col items-center">
-                   <div className="h-24 w-24 mb-4 relative flex justify-center items-center"><img src="/images/bi/bi_tree.png" alt="Tree" className="max-h-full max-w-full" /></div>
-                   <p className="text-[#666] font-medium text-lg">노트의 시작 <span className="text-black font-bold">나무</span></p>
-                </div>
-                <div className="text-4xl text-gray-400 font-light px-2">+</div>
-                <div className="flex flex-col items-center">
-                   <div className="h-24 w-24 mb-4 relative flex justify-center items-center"><img src="/images/bi/bi_pen.png" alt="Pen" className="max-h-full max-w-full" /></div>
-                   <p className="text-[#666] font-medium text-lg">필기의 시작 <span className="text-black font-bold">펜</span></p>
-                </div>
-                <div className="text-4xl text-gray-400 font-light px-2">+</div>
-                <div className="flex flex-col items-center">
-                   <div className="h-24 w-24 mb-4 relative flex justify-center items-center"><img src="/images/bi/bi_box.png" alt="App" className="max-h-full max-w-full" /></div>
-                   <p className="text-[#666] font-medium text-lg">서비스의 시작 <span className="text-black font-bold">앱</span></p>
-                </div>
-                <div className="text-4xl text-gray-400 font-bold px-8">=</div>
-                <div className="flex flex-col items-center">
-                   <div className="h-40 w-40 relative flex justify-center items-center"><img src="/images/bi/bi_neo.png" alt="Neo Symbol" className="max-h-full max-w-full" /></div>
-                </div>
-            </div>
+          <div className="flex justify-center py-8">
+            <img src="/images/bi/bi01.jpg" alt="브랜드 스토리 — 나무 + 펜 + 앱 = Neo Symbol" className="max-w-full w-auto" />
           </div>
         </div>
         
@@ -130,29 +111,39 @@ export default async function BiPage({ params }: { params: Promise<{ lang: Local
         <div>
           <h3 className="text-[24px] font-medium text-[#444] mb-8">LOGO</h3>
 
-          <div className="flex flex-col gap-1">
-              {/* White background */}
-              <p className="text-[13px] text-[#999] mb-2">White</p>
-              <div className="grid grid-cols-3 gap-4 p-8 items-center bg-white border border-gray-200 mb-4">
-                 <div className="flex justify-center"><img src="/images/bi/logo_01.png" className="max-h-10 w-auto" alt="Logo — Color"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_02.png" className="max-h-10 w-auto" alt="Logo — Gray"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_03.png" className="max-h-10 w-auto" alt="Logo — Black"/></div>
+          <div className="flex flex-col gap-6">
+              {/* Grey logos on white background */}
+              <div className="grid grid-cols-4 gap-4 p-8 items-center bg-white border border-gray-100">
+                 <div className="flex justify-center"><img src="/images/bi/logo_01.png" className="max-h-12 w-auto" alt="NEO SMARTPEN grey_01"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_02.png" className="max-h-12 w-auto" alt="NEO SMARTPEN grey_02"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_03.png" className="max-h-12 w-auto" alt="NEO SMARTPEN grey_03"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_04.png" className="max-h-12 w-auto" alt="NEO SMARTPEN grey_04"/></div>
               </div>
 
-              {/* Gray background */}
-              <p className="text-[13px] text-[#999] mb-2">Gray</p>
-              <div className="grid grid-cols-3 gap-4 p-8 items-center bg-[#53565A] mb-4">
-                 <div className="flex justify-center"><img src="/images/bi/logo_05.png" className="max-h-10 w-auto" alt="Logo — Color on Dark"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_06.png" className="max-h-10 w-auto" alt="Logo — White on Dark"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_07.png" className="max-h-10 w-auto" alt="Logo — Orange on Dark"/></div>
+              {/* White logos on dark background */}
+              <div className="grid grid-cols-4 gap-4 p-8 items-center bg-[#53565A]">
+                 <div className="flex justify-center"><img src="/images/bi/logo_05.png" className="max-h-12 w-auto" alt="NEO SMARTPEN white_01"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_06.png" className="max-h-12 w-auto" alt="NEO SMARTPEN white_02"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_07.png" className="max-h-12 w-auto" alt="NEO SMARTPEN white_03"/></div>
+                 <div className="flex justify-center"><img src="/images/bi/logo_08.png" className="max-h-12 w-auto" alt="NEO SMARTPEN white_04"/></div>
               </div>
 
-              {/* Orange background */}
-              <p className="text-[13px] text-[#999] mb-2">Orange</p>
-              <div className="grid grid-cols-3 gap-4 p-8 items-center bg-[#ff6720]">
-                 <div className="flex justify-center"><img src="/images/bi/logo_09.png" className="max-h-10 w-auto" alt="Logo — Dark on Orange"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_10.png" className="max-h-10 w-auto" alt="Logo — White on Orange"/></div>
-                 <div className="flex justify-center"><img src="/images/bi/logo_11.png" className="max-h-10 w-auto" alt="Logo — Orange on Orange"/></div>
+              {/* Symbol — grey on white */}
+              <div className="flex justify-between p-8 items-center border border-gray-100 bg-white">
+                 <div className="text-[24px] font-medium text-[#444]">Symbol</div>
+                 <div className="flex gap-16 pr-16">
+                    <img src="/images/bi/logo_09.png" className="max-h-[60px] w-auto" alt="Symbol grey_02"/>
+                    <img src="/images/bi/logo_10.png" className="max-h-[60px] w-auto" alt="Symbol grey_01"/>
+                 </div>
+              </div>
+
+              {/* Symbol — white on dark */}
+              <div className="flex justify-between p-8 items-center bg-[#53565A]">
+                 <div className="text-[24px] font-medium text-white">Symbol</div>
+                 <div className="flex gap-16 pr-16">
+                    <img src="/images/bi/logo_11.png" className="max-h-[60px] w-auto" alt="Symbol white_02"/>
+                    <img src="/images/bi/logo_12.png" className="max-h-[60px] w-auto" alt="Symbol white_01"/>
+                 </div>
               </div>
           </div>
         </div>
