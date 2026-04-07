@@ -1159,7 +1159,7 @@ const ja = {
       },
       s3: {
         title: "購入方法",
-        desc: "下のボタンをクリックして、Neo smartpen、Neoノートブック、RECO、その他の製品を購入できます",
+        desc: "下のボタンをクリックして、Neo smartpen、Neoノートブック、その他の製品を購入できます",
         cta: "購入する",
       },
     },

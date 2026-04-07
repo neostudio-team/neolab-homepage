@@ -1173,7 +1173,7 @@ const en = {
       },
       s3: {
         title: "How to Purchase",
-        desc: "Click the button below to purchase Neo smartpen, Neo Notebooks, RECO and other products",
+        desc: "Click the button below to purchase Neo smartpen, Neo Notebooks and other products",
         cta: "Purchase",
       },
     },

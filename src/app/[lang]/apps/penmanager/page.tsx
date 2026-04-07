@@ -162,7 +162,7 @@ export default async function PenManagerPage({ params }: { params: Promise<{ lan
                 {t.s3.desc}
               </p>
               <a
-                href="https://shop.neosmartpen.com"
+                href={lang === "ko" ? "https://store.neosmartpen.com/" : lang === "ja" ? "https://neosmartpenjp.com/" : "https://shop.neosmartpen.com/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block px-8 py-3 bg-[#2d2d2d] text-white text-[14px] font-medium hover:bg-[#444] transition-colors"
