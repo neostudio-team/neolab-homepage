@@ -8,6 +8,7 @@ const CATEGORIES = [
   { value: "제안사항", label: "제안사항 (콜라보레이션 포함)" },
   { value: "대량구매문의", label: "대량구매문의" },
   { value: "산업용제품문의", label: "산업용제품문의" },
+  { value: "아이글 문의", label: "아이글 문의" },
   { value: "기타문의", label: "기타문의" },
 ];
 
@@ -15,9 +16,12 @@ const FIELD = "w-full bg-[#5a5250] text-white placeholder-white/50 px-4 py-3 rou
 
 interface Props {
   buttonText: string;
+  variant?: "circle" | "pill";
+  pillClassName?: string;
+  defaultCategory?: string;
 }
 
-export default function ContactModalTrigger({ buttonText }: Props) {
+export default function ContactModalTrigger({ buttonText, variant = "circle", pillClassName, defaultCategory = "" }: Props) {
   const [open, setOpen] = useState(false);
   const [privacyText, setPrivacyText] = useState("");
   const [agreed, setAgreed] = useState(false);
@@ -27,7 +31,7 @@ export default function ContactModalTrigger({ buttonText }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
-    category: "",
+    category: defaultCategory,
     name: "",
     email: "",
     phone: "",
@@ -59,7 +63,7 @@ export default function ContactModalTrigger({ buttonText }: Props) {
   }, [open]);
 
   function resetForm() {
-    setForm({ category: "", name: "", email: "", phone: "", subject: "", message: "" });
+    setForm({ category: defaultCategory, name: "", email: "", phone: "", subject: "", message: "" });
     setFile(null);
     setAgreed(false);
     setDone(false);
@@ -113,23 +117,32 @@ export default function ContactModalTrigger({ buttonText }: Props) {
 
   return (
     <>
-      {/* 원형 트리거 버튼 */}
-      <button
-        onClick={() => { setOpen(true); resetForm(); }}
-        className="flex-shrink-0 flex flex-col items-center justify-center text-white font-bold text-center transition-all hover:bg-white hover:text-[#F5A623]"
-        style={{
-          width: "clamp(140px, 14vw, 200px)",
-          height: "clamp(140px, 14vw, 200px)",
-          borderRadius: "50%",
-          border: "2px solid rgba(255,255,255,0.8)",
-          fontSize: "clamp(13px, 1.2vw, 16px)",
-          letterSpacing: ".3px",
-          padding: "20px",
-        }}
-      >
-        <span className="leading-tight">{buttonText.replace(" →", "")}</span>
-        <span style={{ fontSize: "1.4em", marginTop: 4 }}>→</span>
-      </button>
+      {/* 트리거 버튼 */}
+      {variant === "pill" ? (
+        <button
+          onClick={() => { setOpen(true); resetForm(); }}
+          className={pillClassName ?? "inline-block border border-white/40 text-white text-[17px] px-10 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors"}
+        >
+          {buttonText}
+        </button>
+      ) : (
+        <button
+          onClick={() => { setOpen(true); resetForm(); }}
+          className="flex-shrink-0 flex flex-col items-center justify-center text-white font-bold text-center transition-all hover:bg-white hover:text-[#F5A623]"
+          style={{
+            width: "clamp(140px, 14vw, 200px)",
+            height: "clamp(140px, 14vw, 200px)",
+            borderRadius: "50%",
+            border: "2px solid rgba(255,255,255,0.8)",
+            fontSize: "clamp(13px, 1.2vw, 16px)",
+            letterSpacing: ".3px",
+            padding: "20px",
+          }}
+        >
+          <span className="leading-tight">{buttonText.replace(" →", "")}</span>
+          <span style={{ fontSize: "1.4em", marginTop: 4 }}>→</span>
+        </button>
+      )}
 
       {/* 모달 오버레이 */}
       {open && (
