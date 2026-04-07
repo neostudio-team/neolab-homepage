@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomerInquiryForm from "@/components/CustomerInquiryForm";
+import ContactModalTrigger from "@/components/ContactModalTrigger";
 import SupportFaqAccordion from "@/components/support/SupportFaqAccordion";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
@@ -107,10 +107,12 @@ export default async function SupportSoriPage({ params }: { params: Promise<{ la
               <p className="text-[#E1A02E] text-sm font-bold tracking-widest uppercase mb-3">Customer Support</p>
               <h1 className="text-5xl font-serif text-[#333] mb-4">소리펜</h1>
               <p className="text-gray-600 text-lg mb-8">소리펜은 책을 읽어주는 펜입니다.</p>
-              <Link href="https://poppentalk.com/kr/" target="_blank" rel="noopener noreferrer"
-                className="inline-block bg-black text-white text-sm px-6 py-3 rounded-full hover:opacity-80 transition-opacity">
-                소리펜 알아보기
-              </Link>
+              <ContactModalTrigger
+                buttonText="문의하기"
+                variant="pill"
+                defaultCategory="소리펜 문의"
+                pillClassName="inline-block bg-black text-white text-sm px-6 py-3 rounded-full hover:opacity-80 transition-opacity"
+              />
             </div>
             <div className="flex-shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -172,67 +174,44 @@ export default async function SupportSoriPage({ params }: { params: Promise<{ la
           </div>
         </section>
 
-        {/* 관련 악세서리 및 소프트웨어 */}
+        {/* 관련 액세서리 구입하기 */}
         <section className="py-14 bg-[#F5F8F8]">
           <div className="max-w-[1080px] mx-auto px-4">
-            <h2 className="text-[22px] font-bold text-[#333] mb-8">관련 악세서리 및 소프트웨어</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* 모아튜브 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm">
-                <div className="w-16 h-16 bg-[#FFF0DC] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">📺</span>
+            <h2 className="text-[22px] font-bold text-[#333] mb-8">관련 액세서리 구입하기</h2>
+            <div className="flex justify-center">
+              <div className="bg-white rounded-2xl p-8 shadow-sm flex flex-col md:flex-row items-center gap-8 max-w-[600px] w-full">
+                <div className="flex-shrink-0 w-20 h-20 bg-[#E8F0F5] rounded-xl flex items-center justify-center">
+                  <span className="text-3xl">🔌</span>
                 </div>
-                <h3 className="text-[16px] font-bold text-[#333] mb-3">모아튜브</h3>
-                <p className="text-[13px] text-[#666] leading-relaxed mb-4">
-                  &apos;모아튜브&apos; 앱을 통해 직접 선별한 유튜브 영상을 스티커에 담아보세요. 유튜브 링크만 있으면 스티커에 영상을 넣을 수 있습니다. 스마트폰이나 태블릿을 만지지 않고 스티커를 팝펜으로 콕 찍으면 유튜브 영상이 재생 됩니다.
-                </p>
-                <div className="flex flex-col gap-2">
-                  <Link href="https://play.google.com/store/apps/details?id=neolab.kr.poppenconnect&hl=ko" target="_blank" rel="noopener noreferrer"
-                    className="text-center bg-black text-white text-[12px] px-4 py-2 rounded-full hover:opacity-80 transition-opacity">
-                    안드로이드 앱 설치하기
-                  </Link>
-                  <Link href="https://itunes.apple.com/kr/app/moretube/id1436235000?mt=8" target="_blank" rel="noopener noreferrer"
-                    className="text-center border border-gray-300 text-[#333] text-[12px] px-4 py-2 rounded-full hover:bg-gray-50 transition-colors">
-                    iOS앱 설치하기
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-[18px] font-bold text-[#333] mb-2">USB 케이블</h3>
+                  <p className="text-[13px] text-[#666] leading-relaxed mb-4">
+                    소리펜(네오랩컨버전스 제조)의 데이터 전송을 위한 USB 케이블입니다. *건전지 충전 불가
+                  </p>
+                  <Link href="https://smartstore.naver.com/neolab/products/356557401" target="_blank" rel="noopener noreferrer"
+                    className="inline-block bg-black text-white text-[13px] px-6 py-2.5 rounded-full hover:opacity-80 transition-opacity">
+                    구매 사이트로 이동하기
                   </Link>
                 </div>
-              </div>
-
-              {/* USB 케이블 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm">
-                <div className="w-16 h-16 bg-[#E8F0F5] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">🔌</span>
-                </div>
-                <h3 className="text-[16px] font-bold text-[#333] mb-3">USB 케이블</h3>
-                <p className="text-[13px] text-[#666] leading-relaxed mb-4">
-                  소리펜(네오랩컨버전스 제조)의 데이터 전송을 위한 USB 케이블입니다. *건전지 충전 불가
-                </p>
-                <Link href="https://smartstore.naver.com/neolab/products/356557401" target="_blank" rel="noopener noreferrer"
-                  className="inline-block bg-black text-white text-[12px] px-4 py-2 rounded-full hover:opacity-80 transition-opacity">
-                  구매 사이트로 이동하기
-                </Link>
-              </div>
-
-              {/* 팝펜 에디터 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm">
-                <div className="w-16 h-16 bg-[#EEF2F0] rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-2xl">💾</span>
-                </div>
-                <h3 className="text-[16px] font-bold text-[#333] mb-3">팝펜 에디터(구, 팝펜 스탬프)</h3>
-                <p className="text-[13px] text-[#666] leading-relaxed mb-4">
-                  팝펜 에디터는 팝펜 스티커에 음원을 저장하고 관리하는 PC용 소프트웨어입니다. 드래그앤드롭 방식으로 누구나 쉽게 편집할 수 있습니다.
-                </p>
-                <Link href="http://stamp.neolab.kr/" target="_blank" rel="noopener noreferrer"
-                  className="inline-block bg-black text-white text-[12px] px-4 py-2 rounded-full hover:opacity-80 transition-opacity">
-                  다운로드 받기
-                </Link>
               </div>
             </div>
           </div>
         </section>
 
         {/* 문의하기 */}
-        <CustomerInquiryForm />
+        <section className="py-16 bg-white">
+          <div className="max-w-[600px] mx-auto px-4 text-center">
+            <p className="text-[#E1A02E] text-sm font-bold tracking-widest uppercase mb-3">Contact Us</p>
+            <h2 className="text-[24px] font-bold text-[#333] mb-3">문의하기</h2>
+            <p className="text-[14px] text-[#666] mb-8">소리펜 관련 문의사항이 있으시면 아래 버튼을 통해 문의해 주세요.<br />담당자 확인 후 빠르게 답변드리겠습니다.</p>
+            <ContactModalTrigger
+              buttonText="문의하기"
+              variant="pill"
+              defaultCategory="소리펜 문의"
+              pillClassName="inline-block bg-black text-white text-sm px-8 py-3 rounded-full hover:opacity-80 transition-opacity"
+            />
+          </div>
+        </section>
 
         {/* 뒤로 가기 */}
         <div className="max-w-[1080px] mx-auto px-4 py-8">
