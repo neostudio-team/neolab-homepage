@@ -1,5 +1,24 @@
 import Link from "next/link";
-import Image from "next/image";
+import {
+  BlockDesc,
+  BlockImage,
+  BlockList,
+  BlockRow,
+  BlockTitle,
+  CaseIcon,
+  CaseIconMuted,
+  CaseLabel,
+  CaseLabelMuted,
+  CaseLink,
+  CaseList,
+  CaseRowStatic,
+  Category,
+  ImageCol,
+  Inner,
+  PageTitle,
+  Section,
+  TextCol,
+} from "./ConnectBusinessSection.styles";
 
 interface BusinessCase {
   label: string;
@@ -76,44 +95,44 @@ export default function ConnectBusinessSection({ dict }: ConnectBusinessSectionP
   ];
 
   return (
-    <section className="pt-[54px] pb-0 bg-white">
-      <div className="max-w-[1080px] mx-auto px-4">
-        <h2 className="text-[30px] font-medium text-center text-[#333] mb-16">
-          {dict.title}
-        </h2>
-        <div className="space-y-20">
+    <Section>
+      <Inner>
+        <PageTitle>{dict.title}</PageTitle>
+        <BlockList>
           {blocks.map((block) => (
-            <div
-              key={block.category}
-              className="flex flex-col lg:flex-row gap-8 items-center"
-            >
-              <div className={`w-full lg:w-[58%] ${block.imagePosition === "right" ? "lg:order-2" : "lg:order-1"}`}>
-                <Image src={block.image} alt={block.imageAlt} width={624} height={400} className="w-full h-auto" />
-              </div>
-              <div className={`w-full lg:w-[37%] ${block.imagePosition === "right" ? "lg:order-1" : "lg:order-2"}`}>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-3">{block.category}</p>
-                <h3 className="text-[22px] font-bold text-[#333] mb-4 leading-snug">{block.title}</h3>
-                <p className="text-[#666] text-sm leading-[2] mb-6">{block.description}</p>
-                <div className="space-y-3">
-                  {block.cases.map((c) => (
+            <BlockRow key={block.category}>
+              <ImageCol $orderAfter={block.imagePosition === "right"}>
+                <BlockImage
+                  src={block.image}
+                  alt={block.imageAlt}
+                  width={624}
+                  height={400}
+                />
+              </ImageCol>
+              <TextCol $orderAfter={block.imagePosition === "right"}>
+                <Category>{block.category}</Category>
+                <BlockTitle>{block.title}</BlockTitle>
+                <BlockDesc>{block.description}</BlockDesc>
+                <CaseList>
+                  {block.cases.map((c) =>
                     c.href !== "#" ? (
-                      <Link key={c.label} href={c.href} className="flex items-center gap-3 group" target="_blank" rel="noopener noreferrer">
-                        <span className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-[10px] shrink-0">Y</span>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-[#333] group-hover:text-primary transition-colors">{c.label}</span>
-                      </Link>
+                      <CaseLink key={c.label} href={c.href} target="_blank" rel="noopener noreferrer">
+                        <CaseIcon>Y</CaseIcon>
+                        <CaseLabel>{c.label}</CaseLabel>
+                      </CaseLink>
                     ) : (
-                      <div key={c.label} className="flex items-center gap-3 group translate-y-0.5">
-                        <span className="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-gray-400 font-bold text-[10px] shrink-0">Y</span>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-[#666]">{c.label}</span>
-                      </div>
+                      <CaseRowStatic key={c.label}>
+                        <CaseIconMuted>Y</CaseIconMuted>
+                        <CaseLabelMuted>{c.label}</CaseLabelMuted>
+                      </CaseRowStatic>
                     )
-                  ))}
-                </div>
-              </div>
-            </div>
+                  )}
+                </CaseList>
+              </TextCol>
+            </BlockRow>
           ))}
-        </div>
-      </div>
-    </section>
+        </BlockList>
+      </Inner>
+    </Section>
   );
 }

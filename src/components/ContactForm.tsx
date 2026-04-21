@@ -1,6 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import {
+  FormRoot,
+  SelectField,
+  SubmitButton,
+  TextArea,
+  TextInput,
+} from "./ContactForm.styles";
 
 interface ContactFormDict {
   name: string;
@@ -27,63 +34,70 @@ export default function ContactForm({ showInterest = false, dict }: ContactFormP
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     window.location.href = `mailto:korbiz@neolab.net?subject=Inquiry from ${formData.name}&body=${formData.message}`;
-  };
+  }
+
+  function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData({ ...formData, name: e.target.value });
+  }
+
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData({ ...formData, email: e.target.value });
+  }
+
+  function handleInterestChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setFormData({ ...formData, interest: e.target.value });
+  }
+
+  function handleMessageChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setFormData({ ...formData, message: e.target.value });
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-lg">
+    <FormRoot onSubmit={handleSubmit}>
       <div>
-        <input
+        <TextInput
           type="text"
           placeholder={dict.name}
           value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary"
+          onChange={handleNameChange}
           required
         />
       </div>
       <div>
-        <input
+        <TextInput
           type="email"
           placeholder={dict.email}
           value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary"
+          onChange={handleEmailChange}
           required
         />
       </div>
       {showInterest && (
         <div>
-          <select
+          <SelectField
             value={formData.interest}
-            onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary text-gray-600"
+            onChange={handleInterestChange}
           >
             <option value="">{dict.interest}</option>
             <option value="business">{dict.businessProposal}</option>
             <option value="purchase">{dict.purchaseInquiry}</option>
             <option value="corporate">{dict.corporateRelated}</option>
             <option value="idea">{dict.ideaProposal}</option>
-          </select>
+          </SelectField>
         </div>
       )}
       <div>
-        <textarea
+        <TextArea
           placeholder={dict.message}
           value={formData.message}
-          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-primary h-32 resize-none"
+          onChange={handleMessageChange}
           required
         />
       </div>
-      <button
-        type="submit"
-        className="bg-primary text-white px-8 py-3 rounded font-semibold hover:bg-primary-dark transition-colors uppercase tracking-wider text-sm"
-      >
-        {dict.enquire}
-      </button>
-    </form>
+      <SubmitButton type="submit">{dict.enquire}</SubmitButton>
+    </FormRoot>
   );
 }

@@ -1,0 +1,34 @@
+import styled from "styled-components";
+import Link from "next/link";
+
+export const Page = styled.div`background:#fff;min-height:100vh;font-family:Arial,sans-serif;`;
+export const Hero = styled.section`position:relative;width:100%;background:#f8f9fa;padding-top:100px;margin-bottom:4rem;overflow:hidden;`;
+export const BlobRight = styled.div`position:absolute;top:0;right:25%;width:400px;height:400px;background:linear-gradient(to bottom left,#7fb3f5,transparent);opacity:.3;filter:blur(64px);border-radius:9999px;`;
+export const BlobLeft = styled.div`position:absolute;top:5rem;left:2.5rem;width:300px;height:300px;background:linear-gradient(to bottom right,#f2a99d,transparent);opacity:.4;filter:blur(64px);border-radius:9999px;`;
+export const Container = styled.div`max-width:1080px;margin:0 auto;padding:0 1rem;`;
+export const HeroInner = styled(Container)`position:relative;z-index:10;padding:4rem 1rem;`;
+export const HeroLabel = styled.h4`color:#000;font-size:18px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1rem;`;
+export const HeroTitle = styled.h1`font-size:60px;font-weight:800;color:#000;line-height:1.1;`;
+export const HeroContact = styled.p`margin-top:1.5rem;color:#333;font-weight:500;font-size:15px;`;
+export const HeroMail = styled.a`color:#2ea3f2;&:hover{text-decoration:underline;}`;
+export const Section = styled.section`max-width:1080px;margin:0 auto;padding:0 1rem 8rem;`;
+export const Empty = styled.div`text-align:center;padding:5rem 0;color:#9ca3af;font-size:14px;`;
+export const List = styled.div`max-width:900px;`;
+export const Card = styled.article`margin-bottom:3.5rem;border-bottom:1px solid #f3f4f6;padding-bottom:3rem;&:last-child{border-bottom:0;}`;
+export const Title = styled.h2`font-size:26px;font-weight:500;color:#333;margin-bottom:.75rem;line-height:1.3;letter-spacing:-.02em;transition:color .15s;&:hover{color:#2ea3f2;}`;
+export const Meta = styled.div`font-size:14px;color:#666;margin-bottom:1.25rem;font-weight:500;`;
+export const Excerpt = styled.p`font-size:14px;color:#666;line-height:1.7;margin-bottom:1rem;text-align:justify;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;`;
+export const ReadMore = styled(Link)`font-size:14px;color:#2ea3f2;font-weight:500;&:hover{text-decoration:underline;}`;
+
+export const DetailWrap = styled.div`background:#fff;min-height:100vh;padding-top:100px;`;
+export const DetailInner = styled.div`max-width:780px;margin:0 auto;padding:4rem 1rem;`;
+export const BackLink = styled(Link)`font-size:14px;color:#9ca3af;display:inline-block;margin-bottom:2rem;&:hover{color:#4b5563;}`;
+export const Category = styled.p`font-size:12px;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;`;
+export const DetailTitle = styled.h1`font-size:28px;font-weight:700;color:#111827;margin-bottom:1rem;line-height:1.4;`;
+export const DetailMeta = styled.div`display:flex;align-items:center;gap:1rem;font-size:14px;color:#9ca3af;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid #f3f4f6;`;
+export const ExternalBox = styled.div`margin-bottom:1.5rem;padding:1rem;background:#eff6ff;border:1px solid #dbeafe;border-radius:.5rem;`;
+export const ExternalLink = styled.a`font-size:14px;color:#2563eb;&:hover{text-decoration:underline;}`;
+export const HtmlContent = styled.div`font-size:15px;line-height:1.8;color:#374151;& p{margin-bottom:.75rem;} & ul{list-style:disc;padding-left:1.25rem;} & ol{list-style:decimal;padding-left:1.25rem;} & li{margin-bottom:.25rem;} & a{color:#2563eb;text-decoration:underline;} & img{max-width:100%;border-radius:.25rem;} & h1{font-size:1.5rem;font-weight:700;} & h2{font-size:1.25rem;font-weight:700;} & h3{font-size:1.125rem;font-weight:600;} & strong{font-weight:700;} & em{font-style:italic;} & blockquote{border-left:4px solid #d1d5db;padding-left:1rem;color:#6b7280;}`;
+export const EmptyBody = styled.p`color:#9ca3af;font-size:14px;`;
+export const FooterBox = styled.div`margin-top:4rem;padding-top:2rem;border-top:1px solid #f3f4f6;`;
+export const BorderBtn = styled(Link)`display:inline-block;border:1px solid #d1d5db;color:#4b5563;font-size:14px;padding:.75rem 1.5rem;border-radius:.5rem;transition:background .15s;&:hover{background:#f9fafb;}`;

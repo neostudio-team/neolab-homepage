@@ -1,7 +1,41 @@
 import { Metadata } from "next";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
-import Image from "next/image";
+import {
+  Container,
+  DownloadBtn,
+  DownloadCard,
+  DownloadGrid2,
+  DownloadGrid4,
+  DownloadGrid5,
+  DownloadImage,
+  FeatureCard,
+  FeatureDesc,
+  FeatureGrid,
+  FeatureIcon,
+  FeatureTitle,
+  HeroInner,
+  HeroSection,
+  HeroSubtitle,
+  HeroTitle,
+  InfoDesc,
+  InfoHalf,
+  InfoImage,
+  InfoImageRounded,
+  InfoImageWrap,
+  InfoSplit,
+  InfoSplitReverse,
+  InfoSub,
+  InfoTitle,
+  NoteBox,
+  NoteLabel,
+  NoteLabelStrong,
+  NoteList,
+  SectionGray,
+  SectionHeading,
+  SectionPad,
+  SectionWhite,
+} from "./NcodePdfPage.styles";
 
 const IMG = "/images/neosmartpen/paper/ncode-pdf";
 
@@ -37,194 +71,100 @@ const STORYBOARD_DOWNLOADS = [
 ];
 
 export default async function NcodePdfPage({ params }: { params: Promise<{ lang: Locale }> }) {
-  const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary((await params).lang);
   const t = dict.neosmartpen.ncodePdf;
 
   return (
     <>
-      {/* S0: Hero */}
-      <section className="bg-[#1a1a2e] text-white" style={{ minHeight: 400 }}>
-        <div className="max-w-[1080px] mx-auto px-4 py-20 flex flex-col items-center text-center">
-          <h1 className="text-[36px] lg:text-[48px] font-bold mb-4">
-            {t.hero.title}
-          </h1>
-          <p className="text-[16px] text-gray-300 leading-relaxed max-w-[600px]">
-            {t.hero.subtitle}
-          </p>
-        </div>
-      </section>
+      <HeroSection>
+        <HeroInner>
+          <HeroTitle>{t.hero.title}</HeroTitle>
+          <HeroSubtitle>{t.hero.subtitle}</HeroSubtitle>
+        </HeroInner>
+      </HeroSection>
 
-      {/* S1: How it works - 3 features */}
-      <section className="bg-white">
-        <div className="max-w-[1080px] mx-auto px-4 py-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <SectionWhite>
+        <SectionPad>
+          <FeatureGrid>
             {[
               { icon: `${IMG}/Print-Icon_01.png`, title: t.features.printHome, desc: t.features.printHomeDesc },
               { icon: `${IMG}/Print-Icon_02.png`, title: t.features.enoughPages, desc: t.features.enoughPagesDesc },
               { icon: `${IMG}/Print-Icon_03.png`, title: t.features.templates, desc: t.features.templatesDesc },
             ].map((item) => (
-              <div key={item.title} className="text-center">
-                <Image
-                  src={item.icon}
-                  alt={item.title}
-                  width={80}
-                  height={80}
-                  className="mx-auto mb-6 object-contain"
-                />
-                <h3 className="text-[18px] lg:text-[20px] font-bold text-[#333] mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-[14px] text-[#666] leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
+              <FeatureCard key={item.title}>
+                <FeatureIcon src={item.icon} alt={item.title} width={80} height={80} />
+                <FeatureTitle>{item.title}</FeatureTitle>
+                <FeatureDesc>{item.desc}</FeatureDesc>
+              </FeatureCard>
             ))}
-          </div>
-        </div>
-      </section>
+          </FeatureGrid>
+        </SectionPad>
+      </SectionWhite>
 
-      {/* S2: Printables - Template gallery */}
-      <section className="bg-[#f5f5f5]">
-        <div className="max-w-[1080px] mx-auto px-4 py-20">
-          <h2 className="text-[28px] lg:text-[34px] font-bold text-[#333] mb-12 text-center">
-            {t.printables}
-          </h2>
-
-          {/* Paper types - 5 columns */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mb-12">
+      <SectionGray>
+        <SectionPad>
+          <SectionHeading>{t.printables}</SectionHeading>
+          <DownloadGrid5>
             {PAPER_DOWNLOADS.map((paper) => (
-              <div key={paper.label} className="bg-white rounded-lg p-4 shadow-sm text-center">
-                <Image
-                  src={`${IMG}/${paper.img}`}
-                  alt={paper.label}
-                  width={200}
-                  height={280}
-                  className="w-full object-contain mb-4"
-                />
-                <a
-                  href={paper.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-5 py-2 bg-[#333] text-white text-[13px] font-medium rounded hover:bg-[#555] transition-colors"
-                >
-                  {t.download}
-                </a>
-              </div>
+              <DownloadCard key={paper.label}>
+                <DownloadImage src={`${IMG}/${paper.img}`} alt={paper.label} width={200} height={280} />
+                <DownloadBtn href={paper.href} target="_blank" rel="noopener noreferrer">{t.download}</DownloadBtn>
+              </DownloadCard>
             ))}
-          </div>
-
-          {/* Template downloads - 4 columns */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-12">
+          </DownloadGrid5>
+          <DownloadGrid4>
             {TEMPLATE_DOWNLOADS.map((tmpl) => (
-              <div key={tmpl.label} className="bg-white rounded-lg p-4 shadow-sm text-center">
-                <Image
-                  src={`${IMG}/${tmpl.img}`}
-                  alt={tmpl.label}
-                  width={200}
-                  height={280}
-                  className="w-full object-contain mb-4"
-                />
-                <a
-                  href={tmpl.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-5 py-2 bg-[#333] text-white text-[13px] font-medium rounded hover:bg-[#555] transition-colors"
-                >
-                  {t.download}
-                </a>
-              </div>
+              <DownloadCard key={tmpl.label}>
+                <DownloadImage src={`${IMG}/${tmpl.img}`} alt={tmpl.label} width={200} height={280} />
+                <DownloadBtn href={tmpl.href} target="_blank" rel="noopener noreferrer">{t.download}</DownloadBtn>
+              </DownloadCard>
             ))}
-          </div>
-
-          {/* Storyboard downloads - 2 columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          </DownloadGrid4>
+          <DownloadGrid2>
             {STORYBOARD_DOWNLOADS.map((sb) => (
-              <div key={sb.label} className="bg-white rounded-lg p-4 shadow-sm text-center">
-                <Image
-                  src={`${IMG}/${sb.img}`}
-                  alt={sb.label}
-                  width={400}
-                  height={280}
-                  className="w-full object-contain mb-4"
-                />
-                <a
-                  href={sb.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-5 py-2 bg-[#333] text-white text-[13px] font-medium rounded hover:bg-[#555] transition-colors"
-                >
-                  {t.download}
-                </a>
-              </div>
+              <DownloadCard key={sb.label}>
+                <DownloadImage src={`${IMG}/${sb.img}`} alt={sb.label} width={400} height={280} />
+                <DownloadBtn href={sb.href} target="_blank" rel="noopener noreferrer">{t.download}</DownloadBtn>
+              </DownloadCard>
             ))}
-          </div>
-        </div>
-      </section>
+          </DownloadGrid2>
+        </SectionPad>
+      </SectionGray>
 
-      {/* S3: Print notes */}
-      <section className="bg-white">
-        <div className="max-w-[1080px] mx-auto px-4 py-16">
-          <div className="bg-[#f9f9f9] rounded-lg p-8 mb-12">
-            <p className="text-[13px] text-[#888] mb-2">
-              <span className="font-semibold text-[#666]">{t.notes.noteLabel}</span>
-            </p>
-            <ul className="text-[13px] text-[#888] leading-relaxed space-y-1 list-decimal list-inside">
+      <SectionWhite>
+        <SectionPad>
+          <NoteBox>
+            <NoteLabel><NoteLabelStrong>{t.notes.noteLabel}</NoteLabelStrong></NoteLabel>
+            <NoteList>
               <li>{t.notes.note1}</li>
               <li>{t.notes.note2}</li>
               <li>{t.notes.note3}</li>
-            </ul>
-          </div>
+            </NoteList>
+          </NoteBox>
 
-          {/* Before you print */}
-          <div className="flex flex-col lg:flex-row items-center gap-10 mb-16">
-            <div className="w-full lg:w-1/2">
-              <h3 className="text-[22px] lg:text-[26px] font-bold text-[#333] mb-2">
-                {t.beforePrint}
-              </h3>
-              <h4 className="text-[18px] font-semibold text-[#555] mb-4">
-                {t.testFirst}
-              </h4>
-              <p className="text-[14px] text-[#666] leading-relaxed">
-                {t.testFirstDesc}
-              </p>
-            </div>
-            <div className="w-full lg:w-1/2 flex justify-center">
-              <Image
-                src={`${IMG}/code_head_img-1.png`}
-                alt={t.beforePrint}
-                width={400}
-                height={300}
-                className="object-contain w-full max-w-[400px]"
-              />
-            </div>
-          </div>
+          <InfoSplit>
+            <InfoHalf>
+              <InfoTitle>{t.beforePrint}</InfoTitle>
+              <InfoSub>{t.testFirst}</InfoSub>
+              <InfoDesc>{t.testFirstDesc}</InfoDesc>
+            </InfoHalf>
+            <InfoImageWrap>
+              <InfoImage src={`${IMG}/code_head_img-1.png`} alt={t.beforePrint} width={400} height={300} />
+            </InfoImageWrap>
+          </InfoSplit>
 
-          {/* Neo Studio tip */}
-          <div className="flex flex-col lg:flex-row-reverse items-center gap-10">
-            <div className="w-full lg:w-1/2">
-              <h3 className="text-[22px] lg:text-[26px] font-bold text-[#333] mb-2">
-                {t.neoStudio}
-              </h3>
-              <h4 className="text-[18px] font-semibold text-[#555] mb-4">
-                {t.enableDisable}
-              </h4>
-              <p className="text-[14px] text-[#666] leading-relaxed">
-                {t.enableDisableDesc}
-              </p>
-            </div>
-            <div className="w-full lg:w-1/2 flex justify-center">
-              <Image
-                src={`${IMG}/NeoStudio_input.jpg`}
-                alt={t.neoStudio}
-                width={400}
-                height={300}
-                className="object-contain w-full max-w-[400px] rounded-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+          <InfoSplitReverse>
+            <InfoHalf>
+              <InfoTitle>{t.neoStudio}</InfoTitle>
+              <InfoSub>{t.enableDisable}</InfoSub>
+              <InfoDesc>{t.enableDisableDesc}</InfoDesc>
+            </InfoHalf>
+            <InfoImageWrap>
+              <InfoImageRounded src={`${IMG}/NeoStudio_input.jpg`} alt={t.neoStudio} width={400} height={300} />
+            </InfoImageWrap>
+          </InfoSplitReverse>
+        </SectionPad>
+      </SectionWhite>
     </>
   );
 }

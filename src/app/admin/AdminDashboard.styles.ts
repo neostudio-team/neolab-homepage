@@ -1,0 +1,33 @@
+import styled from "styled-components";
+import Link from "next/link";
+
+export const Wrap = styled.div`padding:2rem;max-width:112rem;`;
+export const LoadingWrap = styled.div`padding:2rem;display:flex;align-items:center;justify-content:center;min-height:60vh;`;
+export const LoadingText = styled.div`color:#9ca3af;font-size:14px;`;
+export const HeaderRow = styled.div`display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;`;
+export const Title = styled.h1`font-size:24px;font-weight:700;color:#1f2937;`;
+export const Sub = styled.p`color:#9ca3af;font-size:14px;margin-top:.25rem;`;
+export const DatePill = styled.p`font-size:14px;font-weight:500;color:#4b5563;background:#fff;border:1px solid #e5e7eb;padding:.5rem 1rem;border-radius:.5rem;box-shadow:0 1px 2px rgba(0,0,0,.06);`;
+export const CardGrid = styled.div`display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;margin-bottom:2rem;`;
+export const Panel = styled.div`background:#fff;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column;`;
+export const PanelHead = styled.div<{ $bg: string }>`background:${({ $bg }) => $bg};padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;`;
+export const HeadLeft = styled.div`display:flex;align-items:center;gap:.5rem;`;
+export const HeadLabel = styled.span`color:#fff;font-weight:600;font-size:14px;`;
+export const HeadCount = styled.span`color:#fff;font-size:1.5rem;font-weight:700;line-height:1;`;
+export const PanelBody = styled.div`flex:1;`;
+export const Empty = styled.p`color:#9ca3af;font-size:12px;text-align:center;padding:2rem 0;`;
+export const ItemRow = styled.div`display:flex;align-items:center;gap:.25rem;padding:.625rem 1rem;border-top:1px solid #f9fafb;`;
+export const Badge = styled.span<{ $bg: string; $color: string }>`font-size:10px;padding:.125rem .375rem;border-radius:.25rem;font-weight:700;margin-right:.375rem;background:${({ $bg }) => $bg};color:${({ $color }) => $color};flex-shrink:0;`;
+export const ItemTitle = styled.span`flex:1;font-size:12px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;`;
+export const ItemMeta = styled.span`font-size:10px;color:#9ca3af;flex-shrink:0;margin-left:.25rem;`;
+export const PanelFoot = styled.div`padding:.75rem 1rem;border-top:1px solid #f3f4f6;display:flex;gap:.75rem;`;
+export const FootLink = styled(Link)`font-size:12px;color:#6b7280;&:hover{color:#1f2937;}`;
+export const NewLink = styled(Link)`font-size:12px;color:#2563eb;font-weight:500;&:hover{color:#1d4ed8;}`;
+
+export const Analytics = styled.div`background:#fff;border-radius:1rem;border:1px solid #f3f4f6;box-shadow:0 1px 2px rgba(0,0,0,.06);padding:1.5rem;`;
+export const AnalyticsHead = styled.div`display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;`;
+export const AnalyticsTitle = styled.h2`font-size:16px;font-weight:700;color:#1f2937;`;
+export const AnalyticsSub = styled.p`font-size:12px;color:#9ca3af;margin-top:.125rem;`;
+export const Row = styled.div`display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;`;
+export const PresetBtn = styled.button<{ $active?: boolean }>`padding:.375rem .75rem;font-size:12px;border-radius:.5rem;border:1px solid ${({ $active }) => ($active ? "#1a1a2e" : "#e5e7eb")};font-weight:500;transition:all .15s;background:${({ $active }) => ($active ? "#1a1a2e" : "#fff")};color:${({ $active }) => ($active ? "#fff" : "#4b5563")};&:hover{border-color:#d1d5db;background:${({ $active }) => ($active ? "#1a1a2e" : "#f9fafb")};}`;
+export const Status = styled.span<{ $ok?: boolean }>`font-size:12px;font-weight:500;padding:.25rem .75rem;border-radius:9999px;background:${({ $ok }) => ($ok ? "#ecfdf5" : "#f9fafb")};color:${({ $ok }) => ($ok ? "#059669" : "#9ca3af")};`;

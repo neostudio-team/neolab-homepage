@@ -1,4 +1,13 @@
-import Link from "next/link";
+import {
+  Body,
+  CtaWrap,
+  ExternalLink,
+  GithubButton,
+  Inner,
+  Section,
+  Subtitle,
+  Title,
+} from "./ResearchSection.styles";
 
 interface ResearchSectionProps {
   dict: {
@@ -12,47 +21,40 @@ interface ResearchSectionProps {
 
 export default function ResearchSection({ dict }: ResearchSectionProps) {
   return (
-    <section className="py-16 bg-black text-white">
-      <div className="max-w-[1080px] mx-auto px-4 text-center">
-        <h2 className="text-[30px] font-medium mb-6">{dict.title}</h2>
-        <p className="text-gray-400 uppercase tracking-wider text-xs mb-8">{dict.subtitle}</p>
-        <div className="space-y-3 text-gray-400 text-sm">
+    <Section>
+      <Inner>
+        <Title>{dict.title}</Title>
+        <Subtitle>{dict.subtitle}</Subtitle>
+        <Body>
           <p>
             {dict.microsoft} ( →{" "}
-            <Link
+            <ExternalLink
               href="https://www.microsoft.com/en-us/research/publication/holodoc-enabling-mixed-reality-workspaces-that-harness-physical-and-digital-content-2/"
-              className="text-blue-400 hover:text-blue-300 underline"
               target="_blank"
               rel="noopener noreferrer"
             >
               {dict.learnMore}
-            </Link>{" "}
+            </ExternalLink>{" "}
             )
           </p>
           <p>
             {dict.germanAI} ( →{" "}
-            <Link
+            <ExternalLink
               href="https://iml.dfki.de/cognitive-assessments-using-speech-based-dialogue-smartpen-and-ml/"
-              className="text-blue-400 hover:text-blue-300 underline"
               target="_blank"
               rel="noopener noreferrer"
             >
               {dict.learnMore}
-            </Link>{" "}
+            </ExternalLink>{" "}
             )
           </p>
-        </div>
-        <div className="mt-8">
-          <Link
-            href="https://github.com/NeoSmartpen"
-            className="inline-block bg-teal text-white px-8 py-3 uppercase tracking-wider text-sm font-semibold hover:opacity-90 transition-opacity"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        </Body>
+        <CtaWrap>
+          <GithubButton href="https://github.com/NeoSmartpen" target="_blank" rel="noopener noreferrer">
             Open source code for Developers »
-          </Link>
-        </div>
-      </div>
-    </section>
+          </GithubButton>
+        </CtaWrap>
+      </Inner>
+    </Section>
   );
 }

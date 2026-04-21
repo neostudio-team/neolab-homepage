@@ -1,4 +1,14 @@
-import Image from "next/image";
+import {
+  Card,
+  CardDesc,
+  CardTitle,
+  Grid,
+  IconWrap,
+  Inner,
+  Section,
+  SolutionIcon,
+  Title,
+} from "./CoreSolutionsSection.styles";
 
 interface SolutionItem {
   title: string;
@@ -26,25 +36,21 @@ export default function CoreSolutionsSection({ dict }: CoreSolutionsSectionProps
   const solutions = [dict.smart, dict.inputDevice, dict.cloud, dict.application];
 
   return (
-    <section className="py-[54px] bg-white">
-      <div className="max-w-[1080px] mx-auto px-4">
-        <h2 className="text-[30px] font-medium text-center text-[#333] mb-12">
-          {dict.title}
-        </h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <Section>
+      <Inner>
+        <Title>{dict.title}</Title>
+        <Grid>
           {solutions.map((solution, i) => (
-            <div key={solution.title} className="text-left">
-              <div className="mb-4">
-                <Image src={icons[i]} alt={solution.title} width={48} height={48} />
-              </div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-[#333] mb-4">
-                {solution.title}
-              </h4>
-              <p className="text-[#666] text-sm leading-[2]">{solution.description}</p>
-            </div>
+            <Card key={solution.title}>
+              <IconWrap>
+                <SolutionIcon src={icons[i]} alt={solution.title} width={48} height={48} />
+              </IconWrap>
+              <CardTitle>{solution.title}</CardTitle>
+              <CardDesc>{solution.description}</CardDesc>
+            </Card>
           ))}
-        </div>
-      </div>
-    </section>
+        </Grid>
+      </Inner>
+    </Section>
   );
 }

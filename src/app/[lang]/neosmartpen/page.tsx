@@ -1,10 +1,79 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
-import LazySection from "@/components/LazySection";
+import { LazySection } from "@/components/home";
 import HeroSlider from "./HeroSlider";
+import {
+  BenefitImg,
+  BodyText,
+  BorderTop,
+  BorderTopBottom,
+  ChevronIcon,
+  Container,
+  EasyMediaCol,
+  EasyTextCol,
+  FallbackHeroImage,
+  FallbackHeroLink,
+  FallbackHeroSection,
+  FeatureGrid2,
+  FullWidthImg,
+  GallerySection,
+  GridaLink,
+  Grid4,
+  Half,
+  HalfCenter,
+  Heading23,
+  Heading26,
+  Heading26Center,
+  HighlightTitle,
+  JaProductCard,
+  JaProductDesc,
+  JaProductImg,
+  JaProductsSection,
+  JaProductThumb,
+  JaProductTitle,
+  KoHeroCta,
+  KoHeroImage,
+  KoHeroImageCol,
+  KoHeroInner,
+  KoHeroSection,
+  KoHeroSubtitle,
+  KoHeroTextCol,
+  KoHeroTitle,
+  NewsCard,
+  NewsGrid,
+  NewsImage,
+  NewsTitle,
+  NotebookGalleryGrid,
+  NotebookThumb,
+  NotebooksPara,
+  OneThirdCenter,
+  RowGapSm,
+  RowLg,
+  RowLgCenter,
+  RowLgStart,
+  SectionDigital,
+  SectionEasy,
+  SectionFeatureGrid,
+  SectionHighlightTitleOnly,
+  SectionNews,
+  SectionNotebooksBody,
+  SectionNotebooksHeading,
+  SectionUtilize,
+  TwoThirds,
+  UtilizeBody,
+  UtilizeBodyBlock,
+  UtilizeCenterCol,
+  UtilizeDetails,
+  UtilizeLayersImg,
+  UtilizeLine1,
+  UtilizeLine2,
+  UtilizeSideCol,
+  UtilizeSummary,
+  UtilizeSummaryTitle,
+  UtilizeRow,
+} from "./NeoSmartpenHomePage.styles";
 
 const IMG = "/images/neosmartpen/main";
 
@@ -19,7 +88,6 @@ export async function generateMetadata({
   return { title: t.title, description: t.description };
 }
 
-/* ── Locale-specific image maps ── */
 const heroSlides: Record<string, string[]> = {
   ko: [`${IMG}/ko/hero_slide1.jpg`, `${IMG}/ko/hero_slide2.jpg`],
   ja: [`${IMG}/ja/hero_slide1.jpg`, `${IMG}/ja/hero_slide2.jpg`, `${IMG}/ja/hero_slide3.jpg`],
@@ -75,7 +143,6 @@ const notebookImgs = (lang: string) => {
   return base;
 };
 
-/* ── JA product cards data ── */
 const jaProductCards = [
   { img: `${IMG}/ja/product_lamy.png`, title: "LAMY safari all star スマートペン", desc: "ドイツLAMY社のロングセラーモデル「safari」がスマートペンになって登場！", href: "/ja/neosmartpen/product-lamy" },
   { img: `${IMG}/ja/product_a1.png`, title: "Neo smartpen A1", desc: "ゲルインキで最上の書き心地", href: "/ja/neosmartpen/product-n2" },
@@ -108,322 +175,250 @@ export default async function NeoSmartpenHome({
 
   return (
     <>
-      {/* S0: Hero */}
       {lang === "ko" ? (
-        <section style={{ background: "#f0f0f0", minHeight: 500 }} className="flex items-center overflow-hidden">
-          <div className="max-w-[1080px] mx-auto px-8 flex flex-col lg:flex-row items-center w-full py-16 gap-0">
-            <div className="w-full lg:w-1/2 flex flex-col gap-5">
-              <h1 className="text-[40px] lg:text-[54px] font-bold text-[#222] leading-tight">모든 특별함이 하나로</h1>
-              <p className="text-[18px] lg:text-[20px] text-[#444]">Neo smartpen A1</p>
-              <a
-                href="https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block border border-[#333] text-[#333] bg-white px-8 py-3 text-[14px] font-medium hover:bg-[#333] hover:text-white transition-colors w-fit"
-              >
+        <KoHeroSection>
+          <KoHeroInner>
+            <KoHeroTextCol>
+              <KoHeroTitle>모든 특별함이 하나로</KoHeroTitle>
+              <KoHeroSubtitle>Neo smartpen A1</KoHeroSubtitle>
+              <KoHeroCta href="https://store.neosmartpen.com/goods/goods_view.php?goodsNo=454" target="_blank" rel="noopener noreferrer">
                 공식몰 가기
-              </a>
-            </div>
-            <div className="w-full lg:w-1/2 flex justify-end items-end self-stretch pt-8 lg:pt-0">
-              <Image
-                src={`${IMG}/ja/product_a1.png`}
-                alt="Neo smartpen A1"
-                width={520}
-                height={520}
-                className="w-full max-w-[460px] lg:max-w-[520px] object-contain self-end"
-                priority
-              />
-            </div>
-          </div>
-        </section>
+              </KoHeroCta>
+            </KoHeroTextCol>
+            <KoHeroImageCol>
+              <KoHeroImage src={`${IMG}/ja/product_a1.png`} alt="Neo smartpen A1" width={520} height={520} priority />
+            </KoHeroImageCol>
+          </KoHeroInner>
+        </KoHeroSection>
       ) : slides ? (
         <HeroSlider slides={slides} />
       ) : (
-        <section className="relative w-full" style={{ height: 600, backgroundColor: "#f3f1ec" }}>
-          <Link href={storeUrl} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
-            <Image
-              src={`${IMG}/hero_bg.jpg`}
-              alt="Neo Smartpen Hero"
-              fill
-              className="object-contain"
-              priority
-            />
-          </Link>
-        </section>
+        <FallbackHeroSection>
+          <FallbackHeroLink href={storeUrl} target="_blank" rel="noopener noreferrer">
+            <FallbackHeroImage src={`${IMG}/hero_bg.jpg`} alt="Neo Smartpen Hero" fill priority />
+          </FallbackHeroLink>
+        </FallbackHeroSection>
       )}
 
-      {/* JA only: Product cards */}
       {lang === "ja" && (
-        <section className="bg-white py-12">
-          <div className="max-w-[1080px] mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <JaProductsSection>
+          <Container>
+            <Grid4>
               {jaProductCards.map((card) => (
-                <Link key={card.title} href={card.href} className="group text-center">
-                  <div className="mb-4 overflow-hidden">
-                    <Image
-                      src={card.img}
-                      alt={card.title}
-                      width={300}
-                      height={300}
-                      className="w-full object-contain group-hover:scale-105 transition-transform"
-                    />
-                  </div>
-                  <h4 className="text-[14px] font-bold text-[#333] mb-1">{card.title}</h4>
-                  <p className="text-[12px] text-[#666]">{card.desc}</p>
-                </Link>
+                <JaProductCard key={card.title} href={card.href}>
+                  <JaProductThumb>
+                    <JaProductImg src={card.img} alt={card.title} width={300} height={300} />
+                  </JaProductThumb>
+                  <JaProductTitle>{card.title}</JaProductTitle>
+                  <JaProductDesc>{card.desc}</JaProductDesc>
+                </JaProductCard>
               ))}
-            </div>
-          </div>
-        </section>
+            </Grid4>
+          </Container>
+        </JaProductsSection>
       )}
 
-      {/* S1: #digital writing */}
-      <section className="bg-white" style={{ paddingTop: 54, paddingBottom: 11 }}>
-        <div className="max-w-[1080px] mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="w-full lg:w-1/2">
-              <h2 className="text-[26px] font-medium text-[#333] mb-6">
+      <SectionDigital>
+        <Container>
+          <RowLg>
+            <Half>
+              <Heading26>
                 <strong>{t.digitalWriting.title}</strong>
-              </h2>
-              <Image
-                src={benefit}
-                alt="benefit"
-                width={400}
-                height={316}
-                className="w-full max-w-[400px]"
-              />
-            </div>
-            <div className="w-full lg:w-1/2 flex items-center">
-              <Image
+              </Heading26>
+              <BenefitImg src={benefit} alt="benefit" width={400} height={316} />
+            </Half>
+            <HalfCenter>
+              <FullWidthImg
                 src={usecase.src}
                 alt="Neo Smartpen in action"
                 width={800}
                 height={450}
-                className="w-full"
                 unoptimized={usecase.unoptimized}
               />
-            </div>
-          </div>
-        </div>
-      </section>
+            </HalfCenter>
+          </RowLg>
+        </Container>
+      </SectionDigital>
 
-      {/* S2: Highlight title */}
       <LazySection>
-      <section className="bg-white" style={{ paddingTop: 7, paddingBottom: 0 }}>
-        <div className="max-w-[1080px] mx-auto px-4">
-          <h1 className="text-[26px] font-medium text-[#333]">
-            <strong>{t.highlight.title}</strong>
-          </h1>
-        </div>
-      </section>
-
+        <SectionHighlightTitleOnly>
+          <Container>
+            <HighlightTitle>
+              <strong>{t.highlight.title}</strong>
+            </HighlightTitle>
+          </Container>
+        </SectionHighlightTitleOnly>
       </LazySection>
 
-      {/* S3: Highlight images */}
       <LazySection>
-      <section className="bg-white" style={{ paddingTop: 8, paddingBottom: 14 }}>
-        <div className="max-w-[1080px] mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="w-full lg:w-1/2">
-              <Image
-                src={`${IMG}/smartpenFeature00.jpg`}
-                alt="Neo Smartpen Feature"
-                width={900}
-                height={900}
-                className="w-full"
-              />
-            </div>
-            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-4">
-              {features.map((src, i) => (
-                <Image
-                  key={src}
-                  src={src}
-                  alt={`Feature ${i + 1}`}
-                  width={450}
+        <SectionFeatureGrid>
+          <Container>
+            <RowGapSm>
+              <Half>
+                <FullWidthImg src={`${IMG}/smartpenFeature00.jpg`} alt="Neo Smartpen Feature" width={900} height={900} />
+              </Half>
+              <Half>
+                <FeatureGrid2>
+                  {features.map((src, i) => (
+                    <FullWidthImg key={src} src={src} alt={`Feature ${i + 1}`} width={450} height={450} />
+                  ))}
+                </FeatureGrid2>
+              </Half>
+            </RowGapSm>
+          </Container>
+        </SectionFeatureGrid>
+      </LazySection>
+
+      <LazySection>
+        <SectionUtilize>
+          <Container>
+            <UtilizeRow>
+              <UtilizeSideCol>
+                <UtilizeLine1>
+                  <strong>{t.utilize.title1}</strong>
+                </UtilizeLine1>
+                <UtilizeLine2>
+                  <strong>{t.utilize.title2}</strong>
+                </UtilizeLine2>
+              </UtilizeSideCol>
+              <UtilizeCenterCol>
+                <UtilizeLayersImg src={`${IMG}/neostudio_layers03.png`} alt="Neo Studio layers" width={800} height={800} />
+              </UtilizeCenterCol>
+              <UtilizeSideCol>
+                <BorderTop>
+                  <UtilizeDetails open>
+                    <UtilizeSummary>
+                      <UtilizeSummaryTitle>{t.utilize.neoStudio}</UtilizeSummaryTitle>
+                      <ChevronIcon fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </ChevronIcon>
+                    </UtilizeSummary>
+                    <UtilizeBody>{t.utilize.neoStudioDesc}</UtilizeBody>
+                  </UtilizeDetails>
+                </BorderTop>
+                <BorderTop>
+                  <UtilizeDetails>
+                    <UtilizeSummary>
+                      <UtilizeSummaryTitle>{t.utilize.gridaBoard}</UtilizeSummaryTitle>
+                      <ChevronIcon fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </ChevronIcon>
+                    </UtilizeSummary>
+                    <UtilizeBodyBlock>
+                      <p>{t.utilize.gridaBoardDesc}</p>
+                      <GridaLink href="https://gridaboard.io/" target="_blank" rel="noopener noreferrer">
+                        {lang === "ko" ? "그리다보드로 이동 →" : lang === "ja" ? "Grida board へ →" : "Go to Grida Board →"}
+                      </GridaLink>
+                    </UtilizeBodyBlock>
+                  </UtilizeDetails>
+                </BorderTop>
+                <BorderTopBottom>
+                  <UtilizeDetails>
+                    <UtilizeSummary>
+                      <UtilizeSummaryTitle>{t.utilize.paperTube}</UtilizeSummaryTitle>
+                      <ChevronIcon fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </ChevronIcon>
+                    </UtilizeSummary>
+                    <UtilizeBody>{t.utilize.paperTubeDesc}</UtilizeBody>
+                  </UtilizeDetails>
+                </BorderTopBottom>
+              </UtilizeSideCol>
+            </UtilizeRow>
+          </Container>
+        </SectionUtilize>
+      </LazySection>
+
+      <LazySection>
+        <SectionEasy>
+          <Container>
+            <RowLgCenter>
+              <EasyMediaCol>
+                <FullWidthImg
+                  src={pui.src}
+                  alt="Easy to Use PUI"
+                  width={800}
                   height={450}
-                  className="w-full"
+                  unoptimized={pui.unoptimized}
                 />
+              </EasyMediaCol>
+              <EasyTextCol>
+                <Heading23>
+                  <strong>{t.easyToUse.title}</strong>
+                </Heading23>
+                <BodyText>{t.easyToUse.p1}</BodyText>
+                <BodyText>{t.easyToUse.p2}</BodyText>
+              </EasyTextCol>
+            </RowLgCenter>
+          </Container>
+        </SectionEasy>
+      </LazySection>
+
+      <LazySection>
+        <SectionNotebooksHeading>
+          <Container>
+            <Heading26Center>
+              <strong>{t.notebooks.title}</strong>
+            </Heading26Center>
+          </Container>
+        </SectionNotebooksHeading>
+
+        {lang !== "ja" && (
+          <SectionNotebooksBody>
+            <Container>
+              <RowLgStart>
+                <TwoThirds>
+                  <NotebooksPara>
+                    <strong>{t.notebooks.p1}</strong>
+                  </NotebooksPara>
+                  <NotebooksPara>{t.notebooks.p2}</NotebooksPara>
+                  <NotebooksPara>{t.notebooks.p3}</NotebooksPara>
+                </TwoThirds>
+                <OneThirdCenter>
+                  <Image
+                    src={`${IMG}/Screen-Shot-2022-02-09-at-11.09.44-PM.png`}
+                    alt="Ncode certification mark"
+                    width={156}
+                    height={180}
+                  />
+                </OneThirdCenter>
+              </RowLgStart>
+            </Container>
+          </SectionNotebooksBody>
+        )}
+
+        {lang === "en" && (
+          <SectionNews>
+            <Container>
+              <NewsGrid>
+                <NewsCard href="https://neosmartpen.com/meet-hybriddocs/" target="_blank" rel="noopener noreferrer">
+                  <NewsImage src={`${IMG}/news_hybriddocs.jpg`} alt="HybridDocs" width={400} height={250} />
+                  <NewsTitle>Meet HybridDocs™, Neo Studio&apos;s new copy &amp; paste feature.</NewsTitle>
+                </NewsCard>
+                <NewsCard href="https://neosmartpen.com/45-of-frustrations/" target="_blank" rel="noopener noreferrer">
+                  <NewsImage src={`${IMG}/news_frustrations.jpg`} alt="45% of frustrations" width={400} height={250} />
+                  <NewsTitle>45% of frustrations</NewsTitle>
+                </NewsCard>
+                <NewsCard href="https://neosmartpen.com/neo-smartpen-reaches-the-australian-market/" target="_blank" rel="noopener noreferrer">
+                  <NewsImage src={`${IMG}/news_australian.jpg`} alt="Australian market" width={400} height={250} />
+                  <NewsTitle>Neo smartpen reaches the Australian market</NewsTitle>
+                </NewsCard>
+              </NewsGrid>
+            </Container>
+          </SectionNews>
+        )}
+      </LazySection>
+
+      <LazySection>
+        <GallerySection $paddingTop={lang === "ja" ? 16 : 0} $paddingBottom={30}>
+          <Container>
+            <NotebookGalleryGrid>
+              {notes.map((note) => (
+                <NotebookThumb key={note.src} src={note.src} alt={note.alt} width={450} height={450} />
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      </LazySection>
-
-      {/* S4 Row 0: #Utilize - Apps accordion */}
-      <LazySection>
-      <section className="bg-white" style={{ paddingTop: 22, paddingBottom: 0 }}>
-        <div className="max-w-[1080px] mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-6">
-            <div className="w-full lg:w-[225px] shrink-0">
-              <h2 className="text-[23px] font-medium text-[#333] mb-2">
-                <strong>{t.utilize.title1}</strong>
-              </h2>
-              <h2 className="text-[23px] font-medium text-[#333]">
-                <strong>{t.utilize.title2}</strong>
-              </h2>
-            </div>
-            <div className="w-full lg:flex-1 flex justify-center">
-              <Image
-                src={`${IMG}/neostudio_layers03.png`}
-                alt="Neo Studio layers"
-                width={800}
-                height={800}
-                className="w-full max-w-[510px]"
-              />
-            </div>
-            <div className="w-full lg:w-[225px] shrink-0">
-              <div className="border-t border-gray-300">
-                <details open className="group">
-                  <summary className="cursor-pointer py-3 text-[14px] font-semibold text-[#333] flex justify-between items-center">
-                    <h3 className="text-[14px] font-semibold m-0">{t.utilize.neoStudio}</h3>
-                    <svg className="w-3 h-3 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                  </summary>
-                  <p className="text-[13px] text-[#666] pb-4 leading-relaxed">{t.utilize.neoStudioDesc}</p>
-                </details>
-              </div>
-              <div className="border-t border-gray-300">
-                <details className="group">
-                  <summary className="cursor-pointer py-3 text-[14px] font-semibold text-[#333] flex justify-between items-center">
-                    <h3 className="text-[14px] font-semibold m-0">{t.utilize.gridaBoard}</h3>
-                    <svg className="w-3 h-3 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                  </summary>
-                  <div className="text-[13px] text-[#666] pb-4 leading-relaxed">
-                    <p>{t.utilize.gridaBoardDesc}</p>
-                    <Link href="https://gridaboard.io/" className="block mt-2 text-[#333] hover:text-[#39d2cc]" target="_blank" rel="noopener noreferrer">
-                      {lang === "ko" ? "그리다보드로 이동 →" : lang === "ja" ? "Grida board へ →" : "Go to Grida Board →"}
-                    </Link>
-                  </div>
-                </details>
-              </div>
-              <div className="border-t border-b border-gray-300">
-                <details className="group">
-                  <summary className="cursor-pointer py-3 text-[14px] font-semibold text-[#333] flex justify-between items-center">
-                    <h3 className="text-[14px] font-semibold m-0">{t.utilize.paperTube}</h3>
-                    <svg className="w-3 h-3 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                  </summary>
-                  <p className="text-[13px] text-[#666] pb-4 leading-relaxed">{t.utilize.paperTubeDesc}</p>
-                </details>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      </LazySection>
-
-      {/* S4 Row 1: Easy to Use */}
-      <LazySection>
-      <section className="bg-white" style={{ paddingTop: 20, paddingBottom: 12 }}>
-        <div className="max-w-[1080px] mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-8 items-center">
-            <div className="w-full lg:w-[65%]">
-              <Image
-                src={pui.src}
-                alt="Easy to Use PUI"
-                width={800}
-                height={450}
-                className="w-full"
-                unoptimized={pui.unoptimized}
-              />
-            </div>
-            <div className="w-full lg:w-[35%]">
-              <h2 className="text-[23px] font-medium text-[#333] mb-4">
-                <strong>{t.easyToUse.title}</strong>
-              </h2>
-              <p className="text-[14px] text-[#666] leading-relaxed mb-3">{t.easyToUse.p1}</p>
-              <p className="text-[14px] text-[#666] leading-relaxed">{t.easyToUse.p2}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      </LazySection>
-
-      {/* S5: Notebooks title */}
-      <LazySection>
-      <section className="bg-white" style={{ paddingTop: 16, paddingBottom: 0 }}>
-        <div className="max-w-[1080px] mx-auto px-4">
-          <h2 className="text-[26px] font-medium text-[#333] text-center">
-            <strong>{t.notebooks.title}</strong>
-          </h2>
-        </div>
-      </section>
-
-      {/* S6: Notebooks description (skip for JA since p1/p2/p3 are empty) */}
-      {lang !== "ja" && (
-        <section className="bg-white" style={{ paddingTop: 6, paddingBottom: 54 }}>
-          <div className="max-w-[1080px] mx-auto px-4">
-            <div className="flex flex-col lg:flex-row gap-8 items-start">
-              <div className="w-full lg:w-2/3">
-                <p className="text-[14px] text-[#666] leading-relaxed mb-4">
-                  <strong>{t.notebooks.p1}</strong>
-                </p>
-                <p className="text-[14px] text-[#666] leading-relaxed mb-4">{t.notebooks.p2}</p>
-                <p className="text-[14px] text-[#666] leading-relaxed">{t.notebooks.p3}</p>
-              </div>
-              <div className="w-full lg:w-1/3 flex justify-center">
-                <Image
-                  src={`${IMG}/Screen-Shot-2022-02-09-at-11.09.44-PM.png`}
-                  alt="Ncode certification mark"
-                  width={156}
-                  height={180}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* S6b: News section (EN only) */}
-      {lang === "en" && (
-        <section className="bg-white" style={{ paddingTop: 20, paddingBottom: 30 }}>
-          <div className="max-w-[1080px] mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <a href="https://neosmartpen.com/meet-hybriddocs/" className="group" target="_blank" rel="noopener noreferrer">
-                <Image src={`${IMG}/news_hybriddocs.jpg`} alt="HybridDocs" width={400} height={250} className="w-full object-cover mb-3" />
-                <h2 className="text-[16px] font-bold text-[#333] group-hover:text-[#39d2cc] leading-snug">
-                  Meet HybridDocs™, Neo Studio&apos;s new copy &amp; paste feature.
-                </h2>
-              </a>
-              <a href="https://neosmartpen.com/45-of-frustrations/" className="group" target="_blank" rel="noopener noreferrer">
-                <Image src={`${IMG}/news_frustrations.jpg`} alt="45% of frustrations" width={400} height={250} className="w-full object-cover mb-3" />
-                <h2 className="text-[16px] font-bold text-[#333] group-hover:text-[#39d2cc] leading-snug">
-                  45% of frustrations
-                </h2>
-              </a>
-              <a href="https://neosmartpen.com/neo-smartpen-reaches-the-australian-market/" className="group" target="_blank" rel="noopener noreferrer">
-                <Image src={`${IMG}/news_australian.jpg`} alt="Australian market" width={400} height={250} className="w-full object-cover mb-3" />
-                <h2 className="text-[16px] font-bold text-[#333] group-hover:text-[#39d2cc] leading-snug">
-                  Neo smartpen reaches the Australian market
-                </h2>
-              </a>
-            </div>
-          </div>
-        </section>
-      )}
-
-      </LazySection>
-
-      {/* S7: Notebook images gallery */}
-      <LazySection>
-      <section className="bg-white" style={{ paddingTop: lang === "ja" ? 16 : 0, paddingBottom: 30 }}>
-        <div className="max-w-[1080px] mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {notes.map((note) => (
-              <Image
-                key={note.src}
-                src={note.src}
-                alt={note.alt}
-                width={450}
-                height={450}
-                className="w-full"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+            </NotebookGalleryGrid>
+          </Container>
+        </GallerySection>
       </LazySection>
     </>
   );

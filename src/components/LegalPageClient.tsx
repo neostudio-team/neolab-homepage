@@ -1,5 +1,18 @@
 "use client";
 import { useState } from "react";
+import {
+  CloseLink,
+  LoadingBox,
+  MainPre,
+  PrevPanel,
+  PrevPre,
+  PrevRow,
+  PrevSection,
+  SelectChevron,
+  SelectWrap,
+  VersionMeta,
+  VersionSelect,
+} from "./LegalPageClient.styles";
 
 interface Version {
   id: string;
@@ -27,13 +40,17 @@ function fmtDate(iso: string | null) {
   return `${d.getFullYear()}년 ${String(d.getMonth() + 1).padStart(2, "0")}월 ${String(d.getDate()).padStart(2, "0")}일`;
 }
 
-export default function LegalPageClient({ type, initialContent, activeVersionId, versions }: Props) {
+export default function LegalPageClient({
+  type,
+  initialContent,
+  activeVersionId,
+  versions,
+}: Props) {
   const [selectedPrevId, setSelectedPrevId] = useState<string>("");
   const [prevContent, setPrevContent] = useState<string>("");
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
-  // Only non-active (previous) versions in the dropdown
-  const prevVersions = versions.filter(v => !v.isActive);
+  const prevVersions = versions.filter((v) => !v.isActive);
 
   async function handleSelectPrev(versionId: string) {
     if (!versionId) {
@@ -53,66 +70,63 @@ export default function LegalPageClient({ type, initialContent, activeVersionId,
     }
   }
 
-  const selectedVersion = prevVersions.find(v => v.id === selectedPrevId);
+  function handleSelectChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    handleSelectPrev(e.target.value);
+  }
+
+  function handleClosePrev() {
+    setSelectedPrevId("");
+    setPrevContent("");
+  }
+
+  const selectedVersion = prevVersions.find((v) => v.id === selectedPrevId);
 
   return (
     <div>
-      {/* Current active version content */}
-      <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">
-        {initialContent}
-      </pre>
+      <MainPre>{initialContent}</MainPre>
 
-      {/* Previous versions dropdown — only shown if there are previous versions */}
       {prevVersions.length > 0 && (
-        <div className="mt-12 pt-8 border-t border-gray-100">
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1 max-w-xs">
-              <select
-                value={selectedPrevId}
-                onChange={e => handleSelectPrev(e.target.value)}
-                className="w-full text-sm border border-gray-300 rounded-lg px-4 py-2.5 pr-8 text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400 bg-white appearance-none cursor-pointer"
-              >
+        <PrevSection>
+          <PrevRow>
+            <SelectWrap>
+              <VersionSelect value={selectedPrevId} onChange={handleSelectChange}>
                 <option value="">{LABEL[type]}</option>
-                {prevVersions.map(v => (
+                {prevVersions.map((v) => (
                   <option key={v.id} value={v.id}>
                     {v.createdAt ? fmtDate(v.createdAt) : ""}
                     {v.versionNumber ? ` (v${v.versionNumber})` : ""}
                     {v.note ? ` — ${v.note}` : ""}
                   </option>
                 ))}
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">▾</span>
-            </div>
+              </VersionSelect>
+              <SelectChevron>▾</SelectChevron>
+            </SelectWrap>
             {selectedPrevId && (
-              <button
-                onClick={() => { setSelectedPrevId(""); setPrevContent(""); }}
-                className="text-xs text-gray-400 hover:text-gray-600 underline"
-              >
+              <CloseLink type="button" onClick={handleClosePrev}>
                 닫기
-              </button>
+              </CloseLink>
             )}
-          </div>
+          </PrevRow>
 
-          {/* Previous version content panel */}
           {selectedPrevId && (
-            <div className="mt-4 p-6 bg-gray-50 rounded-xl border border-gray-200 relative">
+            <PrevPanel>
               {selectedVersion && (
-                <div className="mb-3 flex gap-3 text-xs text-gray-400">
+                <VersionMeta>
                   <span>v{selectedVersion.versionNumber}</span>
                   {selectedVersion.note && <span>{selectedVersion.note}</span>}
-                  {selectedVersion.createdAt && <span>등록일: {fmtDate(selectedVersion.createdAt)}</span>}
-                </div>
+                  {selectedVersion.createdAt && (
+                    <span>등록일: {fmtDate(selectedVersion.createdAt)}</span>
+                  )}
+                </VersionMeta>
               )}
               {loadingId ? (
-                <div className="text-xs text-gray-400 text-center py-8">불러오는 중...</div>
+                <LoadingBox>불러오는 중...</LoadingBox>
               ) : (
-                <pre className="whitespace-pre-wrap font-sans text-sm text-gray-600 leading-relaxed">
-                  {prevContent}
-                </pre>
+                <PrevPre>{prevContent}</PrevPre>
               )}
-            </div>
+            </PrevPanel>
           )}
-        </div>
+        </PrevSection>
       )}
     </div>
   );

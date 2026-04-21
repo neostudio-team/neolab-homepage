@@ -1,33 +1,72 @@
 "use client";
 import { useState } from "react";
+import {
+  Answer,
+  Chevron,
+  Item,
+  QuestionButton,
+  Root,
+} from "./SupportFaqAccordion.styles";
 
 interface FaqItem {
   q: string;
   a: string | string[];
 }
 
-export default function SupportFaqAccordion({ items }: { items: FaqItem[] }) {
-  const [open, setOpen] = useState<number | null>(null);
+interface SupportFaqAccordionProps {
+  items: FaqItem[];
+}
+
+function FaqRow({
+  item,
+  index,
+  isOpen,
+  onToggle,
+}: {
+  item: FaqItem;
+  index: number;
+  isOpen: boolean;
+  onToggle: (index: number) => void;
+}) {
+  function handleQuestionClick() {
+    onToggle(index);
+  }
+
   return (
-    <div className="divide-y divide-gray-100">
+    <Item>
+      <QuestionButton type="button" onClick={handleQuestionClick}>
+        <span>{item.q}</span>
+        <Chevron>{isOpen ? "−" : "+"}</Chevron>
+      </QuestionButton>
+      {isOpen && (
+        <Answer>
+          {Array.isArray(item.a)
+            ? item.a.map((line, j) => <p key={String(j)}>{line}</p>)
+            : <p>{item.a}</p>}
+        </Answer>
+      )}
+    </Item>
+  );
+}
+
+export default function SupportFaqAccordion({ items }: SupportFaqAccordionProps) {
+  const [open, setOpen] = useState<number | null>(null);
+
+  function handleToggle(index: number) {
+    setOpen((prev) => (prev === index ? null : index));
+  }
+
+  return (
+    <Root>
       {items.map((item, i) => (
-        <div key={i} className="py-1">
-          <button
-            onClick={() => setOpen(open === i ? null : i)}
-            className="w-full flex justify-between items-center py-4 text-left text-[15px] font-semibold text-[#333] hover:text-[#ff4e00] transition-colors"
-          >
-            <span>{item.q}</span>
-            <span className="text-xl text-gray-400 ml-4">{open === i ? "−" : "+"}</span>
-          </button>
-          {open === i && (
-            <div className="pb-5 text-[14px] text-[#555] leading-relaxed space-y-2">
-              {Array.isArray(item.a)
-                ? item.a.map((line, j) => <p key={j}>{line}</p>)
-                : <p>{item.a}</p>}
-            </div>
-          )}
-        </div>
+        <FaqRow
+          key={item.q}
+          item={item}
+          index={i}
+          isOpen={open === i}
+          onToggle={handleToggle}
+        />
       ))}
-    </div>
+    </Root>
   );
 }

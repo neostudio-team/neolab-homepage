@@ -1,0 +1,33 @@
+import styled from "styled-components";
+import Link from "next/link";
+
+export const Page = styled.div`background:#fff;min-height:100vh;font-family:Arial,sans-serif;`;
+export const Hero = styled.section`position:relative;width:100%;background:#f8f9fa;padding-top:100px;margin-bottom:5rem;`;
+export const HeroBg = styled.div`position:absolute;inset:0;z-index:0;overflow:hidden;`;
+export const HeroBlobLeft = styled.div`position:absolute;top:0;left:0;width:33.33%;height:100%;background:linear-gradient(to bottom right,#ffdbe0,transparent);opacity:.4;filter:blur(64px);`;
+export const HeroBlobRight = styled.div`position:absolute;top:5rem;right:0;width:33.33%;height:100%;background:linear-gradient(to bottom left,#dbebff,transparent);opacity:.4;filter:blur(64px);`;
+export const Container = styled.div`max-width:1080px;margin:0 auto;padding:0 1rem;`;
+export const HeroInner = styled(Container)`position:relative;z-index:10;padding:4rem 1rem;`;
+export const HeroLabel = styled.h4`color:#666;font-size:14px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;`;
+export const HeroTitle = styled.h1`font-size:60px;font-weight:800;color:#000;line-height:1.1;`;
+export const Wave = styled.div`position:absolute;bottom:-2px;left:0;width:100%;overflow:hidden;line-height:0;z-index:20;`;
+export const BoardSection = styled.section`max-width:1080px;margin:0 auto;padding:0 1rem 8rem;`;
+export const Empty = styled.div`text-align:center;padding:5rem 0;color:#9ca3af;font-size:14px;`;
+export const TableWrap = styled.div`border-top:1.5px solid #000;border-bottom:1px solid #d1d5db;overflow-x:auto;`;
+export const Table = styled.table`width:100%;text-align:left;border-collapse:collapse;min-width:800px;`;
+export const HeadRow = styled.tr`border-bottom:1px solid #d1d5db;background:#fafafa;color:#6a6a6a;font-size:13px;font-weight:500;`;
+export const Th = styled.th`padding:.75rem .5rem;text-align:center;font-weight:500;`;
+export const Row = styled.tr<{ $pinned?: boolean }>`border-bottom:1px solid #e5e7eb;color:#6a6a6a;font-size:13px;height:38px;background:${({ $pinned }) => ($pinned ? "#fafafa" : "#fff")};&:hover{background:#fdfdfd;}`;
+export const Td = styled.td<{ $strong?: boolean }>`padding:.5rem .5rem;text-align:center;font-weight:${({ $strong }) => ($strong ? 700 : 400)};color:${({ $strong }) => ($strong ? "#333" : "#6a6a6a")};`;
+export const TitleTd = styled.td`padding:.5rem 1.5rem;`;
+export const TitleLink = styled(Link)<{ $strong?: boolean }>`display:block;max-width:500px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:${({ $strong }) => ($strong ? "#333" : "#6a6a6a")};font-weight:${({ $strong }) => ($strong ? 700 : 400)};&:hover{text-decoration:underline;}`;
+export const DateText = styled.span`color:#999;`;
+
+export const DetailWrap = styled.div`background:#fff;min-height:100vh;padding-top:100px;`;
+export const DetailInner = styled.div`max-width:780px;margin:0 auto;padding:4rem 1rem;`;
+export const BackLink = styled(Link)`font-size:14px;color:#9ca3af;display:inline-block;margin-bottom:2rem;&:hover{color:#4b5563;}`;
+export const DetailTitle = styled.h1`font-size:28px;font-weight:700;color:#111827;margin-bottom:1rem;line-height:1.4;`;
+export const Meta = styled.div`display:flex;align-items:center;gap:1rem;font-size:14px;color:#9ca3af;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid #f3f4f6;`;
+export const HtmlContent = styled.div`font-size:15px;line-height:1.8;color:#374151;& p{margin-bottom:.75rem;} & ul{list-style:disc;padding-left:1.25rem;} & ol{list-style:decimal;padding-left:1.25rem;} & li{margin-bottom:.25rem;} & a{color:#2563eb;text-decoration:underline;} & img{max-width:100%;border-radius:.25rem;} & h1{font-size:1.5rem;font-weight:700;} & h2{font-size:1.25rem;font-weight:700;} & h3{font-size:1.125rem;font-weight:600;} & strong{font-weight:700;} & em{font-style:italic;} & blockquote{border-left:4px solid #d1d5db;padding-left:1rem;color:#6b7280;}`;
+export const FooterBox = styled.div`margin-top:4rem;padding-top:2rem;border-top:1px solid #f3f4f6;`;
+export const BorderBtn = styled(Link)`display:inline-block;border:1px solid #d1d5db;color:#4b5563;font-size:14px;padding:.75rem 1.5rem;border-radius:.5rem;transition:background .15s;&:hover{background:#f9fafb;}`;

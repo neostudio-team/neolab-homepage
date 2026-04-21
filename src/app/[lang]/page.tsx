@@ -1,13 +1,15 @@
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import LazySection from "@/components/LazySection";
-import ProductsSection from "@/components/ProductsSection";
-import TechSection from "@/components/TechSection";
-import BusinessSection from "@/components/BusinessSection";
-import PartnersSection from "@/components/PartnersSection";
-import StatsSection from "@/components/StatsSection";
-import CTASection from "@/components/CTASection";
-import Footer from "@/components/Footer";
+import Header from "@/components/common/Header";
+import Footer from "@/components/common/Footer";
+import {
+  HeroSection,
+  LazySection,
+  ProductsSection,
+  TechSection,
+  BusinessSection,
+  PartnersSection,
+  StatsSection,
+  CTASection,
+} from "@/components/home";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 

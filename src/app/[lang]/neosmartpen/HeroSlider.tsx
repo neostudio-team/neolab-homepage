@@ -1,78 +1,87 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
+import {
+  DotButton,
+  DotsRow,
+  NavButtonNext,
+  NavButtonPrev,
+  NavIcon,
+  Root,
+  SlideImage,
+  SlideLayer,
+} from "./HeroSlider.styles";
 
 interface HeroSliderProps {
   slides: string[];
   interval?: number;
 }
 
+function SliderDot({
+  index,
+  current,
+  onSelect,
+}: {
+  index: number;
+  current: number;
+  onSelect: (i: number) => void;
+}) {
+  function handleClick() {
+    onSelect(index);
+  }
+
+  return (
+    <DotButton
+      type="button"
+      $active={index === current}
+      onClick={handleClick}
+      aria-label={`Go to slide ${index + 1}`}
+    />
+  );
+}
+
 export default function HeroSlider({ slides, interval = 5000 }: HeroSliderProps) {
   const [current, setCurrent] = useState(0);
 
-  const next = useCallback(() => {
+  const goNext = useCallback(() => {
     setCurrent((prev) => (prev + 1) % slides.length);
   }, [slides.length]);
 
-  const prev = useCallback(() => {
+  const goPrev = useCallback(() => {
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
   useEffect(() => {
-    const timer = setInterval(next, interval);
+    const timer = setInterval(goNext, interval);
     return () => clearInterval(timer);
-  }, [next, interval]);
+  }, [goNext, interval]);
+
+  function handleDotSelect(index: number) {
+    setCurrent(index);
+  }
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ height: 600 }}>
+    <Root>
       {slides.map((src, i) => (
-        <div
-          key={src}
-          className="absolute inset-0 transition-opacity duration-700"
-          style={{ opacity: i === current ? 1 : 0 }}
-        >
-          <Image
-            src={src}
-            alt={`Slide ${i + 1}`}
-            fill
-            className="object-cover"
-            priority={i === 0}
-          />
-        </div>
+        <SlideLayer key={src} $visible={i === current}>
+          <SlideImage src={src} alt={`Slide ${i + 1}`} fill priority={i === 0} />
+        </SlideLayer>
       ))}
-      {/* Navigation arrows */}
-      <button
-        onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/30 text-white rounded-full hover:bg-black/50 transition-colors z-10"
-        aria-label="Previous"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <NavButtonPrev type="button" onClick={goPrev} aria-label="Previous">
+        <NavIcon fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/30 text-white rounded-full hover:bg-black/50 transition-colors z-10"
-        aria-label="Next"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        </NavIcon>
+      </NavButtonPrev>
+      <NavButtonNext type="button" onClick={goNext} aria-label="Next">
+        <NavIcon fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-      {/* Dots indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              i === current ? "bg-white" : "bg-white/50"
-            }`}
-            aria-label={`Go to slide ${i + 1}`}
-          />
+        </NavIcon>
+      </NavButtonNext>
+      <DotsRow>
+        {slides.map((src, i) => (
+          <SliderDot key={src} index={i} current={current} onSelect={handleDotSelect} />
         ))}
-      </div>
-    </div>
+      </DotsRow>
+    </Root>
   );
 }

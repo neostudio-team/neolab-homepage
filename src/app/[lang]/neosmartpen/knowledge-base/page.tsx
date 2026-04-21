@@ -1,6 +1,17 @@
 import { Metadata } from "next";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
+import {
+  CategoriesSection,
+  CategoryCard,
+  CategoryGrid,
+  CategoryIcon,
+  CategoryTitle,
+  Container,
+  HeroSection,
+  HeroSubtitle,
+  HeroTitle,
+} from "./KnowledgeBasePage.styles";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -10,8 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
 }
 
 export default async function KnowledgeBasePage({ params }: { params: Promise<{ lang: Locale }> }) {
-  const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary((await params).lang);
   const t = dict.neosmartpen.knowledgeBase;
 
   const categories = [
@@ -23,27 +33,25 @@ export default async function KnowledgeBasePage({ params }: { params: Promise<{ 
 
   return (
     <>
-      {/* Hero */}
-      <section className="py-20 bg-[#1a1a2e] text-white text-center">
-        <div className="max-w-[1080px] mx-auto px-4">
-          <h1 className="text-[40px] font-black mb-4">{t.hero.title}</h1>
-          <p className="text-lg text-gray-300">{t.hero.subtitle}</p>
-        </div>
-      </section>
+      <HeroSection>
+        <Container>
+          <HeroTitle>{t.hero.title}</HeroTitle>
+          <HeroSubtitle>{t.hero.subtitle}</HeroSubtitle>
+        </Container>
+      </HeroSection>
 
-      {/* Categories */}
-      <section className="py-16 bg-white">
-        <div className="max-w-[1080px] mx-auto px-4">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <CategoriesSection>
+        <Container>
+          <CategoryGrid>
             {categories.map((cat) => (
-              <div key={cat.key} className="bg-[#f5f5f5] rounded-xl p-8 text-center hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="text-4xl mb-4">{cat.icon}</div>
-                <h3 className="font-bold text-black">{t.categories[cat.key]}</h3>
-              </div>
+              <CategoryCard key={cat.key}>
+                <CategoryIcon>{cat.icon}</CategoryIcon>
+                <CategoryTitle>{t.categories[cat.key]}</CategoryTitle>
+              </CategoryCard>
             ))}
-          </div>
-        </div>
-      </section>
+          </CategoryGrid>
+        </Container>
+      </CategoriesSection>
     </>
   );
 }

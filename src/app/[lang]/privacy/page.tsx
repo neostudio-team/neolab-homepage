@@ -1,10 +1,11 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/common/Header";
+import Footer from "@/components/common/Footer";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { adminDb } from "@/lib/firebase-admin";
 import { DEFAULT_PRIVACY } from "@/lib/legal-defaults";
 import LegalPageClient from "@/components/LegalPageClient";
+import LegalDocumentShell from "@/components/legal/LegalDocumentShell";
 
 async function getData() {
   try {
@@ -47,18 +48,14 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
   return (
     <>
       <Header lang={lang as Locale} dict={dict.common.header} />
-      <main className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 py-16">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
-            <LegalPageClient
-              type="privacy"
-              initialContent={activeContent}
-              activeVersionId={activeVersionId}
-              versions={versions}
-            />
-          </div>
-        </div>
-      </main>
+      <LegalDocumentShell>
+        <LegalPageClient
+          type="privacy"
+          initialContent={activeContent}
+          activeVersionId={activeVersionId}
+          versions={versions}
+        />
+      </LegalDocumentShell>
       <Footer lang={lang as Locale} dict={dict.common.footer} />
     </>
   );

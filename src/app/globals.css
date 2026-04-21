@@ -1,17 +1,24 @@
-@import "tailwindcss";
-
-@theme inline {
+:root {
   --color-primary: #f26522;
   --color-primary-dark: #d4551a;
   --color-dark: #1a1a2e;
   --color-gray-light: #f8f8f8;
   --color-teal: #1a5c5c;
   --font-sans: "Open Sans", Arial, Helvetica, sans-serif;
-}
-
-:root {
   --background: #ffffff;
   --foreground: #333333;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -19,10 +26,25 @@ body {
   color: var(--foreground);
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
   word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-html {
-  scroll-behavior: smooth;
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* ── Press 본문 HTML 렌더링 스타일 ────────────────────────────────────── */
@@ -110,7 +132,6 @@ html {
 }
 
 /* ── Partner logo animation ───────────────────────────────────────────── */
-/* Partner logo animation */
 @keyframes scroll-left {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }

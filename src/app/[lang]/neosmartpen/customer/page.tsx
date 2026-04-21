@@ -1,6 +1,62 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import type { Locale } from "@/i18n/config";
+import {
+  AccentLine,
+  AccentRow,
+  AccentText,
+  CategoryCard,
+  CategoryGrid,
+  CategoryLink,
+  CategoryName,
+  CategorySection,
+  Circle,
+  CircleText,
+  Container,
+  Deco1,
+  Deco2,
+  Deco3,
+  Deco4,
+  Divider,
+  DotMint,
+  DotOrange,
+  Form,
+  FormDesc,
+  FormTitle,
+  FormWrap,
+  Heart,
+  HeartWrap,
+  HeroDesc,
+  HeroInner,
+  HeroLeft,
+  HeroRight,
+  HeroSection,
+  HeroTitle,
+  InfoList,
+  InquirySection,
+  Input,
+  NoticeLink,
+  NoticeSection,
+  Page,
+  PageBtn,
+  PageBtnActive,
+  Pagination,
+  Phone,
+  PolicyLink,
+  PolicyText,
+  SectionTitle,
+  ShapeMain,
+  Stick,
+  SubmitBtn,
+  SubmitWrap,
+  Table,
+  TableWrap,
+  Td,
+  Textarea,
+  Th,
+  TheadRow,
+  TitleTd,
+  Tr,
+} from "./CustomerPage.styles";
 
 export const metadata: Metadata = {
   title: "고객지원 | 네오스마트펜",
@@ -24,166 +80,108 @@ export default async function CustomerPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
 
   return (
-    <div className="bg-white min-h-screen text-[#333]">
-      {/* Hero Section */}
-      <section className="bg-[#FCF9F9] relative overflow-hidden py-24">
-        <div className="max-w-[1080px] mx-auto px-4 flex flex-col md:flex-row relative z-10">
-          <div className="w-full md:w-1/2 pt-10">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-10 h-[2px] bg-[#E1A02E]"></div>
-              <span className="text-[#E1A02E] font-bold text-sm tracking-widest uppercase">Customer Support</span>
-            </div>
-            <h1 className="text-6xl font-serif text-[#333] mb-6">고객센터</h1>
-            <p className="text-gray-600 text-lg mb-16 leading-relaxed">
-              최고의 만족을 드릴 수 있도록 고객의 입장에서 최선을 다하<br />겠습니다.
-            </p>
-
-            <h2 className="text-4xl font-serif text-[#333] mb-6">1588-6239</h2>
-            <div className="text-gray-600 space-y-6 text-[15px] leading-relaxed">
-              <p>네오랩컨버전스 상담시간 : 10:00~18:00(평일 / 점심시간<br/>12:00~13:00)</p>
+    <Page>
+      <HeroSection>
+        <HeroInner>
+          <HeroLeft>
+            <AccentRow><AccentLine /><AccentText>Customer Support</AccentText></AccentRow>
+            <HeroTitle>고객센터</HeroTitle>
+            <HeroDesc>최고의 만족을 드릴 수 있도록 고객의 입장에서 최선을 다하겠습니다.</HeroDesc>
+            <Phone>1588-6239</Phone>
+            <InfoList>
+              <p>네오랩컨버전스 상담시간 : 10:00~18:00(평일 / 점심시간 12:00~13:00)</p>
               <p>1661-2981 대교 눈높이</p>
               <p>1833-6239 엠베스트</p>
               <p>1661-1311 구몬</p>
-              <div className="h-px w-full bg-gray-200 my-6"></div>
+              <Divider />
               <p>A/S 센터 : 경기도 수원시 권선구 서부로 1433-20 4층 401호</p>
               <p>네오랩컨버전스 A/S센터 지정택배 : CJ대한통운</p>
-            </div>
-          </div>
-          
-          <div className="hidden md:block w-full md:w-1/2 relative min-h-[500px]">
-            {/* CSS-based replication of the hero illustration */}
-            <div className="absolute top-10 right-0 w-[400px] h-[500px] bg-[#B0A294] rounded-[100px_200px_150px_100px] opacity-80" style={{ borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%' }}></div>
-            <div className="absolute top-0 right-10 w-10 h-10 bg-[#E87B00] rounded-full"></div>
-            <div className="absolute bottom-20 left-10 w-16 h-16 bg-[#32E8E1] rounded-full border-4 border-white"></div>
-            {/* Pink heart on stick */}
-            <div className="absolute top-[40%] right-[30%] rotate-n12">
-              <div className="w-[120px] h-[120px] bg-[#EBB4BC] transform rotate-45 relative before:absolute before:content-[''] before:w-[120px] before:h-[120px] before:bg-[#EBB4BC] before:-top-[60px] before:left-0 before:rounded-full after:absolute after:content-[''] after:w-[120px] after:h-[120px] after:bg-[#EBB4BC] after:top-0 after:-left-[60px] after:rounded-full"></div>
-              <div className="w-[6px] h-[200px] bg-[#D7AA6A] absolute left-[56px] top-[100px] transform -rotate-45 z-[-1]"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+            </InfoList>
+          </HeroLeft>
+          <HeroRight>
+            <ShapeMain />
+            <DotOrange />
+            <DotMint />
+            <HeartWrap><Heart /><Stick /></HeartWrap>
+          </HeroRight>
+        </HeroInner>
+      </HeroSection>
 
-      {/* Notice Board (MangBoard) */}
-      <section className="py-20 max-w-[1080px] mx-auto px-4">
-        <div className="border-t-2 border-black border-b border-b-gray-300">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-gray-300 bg-[#F9F9F9] text-[#333] text-[13px] font-semibold">
-                <th className="py-4 px-2 text-center w-16">번호</th>
-                <th className="py-4 px-2 text-center">제목</th>
-                <th className="py-4 px-2 text-center w-32">작성자</th>
-                <th className="py-4 px-2 text-center w-32">작성일</th>
-                <th className="py-4 px-2 text-center w-24">조회</th>
-              </tr>
-            </thead>
-            <tbody>
-              {notices.map((n, idx) => (
-                <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-[13px] text-[#666]">
-                  <td className="py-4 px-2 text-center">{n.id}</td>
-                  <td className="py-4 px-2 hover:underline cursor-pointer"><Link href="#">{n.title}</Link></td>
-                  <td className="py-4 px-2 text-center">{n.author}</td>
-                  <td className="py-4 px-2 text-center">{n.date}</td>
-                  <td className="py-4 px-2 text-center">{n.views}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        
-        {/* Pagination placeholder */}
-        <div className="flex justify-center mt-10 space-x-2">
-          <div className="w-8 h-8 flex items-center justify-center border border-gray-300 bg-white text-gray-500 cursor-pointer text-xs">«</div>
-          <div className="w-8 h-8 flex items-center justify-center border border-black bg-black text-white font-bold cursor-pointer text-xs">1</div>
-          <div className="w-8 h-8 flex items-center justify-center border border-gray-300 bg-white text-gray-600 cursor-pointer text-xs hover:bg-gray-50">2</div>
-          <div className="w-8 h-8 flex items-center justify-center border border-gray-300 bg-white text-gray-500 cursor-pointer text-xs">»</div>
-        </div>
-      </section>
+      <NoticeSection>
+        <Container>
+          <TableWrap>
+            <Table>
+              <thead>
+                <TheadRow>
+                  <Th>번호</Th><Th>제목</Th><Th>작성자</Th><Th>작성일</Th><Th>조회</Th>
+                </TheadRow>
+              </thead>
+              <tbody>
+                {notices.map((n) => (
+                  <Tr key={n.id}>
+                    <Td>{n.id}</Td>
+                    <TitleTd><NoticeLink href="#">{n.title}</NoticeLink></TitleTd>
+                    <Td>{n.author}</Td>
+                    <Td>{n.date}</Td>
+                    <Td>{n.views}</Td>
+                  </Tr>
+                ))}
+              </tbody>
+            </Table>
+          </TableWrap>
+          <Pagination>
+            <PageBtn>«</PageBtn>
+            <PageBtnActive>1</PageBtnActive>
+            <PageBtn>2</PageBtn>
+            <PageBtn>»</PageBtn>
+          </Pagination>
+        </Container>
+      </NoticeSection>
 
-      {/* Product Categories */}
-      <section className="py-20 relative">
-        <div className="max-w-[1080px] mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-16 text-[#333]">각 제품군의 상세 설명</h2>
-          
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-[900px] mx-auto">
-            {/* Category 1 */}
-            <div className="flex flex-col items-center">
-              <div className="w-[160px] h-[160px] rounded-full bg-black mb-6 flex items-center justify-center shadow-lg transition-transform hover:-translate-y-2">
-                <span className="text-white font-bold text-lg">소리펜</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4">소리펜</h3>
-              <Link href={`/${lang}/soundpen`} className="bg-black text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors inline-block">자세히 알아보기</Link>
-            </div>
-            {/* Category 2 */}
-            <div className="flex flex-col items-center">
-              <div className="w-[160px] h-[160px] rounded-full bg-black mb-6 flex items-center justify-center shadow-lg transition-transform hover:-translate-y-2">
-                <span className="text-white font-bold text-lg text-center">미디어<br/>플레이어</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4">미디어플레이어</h3>
-              <Link href="#" className="bg-black text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors inline-block">자세히 알아보기</Link>
-            </div>
-            {/* Category 3 */}
-            <div className="flex flex-col items-center">
-              <div className="w-[160px] h-[160px] rounded-full bg-black mb-6 flex items-center justify-center shadow-lg transition-transform hover:-translate-y-2">
-                <span className="text-white font-bold text-lg text-center">빔프로젝터</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4">빔프로젝터</h3>
-              <Link href="#" className="bg-black text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors inline-block">자세히 알아보기</Link>
-            </div>
-            {/* Category 4 */}
-            <div className="flex flex-col items-center">
-              <div className="w-[160px] h-[160px] rounded-full bg-black mb-6 flex items-center justify-center shadow-lg transition-transform hover:-translate-y-2">
-                <span className="text-white font-bold text-lg text-center">네오스마트펜</span>
-              </div>
-              <h3 className="text-xl font-bold mb-4">네오스마트펜</h3>
-              <Link href={`/${lang}/neosmartpen`} className="bg-black text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-[#ff4e00] transition-colors inline-block">자세히 알아보기</Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CategorySection>
+        <Container>
+          <SectionTitle>각 제품군의 상세 설명</SectionTitle>
+          <CategoryGrid>
+            <CategoryCard>
+              <Circle><CircleText>소리펜</CircleText></Circle>
+              <CategoryName>소리펜</CategoryName>
+              <CategoryLink href={`/${lang}/soundpen`}>자세히 알아보기</CategoryLink>
+            </CategoryCard>
+            <CategoryCard>
+              <Circle><CircleText>미디어\n플레이어</CircleText></Circle>
+              <CategoryName>미디어플레이어</CategoryName>
+              <CategoryLink href="#">자세히 알아보기</CategoryLink>
+            </CategoryCard>
+            <CategoryCard>
+              <Circle><CircleText>빔프로젝터</CircleText></Circle>
+              <CategoryName>빔프로젝터</CategoryName>
+              <CategoryLink href="#">자세히 알아보기</CategoryLink>
+            </CategoryCard>
+            <CategoryCard>
+              <Circle><CircleText>네오스마트펜</CircleText></Circle>
+              <CategoryName>네오스마트펜</CategoryName>
+              <CategoryLink href={`/${lang}/neosmartpen`}>자세히 알아보기</CategoryLink>
+            </CategoryCard>
+          </CategoryGrid>
+        </Container>
+      </CategorySection>
 
-      {/* Inquiry Form */}
-      <section className="py-24 relative overflow-hidden bg-[#FCF9F9]">
-        {/* Background Decos */}
-        <div className="absolute top-20 left-10 w-24 h-24 bg-[#D39B9B] rounded-full opacity-70"></div>
-        <div className="absolute top-40 right-20 w-12 h-12 bg-[#D39B9B] rounded-full opacity-70"></div>
-        <div className="absolute -bottom-40 -left-20 w-[600px] h-[600px] bg-[#F1EDED] rounded-full opacity-50 z-0"></div>
-        <div className="absolute -bottom-20 -right-20 w-[500px] h-[500px] bg-[#F1EDED] rounded-full opacity-50 z-0"></div>
-
-        <div className="max-w-[700px] mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-[50px] font-bold text-[#333] mb-6 tracking-tight">문의하기</h2>
-          <p className="text-[#666] mb-12 leading-relaxed text-[15px]">
-            해당하는 제품의 자주 묻는 질문에서 원하는 답변을 찾을 수 없는 경우<br/>
-            에는 아래의 전화번호, 이메일, 혹은 문의하기 폼을 이용하여 주세요
-          </p>
-          <p className="text-[#666] text-sm mb-16">
-            (주)네오랩컨버전스의 개인정보 취급방침을 확인 하시려면 상세 보기를 눌러 주세요 <Link href="#" className="text-[#0088cc] hover:underline">상세보기</Link>
-          </p>
-
-          <form className="space-y-6 text-left">
-            <div>
-              <input type="text" placeholder="성함" className="w-full bg-transparent border-b border-gray-300 py-4 px-2 focus:outline-none focus:border-black transition-colors" />
-            </div>
-            <div>
-              <input type="text" placeholder="전화번호" className="w-full bg-transparent border-b border-gray-300 py-4 px-2 focus:outline-none focus:border-black transition-colors" />
-            </div>
-            <div>
-              <input type="email" placeholder="이메일 주소" className="w-full bg-transparent border-b border-gray-300 py-4 px-2 focus:outline-none focus:border-black transition-colors" />
-            </div>
-            <div>
-              <input type="text" placeholder="제품명" className="w-full bg-transparent border-b border-gray-300 py-4 px-2 focus:outline-none focus:border-black transition-colors" />
-            </div>
-            <div>
-              <textarea placeholder="문의 내용" rows={4} className="w-full bg-transparent border-b border-gray-300 py-4 px-2 focus:outline-none focus:border-black transition-colors resize-none"></textarea>
-            </div>
-            <div className="pt-8">
-              <button type="submit" className="w-full bg-black text-white font-bold tracking-[0.2em] py-5 uppercase hover:bg-[#333] transition-colors">
-                Send
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
-    </div>
+      <InquirySection>
+        <Deco1 /><Deco2 /><Deco3 /><Deco4 />
+        <FormWrap>
+          <FormTitle>문의하기</FormTitle>
+          <FormDesc>해당하는 제품의 자주 묻는 질문에서 원하는 답변을 찾을 수 없는 경우에는 아래의 전화번호, 이메일, 혹은 문의하기 폼을 이용하여 주세요</FormDesc>
+          <PolicyText>(주)네오랩컨버전스의 개인정보 취급방침을 확인 하시려면 상세 보기를 눌러 주세요 <PolicyLink href="#">상세보기</PolicyLink></PolicyText>
+          <Form>
+            <Input type="text" placeholder="성함" />
+            <Input type="text" placeholder="전화번호" />
+            <Input type="email" placeholder="이메일 주소" />
+            <Input type="text" placeholder="제품명" />
+            <Textarea placeholder="문의 내용" rows={4} />
+            <SubmitWrap><SubmitBtn type="submit">Send</SubmitBtn></SubmitWrap>
+          </Form>
+        </FormWrap>
+      </InquirySection>
+    </Page>
   );
 }

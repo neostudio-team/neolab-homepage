@@ -2,7 +2,7 @@ import type { Locale } from "./config";
 
 const dictionaries = {
   en: () => import("@/locales/en").then((m) => m.default),
-  ko: () => import("@/locales/ko").then((m) => m.default),
+  ko: () => import("@/locales/ko/index").then((m) => m.default),
   ja: () => import("@/locales/ja").then((m) => m.default),
 };
 
