@@ -28,32 +28,13 @@ export const BgDecoration = styled.div`
   z-index: 0;
 `;
 
-export const Inner = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 1640px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  z-index: 1;
-
-  @media (min-width: 768px) {
-    padding: 0 2.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding: 0 5rem;
-  }
-`;
 
 export const Heading = styled.h2`
   margin: 0;
   text-align: center;
-  color: #111;
-  font-family: Pretendard, sans-serif;
-  font-size: clamp(40px, 4.5vw, 80px);
+  font-size: 5rem;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
 `;
 
 export const PinSpacer = styled.div`

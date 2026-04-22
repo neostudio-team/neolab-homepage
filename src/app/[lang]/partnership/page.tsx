@@ -3,7 +3,7 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import ContactModalTrigger from "@/components/common/ContactModalTrigger";
 import { LazySection } from "@/components/home";
-import PartnershipCategories from "@/components/PartnershipCategories";
+import PartnershipCategories from "@/components/partnership/PartnershipCategories";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import {

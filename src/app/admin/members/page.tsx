@@ -1,7 +1,53 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { auth } from "@/lib/firebase";
+import {
+  AdminBtnSm,
+  AdminCardPadded,
+  AdminCheckboxSm,
+  AdminCheckMark,
+  AdminConfirmModal,
+  AdminDashMark,
+  AdminDialogTitle,
+  AdminEllipsis,
+  AdminFlexGap2,
+  AdminH1,
+  AdminHeaderRowBetween,
+  AdminHelpIconButton,
+  AdminIconButton,
+  AdminInlineStrong,
+  AdminInput,
+  AdminLinkPrimary,
+  AdminModalActions,
+  AdminModalDesc,
+  AdminModalEmoji,
+  AdminModalOverlay,
+  AdminModalTitle,
+  AdminMutedSmall,
+  AdminMutedXs,
+  AdminPage,
+  AdminPagerNav,
+  AdminPagerPage,
+  AdminPagerText,
+  AdminPermTable,
+  AdminPermTd,
+  AdminPermTh,
+  AdminSelect,
+  AdminTable,
+  AdminTableShell,
+  AdminTableWide,
+  AdminTbody,
+  AdminTd,
+  AdminTdDense,
+  AdminTh,
+  AdminThead,
+  AdminTr,
+  AdminWideDialog,
+  AdminLinkBtnXs,
+  AdminToolbarFooter,
+  AdminMemberMeta,
+  AdminMemberMetaSub,
+} from "@/components/admin/AdminCommon.styles";
 
 interface Member {
   id: string;
@@ -26,10 +72,32 @@ const LEVEL_LABELS: Record<number, { label: string; color: string }> = {
 function fmtDatetime(iso: string) {
   if (!iso) return "-";
   const d = new Date(iso);
-  const date = d.toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\. /g, "-").replace(".", "");
-  const time = d.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+  const date = d
+    .toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" })
+    .replace(/\. /g, "-")
+    .replace(".", "");
+  const time = d.toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
   return `${date} ${time}`;
 }
+
+const PERM_ROWS: [string, boolean, boolean][] = [
+  ["대시보드 조회", true, true],
+  ["공지사항 관리", true, true],
+  ["기업뉴스 관리", true, true],
+  ["고객지원 관리", true, true],
+  ["팝업 관리", true, true],
+  ["회원 목록 조회", true, true],
+  ["회원 등록", true, false],
+  ["회원 수정", true, false],
+  ["회원 삭제", true, false],
+  ["회원 레벨 변경", true, false],
+  ["약관 관리", true, false],
+];
 
 export default function AdminMembersPage() {
   const [members, setMembers] = useState<Member[]>([]);
@@ -44,7 +112,7 @@ export default function AdminMembersPage() {
   const [page, setPage] = useState(1);
   const [showPermModal, setShowPermModal] = useState(false);
 
-  async function fetchMembers() {
+  const fetchMembers = useCallback(async () => {
     setLoading(true);
     const token = await auth.currentUser?.getIdToken();
     const res = await fetch("/api/admin-members", {
@@ -55,12 +123,11 @@ export default function AdminMembersPage() {
       setMembers(Array.isArray(data) ? data : []);
     }
     setLoading(false);
-  }
+  }, []);
 
   useEffect(() => {
-    fetchMembers();
-    // 내 레벨 확인
-    (async () => {
+    void fetchMembers();
+    void (async () => {
       const user = auth.currentUser;
       if (!user) return;
       const token = await user.getIdToken();
@@ -72,12 +139,12 @@ export default function AdminMembersPage() {
         if (data?.level) setMyLevel(Number(data.level));
       }
     })();
-  }, []);
+  }, [fetchMembers]);
 
   const filtered = useMemo(() => {
     if (!activeKeyword.value) return members;
     const kw = activeKeyword.value.toLowerCase();
-    return members.filter(m => {
+    return members.filter((m) => {
       if (activeKeyword.field === "name") return m.name?.toLowerCase().includes(kw);
       if (activeKeyword.field === "email") return m.email?.toLowerCase().includes(kw);
       return true;
@@ -87,287 +154,406 @@ export default function AdminMembersPage() {
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
 
-  function handlePageSizeChange(size: number) {
+  const handlePageSizeChange = useCallback((size: number) => {
     setPageSize(size);
     setPage(1);
-  }
-  function handleKeywordChange() {
+  }, []);
+
+  const handleKeywordChange = useCallback(() => {
     setActiveKeyword({ field: searchField, value: searchKeyword });
     setPage(1);
-  }
+  }, [searchField, searchKeyword]);
 
-  function toggleAll(checked: boolean) {
-    setSelected(checked ? new Set(paged.map(m => m.id)) : new Set());
-  }
-  function toggleOne(id: string) {
-    setSelected(prev => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; });
-  }
+  const toggleAll = useCallback(
+    (checked: boolean) => {
+      setSelected(checked ? new Set(paged.map((m) => m.id)) : new Set());
+    },
+    [paged],
+  );
 
-  async function handleLevelChange(id: string, level: number) {
-    const token = await auth.currentUser?.getIdToken();
-    const member = members.find(m => m.id === id);
-    if (!member) return;
-    await fetch(`/api/admin-members/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ ...member, level }),
+  const toggleOne = useCallback((id: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
     });
-    setMembers(prev => prev.map(m => m.id === id ? { ...m, level } : m));
-  }
+  }, []);
 
-  async function doDelete() {
+  const handleLevelChange = useCallback(
+    async (id: string, level: number) => {
+      const token = await auth.currentUser?.getIdToken();
+      const member = members.find((m) => m.id === id);
+      if (!member) return;
+      await fetch(`/api/admin-members/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ ...member, level }),
+      });
+      setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, level } : m)));
+    },
+    [members],
+  );
+
+  const doDelete = useCallback(async () => {
     const token = await auth.currentUser?.getIdToken();
     const results = await Promise.all(
-      [...selected].map(id =>
+      [...selected].map((id) =>
         fetch(`/api/admin-members/${id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
-        }).then(r => r.json())
-      )
+        }).then((r) => r.json()),
+      ),
     );
-    const denied = results.find(r => r.error?.includes("최고관리자"));
-    if (denied) { alert(denied.error); setShowDeleteModal(false); return; }
+    const denied = results.find((r) => r.error?.includes("최고관리자"));
+    if (denied) {
+      alert(denied.error);
+      setShowDeleteModal(false);
+      return;
+    }
     setSelected(new Set());
     setShowDeleteModal(false);
-    fetchMembers();
-  }
+    void fetchMembers();
+  }, [selected, fetchMembers]);
+
+  const handleClosePermModal = useCallback(() => {
+    setShowPermModal(false);
+  }, []);
+
+  const handleOpenPermModal = useCallback(() => {
+    setShowPermModal(true);
+  }, []);
+
+  const handlePermOverlayClick = useCallback(() => {
+    setShowPermModal(false);
+  }, []);
+
+  const handlePermDialogClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
+
+  const handleCloseDeleteModal = useCallback(() => {
+    setShowDeleteModal(false);
+  }, []);
+
+  const handleDeleteToolbarClick = useCallback(() => {
+    if (selected.size === 0) {
+      alert("삭제할 회원을 선택해 주세요.");
+      return;
+    }
+    setShowDeleteModal(true);
+  }, [selected.size]);
+
+  const pageButtons = useMemo(() => {
+    return Array.from({ length: totalPages }, (_, i) => i + 1)
+      .filter((p) => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
+      .reduce<(number | string)[]>((acc, p, i, arr) => {
+        if (i > 0 && (p as number) - (arr[i - 1] as number) > 1) acc.push("…");
+        acc.push(p);
+        return acc;
+      }, []);
+  }, [totalPages, page]);
+
+  const handleFirstPage = useCallback(() => setPage(1), []);
+  const handlePrevPage = useCallback(() => setPage((p) => Math.max(1, p - 1)), []);
+  const handleNextPage = useCallback(
+    () => setPage((p) => Math.min(totalPages, p + 1)),
+    [totalPages],
+  );
+  const handleLastPage = useCallback(() => setPage(totalPages), [totalPages]);
+
+  const makePageHandler = useCallback((p: number) => () => setPage(p), []);
+
+  const handleSearchKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") handleKeywordChange();
+    },
+    [handleKeywordChange],
+  );
 
   return (
-    <div className="p-8 max-w-7xl">
-      {/* 권한 비교 모달 */}
-      {showPermModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setShowPermModal(false)}>
-          <div className="bg-white rounded-2xl shadow-xl p-8 w-[520px] max-w-[90vw]" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-base font-bold text-gray-800">관리자 권한 비교</h2>
-              <button onClick={() => setShowPermModal(false)} className="text-gray-400 hover:text-gray-600 text-lg leading-none">✕</button>
-            </div>
-            <table className="w-full text-xs border-collapse">
+    <AdminPage $max="7xl">
+      {showPermModal ? (
+        <AdminModalOverlay onMouseDown={handlePermOverlayClick}>
+          <AdminWideDialog onMouseDown={handlePermDialogClick}>
+            <AdminHeaderRowBetween style={{ marginBottom: 20 }}>
+              <AdminDialogTitle>관리자 권한 비교</AdminDialogTitle>
+              <AdminIconButton type="button" onClick={handleClosePermModal} aria-label="닫기">
+                ✕
+              </AdminIconButton>
+            </AdminHeaderRowBetween>
+            <AdminPermTable>
               <thead>
-                <tr className="bg-gray-50">
-                  <th className="border border-gray-200 px-4 py-2.5 text-left font-semibold text-gray-600 w-1/2">기능</th>
-                  <th className="border border-gray-200 px-4 py-2.5 text-center font-semibold w-1/4" style={{ color: "#ef4444" }}>최고관리자</th>
-                  <th className="border border-gray-200 px-4 py-2.5 text-center font-semibold w-1/4" style={{ color: "#3b82f6" }}>일반관리자</th>
+                <tr>
+                  <AdminPermTh $align="left" style={{ width: "50%" }}>
+                    기능
+                  </AdminPermTh>
+                  <AdminPermTh $align="center" $tone="red" style={{ width: "25%" }}>
+                    최고관리자
+                  </AdminPermTh>
+                  <AdminPermTh $align="center" $tone="blue" style={{ width: "25%" }}>
+                    일반관리자
+                  </AdminPermTh>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
-                {[
-                  ["대시보드 조회", true, true],
-                  ["공지사항 관리", true, true],
-                  ["기업뉴스 관리", true, true],
-                  ["고객지원 관리", true, true],
-                  ["팝업 관리", true, true],
-                  ["회원 목록 조회", true, true],
-                  ["회원 등록", true, false],
-                  ["회원 수정", true, false],
-                  ["회원 삭제", true, false],
-                  ["회원 레벨 변경", true, false],
-                  ["약관 관리", true, false],
-                ].map(([label, admin, normal], i) => (
-                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
-                    <td className="border border-gray-200 px-4 py-2.5 text-gray-700">{label as string}</td>
-                    <td className="border border-gray-200 px-4 py-2.5 text-center">
-                      {admin ? <span className="text-green-500 font-bold text-sm">✓</span> : <span className="text-gray-300 text-sm">—</span>}
-                    </td>
-                    <td className="border border-gray-200 px-4 py-2.5 text-center">
-                      {normal ? <span className="text-green-500 font-bold text-sm">✓</span> : <span className="text-gray-300 text-sm">—</span>}
-                    </td>
+              <tbody>
+                {PERM_ROWS.map(([label, adm, norm], i) => (
+                  <tr key={label}>
+                    <AdminPermTd $striped={i % 2 === 1}>{label}</AdminPermTd>
+                    <AdminPermTd $align="center" $striped={i % 2 === 1}>
+                      {adm ? <AdminCheckMark>✓</AdminCheckMark> : <AdminDashMark>—</AdminDashMark>}
+                    </AdminPermTd>
+                    <AdminPermTd $align="center" $striped={i % 2 === 1}>
+                      {norm ? <AdminCheckMark>✓</AdminCheckMark> : <AdminDashMark>—</AdminDashMark>}
+                    </AdminPermTd>
                   </tr>
                 ))}
               </tbody>
-            </table>
-            <div className="mt-5 flex justify-end">
-              <button onClick={() => setShowPermModal(false)}
-                className="px-5 py-2 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
+            </AdminPermTable>
+            <div style={{ marginTop: 20, display: "flex", justifyContent: "flex-end" }}>
+              <AdminBtnSm type="button" onClick={handleClosePermModal}>
                 닫기
-              </button>
+              </AdminBtnSm>
             </div>
-          </div>
-        </div>
-      )}
+          </AdminWideDialog>
+        </AdminModalOverlay>
+      ) : null}
 
-      {/* 삭제 확인 모달 */}
-      {showDeleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl p-8 w-[360px] flex flex-col items-center gap-5">
-            <div className="text-3xl">🗑️</div>
-            <h2 className="text-lg font-bold text-gray-800">회원 삭제</h2>
-            <p className="text-sm text-gray-500 text-center">
-              {selected.size}명의 회원을 삭제하시겠습니까?<br />삭제된 회원은 복구할 수 없습니다.
-            </p>
-            <div className="flex gap-3 w-full">
-              <button onClick={() => setShowDeleteModal(false)} className="flex-1 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">취소</button>
-              <button onClick={doDelete} className="flex-1 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold hover:bg-red-600 transition-colors">삭제</button>
-            </div>
-          </div>
-        </div>
-      )}
+      {showDeleteModal ? (
+        <AdminModalOverlay>
+          <AdminConfirmModal>
+            <AdminModalEmoji>🗑️</AdminModalEmoji>
+            <AdminModalTitle>회원 삭제</AdminModalTitle>
+            <AdminModalDesc>
+              {selected.size}명의 회원을 삭제하시겠습니까?
+              <br />
+              삭제된 회원은 복구할 수 없습니다.
+            </AdminModalDesc>
+            <AdminModalActions>
+              <AdminBtnSm type="button" $variant="secondary" $block onClick={handleCloseDeleteModal}>
+                취소
+              </AdminBtnSm>
+              <AdminBtnSm type="button" $variant="danger" $block onClick={doDelete}>
+                삭제
+              </AdminBtnSm>
+            </AdminModalActions>
+          </AdminConfirmModal>
+        </AdminModalOverlay>
+      ) : null}
 
-      {/* 헤더: 제목 */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 mb-1">
-          <h1 className="text-2xl font-bold text-gray-800">회원 관리</h1>
-          {myLevel === 1 && (
-            <button
-              onClick={() => setShowPermModal(true)}
-              title="권한 비교 보기"
-              className="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-500 hover:text-gray-700 text-[11px] font-bold flex items-center justify-center transition-colors leading-none"
-            >
+      <div style={{ marginBottom: 24 }}>
+        <AdminFlexGap2 style={{ marginBottom: 4 }}>
+          <AdminH1>회원 관리</AdminH1>
+          {myLevel === 1 ? (
+            <AdminHelpIconButton type="button" onClick={handleOpenPermModal} title="권한 비교 보기">
               ?
-            </button>
-          )}
-        </div>
-        <p className="text-sm text-gray-400">NeoLAB Convergence 홈페이지 관리자 계정 목록</p>
+            </AdminHelpIconButton>
+          ) : null}
+        </AdminFlexGap2>
+        <AdminMutedSmall as="p" style={{ margin: 0 }}>
+          NeoLAB Convergence 홈페이지 관리자 계정 목록
+        </AdminMutedSmall>
       </div>
 
-      {/* 검색 */}
-      <div className="flex items-center gap-2 mb-3">
-        <select value={searchField} onChange={e => setSearchField(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]">
+      <AdminFlexGap2 style={{ marginBottom: 12 }}>
+        <AdminSelect
+          value={searchField}
+          onChange={(e) => setSearchField(e.target.value)}
+        >
           <option value="name">이름</option>
           <option value="email">이메일</option>
-        </select>
-        <input value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && handleKeywordChange()}
+        </AdminSelect>
+        <AdminInput
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          onKeyDown={handleSearchKeyDown}
           placeholder="검색어 입력"
-          className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-40" />
-        <button onClick={handleKeywordChange}
-          className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">검색</button>
-      </div>
+          style={{ width: 160 }}
+        />
+        <AdminBtnSm type="button" onClick={handleKeywordChange}>
+          검색
+        </AdminBtnSm>
+      </AdminFlexGap2>
 
-      {/* 총 개수 + 페이지당 행 수 + 버튼 */}
-      <div className="flex items-center justify-between mb-2 px-1">
-        <span className="text-xs text-gray-500">총 <strong className="text-gray-800">{filtered.length}</strong>명</span>
-        <div className="flex items-center gap-2">
-          <select value={pageSize} onChange={e => handlePageSizeChange(Number(e.target.value))}
-            className="border border-gray-200 rounded-lg px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] bg-white">
+      <AdminToolbarFooter>
+        <AdminMutedSmall as="span">
+          총 <AdminInlineStrong>{filtered.length}</AdminInlineStrong>명
+        </AdminMutedSmall>
+        <AdminFlexGap2>
+          <AdminSelect value={String(pageSize)} onChange={(e) => handlePageSizeChange(Number(e.target.value))}>
             <option value={10}>10개씩 보기</option>
             <option value={20}>20개씩 보기</option>
             <option value={50}>50개씩 보기</option>
             <option value={100}>100개씩 보기</option>
-          </select>
-          {myLevel === 1 && (
+          </AdminSelect>
+          {myLevel === 1 ? (
             <>
-              <button
-                onClick={() => { if (selected.size === 0) { alert("삭제할 회원을 선택해 주세요."); return; } setShowDeleteModal(true); }}
-                className="px-4 py-1.5 border border-red-200 text-red-500 rounded-lg text-xs bg-white hover:bg-red-50 transition-colors">
+              <AdminBtnSm type="button" $variant="outlineRed" onClick={handleDeleteToolbarClick}>
                 삭제
-              </button>
-              <Link href="/admin/members/new"
-                className="px-4 py-1.5 bg-[#1a1a2e] text-white rounded-lg text-xs hover:bg-[#16213e] transition-colors">
-                회원 등록
-              </Link>
+              </AdminBtnSm>
+              <AdminLinkPrimary href="/admin/members/new">회원 등록</AdminLinkPrimary>
             </>
-          )}
-        </div>
-      </div>
+          ) : null}
+        </AdminFlexGap2>
+      </AdminToolbarFooter>
 
-      {/* 테이블 */}
       {loading ? (
-        <div className="bg-white border border-gray-200 rounded-xl p-12 text-center text-gray-400 text-sm">불러오는 중...</div>
+        <AdminCardPadded>불러오는 중...</AdminCardPadded>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-xl overflow-x-auto">
-          <table className="w-full text-xs">
-            <thead className="bg-gray-50 border-b border-gray-200 text-gray-500">
+        <AdminTableWide>
+          <AdminTable>
+            <AdminThead>
               <tr>
-                <th className="px-3 py-3 w-10">
-                  <input type="checkbox" onChange={e => toggleAll(e.target.checked)}
+                <AdminTh $width="40px">
+                  <AdminCheckboxSm
+                    type="checkbox"
+                    onChange={(e) => toggleAll(e.target.checked)}
                     checked={selected.size === paged.length && paged.length > 0}
-                    className="w-4 h-4 rounded accent-[#1a1a2e]" />
-                </th>
-                <th className="px-3 py-3 w-12 text-center font-medium">번호</th>
-                <th className="px-3 py-3 w-40 text-center font-medium">이름</th>
-                <th className="px-3 py-3 w-36 text-center font-medium">레벨</th>
-                <th className="px-3 py-3 w-56 text-center font-medium">이메일</th>
-                <th className="px-3 py-3 w-14 text-center font-medium">로그인</th>
-                <th className="px-3 py-3 w-14 text-center font-medium">글쓰기</th>
-                <th className="px-3 py-3 w-14 text-center font-medium">답변</th>
-                <th className="px-3 py-3 w-14 text-center font-medium">댓글</th>
-                <th className="px-3 py-3 w-44 text-center font-medium">가입/최종 접속일</th>
-                <th className="px-3 py-3 w-14 text-center font-medium">수정</th>
+                  />
+                </AdminTh>
+                <AdminTh $align="center" $width="48px">
+                  번호
+                </AdminTh>
+                <AdminTh $align="center" $width="160px">
+                  이름
+                </AdminTh>
+                <AdminTh $align="center" $width="144px">
+                  레벨
+                </AdminTh>
+                <AdminTh $align="center" $width="224px">
+                  이메일
+                </AdminTh>
+                <AdminTh $align="center" $width="56px">
+                  로그인
+                </AdminTh>
+                <AdminTh $align="center" $width="56px">
+                  글쓰기
+                </AdminTh>
+                <AdminTh $align="center" $width="56px">
+                  답변
+                </AdminTh>
+                <AdminTh $align="center" $width="56px">
+                  댓글
+                </AdminTh>
+                <AdminTh $align="center" $width="176px">
+                  가입/최종 접속일
+                </AdminTh>
+                <AdminTh $align="center" $width="56px">
+                  수정
+                </AdminTh>
               </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
+            </AdminThead>
+            <AdminTbody>
               {paged.length === 0 ? (
-                <tr><td colSpan={10} className="px-6 py-12 text-center text-gray-400">등록된 회원이 없습니다.</td></tr>
-              ) : paged.map(m => (
-                <tr key={m.id} className={`hover:bg-gray-50 transition-colors ${selected.has(m.id) ? "bg-blue-50/60" : ""}`}>
-                  <td className="px-3 py-2.5 text-center">
-                    <input type="checkbox" checked={selected.has(m.id)} onChange={() => toggleOne(m.id)}
-                      className="w-4 h-4 rounded accent-[#1a1a2e]" />
-                  </td>
-                  <td className="px-3 py-2.5 text-center text-gray-500">{m.seq}</td>
-                  <td className="px-3 py-2.5 text-center text-gray-700 font-medium">{m.name}</td>
-                  <td className="px-3 py-2.5 text-center">
-                    {myLevel === 1 ? (
-                      <select value={m.level}
-                        onChange={e => handleLevelChange(m.id, Number(e.target.value))}
-                        className="border border-gray-200 rounded px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-[#1a1a2e]"
-                        style={{ color: LEVEL_LABELS[m.level]?.color ?? "#374151" }}>
-                        <option value={1} style={{ color: "#ef4444" }}>1 (최고관리자)</option>
-                        <option value={2} style={{ color: "#3b82f6" }}>2 (일반관리자)</option>
-                      </select>
-                    ) : (
-                      <span className="text-xs font-medium" style={{ color: LEVEL_LABELS[m.level]?.color ?? "#374151" }}>
-                        {m.level} ({LEVEL_LABELS[m.level]?.label ?? "관리자"})
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-3 py-2.5 text-center text-gray-600 truncate max-w-[14rem]">{m.email}</td>
-                  <td className="px-3 py-2.5 text-center text-gray-500">{m.loginCount ?? 0}</td>
-                  <td className="px-3 py-2.5 text-center text-gray-500">{m.postCount ?? 0}</td>
-                  <td className="px-3 py-2.5 text-center text-gray-500">{m.replyCount ?? 0}</td>
-                  <td className="px-3 py-2.5 text-center text-gray-500">{m.commentCount ?? 0}</td>
-
-                  <td className="px-3 py-2.5 text-center text-gray-500 leading-snug">
-                    <div>{fmtDatetime(m.createdAt)}</div>
-                    <div className="text-gray-400 text-[10px]">({fmtDatetime(m.lastLoginAt)})</div>
-                  </td>
-                  <td className="px-3 py-2.5 text-center">
-                    {myLevel === 1 && (
-                      <Link href={`/admin/members/${m.id}/edit`}
-                        className="px-2.5 py-1 border border-gray-200 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">
-                        수정
-                      </Link>
-                    )}
-                  </td>
+                <tr>
+                  <AdminTd colSpan={11} $align="center">
+                    등록된 회원이 없습니다.
+                  </AdminTd>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              ) : (
+                paged.map((m) => (
+                  <AdminTr key={m.id} $hover $selected={selected.has(m.id)}>
+                    <AdminTdDense $align="center">
+                      <AdminCheckboxSm
+                        type="checkbox"
+                        checked={selected.has(m.id)}
+                        onChange={() => toggleOne(m.id)}
+                      />
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMutedSmall as="span">{m.seq}</AdminMutedSmall>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMutedXs as="span" style={{ fontWeight: 600, color: "#374151", fontSize: 12 }}>
+                        {m.name}
+                      </AdminMutedXs>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      {myLevel === 1 ? (
+                        <AdminSelect
+                          value={m.level}
+                          onChange={(e) => handleLevelChange(m.id, Number(e.target.value))}
+                          style={{
+                            color: LEVEL_LABELS[m.level]?.color ?? "#374151",
+                            fontSize: 12,
+                            padding: "2px 6px",
+                          }}
+                        >
+                          <option value={1} style={{ color: "#ef4444" }}>
+                            1 (최고관리자)
+                          </option>
+                          <option value={2} style={{ color: "#3b82f6" }}>
+                            2 (일반관리자)
+                          </option>
+                        </AdminSelect>
+                      ) : (
+                        <AdminMutedXs as="span" style={{ color: LEVEL_LABELS[m.level]?.color ?? "#374151", fontWeight: 500 }}>
+                          {m.level} ({LEVEL_LABELS[m.level]?.label ?? "관리자"})
+                        </AdminMutedXs>
+                      )}
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMutedSmall as="span">{m.email}</AdminMutedSmall>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMutedSmall as="span">{m.loginCount ?? 0}</AdminMutedSmall>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMutedSmall as="span">{m.postCount ?? 0}</AdminMutedSmall>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMutedSmall as="span">{m.replyCount ?? 0}</AdminMutedSmall>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMutedSmall as="span">{m.commentCount ?? 0}</AdminMutedSmall>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      <AdminMemberMeta>
+                        <div>{fmtDatetime(m.createdAt)}</div>
+                        <AdminMemberMetaSub>({fmtDatetime(m.lastLoginAt)})</AdminMemberMetaSub>
+                      </AdminMemberMeta>
+                    </AdminTdDense>
+                    <AdminTdDense $align="center">
+                      {myLevel === 1 ? (
+                        <AdminLinkBtnXs href={`/admin/members/${m.id}/edit`}>수정</AdminLinkBtnXs>
+                      ) : null}
+                    </AdminTdDense>
+                  </AdminTr>
+                ))
+              )}
+            </AdminTbody>
+          </AdminTable>
+        </AdminTableWide>
       )}
 
-      {/* 페이지네이션 */}
-      {totalPages > 1 && (
-        <div className="mt-3 flex justify-center items-center gap-1">
-          <button onClick={() => setPage(1)} disabled={page === 1}
-            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">«</button>
-          <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">‹</button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1)
-            .filter(p => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
-            .reduce<(number | string)[]>((acc, p, i, arr) => {
-              if (i > 0 && (p as number) - (arr[i - 1] as number) > 1) acc.push("…");
-              acc.push(p);
-              return acc;
-            }, [])
-            .map((p, i) => p === "…" ? (
-              <span key={`ellipsis-${i}`} className="px-1 text-xs text-gray-400">…</span>
+      {totalPages > 1 ? (
+        <div style={{ marginTop: 12, display: "flex", justifyContent: "center", alignItems: "center", gap: 4 }}>
+          <AdminPagerNav type="button" disabled={page === 1} onClick={handleFirstPage}>
+            «
+          </AdminPagerNav>
+          <AdminPagerNav type="button" disabled={page === 1} onClick={handlePrevPage}>
+            ‹
+          </AdminPagerNav>
+          {pageButtons.map((p, i) =>
+            p === "…" ? (
+              <AdminEllipsis key={`ellipsis-${i}`}>…</AdminEllipsis>
             ) : (
-              <button key={p} onClick={() => setPage(p as number)}
-                className={`px-2.5 py-1 text-xs border rounded transition-colors ${
-                  page === p ? "bg-[#1a1a2e] text-white border-[#1a1a2e]" : "border-gray-200 hover:bg-gray-50"
-                }`}>{p}</button>
-            ))}
-          <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">›</button>
-          <button onClick={() => setPage(totalPages)} disabled={page === totalPages}
-            className="px-2 py-1 text-xs border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-30">»</button>
-          <span className="ml-2 text-xs text-gray-400">{filtered.length}명 중 {(page-1)*pageSize+1}–{Math.min(page*pageSize, filtered.length)}</span>
+              <AdminPagerPage key={p} type="button" $active={page === p} onClick={makePageHandler(p as number)}>
+                {p}
+              </AdminPagerPage>
+            ),
+          )}
+          <AdminPagerNav type="button" disabled={page === totalPages} onClick={handleNextPage}>
+            ›
+          </AdminPagerNav>
+          <AdminPagerNav type="button" disabled={page === totalPages} onClick={handleLastPage}>
+            »
+          </AdminPagerNav>
+          <AdminPagerText>
+            {filtered.length}명 중 {(page - 1) * pageSize + 1}–{Math.min(page * pageSize, filtered.length)}
+          </AdminPagerText>
         </div>
-      )}
-
-    </div>
+      ) : null}
+    </AdminPage>
   );
 }

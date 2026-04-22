@@ -6,7 +6,6 @@ import {
   CardImage,
   CardTrack,
   Heading,
-  Inner,
   PinContent,
   PinSpacer,
   Section,
@@ -76,13 +75,11 @@ export default function TechSection({ dict }: TechSectionProps) {
   return (
     <Section>
       <BgDecoration />
-      <Inner>
-        <Heading>
-          어떠한 평면이라도
-          <br />
-          디지털화 할 수 있는 기술
-        </Heading>
-      </Inner>
+      <Heading>
+        어떠한 평면이라도
+        <br />
+        디지털화 할 수 있는 기술
+      </Heading>
 
       <PinSpacer ref={pinRef}>
         <PinContent>

@@ -4,11 +4,8 @@ import {
   CardFigure,
   CardImage,
   CardRow,
-  Inner,
-  Overlay,
-  Section,
 } from "./BusinessSection.styles";
-import SectionHeading from "../common/SectionHeading";
+import Section from "@/components/common/Section";
 
 interface BusinessSectionProps {
   dict?: unknown;
@@ -35,24 +32,20 @@ const cards = [
 export default function BusinessSection({ dict }: BusinessSectionProps) {
   void dict;
   return (
-    <Section>
-      <Overlay />
-      <Inner>
-        <SectionHeading tone="light">BUSINESS</SectionHeading>
+    <Section backgroundImage="/images/home/figma/business-bg.png" title="BUSINESS" tone="light">
+      <CardRow>
+        {cards.map((card) => (
+          <CardFigure key={card.key}>
+            <CardImage
+              src={card.src}
+              alt={card.alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </CardFigure>
+        ))}
+      </CardRow>
 
-        <CardRow>
-          {cards.map((card) => (
-            <CardFigure key={card.key}>
-              <CardImage
-                src={card.src}
-                alt={card.alt}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-            </CardFigure>
-          ))}
-        </CardRow>
-      </Inner>
     </Section>
   );
 }

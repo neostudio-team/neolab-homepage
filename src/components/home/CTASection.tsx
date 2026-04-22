@@ -2,14 +2,13 @@
 
 import ContactModalTrigger from "../common/ContactModalTrigger";
 import {
-  Inner,
   LogoBox,
   LogoImage,
   LogosRow,
-  Section,
   Title,
   TopRow,
 } from "./CTASection.styles";
+import Section from "@/components/common/Section";
 
 interface CTASectionProps {
   dict?: unknown;
@@ -29,8 +28,7 @@ export default function CTASection({ dict }: CTASectionProps) {
   void dict;
 
   return (
-    <Section>
-      <Inner>
+    <Section background="#ff9900">
         <TopRow>
           <Title>{"Write the Future,\nConnect the World."}</Title>
           <ContactModalTrigger buttonText="Contact Us →" />
@@ -43,7 +41,6 @@ export default function CTASection({ dict }: CTASectionProps) {
             </LogoBox>
           ))}
         </LogosRow>
-      </Inner>
     </Section>
   );
 }

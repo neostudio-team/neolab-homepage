@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const HeadingWrap = styled.div`
-  margin: 0 auto 80px;
-  max-width: 1640px;
   display: flex;
+  margin-bottom: 120px;
   align-items: center;
+  justify-content: center;
 `;
 
 export const HeadingTitle = styled.h2<{ $tone: "dark" | "light" }>`

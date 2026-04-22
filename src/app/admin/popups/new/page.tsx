@@ -1,9 +1,50 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
-import Link from "next/link";
 import RichEditor from "@/components/admin/RichEditor";
+import {
+  AdminAuthorName,
+  AdminBackLink,
+  AdminBtn,
+  AdminCheckbox,
+  AdminChipButton,
+  AdminFlexColGap,
+  AdminFlexGap6,
+  AdminFlexRowWrap,
+  AdminFooterHint,
+  AdminFormActions,
+  AdminFormLabelCell,
+  AdminFormLabelCellTop,
+  AdminFormNote,
+  AdminFormTable,
+  AdminFormValueCell,
+  AdminH1,
+  AdminHeaderRow,
+  AdminHtmlPreview,
+  AdminIconButton,
+  AdminInput,
+  AdminLabelRow,
+  AdminLinkMuted,
+  AdminModalFooterBar,
+  AdminModalHeaderBar,
+  AdminModalOverlayHigh,
+  AdminModalTitle,
+  AdminModalWide,
+  AdminMutedSmall,
+  AdminNumberField,
+  AdminPage,
+  AdminPreviewCloseCaption,
+  AdminPreviewFooter,
+  AdminPreviewFrame,
+  AdminPreviewHint,
+  AdminRequiredMark,
+  AdminScrollArea,
+  AdminScrollAreaLg,
+  AdminSelect,
+  AdminTableForm,
+  AdminDatetimeRow,
+  AdminDatetimeLabel,
+} from "@/components/admin/AdminCommon.styles";
 
 const PAGE_OPTIONS = [
   { value: "all", label: "모든 페이지" },
@@ -16,11 +57,10 @@ const PAGE_OPTIONS = [
   { value: "/apps", label: "Apps" },
   { value: "/customer", label: "Customer" },
   { value: "/partnership", label: "Partnership" },
-  { value: "/bi", label: "BI" }
+  { value: "/bi", label: "BI" },
 ];
 
 export default function NewPopupPage() {
-  const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     isActive: true,
@@ -36,15 +76,15 @@ export default function NewPopupPage() {
     displayPages: "all",
   });
 
-  function set(field: string, value: any) {
+  const setField = useCallback((field: string, value: unknown) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-  }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         const name = user.displayName || user.email?.split("@")[0] || "관리자";
-        setForm(prev => ({ ...prev, author: name }));
+        setForm((prev) => ({ ...prev, author: name }));
       }
     });
     return () => unsubscribe();
@@ -52,13 +92,23 @@ export default function NewPopupPage() {
 
   const [showPreview, setShowPreview] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!form.title) return alert("제목을 입력해 주세요.");
-    setShowPreview(true);
-  }
+  const handleClosePreview = useCallback(() => {
+    setShowPreview(false);
+  }, []);
 
-  async function doSubmit() {
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!form.title) {
+        alert("제목을 입력해 주세요.");
+        return;
+      }
+      setShowPreview(true);
+    },
+    [form.title],
+  );
+
+  const doSubmit = useCallback(async () => {
     setSaving(true);
     try {
       const token = await auth.currentUser?.getIdToken();
@@ -75,186 +125,229 @@ export default function NewPopupPage() {
       setSaving(false);
       setShowPreview(false);
     }
-  }
+  }, [form]);
+
+  const previewHeight = form.height ? Number(form.height) : null;
+
+  const toggleDisplayPage = useCallback((optValue: string) => {
+    if (optValue === "all") {
+      setForm((prev) => ({ ...prev, displayPages: "all" }));
+      return;
+    }
+    setForm((prev) => {
+      let cur =
+        prev.displayPages === "all" ? [] : prev.displayPages.split(",").map((s) => s.trim()).filter(Boolean);
+      if (cur.includes(optValue)) cur = cur.filter((x) => x !== optValue);
+      else cur.push(optValue);
+      return { ...prev, displayPages: cur.length ? cur.join(",") : "all" };
+    });
+  }, []);
+
+  const handleModalWideClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  }, []);
 
   return (
-    <div className="p-8 max-w-4xl">
-      {showPreview && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl flex flex-col w-full max-w-3xl max-h-[90vh] overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-              <h3 className="font-bold text-lg text-gray-800">팝업 미리보기</h3>
-              <button type="button" onClick={() => setShowPreview(false)} className="text-gray-400 hover:text-gray-600">✕</button>
-            </div>
-            
-            <div className="flex-1 overflow-y-auto bg-gray-100 p-8 flex flex-col items-center justify-center relative min-h-[400px]">
-              <div className="absolute top-4 left-4 text-xs text-gray-400">실제 웹페이지 배경</div>
-              
-              <div 
-                className="bg-white shadow-2xl overflow-hidden flex flex-col border border-gray-100 rounded-xl"
-                style={{ width: form.width || 400, height: form.height || "auto", minHeight: 100 }}
-              >
-                <div className="flex-1 overflow-y-auto w-full max-h-[60vh]">
-                  <div dangerouslySetInnerHTML={{ __html: form.content }} className="prose prose-sm max-w-none p-4 w-full" />
-                </div>
-                <div className="bg-[#f8f9fa] border-t border-gray-200 px-4 py-2.5 flex items-center justify-between text-xs">
-                  <label className="flex items-center gap-1.5 text-gray-500 select-none">
-                    <input type="checkbox" readOnly className="w-3.5 h-3.5 accent-[#1a1a2e]" />
-                    오늘 하루 보지 않기
-                  </label>
-                  <span className="text-gray-600 font-medium">닫기 ✕</span>
-                </div>
-              </div>
-            </div>
+    <AdminPage $max="4xl">
+      {showPreview ? (
+        <AdminModalOverlayHigh $padded>
+          <AdminModalWide onClick={handleModalWideClick}>
+            <AdminModalHeaderBar>
+              <AdminModalTitle as="h3">팝업 미리보기</AdminModalTitle>
+              <AdminIconButton type="button" onClick={handleClosePreview} aria-label="닫기">
+                ✕
+              </AdminIconButton>
+            </AdminModalHeaderBar>
 
-            <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-end gap-3">
-              <span className="text-sm text-gray-500 mr-auto">※ 설정한 위치({form.position})에 맞추어 표출됩니다. 위 내용을 이대로 등록하시겠습니까?</span>
-              <button type="button" onClick={() => setShowPreview(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-white transition-colors">취소</button>
-              <button type="button" onClick={doSubmit} disabled={saving} className="px-5 py-2 bg-[#1a1a2e] text-white rounded-lg text-sm font-semibold hover:bg-[#16213e] transition-colors disabled:opacity-50">
+            <AdminScrollAreaLg>
+              <AdminPreviewHint>실제 웹페이지 배경</AdminPreviewHint>
+
+              <AdminPreviewFrame $width={form.width || 400} $height={previewHeight}>
+                <AdminScrollArea>
+                  <AdminHtmlPreview dangerouslySetInnerHTML={{ __html: form.content }} />
+                </AdminScrollArea>
+                <AdminPreviewFooter>
+                  <AdminLabelRow>
+                    <AdminCheckbox type="checkbox" readOnly checked={false} />
+                    오늘 하루 보지 않기
+                  </AdminLabelRow>
+                  <AdminPreviewCloseCaption>닫기 ✕</AdminPreviewCloseCaption>
+                </AdminPreviewFooter>
+              </AdminPreviewFrame>
+            </AdminScrollAreaLg>
+
+            <AdminModalFooterBar>
+              <AdminFooterHint>
+                ※ 설정한 위치({form.position})에 맞추어 표출됩니다. 위 내용을 이대로 등록하시겠습니까?
+              </AdminFooterHint>
+              <AdminBtn type="button" $variant="secondary" onClick={handleClosePreview}>
+                취소
+              </AdminBtn>
+              <AdminBtn type="button" onClick={doSubmit} disabled={saving}>
                 {saving ? "등록 중..." : "이대로 등록"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      <div className="flex items-center gap-3 mb-6">
-        <Link href="/admin/popups" className="text-gray-400 hover:text-gray-600 text-sm">← 목록으로</Link>
-        <h1 className="text-2xl font-bold text-gray-800">새 팝업 등록</h1>
-      </div>
+              </AdminBtn>
+            </AdminModalFooterBar>
+          </AdminModalWide>
+        </AdminModalOverlayHigh>
+      ) : null}
+
+      <AdminHeaderRow>
+        <AdminBackLink href="/admin/popups">← 목록으로</AdminBackLink>
+        <AdminH1>새 팝업 등록</AdminH1>
+      </AdminHeaderRow>
 
       <form onSubmit={handleSubmit}>
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-4">
-          <table className="w-full text-sm">
+        <AdminTableForm>
+          <AdminFormTable>
             <tbody>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium w-32">기본 설정</td>
-                <td className="px-5 py-3">
-                  <div className="flex items-center gap-6">
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
-                      <input type="checkbox" checked={form.isActive} onChange={(e) => set("isActive", e.target.checked)} className="w-4 h-4 rounded accent-[#1a1a2e]" />
+              <tr>
+                <AdminFormLabelCell>기본 설정</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminFlexGap6>
+                    <AdminLabelRow>
+                      <AdminCheckbox
+                        type="checkbox"
+                        checked={form.isActive}
+                        onChange={(e) => setField("isActive", e.target.checked)}
+                      />
                       활성화 (사용)
-                    </label>
-                    <div className="flex items-center gap-2 ml-4">
-                      <span className="text-xs text-gray-500">작성자</span>
-                      <span className="text-sm font-semibold text-gray-800 px-2 py-1">{form.author}</span>
-                    </div>
-                  </div>
-                </td>
+                    </AdminLabelRow>
+                    <AdminFlexGap6>
+                      <AdminMutedSmall as="span">작성자</AdminMutedSmall>
+                      <AdminAuthorName>{form.author}</AdminAuthorName>
+                    </AdminFlexGap6>
+                  </AdminFlexGap6>
+                </AdminFormValueCell>
               </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">팝업 제목 <span className="text-red-500">*</span></td>
-                <td className="px-5 py-3">
-                  <input value={form.title} onChange={(e) => set("title", e.target.value)} required
+              <tr>
+                <AdminFormLabelCell>
+                  팝업 제목 <AdminRequiredMark>*</AdminRequiredMark>
+                </AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminInput
+                    value={form.title}
+                    onChange={(e) => setField("title", e.target.value)}
+                    required
                     placeholder="관리자용 팝업 제목 (예: 신규 기능 안내)"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
-                </td>
+                  />
+                </AdminFormValueCell>
               </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium align-top pt-4">팝업 내용</td>
-                <td className="px-5 py-3">
-                  <RichEditor value={form.content} onChange={(v) => set("content", v)} />
-                </td>
+              <tr>
+                <AdminFormLabelCellTop>팝업 내용</AdminFormLabelCellTop>
+                <AdminFormValueCell>
+                  <RichEditor value={form.content} onChange={(v) => setField("content", v)} />
+                </AdminFormValueCell>
               </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium align-top pt-4">게시 일정</td>
-                <td className="px-5 py-3">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="w-16">시작일:</span>
-                      <input type="datetime-local" value={form.startDate} onChange={e => set("startDate", e.target.value)}
-                        className="border border-gray-200 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2" />
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="w-16">종료일:</span>
-                      <input type="datetime-local" value={form.endDate} onChange={e => set("endDate", e.target.value)}
-                        className="border border-gray-200 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2" />
-                    </div>
-                    <p className="text-xs text-gray-400 mt-1">※ 일정을 비워두면 상시 노출됩니다.</p>
-                  </div>
-                </td>
+              <tr>
+                <AdminFormLabelCellTop>게시 일정</AdminFormLabelCellTop>
+                <AdminFormValueCell>
+                  <AdminFlexColGap>
+                    <AdminDatetimeRow>
+                      <AdminDatetimeLabel>시작일:</AdminDatetimeLabel>
+                      <AdminInput
+                        type="datetime-local"
+                        value={form.startDate}
+                        onChange={(e) => setField("startDate", e.target.value)}
+                      />
+                    </AdminDatetimeRow>
+                    <AdminDatetimeRow>
+                      <AdminDatetimeLabel>종료일:</AdminDatetimeLabel>
+                      <AdminInput
+                        type="datetime-local"
+                        value={form.endDate}
+                        onChange={(e) => setField("endDate", e.target.value)}
+                      />
+                    </AdminDatetimeRow>
+                    <AdminFormNote>※ 일정을 비워두면 상시 노출됩니다.</AdminFormNote>
+                  </AdminFlexColGap>
+                </AdminFormValueCell>
               </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">노출 페이지</td>
-                <td className="px-5 py-3">
-                  <select value={form.language} onChange={e => set("language", e.target.value)}
-                    className="border border-gray-200 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2">
+              <tr>
+                <AdminFormLabelCell>노출 페이지</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminSelect value={form.language} onChange={(e) => setField("language", e.target.value)}>
                     <option value="all">전체</option>
                     <option value="ko">국문</option>
                     <option value="en">영문</option>
                     <option value="ja">일문</option>
-                  </select>
-                </td>
+                  </AdminSelect>
+                </AdminFormValueCell>
               </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">화면 위치</td>
-                <td className="px-5 py-3">
-                  <select value={form.position} onChange={e => set("position", e.target.value)}
-                    className="border border-gray-200 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2">
+              <tr>
+                <AdminFormLabelCell>화면 위치</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminSelect value={form.position} onChange={(e) => setField("position", e.target.value)}>
                     <option value="center">가운데 (Center)</option>
                     <option value="top-left">왼쪽 상단 (Top-Left)</option>
                     <option value="top-right">오른쪽 상단 (Top-Right)</option>
                     <option value="bottom-left">왼쪽 하단 (Bottom-Left)</option>
                     <option value="bottom-right">오른쪽 하단 (Bottom-Right)</option>
-                  </select>
-                </td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">크기 설정</td>
-                <td className="px-5 py-3 text-sm">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      가로(px) <input type="number" value={form.width} onChange={e => set("width", Number(e.target.value))} className="w-20 border rounded px-2 py-1" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      세로(px) <input type="number" value={form.height || ""} onChange={e => set("height", e.target.value)} placeholder="자동" className="w-20 border rounded px-2 py-1" />
-                    </div>
-                  </div>
-                </td>
+                  </AdminSelect>
+                </AdminFormValueCell>
               </tr>
               <tr>
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">상세 메뉴 선택</td>
-                <td className="px-5 py-3">
-                  <div className="flex flex-wrap gap-2">
-                    {PAGE_OPTIONS.map(opt => {
-                      const isSelected = form.displayPages === "all" ? opt.value === "all" : form.displayPages.split(",").map(s => s.trim()).includes(opt.value);
+                <AdminFormLabelCell>크기 설정</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminFlexGap6>
+                    <AdminFlexGap6>
+                      가로(px){" "}
+                      <AdminNumberField
+                        type="number"
+                        value={form.width}
+                        onChange={(e) => setField("width", Number(e.target.value))}
+                      />
+                    </AdminFlexGap6>
+                    <AdminFlexGap6>
+                      세로(px){" "}
+                      <AdminNumberField
+                        type="number"
+                        value={form.height === "" ? "" : form.height}
+                        onChange={(e) => setField("height", e.target.value)}
+                        placeholder="자동"
+                      />
+                    </AdminFlexGap6>
+                  </AdminFlexGap6>
+                </AdminFormValueCell>
+              </tr>
+              <tr>
+                <AdminFormLabelCell>상세 메뉴 선택</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminFlexRowWrap>
+                    {PAGE_OPTIONS.map((opt) => {
+                      const isSelected =
+                        form.displayPages === "all"
+                          ? opt.value === "all"
+                          : form.displayPages
+                              .split(",")
+                              .map((s) => s.trim())
+                              .includes(opt.value);
                       return (
-                        <button 
-                          type="button"
+                        <AdminChipButton
                           key={opt.value}
-                          onClick={() => {
-                            if (opt.value === "all") {
-                              set("displayPages", "all");
-                            } else {
-                              let cur = form.displayPages === "all" ? [] : form.displayPages.split(",").map(s => s.trim()).filter(Boolean);
-                              if (cur.includes(opt.value)) {
-                                cur = cur.filter(x => x !== opt.value);
-                              } else {
-                                cur.push(opt.value);
-                              }
-                              set("displayPages", cur.length ? cur.join(",") : "all");
-                            }
-                          }}
-                          className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${isSelected ? "bg-[#1a1a2e] text-white border-[#1a1a2e]" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"}`}
+                          type="button"
+                          $active={isSelected}
+                          onClick={() => toggleDisplayPage(opt.value)}
                         >
                           {opt.label}
-                        </button>
+                        </AdminChipButton>
                       );
                     })}
-                  </div>
-                  <p className="text-xs text-gray-400 mt-2">※ 클릭하여 여러 페이지를 선택할 수 있습니다. 아무것도 안 선택시 '모든 페이지'가 됩니다.</p>
-                </td>
+                  </AdminFlexRowWrap>
+                  <AdminFormNote>
+                    ※ 클릭하여 여러 페이지를 선택할 수 있습니다. 아무것도 안 선택시 &apos;모든 페이지&apos;가 됩니다.
+                  </AdminFormNote>
+                </AdminFormValueCell>
               </tr>
             </tbody>
-          </table>
-        </div>
-        <div className="flex items-center justify-between">
-          <Link href="/admin/popups" className="px-5 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">취소</Link>
-          <button type="submit" disabled={saving}
-            className="px-6 py-2.5 bg-[#1a1a2e] text-white rounded-lg text-sm hover:bg-[#16213e] transition-colors disabled:opacity-50">
+          </AdminFormTable>
+        </AdminTableForm>
+        <AdminFormActions>
+          <AdminLinkMuted href="/admin/popups">취소</AdminLinkMuted>
+          <AdminBtn type="submit" disabled={saving}>
             {saving ? "등록 중..." : "확인"}
-          </button>
-        </div>
+          </AdminBtn>
+        </AdminFormActions>
       </form>
-    </div>
+    </AdminPage>
   );
 }

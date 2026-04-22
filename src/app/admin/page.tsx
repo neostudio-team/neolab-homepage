@@ -2,6 +2,99 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { auth } from "@/lib/firebase";
+import { AdminPage, AdminTilde } from "@/components/admin/AdminCommon.styles";
+import {
+  DashBadgeNew,
+  DashBadgeNotice,
+  DashBadgeNoticeViolet,
+  DashBoardCard,
+  DashBoardCardHeader,
+  DashBoardCardHeaderLeft,
+  DashBoardCount,
+  DashBoardFooter,
+  DashBoardIcon,
+  DashBoardLabel,
+  DashBoardList,
+  DashBoardListEmpty,
+  DashBoardRow,
+  DashBoardRowMeta,
+  DashBoardRowTitle,
+  DashCardsGrid,
+  DashChannelDot,
+  DashChannelName,
+  DashDatePill,
+  DashEngageBody,
+  DashEngageCard,
+  DashEngageDesc,
+  DashEngageIcon,
+  DashEngageLabel,
+  DashEngageValue,
+  DashFooterBlueLink,
+  DashFooterMutedLink,
+  DashFooterSep,
+  DashGA2Col,
+  DashGAAlertAmber,
+  DashGAAlertAmberCode,
+  DashGAAlertAmberOl,
+  DashGAAlertAmberTitle,
+  DashGAAlertRed,
+  DashGAAlertRedText,
+  DashGAAlertRedTitle,
+  DashGABadgeOk,
+  DashGABadgeWait,
+  DashGABarFill,
+  DashGABarFillSm,
+  DashGABarTrack,
+  DashGABarTrackSm,
+  DashGABtn,
+  DashGACountry,
+  DashGADateRow,
+  DashGAFlag,
+  DashGAH2,
+  DashGAH3,
+  DashGAHeader,
+  DashGAInput,
+  DashGAListStack,
+  DashGAListStackLg,
+  DashGAMetricCard,
+  DashGAMetricLabel,
+  DashGAMetricsGrid,
+  DashGAMetricSub,
+  DashGAMetricTop,
+  DashGAMetricValue,
+  DashGANum,
+  DashGAPagesHeader,
+  DashGAPageSectionTitle,
+  DashGAPagesCaption,
+  DashGAPagesTable,
+  DashGAPagesTd,
+  DashGAPagesTh,
+  DashGAPagesTr,
+  DashGAPagePath,
+  DashGAPagePathRow,
+  DashGAPct,
+  DashGAPresetBtn,
+  DashGAPresetWrap,
+  DashGARow,
+  DashGAStat,
+  DashGASection,
+  DashGASub,
+  DashGASummaryCell,
+  DashGASummaryGrid,
+  DashGASummaryLabel,
+  DashGASummaryValue,
+  DashGASvg,
+  DashGATabBar,
+  DashGATabBtn,
+  DashGATabRow,
+  DashGATableScroll,
+  DashGAToolbar,
+  DashHeader,
+  DashLoadingText,
+  DashLoadingWrap,
+  DashSubtitle,
+  DashTitle,
+} from "@/components/admin/AdminDashboard.styles";
 
 interface BoardItem { id: string; titleKo: string; createdAt: string; isPinned?: boolean; }
 interface ContactItem { id: string; name: string; subject: string; createdAt: string; isRead: boolean; category: string; }
@@ -64,10 +157,16 @@ const CHANNEL_KO: Record<string, string> = {
   "Organic Social": "소셜", "Paid Search": "검색광고", "Email": "이메일",
   "Display": "디스플레이광고", "Unassigned": "미분류", "(not set)": "미설정",
 };
-const CHANNEL_COLOR: Record<string, string> = {
-  "Organic Search": "bg-green-400", "Direct": "bg-blue-400", "Referral": "bg-purple-400",
-  "Organic Social": "bg-pink-400", "Paid Search": "bg-yellow-400", "Email": "bg-orange-400",
-  "Display": "bg-red-400", "Unassigned": "bg-gray-300", "(not set)": "bg-gray-300",
+const CHANNEL_HEX: Record<string, string> = {
+  "Organic Search": "#4ade80",
+  Direct: "#60a5fa",
+  Referral: "#c084fc",
+  "Organic Social": "#f472b6",
+  "Paid Search": "#facc15",
+  Email: "#fb923c",
+  Display: "#f87171",
+  Unassigned: "#d1d5db",
+  "(not set)": "#d1d5db",
 };
 
 type GATab = "overview" | "pages" | "sessions";
@@ -134,39 +233,65 @@ export default function AdminDashboard() {
 
   const CARDS = [
     {
-      key: "notice", label: "공지사항", icon: "📋", color: "from-blue-500 to-blue-600",
-      items: notices, newHref: "/admin/notices/new", listHref: "/admin/notices",
-      badge: (n: BoardItem) => n.isPinned
-        ? <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-blue-100 text-blue-600 flex-shrink-0">공지</span>
-        : null,
+      key: "notice",
+      label: "공지사항",
+      icon: "📋",
+      gradient: "linear-gradient(to right, #3b82f6, #2563eb)",
+      items: notices,
+      newHref: "/admin/notices/new",
+      listHref: "/admin/notices",
+      badge: (n: BoardItem) =>
+        n.isPinned ? <DashBadgeNotice>공지</DashBadgeNotice> : null,
     },
     {
-      key: "press", label: "기업뉴스", icon: "📰", color: "from-emerald-500 to-emerald-600",
-      items: press, newHref: "/admin/press/new", listHref: "/admin/press",
+      key: "press",
+      label: "기업뉴스",
+      icon: "📰",
+      gradient: "linear-gradient(to right, #10b981, #059669)",
+      items: press,
+      newHref: "/admin/press/new",
+      listHref: "/admin/press",
       badge: () => null,
     },
     {
-      key: "customer", label: "고객지원", icon: "🎧", color: "from-violet-500 to-violet-600",
-      items: customer, newHref: "/admin/customer/new", listHref: "/admin/customer",
-      badge: (n: BoardItem) => n.isPinned
-        ? <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-violet-100 text-violet-600 flex-shrink-0">공지</span>
-        : null,
+      key: "customer",
+      label: "고객지원",
+      icon: "🎧",
+      gradient: "linear-gradient(to right, #8b5cf6, #7c3aed)",
+      items: customer,
+      newHref: "/admin/customer/new",
+      listHref: "/admin/customer",
+      badge: (n: BoardItem) =>
+        n.isPinned ? <DashBadgeNoticeViolet>공지</DashBadgeNoticeViolet> : null,
     },
     {
-      key: "contact", label: "문의 관리", icon: "📩", color: "from-rose-500 to-rose-600",
-      items: contacts.map(c => ({ id: c.id, titleKo: c.subject || "(제목 없음)", createdAt: c.createdAt, isPinned: !c.isRead })) as BoardItem[],
-      newHref: "/admin/contact", listHref: "/admin/contact",
-      badge: (n: BoardItem) => n.isPinned
-        ? <span className="text-[10px] px-1.5 py-0.5 rounded font-bold mr-1.5 bg-red-100 text-red-600 flex-shrink-0">NEW</span>
-        : null,
+      key: "contact",
+      label: "문의 관리",
+      icon: "📩",
+      gradient: "linear-gradient(to right, #f43f5e, #e11d48)",
+      items: contacts.map(
+        (c) =>
+          ({
+            id: c.id,
+            titleKo: c.subject || "(제목 없음)",
+            createdAt: c.createdAt,
+            isPinned: !c.isRead,
+          }) as BoardItem,
+      ),
+      newHref: "/admin/contact",
+      listHref: "/admin/contact",
+      badge: (n: BoardItem) =>
+        n.isPinned ? <DashBadgeNew>NEW</DashBadgeNew> : null,
     },
   ];
 
-  if (loading) return (
-    <div className="p-8 flex items-center justify-center min-h-[60vh]">
-      <div className="text-gray-400 text-sm">불러오는 중...</div>
-    </div>
-  );
+  if (loading) {
+    return (
+      <DashLoadingWrap>
+        <DashLoadingText>불러오는 중...</DashLoadingText>
+      </DashLoadingWrap>
+    );
+  }
 
   const TAB_ITEMS: { key: GATab; label: string }[] = [
     { key: "overview", label: "개요" },
@@ -174,211 +299,282 @@ export default function AdminDashboard() {
     { key: "sessions", label: "세션 상세" },
   ];
 
+  const gaRangeLabel =
+    gaPreset === "today"
+      ? "오늘"
+      : gaPreset === "yesterday"
+        ? "어제"
+        : gaPreset === "custom" && customStart && customEnd
+          ? `${customStart} ~ ${customEnd}`
+          : gaPreset === "7"
+            ? "최근 7일"
+            : gaPreset === "14"
+              ? "최근 14일"
+              : gaPreset === "30"
+                ? "최근 30일"
+                : gaPreset === "90"
+                  ? "최근 90일"
+                  : gaPreset === "180"
+                    ? "최근 6개월"
+                    : gaPreset === "365"
+                      ? "최근 1년"
+                      : "";
+
   return (
-    <div className="p-8 max-w-7xl">
-      {/* 헤더 */}
-      <div className="flex items-start justify-between mb-8">
+    <AdminPage $max="7xl">
+      <DashHeader>
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">대시보드</h1>
-          <p className="text-gray-400 text-sm mt-1">NeoLAB Convergence 홈페이지 관리 현황</p>
+          <DashTitle>대시보드</DashTitle>
+          <DashSubtitle>NeoLAB Convergence 홈페이지 관리 현황</DashSubtitle>
         </div>
-        <p className="text-sm font-medium text-gray-600 bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm">{todayKr()}</p>
-      </div>
+        <DashDatePill>{todayKr()}</DashDatePill>
+      </DashHeader>
 
-      {/* 게시판 카드 4개 */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
-        {CARDS.map(card => (
-          <div key={card.key} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-            <div className={`bg-gradient-to-r ${card.color} px-5 py-4 flex items-center justify-between`}>
-              <div className="flex items-center gap-2">
-                <span className="text-xl">{card.icon}</span>
-                <span className="text-white font-semibold text-sm">{card.label}</span>
-              </div>
-              <span className="text-white text-2xl font-bold leading-none">{card.items.length}</span>
-            </div>
+      <DashCardsGrid>
+        {CARDS.map((card) => (
+          <DashBoardCard key={card.key}>
+            <DashBoardCardHeader $gradient={card.gradient}>
+              <DashBoardCardHeaderLeft>
+                <DashBoardIcon>{card.icon}</DashBoardIcon>
+                <DashBoardLabel>{card.label}</DashBoardLabel>
+              </DashBoardCardHeaderLeft>
+              <DashBoardCount>{card.items.length}</DashBoardCount>
+            </DashBoardCardHeader>
 
-            <div className="flex-1 divide-y divide-gray-50">
+            <DashBoardList>
               {card.items.length === 0 ? (
-                <p className="text-gray-400 text-xs text-center py-8">등록된 항목이 없습니다.</p>
-              ) : card.items.slice(0, 5).map((item) => {
-                const m = item as unknown as MemberItem;
-                const isMember = card.key === "member";
-                return (
-                  <div key={item.id} className="flex items-center gap-1 px-4 py-2.5">
-                    {card.badge(item)}
-                    <span className="flex-1 text-xs text-gray-700 truncate">
-                      {isMember ? m.name : (item.titleKo || "(제목 없음)")}
-                    </span>
-                    <span className="text-[10px] text-gray-400 flex-shrink-0 ml-1">
-                      {isMember ? m.email.split("@")[0] : fmtShort(item.createdAt)}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+                <DashBoardListEmpty>등록된 항목이 없습니다.</DashBoardListEmpty>
+              ) : (
+                card.items.slice(0, 5).map((item) => {
+                  const m = item as unknown as MemberItem;
+                  const isMember = card.key === "member";
+                  return (
+                    <DashBoardRow key={item.id}>
+                      {card.badge(item)}
+                      <DashBoardRowTitle>
+                        {isMember ? m.name : item.titleKo || "(제목 없음)"}
+                      </DashBoardRowTitle>
+                      <DashBoardRowMeta>
+                        {isMember
+                          ? m.email.split("@")[0]
+                          : fmtShort(item.createdAt)}
+                      </DashBoardRowMeta>
+                    </DashBoardRow>
+                  );
+                })
+              )}
+            </DashBoardList>
 
-            <div className="px-4 py-3 border-t border-gray-100 flex gap-3">
-              <Link href={card.listHref} className="text-xs text-gray-500 hover:text-gray-800 transition-colors">목록보기</Link>
+            <DashBoardFooter>
+              <DashFooterMutedLink href={card.listHref}>
+                목록보기
+              </DashFooterMutedLink>
               {card.key !== "member" && card.key !== "contact" && (
                 <>
-                  <span className="text-gray-200 select-none">|</span>
-                  <Link href={card.newHref} className="text-xs text-blue-500 hover:text-blue-700 font-medium transition-colors">새 글 작성</Link>
+                  <DashFooterSep>|</DashFooterSep>
+                  <DashFooterBlueLink href={card.newHref}>
+                    새 글 작성
+                  </DashFooterBlueLink>
                 </>
               )}
-            </div>
-          </div>
+            </DashBoardFooter>
+          </DashBoardCard>
         ))}
-      </div>
+      </DashCardsGrid>
 
-      {/* GA 방문 통계 */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        {/* 헤더 */}
-        <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
+      <DashGASection>
+        <DashGAHeader>
           <div>
-            <h2 className="text-base font-bold text-gray-800">방문 통계</h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Google Analytics ·{" "}
-              {gaPreset === "today" ? "오늘" : gaPreset === "yesterday" ? "어제" :
-               gaPreset === "custom" && customStart && customEnd ? `${customStart} ~ ${customEnd}` :
-               gaPreset === "7" ? "최근 7일" : gaPreset === "14" ? "최근 14일" :
-               gaPreset === "30" ? "최근 30일" : gaPreset === "90" ? "최근 90일" :
-               gaPreset === "180" ? "최근 6개월" : gaPreset === "365" ? "최근 1년" : ""}
-            </p>
+            <DashGAH2>방문 통계</DashGAH2>
+            <DashGASub>Google Analytics · {gaRangeLabel}</DashGASub>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {/* 프리셋 버튼 */}
-            <div className="flex flex-wrap gap-1">
-              {PRESET_OPTIONS.map(opt => (
-                <button key={opt.key}
+          <DashGAToolbar>
+            <DashGAPresetWrap>
+              {PRESET_OPTIONS.map((opt) => (
+                <DashGAPresetBtn
+                  key={opt.key}
+                  type="button"
+                  $active={gaPreset === opt.key}
                   onClick={() => {
                     setGaPreset(opt.key);
-                    if (opt.key !== "custom") fetchGA(opt.key, "", "");
+                    if (opt.key !== "custom") void fetchGA(opt.key, "", "");
                   }}
-                  className={`px-3 py-1.5 text-xs rounded-lg border font-medium transition-colors ${
-                    gaPreset === opt.key
-                      ? "bg-[#1a1a2e] text-white border-[#1a1a2e]"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                  }`}>
+                >
                   {opt.label}
-                </button>
+                </DashGAPresetBtn>
               ))}
-            </div>
-            {/* 직접입력 날짜 */}
+            </DashGAPresetWrap>
             {gaPreset === "custom" && (
-              <div className="flex items-center gap-1.5">
-                <input type="date" value={customStart} onChange={e => setCustomStart(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]/20" />
-                <span className="text-xs text-gray-400">~</span>
-                <input type="date" value={customEnd} onChange={e => setCustomEnd(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]/20" />
-                <button
-                  onClick={() => { if (customStart && customEnd) fetchGA("custom", customStart, customEnd); }}
+              <DashGADateRow>
+                <DashGAInput
+                  type="date"
+                  value={customStart}
+                  onChange={(e) => setCustomStart(e.target.value)}
+                />
+                <AdminTilde>~</AdminTilde>
+                <DashGAInput
+                  type="date"
+                  value={customEnd}
+                  onChange={(e) => setCustomEnd(e.target.value)}
+                />
+                <DashGABtn
+                  type="button"
+                  onClick={() => {
+                    if (customStart && customEnd)
+                      void fetchGA("custom", customStart, customEnd);
+                  }}
                   disabled={!customStart || !customEnd}
-                  className="px-3 py-1.5 text-xs bg-[#1a1a2e] text-white rounded-lg hover:bg-[#2a2a4e] disabled:opacity-40 transition-colors">
+                >
                   조회
-                </button>
-              </div>
+                </DashGABtn>
+              </DashGADateRow>
             )}
-            {gaData && !gaLoading && (
-              <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-3 py-1 rounded-full">● 연동됨</span>
-            )}
-            {gaLoading && (
-              <span className="text-xs text-gray-400 font-medium bg-gray-50 px-3 py-1 rounded-full">조회 중...</span>
-            )}
-          </div>
-        </div>
+            {gaData && !gaLoading && <DashGABadgeOk>● 연동됨</DashGABadgeOk>}
+            {gaLoading && <DashGABadgeWait>조회 중...</DashGABadgeWait>}
+          </DashGAToolbar>
+        </DashGAHeader>
 
-        {/* 에러 */}
         {gaError === "GA_PROPERTY_ID_NOT_SET" && (
-          <div className="rounded-xl bg-amber-50 border border-amber-100 p-5">
-            <p className="text-sm font-semibold text-amber-700 mb-2">📌 GA 연동 설정이 필요합니다</p>
-            <ol className="list-decimal pl-5 space-y-1 text-xs text-amber-600 leading-relaxed">
-              <li>Google Analytics 콘솔 → 관리 → 속성 설정에서 <strong>속성 ID</strong>(숫자) 확인</li>
-              <li>Firebase Admin 서비스 계정을 GA 속성에 <strong>뷰어</strong>로 추가</li>
-              <li>Vercel 환경변수에 <code className="bg-amber-100 px-1 rounded font-mono">GA_PROPERTY_ID=숫자</code> 추가 후 재배포</li>
-              <li>Google Cloud Console에서 <strong>Google Analytics Data API</strong> 활성화</li>
-            </ol>
-          </div>
+          <DashGAAlertAmber>
+            <DashGAAlertAmberTitle>
+              📌 GA 연동 설정이 필요합니다
+            </DashGAAlertAmberTitle>
+            <DashGAAlertAmberOl>
+              <li>
+                Google Analytics 콘솔 → 관리 → 속성 설정에서{" "}
+                <strong>속성 ID</strong>(숫자) 확인
+              </li>
+              <li>
+                Firebase Admin 서비스 계정을 GA 속성에 <strong>뷰어</strong>로
+                추가
+              </li>
+              <li>
+                Vercel 환경변수에{" "}
+                <DashGAAlertAmberCode>GA_PROPERTY_ID=숫자</DashGAAlertAmberCode>{" "}
+                추가 후 재배포
+              </li>
+              <li>
+                Google Cloud Console에서{" "}
+                <strong>Google Analytics Data API</strong> 활성화
+              </li>
+            </DashGAAlertAmberOl>
+          </DashGAAlertAmber>
         )}
         {gaError && gaError !== "GA_PROPERTY_ID_NOT_SET" && (
-          <div className="rounded-xl bg-red-50 border border-red-100 p-4">
-            <p className="text-sm font-semibold text-red-600">⚠️ GA 데이터 조회 실패</p>
-            <p className="text-xs mt-1 text-red-400">{gaError}</p>
-          </div>
+          <DashGAAlertRed>
+            <DashGAAlertRedTitle>⚠️ GA 데이터 조회 실패</DashGAAlertRedTitle>
+            <DashGAAlertRedText>{gaError}</DashGAAlertRedText>
+          </DashGAAlertRed>
         )}
 
         {gaData && (
           <>
-            {/* 요약 지표 4개 */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <DashGAMetricsGrid>
               {[
-                { label: "방문자수", value: fmt(gaData.summary.activeUsers), sub: "Active Users", icon: "👤", color: "text-blue-600", bg: "bg-blue-50" },
-                { label: "세션수", value: fmt(gaData.summary.sessions), sub: "Sessions", icon: "📊", color: "text-emerald-600", bg: "bg-emerald-50" },
-                { label: "페이지뷰", value: fmt(gaData.summary.pageViews), sub: "Page Views", icon: "👁️", color: "text-violet-600", bg: "bg-violet-50" },
-                { label: "신규방문자", value: fmt(gaData.summary.newUsers), sub: "New Users", icon: "✨", color: "text-orange-600", bg: "bg-orange-50" },
-              ].map(m => (
-                <div key={m.label} className={`${m.bg} rounded-xl px-4 py-4`}>
-                  <div className="flex items-center gap-1.5 mb-2">
+                {
+                  label: "방문자수",
+                  value: fmt(gaData.summary.activeUsers),
+                  sub: "Active Users",
+                  icon: "👤",
+                  valueColor: "#2563eb",
+                  bg: "#eff6ff",
+                },
+                {
+                  label: "세션수",
+                  value: fmt(gaData.summary.sessions),
+                  sub: "Sessions",
+                  icon: "📊",
+                  valueColor: "#059669",
+                  bg: "#ecfdf5",
+                },
+                {
+                  label: "페이지뷰",
+                  value: fmt(gaData.summary.pageViews),
+                  sub: "Page Views",
+                  icon: "👁️",
+                  valueColor: "#7c3aed",
+                  bg: "#f5f3ff",
+                },
+                {
+                  label: "신규방문자",
+                  value: fmt(gaData.summary.newUsers),
+                  sub: "New Users",
+                  icon: "✨",
+                  valueColor: "#ea580c",
+                  bg: "#fff7ed",
+                },
+              ].map((m) => (
+                <DashGAMetricCard key={m.label} $bg={m.bg}>
+                  <DashGAMetricTop>
                     <span>{m.icon}</span>
-                    <span className="text-xs text-gray-500">{m.sub}</span>
-                  </div>
-                  <p className={`text-2xl font-bold ${m.color}`}>{m.value}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{m.label}</p>
-                </div>
+                    <DashGAMetricSub>{m.sub}</DashGAMetricSub>
+                  </DashGAMetricTop>
+                  <DashGAMetricValue $color={m.valueColor}>{m.value}</DashGAMetricValue>
+                  <DashGAMetricLabel>{m.label}</DashGAMetricLabel>
+                </DashGAMetricCard>
               ))}
-            </div>
+            </DashGAMetricsGrid>
 
-            {/* 탭 */}
-            <div className="border-b border-gray-100 mb-5">
-              <div className="flex gap-1">
-                {TAB_ITEMS.map(t => (
-                  <button key={t.key} onClick={() => setGaTab(t.key)}
-                    className={`px-4 py-2 text-sm font-medium rounded-t-lg border-b-2 transition-colors ${
-                      gaTab === t.key
-                        ? "border-[#1a1a2e] text-[#1a1a2e] bg-[#1a1a2e]/5"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                    }`}>
+            <DashGATabBar>
+              <DashGATabRow>
+                {TAB_ITEMS.map((t) => (
+                  <DashGATabBtn
+                    key={t.key}
+                    type="button"
+                    $active={gaTab === t.key}
+                    onClick={() => setGaTab(t.key)}
+                  >
                     {t.label}
-                  </button>
+                  </DashGATabBtn>
                 ))}
-              </div>
-            </div>
+              </DashGATabRow>
+            </DashGATabBar>
 
-            {/* 탭 1: 개요 */}
             {gaTab === "overview" && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* 국가별 */}
+              <DashGA2Col>
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">국가별 접속자</h3>
-                  <div className="space-y-2.5">
+                  <DashGAH3>국가별 접속자</DashGAH3>
+                  <DashGAListStack>
                     {gaData.countries.map((c, i) => (
-                      <div key={c.country} className="flex items-center gap-2.5">
-                        <span className="text-gray-400 text-xs w-4 text-right flex-shrink-0">{i + 1}</span>
-                        <span className="text-sm flex-shrink-0">{FLAG[c.country] || "🌐"}</span>
-                        <span className="text-xs text-gray-700 w-20 flex-shrink-0">{COUNTRY_MAP[c.country] || c.country}</span>
-                        <div className="flex-1 bg-gray-100 rounded-full h-1.5 overflow-hidden">
-                          <div className="h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-blue-500" style={{ width: `${c.pct}%` }} />
-                        </div>
-                        <span className="text-xs text-gray-500 w-14 text-right flex-shrink-0">{fmt(c.users)}명</span>
-                        <span className="text-xs text-gray-400 w-8 text-right flex-shrink-0">{c.pct}%</span>
-                      </div>
+                      <DashGARow key={c.country}>
+                        <DashGANum>{i + 1}</DashGANum>
+                        <DashGAFlag>{FLAG[c.country] || "🌐"}</DashGAFlag>
+                        <DashGACountry>
+                          {COUNTRY_MAP[c.country] || c.country}
+                        </DashGACountry>
+                        <DashGABarTrack>
+                          <DashGABarFill
+                            $widthPct={c.pct}
+                            $fill="linear-gradient(to right, #60a5fa, #3b82f6)"
+                          />
+                        </DashGABarTrack>
+                        <DashGAStat>{fmt(c.users)}명</DashGAStat>
+                        <DashGAPct>{c.pct}%</DashGAPct>
+                      </DashGARow>
                     ))}
-                  </div>
+                  </DashGAListStack>
                 </div>
 
                 {/* 트렌드 차트 */}
                 {gaData.trend.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                      {gaPreset === "today" || gaPreset === "yesterday" ? "시간별 세션" :
-                       gaPreset === "7" ? "최근 7일 일별 세션" :
-                       gaPreset === "14" ? "최근 14일 일별 세션" :
-                       gaPreset === "30" ? "최근 30일 일별 세션" :
-                       gaPreset === "90" ? "최근 90일 일별 세션" :
-                       gaPreset === "180" ? "최근 90일 일별 세션" :
-                       gaPreset === "365" ? "최근 90일 일별 세션" :
-                       "일별 세션"}
-                    </h3>
+                    <DashGAH3>
+                      {gaPreset === "today" || gaPreset === "yesterday"
+                        ? "시간별 세션"
+                        : gaPreset === "7"
+                          ? "최근 7일 일별 세션"
+                          : gaPreset === "14"
+                            ? "최근 14일 일별 세션"
+                            : gaPreset === "30"
+                              ? "최근 30일 일별 세션"
+                              : gaPreset === "90"
+                                ? "최근 90일 일별 세션"
+                                : gaPreset === "180"
+                                  ? "최근 90일 일별 세션"
+                                  : gaPreset === "365"
+                                    ? "최근 90일 일별 세션"
+                                    : "일별 세션"}
+                    </DashGAH3>
                     {(() => {
                       const data = gaData.trend;
                       const W = 560, H = 110;
@@ -394,7 +590,7 @@ export default function AdminDashboard() {
                         const bw = cW / data.length;
                         const gap = Math.max(1, bw * 0.25);
                         return (
-                          <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
+                          <DashGASvg viewBox={`0 0 ${W} ${H}`}>
                             {data.map((t, i) => {
                               const bh = t.sessions > 0 ? Math.max(2, (t.sessions / max) * cH) : 0;
                               const x = pad.left + i * bw + gap / 2;
@@ -413,7 +609,7 @@ export default function AdminDashboard() {
                                 </g>
                               );
                             })}
-                          </svg>
+                          </DashGASvg>
                         );
                       } else {
                         /* ── 영역 라인 차트 (>14일) ── */
@@ -427,7 +623,7 @@ export default function AdminDashboard() {
                         /* 레이블: 첫·마지막·N 간격마다 */
                         const every = n <= 30 ? 6 : n <= 60 ? 10 : 15;
                         return (
-                          <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
+                          <DashGASvg viewBox={`0 0 ${W} ${H}`}>
                             <defs>
                               <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.35" />
@@ -450,152 +646,203 @@ export default function AdminDashboard() {
                                 </g>
                               );
                             })}
-                          </svg>
+                          </DashGASvg>
                         );
                       }
                     })()}
                   </div>
                 )}
-              </div>
+              </DashGA2Col>
             )}
 
-            {/* 탭 2: 페이지뷰 상세 */}
             {gaTab === "pages" && (
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-semibold text-gray-700">인기 페이지 Top 10</h3>
-                  <span className="text-xs text-gray-400">
-                    {gaPreset === "today" ? "오늘 기준" : gaPreset === "yesterday" ? "어제 기준" :
-                     gaPreset === "custom" && customStart && customEnd ? `${customStart} ~ ${customEnd}` :
-                     `최근 ${gaPreset === "7" ? "7일" : gaPreset === "14" ? "14일" : gaPreset === "30" ? "30일" : gaPreset === "90" ? "90일" : gaPreset === "180" ? "6개월" : "1년"} 기준`}
-                  </span>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
+                <DashGAPagesHeader>
+                  <DashGAPageSectionTitle>
+                    인기 페이지 Top 10
+                  </DashGAPageSectionTitle>
+                  <DashGAPagesCaption>
+                    {gaPreset === "today"
+                      ? "오늘 기준"
+                      : gaPreset === "yesterday"
+                        ? "어제 기준"
+                        : gaPreset === "custom" && customStart && customEnd
+                          ? `${customStart} ~ ${customEnd}`
+                          : `최근 ${
+                              gaPreset === "7"
+                                ? "7일"
+                                : gaPreset === "14"
+                                  ? "14일"
+                                  : gaPreset === "30"
+                                    ? "30일"
+                                    : gaPreset === "90"
+                                      ? "90일"
+                                      : gaPreset === "180"
+                                        ? "6개월"
+                                        : "1년"
+                            } 기준`}
+                  </DashGAPagesCaption>
+                </DashGAPagesHeader>
+                <DashGATableScroll>
+                  <DashGAPagesTable>
                     <thead>
-                      <tr className="border-b border-gray-100">
-                        <th className="text-left pb-2 pr-4 font-medium text-gray-500 w-6">#</th>
-                        <th className="text-left pb-2 pr-4 font-medium text-gray-500">페이지 경로</th>
-                        <th className="text-right pb-2 pr-4 font-medium text-gray-500 w-24">페이지뷰</th>
-                        <th className="text-right pb-2 pr-4 font-medium text-gray-500 w-16">사용자</th>
-                        <th className="text-right pb-2 font-medium text-gray-500 w-12">비중</th>
+                      <tr>
+                        <DashGAPagesTh $w="24px">#</DashGAPagesTh>
+                        <DashGAPagesTh>페이지 경로</DashGAPagesTh>
+                        <DashGAPagesTh $align="right" $w="96px">
+                          페이지뷰
+                        </DashGAPagesTh>
+                        <DashGAPagesTh $align="right" $w="64px">
+                          사용자
+                        </DashGAPagesTh>
+                        <DashGAPagesTh $align="right" $w="48px">
+                          비중
+                        </DashGAPagesTh>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody>
                       {gaData.topPages.map((p, i) => (
-                        <tr key={p.path} className="hover:bg-gray-50/50">
-                          <td className="py-2.5 pr-4 text-gray-400">{i + 1}</td>
-                          <td className="py-2.5 pr-4">
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono text-gray-700 truncate max-w-xs" title={p.path}>{p.path}</span>
-                              <div className="flex-1 min-w-16 bg-gray-100 rounded-full h-1 overflow-hidden">
-                                <div className="h-1 rounded-full bg-violet-400" style={{ width: `${p.pct}%` }} />
-                              </div>
-                            </div>
-                          </td>
-                          <td className="py-2.5 pr-4 text-right font-semibold text-violet-700">{fmt(p.pageViews)}</td>
-                          <td className="py-2.5 pr-4 text-right text-gray-500">{fmt(p.users)}</td>
-                          <td className="py-2.5 text-right text-gray-400">{p.pct}%</td>
-                        </tr>
+                        <DashGAPagesTr key={p.path}>
+                          <DashGAPagesTd>{i + 1}</DashGAPagesTd>
+                          <DashGAPagesTd>
+                            <DashGAPagePathRow>
+                              <DashGAPagePath title={p.path}>
+                                {p.path}
+                              </DashGAPagePath>
+                              <DashGABarTrackSm>
+                                <DashGABarFillSm
+                                  $widthPct={p.pct}
+                                  $fill="#a78bfa"
+                                />
+                              </DashGABarTrackSm>
+                            </DashGAPagePathRow>
+                          </DashGAPagesTd>
+                          <DashGAPagesTd $align="right" $variant="violet">
+                            {fmt(p.pageViews)}
+                          </DashGAPagesTd>
+                          <DashGAPagesTd $align="right" $variant="muted">
+                            {fmt(p.users)}
+                          </DashGAPagesTd>
+                          <DashGAPagesTd $align="right">{p.pct}%</DashGAPagesTd>
+                        </DashGAPagesTr>
                       ))}
                     </tbody>
-                  </table>
-                </div>
+                  </DashGAPagesTable>
+                </DashGATableScroll>
 
-                {/* 참여 지표 요약 */}
-                <div className="mt-5 pt-5 border-t border-gray-100 grid grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400 mb-1">세션당 페이지뷰</p>
-                    <p className="text-xl font-bold text-violet-600">{gaData.summary.pagesPerSession.toFixed(1)}</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400 mb-1">총 페이지뷰</p>
-                    <p className="text-xl font-bold text-gray-800">{fmt(gaData.summary.pageViews)}</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400 mb-1">신규 방문자</p>
-                    <p className="text-xl font-bold text-orange-600">{fmt(gaData.summary.newUsers)}</p>
-                  </div>
-                </div>
+                <DashGASummaryGrid>
+                  <DashGASummaryCell>
+                    <DashGASummaryLabel>세션당 페이지뷰</DashGASummaryLabel>
+                    <DashGASummaryValue $color="#7c3aed">
+                      {gaData.summary.pagesPerSession.toFixed(1)}
+                    </DashGASummaryValue>
+                  </DashGASummaryCell>
+                  <DashGASummaryCell>
+                    <DashGASummaryLabel>총 페이지뷰</DashGASummaryLabel>
+                    <DashGASummaryValue $color="#1f2937">
+                      {fmt(gaData.summary.pageViews)}
+                    </DashGASummaryValue>
+                  </DashGASummaryCell>
+                  <DashGASummaryCell>
+                    <DashGASummaryLabel>신규 방문자</DashGASummaryLabel>
+                    <DashGASummaryValue $color="#ea580c">
+                      {fmt(gaData.summary.newUsers)}
+                    </DashGASummaryValue>
+                  </DashGASummaryCell>
+                </DashGASummaryGrid>
               </div>
             )}
 
-            {/* 탭 3: 세션 상세 */}
             {gaTab === "sessions" && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* 유입 경로 */}
+              <DashGA2Col>
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">유입 채널별 세션</h3>
-                  <div className="space-y-2.5">
-                    {gaData.sources.map((s, i) => (
-                      <div key={s.channel} className="flex items-center gap-2.5">
-                        <span className="text-gray-400 text-xs w-4 text-right flex-shrink-0">{i + 1}</span>
-                        <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${CHANNEL_COLOR[s.channel] || "bg-gray-300"}`} />
-                        <span className="text-xs text-gray-700 w-24 flex-shrink-0">{CHANNEL_KO[s.channel] || s.channel}</span>
-                        <div className="flex-1 bg-gray-100 rounded-full h-1.5 overflow-hidden">
-                          <div className={`h-1.5 rounded-full ${CHANNEL_COLOR[s.channel] || "bg-gray-400"}`} style={{ width: `${s.pct}%` }} />
-                        </div>
-                        <span className="text-xs text-gray-500 w-14 text-right flex-shrink-0">{fmt(s.sessions)}세션</span>
-                        <span className="text-xs text-gray-400 w-8 text-right flex-shrink-0">{s.pct}%</span>
-                      </div>
-                    ))}
-                  </div>
+                  <DashGAH3>유입 채널별 세션</DashGAH3>
+                  <DashGAListStack>
+                    {gaData.sources.map((s, i) => {
+                      const chColor =
+                        CHANNEL_HEX[s.channel] ?? "#d1d5db";
+                      return (
+                        <DashGARow key={s.channel}>
+                          <DashGANum>{i + 1}</DashGANum>
+                          <DashChannelDot $color={chColor} />
+                          <DashChannelName>
+                            {CHANNEL_KO[s.channel] || s.channel}
+                          </DashChannelName>
+                          <DashGABarTrack>
+                            <DashGABarFill
+                              $widthPct={s.pct}
+                              $fill={chColor}
+                            />
+                          </DashGABarTrack>
+                          <DashGAStat>{fmt(s.sessions)}세션</DashGAStat>
+                          <DashGAPct>{s.pct}%</DashGAPct>
+                        </DashGARow>
+                      );
+                    })}
+                  </DashGAListStack>
                 </div>
 
-                {/* 참여 지표 */}
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">참여 지표</h3>
-                  <div className="space-y-3">
+                  <DashGAH3>참여 지표</DashGAH3>
+                  <DashGAListStackLg>
                     {[
                       {
                         label: "평균 세션 시간",
                         value: fmtDuration(gaData.summary.avgSessionDuration),
                         icon: "⏱️",
                         desc: "방문자 1인당 평균 체류 시간",
-                        color: "text-blue-600",
-                        bg: "bg-blue-50",
+                        valueColor: "#2563eb",
+                        bg: "#eff6ff",
                       },
                       {
                         label: "이탈률",
                         value: fmtPct(gaData.summary.bounceRate),
                         icon: "↩️",
                         desc: "1개 페이지만 보고 떠난 비율",
-                        color: gaData.summary.bounceRate > 0.7 ? "text-red-500" : "text-emerald-600",
-                        bg: gaData.summary.bounceRate > 0.7 ? "bg-red-50" : "bg-emerald-50",
+                        valueColor:
+                          gaData.summary.bounceRate > 0.7
+                            ? "#ef4444"
+                            : "#059669",
+                        bg:
+                          gaData.summary.bounceRate > 0.7
+                            ? "#fef2f2"
+                            : "#ecfdf5",
                       },
                       {
                         label: "세션당 페이지뷰",
-                        value: gaData.summary.pagesPerSession.toFixed(1) + "페이지",
+                        value: `${gaData.summary.pagesPerSession.toFixed(1)}페이지`,
                         icon: "📄",
                         desc: "방문당 평균 페이지 조회 수",
-                        color: "text-violet-600",
-                        bg: "bg-violet-50",
+                        valueColor: "#7c3aed",
+                        bg: "#f5f3ff",
                       },
                       {
                         label: "총 세션",
-                        value: fmt(gaData.summary.sessions) + "회",
+                        value: `${fmt(gaData.summary.sessions)}회`,
                         icon: "📊",
                         desc: "최근 30일 전체 세션 수",
-                        color: "text-emerald-600",
-                        bg: "bg-emerald-50",
+                        valueColor: "#059669",
+                        bg: "#ecfdf5",
                       },
-                    ].map(m => (
-                      <div key={m.label} className={`flex items-center gap-3 px-4 py-3 rounded-xl ${m.bg}`}>
-                        <span className="text-xl">{m.icon}</span>
-                        <div className="flex-1">
-                          <p className="text-xs text-gray-500">{m.desc}</p>
-                          <p className="text-xs font-medium text-gray-700">{m.label}</p>
-                        </div>
-                        <p className={`text-lg font-bold ${m.color}`}>{m.value}</p>
-                      </div>
+                    ].map((m) => (
+                      <DashEngageCard key={m.label} $bg={m.bg}>
+                        <DashEngageIcon>{m.icon}</DashEngageIcon>
+                        <DashEngageBody>
+                          <DashEngageDesc>{m.desc}</DashEngageDesc>
+                          <DashEngageLabel>{m.label}</DashEngageLabel>
+                        </DashEngageBody>
+                        <DashEngageValue $color={m.valueColor}>
+                          {m.value}
+                        </DashEngageValue>
+                      </DashEngageCard>
                     ))}
-                  </div>
+                  </DashGAListStackLg>
                 </div>
-              </div>
+              </DashGA2Col>
             )}
           </>
         )}
-      </div>
-    </div>
+      </DashGASection>
+    </AdminPage>
   );
 }

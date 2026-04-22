@@ -163,16 +163,6 @@ html.lenis {
   to { opacity: 1; }
 }
 
-/* Section spacing - matches Divi default 54px */
-.section-padding {
-  padding: 54px 0;
-}
-
-@media (max-width: 768px) {
-  .section-padding {
-    padding: 40px 0;
-  }
-}
 
 /* Container width matching original Divi 1080px */
 .divi-container {

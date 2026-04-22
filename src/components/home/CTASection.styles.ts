@@ -1,19 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { sectionPadding } from "@/styles/section";
 
-export const Section = styled.section`
-  position: relative;
-  overflow: hidden;
-  background: #ff9900;
-  ${sectionPadding}
-`;
-
-export const Inner = styled.div`
-  position: relative;
-  margin: 0 auto;
-  max-width: 1640px;
-`;
 
 export const TopRow = styled.div`
   display: flex;

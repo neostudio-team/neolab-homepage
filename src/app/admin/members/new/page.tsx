@@ -1,12 +1,31 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
-import Link from "next/link";
+import {
+  AdminBackLink,
+  AdminBtn,
+  AdminFormActions,
+  AdminFormLabelCellTop,
+  AdminFormTable,
+  AdminFormValueCell,
+  AdminH1,
+  AdminHeaderRow,
+  AdminInputW72,
+  AdminLabelCellNarrow,
+  AdminLinkMuted,
+  AdminPage,
+  AdminRequiredMark,
+  AdminSelect,
+  AdminTableForm,
+  AdminTextarea,
+  AdminCardPadded,
+  AdminMutedSmall,
+} from "@/components/admin/AdminCommon.styles";
 
 const FIELD_ROWS = [
-  { key: "name", label: "이름", required: true, type: "text" },
-  { key: "email", label: "이메일", required: true, type: "email" },
+  { key: "name", label: "이름", required: true, type: "text" as const },
+  { key: "email", label: "이메일", required: true, type: "email" as const },
 ];
 
 export default function NewMemberPage() {
@@ -15,9 +34,12 @@ export default function NewMemberPage() {
   const [permitted, setPermitted] = useState<boolean | null>(null);
 
   useEffect(() => {
-    (async () => {
+    void (async () => {
       const user = auth.currentUser;
-      if (!user) { router.replace("/admin/members"); return; }
+      if (!user) {
+        router.replace("/admin/members");
+        return;
+      }
       const token = await user.getIdToken();
       const res = await fetch(`/api/admin-members?email=${encodeURIComponent(user.email ?? "")}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -25,103 +47,136 @@ export default function NewMemberPage() {
       if (res.ok) {
         const data = await res.json();
         if (Number(data?.level) === 1) setPermitted(true);
-        else { alert("최고관리자만 접근할 수 있습니다."); router.replace("/admin/members"); }
+        else {
+          alert("최고관리자만 접근할 수 있습니다.");
+          router.replace("/admin/members");
+        }
       }
     })();
   }, [router]);
+
   const [form, setForm] = useState({
-    name: "", email: "", level: 2,
-    memberMemo: "", adminMemo: "",
+    name: "",
+    email: "",
+    level: 2,
+    memberMemo: "",
+    adminMemo: "",
   });
 
-  function set(key: string, value: string | number) {
-    setForm(f => ({ ...f, [key]: value }));
-  }
+  const setField = useCallback((key: string, value: string | number) => {
+    setForm((f) => ({ ...f, [key]: value }));
+  }, []);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!form.name) return alert("이름을 입력해 주세요.");
-    if (!form.email) return alert("이메일을 입력해 주세요.");
-    setSaving(true);
-    try {
-      const token = await auth.currentUser?.getIdToken();
-      const res = await fetch("/api/admin-members", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) router.push("/admin/members");
-      else alert("등록에 실패했습니다.");
-    } finally {
-      setSaving(false);
-    }
-  }
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!form.name) {
+        alert("이름을 입력해 주세요.");
+        return;
+      }
+      if (!form.email) {
+        alert("이메일을 입력해 주세요.");
+        return;
+      }
+      setSaving(true);
+      try {
+        const token = await auth.currentUser?.getIdToken();
+        const res = await fetch("/api/admin-members", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify(form),
+        });
+        if (res.ok) router.push("/admin/members");
+        else alert("등록에 실패했습니다.");
+      } finally {
+        setSaving(false);
+      }
+    },
+    [form, router],
+  );
 
-  if (permitted === null) return <div className="p-8 text-gray-400 text-sm">권한 확인 중...</div>;
+  if (permitted === null) {
+    return (
+      <AdminPage $max="3xl">
+        <AdminCardPadded>
+          <AdminMutedSmall as="span">권한 확인 중...</AdminMutedSmall>
+        </AdminCardPadded>
+      </AdminPage>
+    );
+  }
 
   return (
-    <div className="p-8 max-w-3xl">
-      <div className="flex items-center gap-3 mb-6">
-        <Link href="/admin/members" className="text-gray-400 hover:text-gray-600 text-sm">← 목록으로</Link>
-        <h1 className="text-2xl font-bold text-gray-800">회원 등록</h1>
-      </div>
+    <AdminPage $max="3xl">
+      <AdminHeaderRow>
+        <AdminBackLink href="/admin/members">← 목록으로</AdminBackLink>
+        <AdminH1>회원 등록</AdminH1>
+      </AdminHeaderRow>
 
       <form onSubmit={handleSubmit}>
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-4">
-          <table className="w-full text-sm">
+        <AdminTableForm>
+          <AdminFormTable>
             <tbody>
-              {FIELD_ROWS.map(row => (
-                <tr key={row.key} className="border-b border-gray-100 last:border-0">
-                  <td className="px-5 py-3 w-36 bg-gray-50 text-gray-600 text-xs font-medium">
-                    {row.label}{row.required && <span className="text-red-500 ml-0.5">(*)</span>}
-                  </td>
-                  <td className="px-5 py-3">
-                    <input
+              {FIELD_ROWS.map((row) => (
+                <tr key={row.key}>
+                  <AdminLabelCellNarrow>
+                    {row.label}
+                    {row.required ? (
+                      <>
+                        {" "}
+                        <AdminRequiredMark>(*)</AdminRequiredMark>
+                      </>
+                    ) : null}
+                  </AdminLabelCellNarrow>
+                  <AdminFormValueCell>
+                    <AdminInputW72
                       type={row.type}
                       value={(form as Record<string, string | number>)[row.key] as string}
-                      onChange={e => set(row.key, e.target.value)}
+                      onChange={(e) => setField(row.key, e.target.value)}
                       required={row.required}
-                      className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-72"
                     />
-                  </td>
+                  </AdminFormValueCell>
                 </tr>
               ))}
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">레벨</td>
-                <td className="px-5 py-3">
-                  <select value={form.level} onChange={e => set("level", Number(e.target.value))}
-                    className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]">
+              <tr>
+                <AdminLabelCellNarrow>레벨</AdminLabelCellNarrow>
+                <AdminFormValueCell>
+                  <AdminSelect value={form.level} onChange={(e) => setField("level", Number(e.target.value))}>
                     <option value={1}>1 (최고관리자)</option>
                     <option value={2}>2 (일반관리자)</option>
-                  </select>
-                </td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium align-top pt-4">회원 메모</td>
-                <td className="px-5 py-3">
-                  <textarea value={form.memberMemo} onChange={e => set("memberMemo", e.target.value)}
-                    rows={4} className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-full resize-y" />
-                </td>
+                  </AdminSelect>
+                </AdminFormValueCell>
               </tr>
               <tr>
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium align-top pt-4">관리자 메모</td>
-                <td className="px-5 py-3">
-                  <textarea value={form.adminMemo} onChange={e => set("adminMemo", e.target.value)}
-                    rows={4} className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-full resize-y" />
-                </td>
+                <AdminFormLabelCellTop>회원 메모</AdminFormLabelCellTop>
+                <AdminFormValueCell>
+                  <AdminTextarea
+                    value={form.memberMemo}
+                    onChange={(e) => setField("memberMemo", e.target.value)}
+                    rows={4}
+                  />
+                </AdminFormValueCell>
+              </tr>
+              <tr>
+                <AdminFormLabelCellTop>관리자 메모</AdminFormLabelCellTop>
+                <AdminFormValueCell>
+                  <AdminTextarea
+                    value={form.adminMemo}
+                    onChange={(e) => setField("adminMemo", e.target.value)}
+                    rows={4}
+                  />
+                </AdminFormValueCell>
               </tr>
             </tbody>
-          </table>
-        </div>
+          </AdminFormTable>
+        </AdminTableForm>
 
-        <div className="flex items-center justify-between">
-          <Link href="/admin/members" className="px-5 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">목록</Link>
-          <button type="submit" disabled={saving}
-            className="px-6 py-2.5 bg-[#1a1a2e] text-white rounded-lg text-sm hover:bg-[#16213e] transition-colors disabled:opacity-50">
+        <AdminFormActions>
+          <AdminLinkMuted href="/admin/members">목록</AdminLinkMuted>
+          <AdminBtn type="submit" disabled={saving}>
             {saving ? "등록 중..." : "확인"}
-          </button>
-        </div>
+          </AdminBtn>
+        </AdminFormActions>
       </form>
-    </div>
+    </AdminPage>
   );
 }

@@ -3,8 +3,8 @@ import { Open_Sans } from "next/font/google";
 import Script from "next/script";
 import "../globals.css";
 import { i18n, Locale } from "@/i18n/config";
-import GlobalPopups from "@/components/GlobalPopups";
-import SmoothScroll from "@/components/SmoothScroll";
+import GlobalPopups from "@/components/common/GlobalPopups";
+import SmoothScroll from "@/components/common/SmoothScroll";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",

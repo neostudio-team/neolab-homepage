@@ -18,7 +18,7 @@ import {
   Title,
   Unit,
   VerticalStripes,
-} from "../StatsSection.styles";
+} from "./StatsSection.styles";
 
 interface StatsSectionProps {
   dict?: unknown;

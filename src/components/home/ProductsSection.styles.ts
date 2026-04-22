@@ -1,16 +1,8 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { colors } from "@/styles/theme";
-import { sectionPadding } from "@/styles/section";
-
-export const Section = styled.section`
-  background: #fff;
-  ${sectionPadding}
-`;
 
 export const Row = styled.div`
-  margin: 0 auto;
-  max-width: 1640px;
   display: flex;
   gap: 16px;
   align-items: stretch;
@@ -36,10 +28,10 @@ export const Card = styled.button<{ $active: boolean }>`
   overflow: hidden;
   position: relative;
   transition:
-    flex-grow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    min-width 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.4s ease,
-    border-color 0.4s ease;
+    flex-grow 1.05s cubic-bezier(0.19, 1, 0.22, 1),
+    min-width 1.05s cubic-bezier(0.19, 1, 0.22, 1),
+    background-color 0.7s ease,
+    border-color 0.7s ease;
   display: flex;
   flex-direction: column;
   will-change: flex-grow;
@@ -53,18 +45,25 @@ export const Card = styled.button<{ $active: boolean }>`
     flex: 1 1 auto;
     min-height: ${({ $active }) => ($active ? "560px" : "200px")};
     transition:
-      min-height 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      background-color 0.4s ease,
-      border-color 0.4s ease;
+      min-height 1.05s cubic-bezier(0.19, 1, 0.22, 1),
+      background-color 0.7s ease,
+      border-color 0.7s ease;
   }
 `;
 
-export const CardContent = styled.div`
+export const CardContent = styled.div<{
+  $active: boolean;
+  $visible: boolean;
+}>`
   position: absolute;
   inset: 0;
-  padding: 28px 28px 30px;
+  padding: ${({ $active }) => ($active ? "40px" : "0")};
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  pointer-events: ${({ $visible }) => ($visible ? "auto" : "none")};
+  transition: opacity 0.55s cubic-bezier(0.19, 1, 0.22, 1);
 `;
 
 export const SmallHeader = styled.div`
@@ -74,36 +73,46 @@ export const SmallHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
 `;
 
 export const SmallTitle = styled.h3`
   margin: 0;
-  color: #111;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  line-height: 1.05;
   text-align: center;
 `;
 
-export const SmallChipList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
+export const SmallChipList = styled.div<{ $singleChip?: boolean }>`
+  display: grid;
+  grid-template-columns: ${({ $singleChip }) =>
+    $singleChip ? "minmax(0, 1fr)" : "repeat(2, minmax(0, 1fr))"};
+  justify-items: ${({ $singleChip }) => ($singleChip ? "center" : "stretch")};
+  gap: 4px;
+  width: 100%;
 `;
 
-export const SmallChip = styled.span`
+export const SmallChip = styled.span<{ $wide?: boolean; $singleChip?: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: ${({ $wide, $singleChip }) => {
+    if ($singleChip) return "auto";
+    return $wide ? "auto" : "100%";
+  }};
+  justify-self: ${({ $wide, $singleChip }) => {
+    if ($singleChip) return "center";
+    return $wide ? "start" : "stretch";
+  }};
+  min-width: ${({ $wide, $singleChip }) => {
+    if ($singleChip) return "auto";
+    return $wide ? "auto" : "100px";
+  }};
   border: 1px solid #757575;
   border-radius: 100px;
   padding: 4px 10px;
-  min-width: 64px;
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.2;
   color: #757575;
   background: transparent;
   white-space: nowrap;
@@ -113,8 +122,8 @@ export const ChipList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  max-width: 248px;
-  justify-content: flex-end;
+  max-width: 368px;
+  justify-content: flex-start;
 `;
 
 export const ChipButton = styled.button<{ $active?: boolean }>`
@@ -122,9 +131,9 @@ export const ChipButton = styled.button<{ $active?: boolean }>`
   cursor: pointer;
   font-family: inherit;
   border-radius: 999px;
-  padding: 7px 14px;
-  min-width: 104px;
-  font-size: 14px;
+  padding: 16px;
+  width: 180px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
@@ -164,17 +173,16 @@ export const SmallImage = styled(Image)`
 export const SearchBadge = styled.span`
   position: absolute;
   left: 50%;
-  bottom: 72px;
-  transform: translateX(-50%);
-  width: 54px;
-  height: 54px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
   display: grid;
   place-items: center;
-  color: #111;
-  font-size: 22px;
+  font-size: 48px;
   pointer-events: none;
   z-index: 2;
 `;
@@ -183,7 +191,7 @@ export const BigImageWrap = styled.div`
   position: relative;
   flex: 1;
   width: 100%;
-  min-height: 370px;
+  max-height: 420px;
   overflow: hidden;
 `;
 
@@ -203,27 +211,19 @@ export const BigInfo = styled.div`
 
 export const BigCategory = styled.p`
   margin: 0;
-  color: #111;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 600;
 `;
 
-export const BigTitleRow = styled.div`
-  display: block;
-`;
-
 export const BigTitle = styled.span`
-  color: #111;
-  font-size: 54px;
-  font-weight: 700;
+  font-size: 48px;
+  letter-spacing: -1px;
   line-height: 1;
+  font-weight: 700;
 `;
 
 export const BigSub = styled.span`
-  color: #555;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.35;
+  font-size: 16px;
 `;
 
 export const ProductImage = styled(Image)`
@@ -235,14 +235,18 @@ export const SwappableProductImage = styled(Image)<{ $visible: boolean }>`
   object-fit: contain;
   object-position: center center;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 0.4s ease;
+  transform: ${({ $visible }) =>
+    $visible ? "translateY(0) scale(1)" : "translateY(8px) scale(0.985)"};
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
 `;
 
 export const ProductTextBlock = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  animation: productFadeIn 0.35s ease;
+  gap: 8px;
+  animation: productFadeIn 0.7s cubic-bezier(0.19, 1, 0.22, 1);
 
   @keyframes productFadeIn {
     from {

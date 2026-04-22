@@ -1,6 +1,6 @@
 /** Design tokens — use in styled-components (no Tailwind). */
 export const colors = {
-  primary: "#f26522",
+  primary: "#FF9900",
   primaryDark: "#d4551a",
   dark: "#1a1a2e",
   grayLight: "#f8f8f8",

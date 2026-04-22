@@ -1,10 +1,39 @@
 "use client";
-import { useState, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, storage } from "@/lib/firebase";
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import Link from "next/link";
 import RichEditor from "@/components/admin/RichEditor";
+import {
+  AdminBackLink,
+  AdminBtn,
+  AdminFileButton,
+  AdminFileRow,
+  AdminFlexGap6,
+  AdminFormActions,
+  AdminFormLabelCell,
+  AdminFormLabelCellTop,
+  AdminFormTable,
+  AdminFormValueCell,
+  AdminH1,
+  AdminHeaderRow,
+  AdminHiddenInput,
+  AdminInput,
+  AdminLabelRow,
+  AdminLinkMuted,
+  AdminModalActions,
+  AdminModalDesc,
+  AdminModalEmoji,
+  AdminModalOverlay,
+  AdminModalTitle,
+  AdminMutedSmall,
+  AdminMutedXs,
+  AdminPage,
+  AdminCheckbox,
+  AdminRequiredMark,
+  AdminTableForm,
+  AdminConfirmModal,
+} from "@/components/admin/AdminCommon.styles";
 
 export default function NewNoticePage() {
   const router = useRouter();
@@ -27,28 +56,66 @@ export default function NewNoticePage() {
   const file1Ref = useRef<HTMLInputElement>(null);
   const file2Ref = useRef<HTMLInputElement>(null);
 
-  function set(field: string, value: string | boolean) {
+  const setField = useCallback((field: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-  }
+  }, []);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!form.titleKo) return alert("제목을 입력해 주세요.");
-    setShowModal(true);
-  }
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!form.titleKo) {
+        alert("제목을 입력해 주세요.");
+        return;
+      }
+      setShowModal(true);
+    },
+    [form.titleKo],
+  );
+
+  const handlePickFile1 = useCallback(() => {
+    file1Ref.current?.click();
+  }, []);
+
+  const handlePickFile2 = useCallback(() => {
+    file2Ref.current?.click();
+  }, []);
+
+  const handleFile1Change = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0] ?? null;
+    if (f && f.size > 10 * 1024 * 1024) {
+      alert("파일 크기는 최대 10MB까지 가능합니다.");
+      e.target.value = "";
+      return;
+    }
+    setFile1(f);
+  }, []);
+
+  const handleFile2Change = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0] ?? null;
+    if (f && f.size > 10 * 1024 * 1024) {
+      alert("파일 크기는 최대 10MB까지 가능합니다.");
+      e.target.value = "";
+      return;
+    }
+    setFile2(f);
+  }, []);
 
   async function uploadFile(file: File): Promise<{ url: string; name: string }> {
     const path = `notices/${Date.now()}_${file.name}`;
     const fileRef = storageRef(storage, path);
     const timeout = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error("파일 업로드 시간 초과")), 15000)
+      setTimeout(() => reject(new Error("파일 업로드 시간 초과")), 15000),
     );
     await Promise.race([uploadBytes(fileRef, file), timeout]);
     const url = await getDownloadURL(fileRef);
     return { url, name: file.name };
   }
 
-  async function doSubmit() {
+  const doSubmit = useCallback(async () => {
     setShowModal(false);
     setSaving(true);
     try {
@@ -85,118 +152,135 @@ export default function NewNoticePage() {
     } finally {
       setSaving(false);
     }
-  }
+  }, [file1, file2, form, router]);
 
   return (
-    <div className="p-8 max-w-4xl">
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl p-8 w-[360px] flex flex-col items-center gap-5">
-            <div className="text-3xl">📋</div>
-            <h2 className="text-lg font-bold text-gray-800">공지사항 등록</h2>
-            <p className="text-sm text-gray-500 text-center">입력한 내용으로 공지사항을 등록하시겠습니까?</p>
-            <div className="flex gap-3 w-full">
-              <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">취소</button>
-              <button onClick={doSubmit} className="flex-1 py-2.5 bg-[#1a1a2e] text-white rounded-lg text-sm font-semibold hover:bg-[#16213e] transition-colors">등록</button>
-            </div>
-          </div>
-        </div>
-      )}
+    <AdminPage $max="4xl">
+      {showModal ? (
+        <AdminModalOverlay>
+          <AdminConfirmModal>
+            <AdminModalEmoji>📋</AdminModalEmoji>
+            <AdminModalTitle>공지사항 등록</AdminModalTitle>
+            <AdminModalDesc>입력한 내용으로 공지사항을 등록하시겠습니까?</AdminModalDesc>
+            <AdminModalActions>
+              <AdminBtn type="button" $variant="secondary" $block onClick={handleCloseModal}>
+                취소
+              </AdminBtn>
+              <AdminBtn type="button" $block onClick={doSubmit}>
+                등록
+              </AdminBtn>
+            </AdminModalActions>
+          </AdminConfirmModal>
+        </AdminModalOverlay>
+      ) : null}
 
-      <div className="flex items-center gap-3 mb-6">
-        <Link href="/admin/notices" className="text-gray-400 hover:text-gray-600 text-sm">← 목록으로</Link>
-        <h1 className="text-2xl font-bold text-gray-800">공지사항 작성</h1>
-      </div>
+      <AdminHeaderRow>
+        <AdminBackLink href="/admin/notices">← 목록으로</AdminBackLink>
+        <AdminH1>공지사항 작성</AdminH1>
+      </AdminHeaderRow>
 
       <form onSubmit={handleSubmit}>
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden mb-4">
-          <table className="w-full text-sm">
+        <AdminTableForm>
+          <AdminFormTable>
             <tbody>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium w-28">옵션</td>
-                <td className="px-5 py-3">
-                  <div className="flex items-center gap-6">
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
-                      <input type="checkbox" checked={form.isSecret} onChange={(e) => set("isSecret", e.target.checked)} className="w-4 h-4 rounded accent-[#1a1a2e]" />
+              <tr>
+                <AdminFormLabelCell>옵션</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminFlexGap6>
+                    <AdminLabelRow>
+                      <AdminCheckbox
+                        type="checkbox"
+                        checked={form.isSecret}
+                        onChange={(e) => setField("isSecret", e.target.checked)}
+                      />
                       비밀글
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
-                      <input type="checkbox" checked={form.isPinned} onChange={(e) => set("isPinned", e.target.checked)} className="w-4 h-4 rounded accent-[#1a1a2e]" />
+                    </AdminLabelRow>
+                    <AdminLabelRow>
+                      <AdminCheckbox
+                        type="checkbox"
+                        checked={form.isPinned}
+                        onChange={(e) => setField("isPinned", e.target.checked)}
+                      />
                       공지
-                    </label>
-                    <div className="flex items-center gap-2 ml-4">
-                      <label className="text-xs text-gray-500">작성자</label>
-                      <input value={form.author} onChange={(e) => set("author", e.target.value)}
-                        className="border border-gray-200 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e] w-36" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">제목 <span className="text-red-500">*</span></td>
-                <td className="px-5 py-3">
-                  <input value={form.titleKo} onChange={(e) => set("titleKo", e.target.value)} required
-                    placeholder="공지사항 제목을 입력하세요"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
-                </td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium align-top pt-4">내용</td>
-                <td className="px-5 py-3">
-                  <RichEditor value={form.contentKo} onChange={(v) => set("contentKo", v)} />
-                </td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">태그</td>
-                <td className="px-5 py-3">
-                  <input value={form.tags} onChange={(e) => set("tags", e.target.value)}
-                    placeholder="쉼표로 구분 (예: 업데이트, 점검, 이벤트)"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a2e]" />
-                </td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">파일1</td>
-                <td className="px-5 py-3">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <button type="button" onClick={() => file1Ref.current?.click()}
-                      className="px-3 py-1.5 border border-gray-300 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">파일선택</button>
-                    <span className="text-xs text-gray-500">{file1 ? file1.name : "-"}</span>
-                    <span className="text-xs text-gray-400">최대 10MB</span>
-                    <input ref={file1Ref} type="file" className="hidden" onChange={(e) => {
-                      const f = e.target.files?.[0] ?? null;
-                      if (f && f.size > 10 * 1024 * 1024) { alert("파일 크기는 최대 10MB까지 가능합니다."); e.target.value = ""; return; }
-                      setFile1(f);
-                    }} />
-                  </div>
-                </td>
+                    </AdminLabelRow>
+                    <AdminFlexGap6>
+                      <AdminMutedSmall as="label" htmlFor="notice-new-author">
+                        작성자
+                      </AdminMutedSmall>
+                      <AdminInput
+                        id="notice-new-author"
+                        value={form.author}
+                        onChange={(e) => setField("author", e.target.value)}
+                      />
+                    </AdminFlexGap6>
+                  </AdminFlexGap6>
+                </AdminFormValueCell>
               </tr>
               <tr>
-                <td className="px-5 py-3 bg-gray-50 text-gray-600 text-xs font-medium">파일2</td>
-                <td className="px-5 py-3">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <button type="button" onClick={() => file2Ref.current?.click()}
-                      className="px-3 py-1.5 border border-gray-300 rounded text-xs text-gray-600 hover:bg-gray-50 transition-colors">파일선택</button>
-                    <span className="text-xs text-gray-500">{file2 ? file2.name : "-"}</span>
-                    <span className="text-xs text-gray-400">최대 10MB</span>
-                    <input ref={file2Ref} type="file" className="hidden" onChange={(e) => {
-                      const f = e.target.files?.[0] ?? null;
-                      if (f && f.size > 10 * 1024 * 1024) { alert("파일 크기는 최대 10MB까지 가능합니다."); e.target.value = ""; return; }
-                      setFile2(f);
-                    }} />
-                  </div>
-                </td>
+                <AdminFormLabelCell>
+                  제목 <AdminRequiredMark>*</AdminRequiredMark>
+                </AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminInput
+                    value={form.titleKo}
+                    onChange={(e) => setField("titleKo", e.target.value)}
+                    required
+                    placeholder="공지사항 제목을 입력하세요"
+                  />
+                </AdminFormValueCell>
+              </tr>
+              <tr>
+                <AdminFormLabelCellTop>내용</AdminFormLabelCellTop>
+                <AdminFormValueCell>
+                  <RichEditor value={form.contentKo} onChange={(v) => setField("contentKo", v)} />
+                </AdminFormValueCell>
+              </tr>
+              <tr>
+                <AdminFormLabelCell>태그</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminInput
+                    value={form.tags}
+                    onChange={(e) => setField("tags", e.target.value)}
+                    placeholder="쉼표로 구분 (예: 업데이트, 점검, 이벤트)"
+                  />
+                </AdminFormValueCell>
+              </tr>
+              <tr>
+                <AdminFormLabelCell>파일1</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminFileRow>
+                    <AdminFileButton type="button" onClick={handlePickFile1}>
+                      파일선택
+                    </AdminFileButton>
+                    <AdminMutedSmall as="span">{file1 ? file1.name : "-"}</AdminMutedSmall>
+                    <AdminMutedXs as="span">최대 10MB</AdminMutedXs>
+                    <AdminHiddenInput ref={file1Ref} type="file" onChange={handleFile1Change} />
+                  </AdminFileRow>
+                </AdminFormValueCell>
+              </tr>
+              <tr>
+                <AdminFormLabelCell>파일2</AdminFormLabelCell>
+                <AdminFormValueCell>
+                  <AdminFileRow>
+                    <AdminFileButton type="button" onClick={handlePickFile2}>
+                      파일선택
+                    </AdminFileButton>
+                    <AdminMutedSmall as="span">{file2 ? file2.name : "-"}</AdminMutedSmall>
+                    <AdminMutedXs as="span">최대 10MB</AdminMutedXs>
+                    <AdminHiddenInput ref={file2Ref} type="file" onChange={handleFile2Change} />
+                  </AdminFileRow>
+                </AdminFormValueCell>
               </tr>
             </tbody>
-          </table>
-        </div>
-        <div className="flex items-center justify-between">
-          <Link href="/admin/notices" className="px-5 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">목록</Link>
-          <button type="submit" disabled={saving}
-            className="px-6 py-2.5 bg-[#1a1a2e] text-white rounded-lg text-sm hover:bg-[#16213e] transition-colors disabled:opacity-50">
+          </AdminFormTable>
+        </AdminTableForm>
+        <AdminFormActions>
+          <AdminLinkMuted href="/admin/notices">목록</AdminLinkMuted>
+          <AdminBtn type="submit" disabled={saving}>
             {saving ? "등록 중..." : "확인"}
-          </button>
-        </div>
+          </AdminBtn>
+        </AdminFormActions>
       </form>
-    </div>
+    </AdminPage>
   );
 }

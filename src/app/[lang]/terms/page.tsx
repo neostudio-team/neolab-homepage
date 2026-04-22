@@ -4,7 +4,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import { adminDb } from "@/lib/firebase-admin";
 import { DEFAULT_TERMS } from "@/lib/legal-defaults";
-import LegalPageClient from "@/components/LegalPageClient";
+import LegalPageClient from "@/components/legal/LegalPageClient";
 import LegalDocumentShell from "@/components/legal/LegalDocumentShell";
 
 async function getData() {
