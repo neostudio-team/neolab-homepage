@@ -68,45 +68,30 @@ export const HeroTextBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  max-width: 700px;
-  padding: 0 80px 160px;
-`;
-
-export const LabelRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 28px;
-`;
-
-export const LabelDot = styled.div`
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #e63b2e;
-`;
-
-export const LabelText = styled.span`
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #e63b2e;
-  font-size: 10px;
-  letter-spacing: 3px;
+  max-width: 1400px;
+  padding: 0 80px 140px;
 `;
 
 export const HeroTitle = styled.h1`
+  margin: 0;
   font-family: "DM Sans", sans-serif;
-  font-size: clamp(40px, 4.8vw, 88px);
-  line-height: 1.05;
-  letter-spacing: -2px;
+  font-size: clamp(48px, 7vw, 128px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   font-weight: 700;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
-export const HeroTitleAccent = styled.em`
-  font-style: italic;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.5);
+export const HeroTitleLine = styled.span`
+  display: block;
+  overflow: hidden;
+`;
+
+export const HeroTitleLineInner = styled.span`
+  display: block;
 `;
 
 export const ScrollIndicator = styled.div`

@@ -30,7 +30,7 @@ export const QuickLabel = styled.span`
   font-weight: 600;
   font-size: 12px;
   letter-spacing: 0.2em;
-  transform: rotate(180deg);
+  transform: rotate(270deg);
 `;
 
 export const QuickMenuWrapper = styled.div<{ $open: boolean }>`
@@ -129,7 +129,7 @@ export const NavBarRow = styled.div`
   }
 
   ${media.lg} {
-    padding: 0 clamp(40px, 8.3vw, 160px);
+    padding: 0 clamp(40px, 8.3vw, 140px);
     height: 100px;
   }
 `;

@@ -1,22 +1,24 @@
- "use client";
+"use client";
 import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   DotCanvas,
   FadeOverlay,
   GradientOverlay,
   HeroTextBlock,
   HeroTitle,
-  HeroTitleAccent,
+  HeroTitleLine,
   HeroVideo,
-  LabelDot,
-  LabelRow,
-  LabelText,
   ScrollIndicator,
   ScrollLine,
   ScrollText,
   Section,
   VideoBackground,
 } from "./HeroSection.styles";
+import { subscribeMouseMove, subscribeResize } from "@/lib/browser-runtime";
+
+const HERO_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const heroLines = ["Write the Future,", "Connect the World."] as const;
 
 interface HeroSectionProps {
   dict: {
@@ -31,6 +33,8 @@ interface HeroSectionProps {
 export default function HeroSection({ dict }: HeroSectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const titleInView = useInView(titleRef, { once: false, amount: 0.1 });
   const [fadeOpacity, setFadeOpacity] = useState(0);
   void dict;
 
@@ -107,21 +111,21 @@ export default function HeroSection({ dict }: HeroSectionProps) {
       animId = requestAnimationFrame(loop);
     }
 
-    const onMouseMove = (e: MouseEvent) => {
+    const onMouseMove = (clientX: number, clientY: number) => {
       const c = canvasRef.current;
       if (!c) return;
       const rect = c.getBoundingClientRect();
-      mouse = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      mouse = { x: clientX - rect.left, y: clientY - rect.top };
     };
 
-    window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMouseMove);
+    const offResize = subscribeResize(resize);
+    const offMouseMove = subscribeMouseMove(onMouseMove);
     resize();
     loop();
 
     return () => {
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMouseMove);
+      offResize();
+      offMouseMove();
       cancelAnimationFrame(animId);
     };
   }, []);
@@ -181,20 +185,23 @@ export default function HeroSection({ dict }: HeroSectionProps) {
       <DotCanvas ref={canvasRef} />
 
       <HeroTextBlock>
-        <LabelRow>
-          <LabelDot />
-          <LabelText>NeoLAB Convergence</LabelText>
-        </LabelRow>
-        <HeroTitle>
-          Write the{" "}
-          <HeroTitleAccent>
-            Future,
-          </HeroTitleAccent>
-          <br />
-          Connect the{" "}
-          <HeroTitleAccent>
-            World.
-          </HeroTitleAccent>
+        <HeroTitle ref={titleRef}>
+          {heroLines.map((line, index) => (
+            <HeroTitleLine key={line}>
+              <motion.span
+                initial={{ y: "110%" }}
+                animate={titleInView ? { y: 0 } : { y: "110%" }}
+                transition={{
+                  duration: 1.1,
+                  ease: HERO_EASE,
+                  delay: index * 0.18,
+                }}
+                style={{ display: "block" }}
+              >
+                {line}
+              </motion.span>
+            </HeroTitleLine>
+          ))}
         </HeroTitle>
       </HeroTextBlock>
 

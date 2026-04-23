@@ -60,7 +60,6 @@ export const BrandSubtitle = styled.p`
   font-weight: 600;
   color: rgba(255, 255, 255, 0.6);
   letter-spacing: 0.02em;
-  margin: 0;
   transition: color 0.15s;
 
   ${BrandLink}:hover & {
@@ -147,7 +146,6 @@ export const ProfileName = styled.p`
   color: #fff;
   font-size: 14px;
   font-weight: 600;
-  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -156,7 +154,6 @@ export const ProfileName = styled.p`
 export const ProfileEmail = styled.p`
   color: rgba(255, 255, 255, 0.5);
   font-size: 10px;
-  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

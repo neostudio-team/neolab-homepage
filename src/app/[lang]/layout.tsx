@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import Script from "next/script";
 import "../globals.css";
+import { rootStyleBlock } from "@/styles/theme";
 import { i18n, Locale } from "@/i18n/config";
 import GlobalPopups from "@/components/common/GlobalPopups";
 import SmoothScroll from "@/components/common/SmoothScroll";
@@ -51,6 +52,7 @@ export default async function RootLayout({
   return (
     <html lang={lang}>
       <head>
+        <style dangerouslySetInnerHTML={{ __html: rootStyleBlock() }} />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-5865P9Q0K2"
           strategy="afterInteractive"

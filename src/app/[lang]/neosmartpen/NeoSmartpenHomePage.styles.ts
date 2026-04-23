@@ -305,7 +305,6 @@ export const UtilizeLine2 = styled.h2`
   font-size: 23px;
   font-weight: 500;
   color: ${c.text};
-  margin: 0;
 `;
 
 export const UtilizeCenterCol = styled.div`
@@ -352,7 +351,6 @@ export const UtilizeSummary = styled.summary`
 export const UtilizeSummaryTitle = styled.h3`
   font-size: 14px;
   font-weight: 600;
-  margin: 0;
 `;
 
 export const UtilizeBody = styled.p`

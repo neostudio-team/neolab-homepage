@@ -474,7 +474,7 @@ export default function AdminLegalPage() {
             />
           </AdminTableShell>
           <AdminFlexBetweenBar>
-            <AdminMutedSmall as="p" style={{ margin: 0 }}>
+            <AdminMutedSmall as="p">
               {mode === "new"
                 ? "※ 저장 후 목록에서 '발행' 버튼을 눌러야 홈페이지에 반영됩니다."
                 : "※ 수정 사항은 즉시 저장되며, 발행 중인 버전이면 홈페이지에도 반영됩니다."}

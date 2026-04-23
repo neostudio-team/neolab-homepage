@@ -4,6 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import "../globals.css";
+import { rootStyleBlock } from "@/styles/theme";
 import {
   Avatar,
   BodyPlain,
@@ -107,6 +108,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (pathname === "/admin/login") {
     return (
       <html lang="ko">
+        <head>
+          <style dangerouslySetInnerHTML={{ __html: rootStyleBlock() }} />
+        </head>
         <BodyPlain>{children}</BodyPlain>
       </html>
     );
@@ -115,6 +119,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (loading) {
     return (
       <html lang="ko">
+        <head>
+          <style dangerouslySetInnerHTML={{ __html: rootStyleBlock() }} />
+        </head>
         <BodyPlain>
           <LoadingScreen>
             <LoadingText>로딩 중...</LoadingText>
@@ -131,6 +138,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <html lang="ko">
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: rootStyleBlock() }} />
+      </head>
       <BodyPlain>
         <Shell>
           <Sidebar>

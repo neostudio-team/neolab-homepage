@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/i18n/config";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
+import { readScrollY, subscribeScrollPassive } from "@/lib/browser-runtime";
 import LangDropdownSwitcher from "@/components/common/LangDropdownSwitcher";
 import {
   DesktopNav,
@@ -186,9 +187,8 @@ export default function Header({ lang, dict }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(readScrollY() > 20);
+    return subscribeScrollPassive(onScroll);
   }, []);
 
   const navItems = getNavItems(lang, dict);

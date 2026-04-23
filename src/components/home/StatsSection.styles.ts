@@ -1,53 +1,10 @@
 import styled from "styled-components";
 
-export const Section = styled.section`
-  position: relative;
-  overflow: hidden;
-  background: #fcfcfc;
-  color: #0a0a0a;
-  padding: 140px 0 160px;
-`;
-
-export const VerticalStripes = styled.div`
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.05) 0px,
-    rgba(0, 0, 0, 0.05) 1px,
-    transparent 1px,
-    transparent 47px
-  );
-  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
-`;
-
-export const Inner = styled.div`
-  position: relative;
-  margin: 0 auto;
-  max-width: 1640px;
-  padding: 0 1rem;
-
-  @media (min-width: 768px) {
-    padding: 0 2.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding: 0 5rem;
-  }
-`;
-
-export const HeadingBlock = styled.div`
-  margin-bottom: 80px;
-`;
-
 export const Title = styled.h2`
   margin: 0;
-  white-space: pre-line;
-  line-height: 1.1;
-  font-size: clamp(44px, 5.5vw, 80px);
+  font-size: 5rem;
   font-weight: 700;
-  letter-spacing: -1px;
+  margin-bottom: 7.5rem;
 `;
 
 export const Subtitle = styled.p`
@@ -61,54 +18,47 @@ export const Subtitle = styled.p`
 `;
 
 export const PillRow = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+  margin-bottom: 48px;
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(3, 1fr);
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
 export const Pill = styled.div`
   background: #fff;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #111;
   border-radius: 100px;
-  padding: 32px 56px;
+  padding: 24px 120px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 167px;
   justify-content: center;
+  align-items: center;
 `;
 
 export const Label = styled.p`
   margin: 0;
   font-size: 18px;
   font-weight: 500;
-  color: #111;
 `;
 
 export const CountRow = styled.div`
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 4px;
 `;
 
 export const Count = styled.span`
-  color: #111;
-  line-height: 1;
-  font-size: clamp(48px, 5vw, 72px);
+  font-size: 5rem;
   font-weight: 700;
-  letter-spacing: -2px;
 `;
 
 export const Unit = styled.span`
-  color: #111;
-  font-size: 22px;
+  font-size: 3rem;
   font-weight: 600;
-  letter-spacing: -0.5px;
 `;
 
 export const InfoRow = styled.div`
@@ -117,43 +67,58 @@ export const InfoRow = styled.div`
   gap: 20px;
 
   @media (min-width: 768px) {
-    grid-template-columns: 355fr 1269fr;
+    grid-template-columns: 1fr 2fr;
   }
 `;
 
 export const InfoCard = styled.div`
-  background: #fff;
-  border: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid #ddd;
   border-radius: 16px;
-  padding: 32px 36px;
-  min-height: 285px;
+  padding: 32px;
 `;
 
 export const InfoTitle = styled.h3`
-  margin: 0 0 18px;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #111;
 `;
 
 export const InfoBody = styled.div`
-  font-size: 16px;
-  line-height: 1.6;
-  color: #111;
-  white-space: pre-line;
+  font-size: 1rem;
 `;
 
 export const AwardsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #111;
-  white-space: pre-line;
+  font-size: 1rem;
 `;
 
-// legacy kept for compatibility
-export const CardGrid = styled.div``;
-export const Card = styled.div``;
-export const Desc = styled.p``;
+export const BulletList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const BulletItem = styled.li`
+  position: relative;
+  padding-left: 18px;
+  line-height: 1.5;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+`;

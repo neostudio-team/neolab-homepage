@@ -54,8 +54,8 @@ export const categories: Category[] = [
       },
       {
         key: "lamy",
-        chipLabel: "라미 사파리 올블랙",
-        name: "라미 사파리 올블랙",
+        chipLabel: "LAMY safari",
+        name: "LAMY safari",
         tagline: "라미 사파리 그대로 디지털과 연결하다",
         image: "/images/home/figma/products/smartpen-lamy.png",
         href: "/ko/neosmartpen/product-lamy",

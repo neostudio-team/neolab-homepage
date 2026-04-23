@@ -1,109 +1,177 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { colors, media } from "@/styles/theme";
+import Image from "next/image";
+import { media } from "@/styles/theme";
 
 export const FooterRoot = styled.footer`
-  background: #ffffff;
-  border-top: 1px solid #e5e7eb;
+  background: #f4f4f4;
 `;
 
-export const Inner = styled.div`
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3rem 1rem;
-`;
-
-export const TopGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+export const FooterInner = styled.div`
+  margin: 0 auto;
+  max-width: 1920px;
+  padding: 40px 1rem 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 
   ${media.md} {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 48px 2.5rem 24px;
+  }
+
+  ${media.lg} {
+    padding: 48px clamp(40px, 8.3vw, 160px) 24px;
   }
 `;
 
-export const Col = styled.div``;
-
-export const FollowTitle = styled.h3`
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 1rem;
-`;
-
-export const SocialRow = styled.div`
+export const TopRow = styled.div`
   display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 `;
 
-export const SocialLink = styled(Link)`
-  width: 2.5rem;
-  height: 2.5rem;
-  background: #111827;
-  border-radius: 9999px;
+export const BrandRow = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  transition: background-color 0.2s;
+  flex-wrap: wrap;
+  gap: 20px;
 
-  &:hover {
-    background: ${colors.primary};
+  ${media.md} {
+    gap: 48px;
   }
 `;
 
-export const SocialIcon = styled.svg`
-  width: 1rem;
-  height: 1rem;
+export const LogoImage = styled(Image)`
+  width: auto;
+  height: 50px;
+  object-fit: contain;
 `;
 
-export const BottomBar = styled.div`
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
+export const AddressText = styled.p`
+  margin: 0;
+  color: #111111;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  white-space: pre-line;
+
+  ${media.md} {
+    font-size: 15px;
+  }
+
+  ${media.lg} {
+    font-size: 16px;
+  }
+`;
+
+export const Divider = styled.hr`
+  border: none;
+  border-top: 1px solid #dddddd;
+  margin: 0;
 `;
 
 export const BottomRow = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
   gap: 1rem;
+  padding: 16px 0;
+  flex-wrap: wrap;
+`;
+
+export const CopyrightText = styled.p`
+  margin: 0;
+  color: #757575;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 14px;
 
   ${media.md} {
-    flex-direction: row;
-    align-items: center;
+    font-size: 16px;
   }
 `;
 
-export const AddressText = styled.p`
-  font-size: 14px;
-  color: #6b7280;
+export const BottomRight = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+`;
+
+export const SocialRow = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+
+export const SocialLink = styled(Link)`
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #757575;
+  transition: color 0.15s;
+
+  &:hover {
+    color: #111;
+  }
+`;
+
+export const SocialIcon = styled.svg`
+  width: 18px;
+  height: 18px;
 `;
 
 export const LegalRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
-  font-size: 14px;
+  gap: 12px;
 `;
 
 export const LegalLink = styled(Link)`
-  color: #6b7280;
+  color: #757575;
+  font-family: "Pretendard", sans-serif;
+  font-size: 14px;
+  text-decoration: none;
   transition: color 0.15s;
 
   &:hover {
-    color: #1f2937;
-    text-decoration: underline;
+    color: #111;
   }
 `;
 
-export const Divider = styled.span`
-  color: #d1d5db;
+export const LegalDivider = styled.span`
+  color: #dddddd;
+  font-size: 14px;
+  line-height: 1;
 `;
 
-export const CopyrightText = styled.p`
-  color: #6b7280;
+export const ToTopButton = styled.button`
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: #333333;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: #111111;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 2px;
+  }
+
+  svg {
+    color: #ffffff;
+  }
 `;

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Reveal from "./Reveal";
 import { HeadingTitle, HeadingWrap } from "./SectionHeading.styles";
 
 interface SectionHeadingProps {
@@ -11,8 +12,10 @@ export default function SectionHeading({
   tone = "dark",
 }: SectionHeadingProps) {
   return (
-    <HeadingWrap>
-      <HeadingTitle $tone={tone}>{children}</HeadingTitle>
-    </HeadingWrap>
+    <Reveal>
+      <HeadingWrap>
+        <HeadingTitle $tone={tone}>{children}</HeadingTitle>
+      </HeadingWrap>
+    </Reveal>
   );
 }

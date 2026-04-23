@@ -6,7 +6,6 @@ import {
   ProductsSection,
   TechSection,
   BusinessSection,
-  PartnersSection,
   StatsSection,
   CTASection,
 } from "@/components/home";
@@ -40,9 +39,6 @@ export default async function Home({
         </LazySection>
         <LazySection>
           <CTASection dict={dict.home.cta} />
-        </LazySection>
-        <LazySection>
-          <PartnersSection />
         </LazySection>
       </main>
       <Footer lang={lang} dict={dict.common.footer} />

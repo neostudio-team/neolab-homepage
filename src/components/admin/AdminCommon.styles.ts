@@ -56,7 +56,6 @@ export const AdminCenterMessage = styled.div`
 `;
 
 export const AdminMutedText = styled.p`
-  margin: 0;
   font-size: 14px;
   color: ${admin.gray400};
 `;
@@ -109,21 +108,18 @@ export const AdminModalEmoji = styled.div`
 `;
 
 export const AdminModalTitle = styled.h2`
-  margin: 0;
   font-size: 18px;
   font-weight: 700;
   color: ${admin.gray800};
 `;
 
 export const AdminDialogTitle = styled.h2`
-  margin: 0;
   font-size: 16px;
   font-weight: 700;
   color: ${admin.gray800};
 `;
 
 export const AdminModalDesc = styled.p`
-  margin: 0;
   font-size: 14px;
   color: ${admin.gray500};
   text-align: center;
@@ -170,7 +166,6 @@ export const AdminIconButton = styled.button`
 `;
 
 export const AdminH1 = styled.h1`
-  margin: 0;
   font-size: 24px;
   font-weight: 700;
   color: ${admin.gray800};

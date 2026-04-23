@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
+import { assignLocationHref } from "@/lib/browser-runtime";
 import RichEditor from "@/components/admin/RichEditor";
 import {
   AdminAuthorName,
@@ -117,7 +118,7 @@ export default function NewPopupPage() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ...form, height: form.height ? Number(form.height) : null }),
       });
-      if (res.ok) window.location.href = "/admin/popups";
+      if (res.ok) assignLocationHref("/admin/popups");
       else alert("등록에 실패했습니다.");
     } catch {
       alert("등록 중 오류가 발생했습니다.");

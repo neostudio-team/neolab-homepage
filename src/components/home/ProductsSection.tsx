@@ -36,6 +36,7 @@ import {
 } from "./ProductsSection.styles";
 import { categories, type Category } from "./productsData";
 import { Icon } from "@iconify/react";
+import Reveal from "@/components/common/Reveal";
 
 interface ProductsSectionProps {
   dict?: unknown;
@@ -171,12 +172,12 @@ const CategoryCard = memo(CategoryCardView);
 export default function ProductsSection({ dict }: ProductsSectionProps) {
   void dict;
   const [activeIndex, setActiveIndex] = useState(0);
-  const hoverTimeoutRef = useRef<number | null>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hoverActivateDelayMs = 180;
 
   const clearHoverTimeout = useCallback(() => {
     if (hoverTimeoutRef.current === null) return;
-    window.clearTimeout(hoverTimeoutRef.current);
+    clearTimeout(hoverTimeoutRef.current);
     hoverTimeoutRef.current = null;
   }, []);
 
@@ -192,7 +193,7 @@ export default function ProductsSection({ dict }: ProductsSectionProps) {
     if (Number.isNaN(idx) || idx === activeIndex) return;
 
     clearHoverTimeout();
-    hoverTimeoutRef.current = window.setTimeout(() => {
+    hoverTimeoutRef.current = setTimeout(() => {
       setActiveIndex(idx);
       hoverTimeoutRef.current = null;
     }, hoverActivateDelayMs);
@@ -202,18 +203,20 @@ export default function ProductsSection({ dict }: ProductsSectionProps) {
 
   return (
     <Section title="OUR PRODUCTS" tone="dark">
-      <Row>
-        {categories.map((category, index) => (
-          <CategoryCard
-            key={category.key}
-            category={category}
-            index={index}
-            active={index === activeIndex}
-            onActivateByHover={activateByHover}
-            onActivateByFocus={activateByFocus}
-          />
-        ))}
-      </Row>
+      <Reveal y={100} duration={1.2}>
+        <Row>
+          {categories.map((category, index) => (
+            <CategoryCard
+              key={category.key}
+              category={category}
+              index={index}
+              active={index === activeIndex}
+              onActivateByHover={activateByHover}
+              onActivateByFocus={activateByFocus}
+            />
+          ))}
+        </Row>
+      </Reveal>
     </Section>
   );
 }

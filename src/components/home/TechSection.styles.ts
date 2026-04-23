@@ -5,8 +5,9 @@ export const Section = styled.section`
   position: relative;
   width: 100%;
   background: #fff;
-  padding-top: 160px;
+  padding: 200px 0;
 
+  
   @media (max-width: 1023px) {
     padding-top: 120px;
   }
@@ -19,13 +20,13 @@ export const Section = styled.section`
 export const BgDecoration = styled.div`
   position: absolute;
   inset: 0;
-  background-image: url("/images/home/figma/tech-bg-decoration.svg");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 208% auto;
   opacity: 0.9;
   pointer-events: none;
   z-index: 0;
+  background-image: url("/images/home/figma/tech-bg-decoration.svg");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-attachment: fixed;
 `;
 
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { media } from "@/styles/theme";
+import { colors, media } from "@/styles/theme";
 
 const fieldBase = `
   width: 100%;
@@ -93,38 +93,67 @@ export const PillButton = styled.button<{ $pillVariant?: PillVariant }>`
 `;
 
 export const CircleButton = styled.button`
+  position: relative;
   flex-shrink: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  gap: clamp(14px, 1.6vw, 24px);
+  text-align: left;
   color: #fff;
-  font-weight: 700;
-  transition: all 0.2s;
+  font-weight: 600;
+  overflow: visible;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
   background: transparent;
   cursor: pointer;
-  width: clamp(140px, 14vw, 200px);
-  height: clamp(140px, 14vw, 200px);
+  width: clamp(220px, 23vw, 300px);
+  height: clamp(220px, 23vw, 300px);
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  font-size: clamp(13px, 1.2vw, 16px);
-  letter-spacing: 0.3px;
-  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  font-size: clamp(24px, 3vw, 52px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding: 20px 24px;
 
   &:hover {
-    background: #fff;
-    color: #f5a623;
+    border-color: rgba(255, 255, 255, 0.95);
   }
 `;
 
 export const CircleLine1 = styled.span`
-  line-height: 1.25;
+  white-space: nowrap;
+  font-size: 3.5rem;
+  position: absolute;
+  left: -140px;
+  background: ${colors.primary};
 `;
 
 export const CircleArrow = styled.span`
-  font-size: 1.4em;
-  margin-top: 4px;
+  position: absolute;
+  right: 18px;
+  width: clamp(68px, 8vw, 105px);
+  height: 2px;
+  background: #fff;
+  transform: translateX(0);
+  transition: transform 0.25s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 14px;
+    height: 14px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  ${CircleButton}:hover & {
+    transform: translateX(clamp(16px, 2.1vw, 80px));
+  }
 `;
 
 export const Backdrop = styled.div`

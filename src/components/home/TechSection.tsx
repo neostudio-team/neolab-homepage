@@ -12,6 +12,8 @@ import {
   SliderWrap,
   TechCard,
 } from "./TechSection.styles";
+import Reveal, { RevealGroup, RevealItem } from "@/components/common/Reveal";
+import { readInnerHeight, subscribeResize, subscribeScrollPassive } from "@/lib/browser-runtime";
 
 interface TechSectionProps {
   dict: {
@@ -53,7 +55,7 @@ export default function TechSection({ dict }: TechSectionProps) {
 
     const update = () => {
       const rect = pin.getBoundingClientRect();
-      const range = pin.offsetHeight - window.innerHeight;
+      const range = pin.offsetHeight - readInnerHeight();
       const maxScroll = slider.scrollWidth - slider.clientWidth;
       if (range <= 0 || maxScroll <= 0) return;
 
@@ -63,11 +65,11 @@ export default function TechSection({ dict }: TechSectionProps) {
     };
 
     update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    const offScroll = subscribeScrollPassive(update);
+    const offResize = subscribeResize(update);
     return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      offScroll();
+      offResize();
       if (rafId != null) cancelAnimationFrame(rafId);
     };
   }, []);
@@ -75,28 +77,38 @@ export default function TechSection({ dict }: TechSectionProps) {
   return (
     <Section>
       <BgDecoration />
-      <Heading>
-        어떠한 평면이라도
-        <br />
-        디지털화 할 수 있는 기술
-      </Heading>
+      <Reveal>
+        <Heading>
+          어떠한 평면이라도
+          <br />
+          디지털화 할 수 있는 기술
+        </Heading>
+      </Reveal>
 
       <PinSpacer ref={pinRef}>
         <PinContent>
           <SliderWrap ref={sliderRef}>
-            <CardTrack>
-              {cards.map((card, index) => (
-                <TechCard key={card.alt} $offset={index % 2 === 1}>
-                  <CardImage
-                    src={card.src}
-                    alt={card.alt}
-                    fill
-                    sizes="(max-width: 767px) 86vw, 38vw"
-                    priority={index === 0}
-                  />
-                </TechCard>
-              ))}
-            </CardTrack>
+            <RevealGroup stagger={0.18} amount={0.1}>
+              <CardTrack>
+                {cards.map((card, index) => (
+                  <RevealItem
+                    key={card.alt}
+                    y={100}
+                    duration={1.1}
+                  >
+                    <TechCard $offset={index % 2 === 1}>
+                      <CardImage
+                        src={card.src}
+                        alt={card.alt}
+                        fill
+                        sizes="(max-width: 767px) 86vw, 38vw"
+                        priority={index === 0}
+                      />
+                    </TechCard>
+                  </RevealItem>
+                ))}
+              </CardTrack>
+            </RevealGroup>
           </SliderWrap>
         </PinContent>
       </PinSpacer>

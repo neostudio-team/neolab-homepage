@@ -2,13 +2,11 @@
 
 import Lenis from "lenis";
 import { useEffect } from "react";
+import { prefersReducedMotionMedia } from "@/lib/browser-runtime";
 
 export default function SmoothScroll() {
   useEffect(() => {
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
+    if (prefersReducedMotionMedia()) return;
 
     const lenis = new Lenis({
       duration: 1.1,

@@ -1,6 +1,20 @@
+import { colors } from "@/styles/theme";
 import Image from "next/image";
-import styled from "styled-components";
+import Link from "next/link";
+import styled, { keyframes } from "styled-components";
 
+export const Section = styled.section`
+  background: ${colors.primary};
+`;
+
+const ctaPartnerScroll = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 32px));
+  }
+`;
 
 export const TopRow = styled.div`
   display: flex;
@@ -8,6 +22,7 @@ export const TopRow = styled.div`
   gap: 32px;
   align-items: flex-start;
   justify-content: space-between;
+  padding: 140px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -17,13 +32,9 @@ export const TopRow = styled.div`
 `;
 
 export const Title = styled.h2`
-  margin: 0;
   color: #fff;
-  font-size: clamp(44px, 5.5vw, 80px);
-  font-weight: 400;
-  letter-spacing: -1px;
-  line-height: 1.12;
-  white-space: pre-line;
+  font-weight: 700;
+  font-size: 5rem;
   flex: 1;
 `;
 
@@ -65,36 +76,52 @@ export const ContactCircle = styled.span`
   font-size: 48px;
 `;
 
-export const LogosRow = styled.div`
-  margin-top: 100px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+export const PartnerMarqueeOuter = styled.div`
+  padding-bottom: 140px;
+  width: 100vw;
+  overflow: hidden;
+`;
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 16px;
+export const PartnerMarqueeTrack = styled.div`
+  display: flex;
+  width: max-content;
+  gap: 32px;
+  align-items: center;
+
+  @media (prefers-reduced-motion: reduce) {
+    transform: none;
   }
 `;
 
-export const LogoBox = styled.div`
-  position: relative;
-  width: 100%;
-  aspect-ratio: 280 / 140;
+export const PartnerMarqueeGroup = styled.div`
+  display: flex;
+  gap: 32px;
+  width: max-content;
+  align-items: center;
+  flex-shrink: 0;
+  animation: ${ctaPartnerScroll} 40s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+`;
+
+export const PartnerMarqueeLink = styled(Link)`
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 140px;
   border-radius: 16px;
   background: #fff;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  display: grid;
-  place-items: center;
-  padding: 16px;
 `;
 
-export const LogoImage = styled(Image)`
+export const PartnerMarqueeLogo = styled(Image)`
   object-fit: contain;
-  object-position: center;
-`;
-
-// legacy
-export const ButtonWrap = styled.div`
-  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  transition: opacity 0.2s ease,
 `;

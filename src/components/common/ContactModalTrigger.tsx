@@ -196,7 +196,7 @@ export default function ContactModalTrigger({
       ) : (
         <CircleButton type="button" onClick={handleOpenModal}>
           <CircleLine1>{buttonText.replace(" →", "")}</CircleLine1>
-          <CircleArrow>→</CircleArrow>
+          <CircleArrow aria-hidden="true" />
         </CircleButton>
       )}
 

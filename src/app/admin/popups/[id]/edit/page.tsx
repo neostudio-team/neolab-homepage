@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
+import { assignLocationHref } from "@/lib/browser-runtime";
 import RichEditor from "@/components/admin/RichEditor";
 import {
   AdminAuthorName,
@@ -148,7 +149,7 @@ export default function EditPopupPage({ params }: { params: Promise<{ id: string
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ...form, height: form.height ? Number(form.height) : null }),
       });
-      if (res.ok) window.location.href = "/admin/popups";
+      if (res.ok) assignLocationHref("/admin/popups");
       else alert("수정에 실패했습니다.");
     } catch {
       alert("수정 중 오류가 발생했습니다.");

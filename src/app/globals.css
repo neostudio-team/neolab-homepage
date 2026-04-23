@@ -1,33 +1,12 @@
-:root {
-  --color-primary: #f26522;
-  --color-primary-dark: #d4551a;
-  --color-dark: #1a1a2e;
-  --color-gray-light: #f8f8f8;
-  --color-teal: #1a5c5c;
-  --font-sans: "Open Sans", Arial, Helvetica, sans-serif;
-  --background: #ffffff;
-  --foreground: #333333;
-}
+@import "./reset.css";
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
+/* :root 토큰은 src/styles/theme.ts 의 rootStyleBlock() 으로 레이아웃에서 주입 */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: var(--font-open-sans, var(--font-sans));
   word-break: keep-all;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
@@ -47,60 +26,6 @@ html.lenis {
   overflow: hidden;
 }
 
-/* ── Press 본문 HTML 렌더링 스타일 ────────────────────────────────────── */
-.press-content {
-  font-size: 15px;
-  color: #374151;
-  line-height: 1.85;
-}
-.press-content p {
-  margin-bottom: 1.25rem;
-}
-.press-content p:empty {
-  display: none;
-}
-.press-content h1, .press-content h2, .press-content h3 {
-  font-weight: 700;
-  color: #111827;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-}
-.press-content h1 { font-size: 1.5rem; }
-.press-content h2 { font-size: 1.25rem; }
-.press-content h3 { font-size: 1.1rem; }
-.press-content a {
-  color: #2563eb;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.press-content a:hover { color: #1d4ed8; }
-.press-content strong, .press-content b { font-weight: 700; }
-.press-content em { font-style: italic; }
-.press-content ul, .press-content ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1.25rem;
-}
-.press-content li { margin-bottom: 0.35rem; }
-.press-content img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 1.5rem 0;
-}
-.press-content .press-img {
-  margin: 1.5rem 0;
-  text-align: center;
-}
-.press-content blockquote {
-  border-left: 3px solid #e5e7eb;
-  padding-left: 1rem;
-  color: #6b7280;
-  margin: 1.25rem 0;
-}
-.press-content figure { margin: 1.5rem 0; }
-.press-content .has-text-align-right { text-align: right; }
-.press-content .has-text-align-center { text-align: center; }
-
 /* ── Quill Rich Editor ──────────────────────────────────────────────────── */
 .rich-editor-container .ql-toolbar.ql-snow {
   border: none;
@@ -112,7 +37,7 @@ html.lenis {
 .rich-editor-container .ql-container.ql-snow {
   border: none;
   font-size: 14px;
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
 .rich-editor-container .ql-editor {
   min-height: 320px;
@@ -129,46 +54,4 @@ html.lenis {
 }
 .rich-editor-container .ql-tooltip input[type="text"] {
   width: 220px;
-}
-
-/* ── Partner logo animation ───────────────────────────────────────────── */
-@keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-scroll-left {
-  animation: scroll-left 20s linear infinite;
-}
-
-/* Fade in animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-/* Counter animation */
-@keyframes countUp {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-
-/* Container width matching original Divi 1080px */
-.divi-container {
-  max-width: 1080px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
 }

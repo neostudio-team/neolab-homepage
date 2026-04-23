@@ -6,6 +6,7 @@ import {
   CardRow,
 } from "./BusinessSection.styles";
 import Section from "@/components/common/Section";
+import { RevealGroup, RevealItem } from "@/components/common/Reveal";
 
 interface BusinessSectionProps {
   dict?: unknown;
@@ -33,19 +34,22 @@ export default function BusinessSection({ dict }: BusinessSectionProps) {
   void dict;
   return (
     <Section backgroundImage="/images/home/figma/business-bg.png" title="BUSINESS" tone="light">
-      <CardRow>
-        {cards.map((card) => (
-          <CardFigure key={card.key}>
-            <CardImage
-              src={card.src}
-              alt={card.alt}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
-          </CardFigure>
-        ))}
-      </CardRow>
-
+      <RevealGroup stagger={0.2}>
+        <CardRow>
+          {cards.map((card) => (
+            <RevealItem key={card.key} y={80} duration={1.1} style={{ width: "100%" }}>
+              <CardFigure>
+                <CardImage
+                  src={card.src}
+                  alt={card.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              </CardFigure>
+            </RevealItem>
+          ))}
+        </CardRow>
+      </RevealGroup>
     </Section>
   );
 }
