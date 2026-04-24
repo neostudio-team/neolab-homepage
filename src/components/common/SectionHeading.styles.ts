@@ -1,3 +1,4 @@
+import { colors } from "@/styles/theme";
 import styled from "styled-components";
 
 export const HeadingWrap = styled.div`
@@ -24,6 +25,6 @@ export const HeadingTitle = styled.h2<{ $tone: "dark" | "light" }>`
     width: clamp(20px, 2.5vw, 40px);
     height: clamp(20px, 2.5vw, 40px);
     border-radius: 999px;
-    border: clamp(5px, 0.6vw, 10px) solid #f3a101;
+    border: clamp(5px, 0.6vw, 10px) solid ${colors.primary};
   }
 `;

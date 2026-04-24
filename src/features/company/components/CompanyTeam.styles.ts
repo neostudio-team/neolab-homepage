@@ -27,7 +27,7 @@ export const TeamDescription = styled.p`
   margin: 0;
   max-width: 1100px;
   font-family: "Pretendard", sans-serif;
-  font-size: clamp(0.95rem, 1.2vw, 1.5rem);
+  font-size: clamp(0.95rem, 1.5vw, 1.5rem);
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: -0.01em;
@@ -39,17 +39,22 @@ export const TeamDescription = styled.p`
 export const OrgChart = styled.div`
   position: relative;
   width: 100%;
-  max-width: 800px;
-  aspect-ratio: 1;
+  max-width: 1640px;
+  aspect-ratio: 1640 / 800;
   margin-top: clamp(20px, 4vw, 60px);
+
+  @media (max-width: 767px) {
+    aspect-ratio: 1 / 1.05;
+  }
 `;
 
-export const OrgRing = styled.div<{ $size: number; $alpha: number }>`
+/* Concentric center circles */
+export const OrgRing = styled.div<{ $diameter: number; $alpha: number }>`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: ${({ $size }) => $size}%;
-  height: ${({ $size }) => $size}%;
+  top: 53.9%;
+  left: 50.5%;
+  width: ${({ $diameter }) => $diameter}%;
+  aspect-ratio: 1;
   border-radius: 50%;
   background: rgba(255, 153, 0, ${({ $alpha }) => $alpha});
   transform: translate(-50%, -50%);
@@ -58,10 +63,10 @@ export const OrgRing = styled.div<{ $size: number; $alpha: number }>`
 
 export const OrgCenter = styled.div`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 41%;
-  height: 41%;
+  top: 53.9%;
+  left: 50.5%;
+  width: 20.1%;
+  aspect-ratio: 1;
   border-radius: 50%;
   background: ${orange};
   transform: translate(-50%, -50%);
@@ -71,7 +76,7 @@ export const OrgCenter = styled.div`
   color: #ffffff;
   font-family: "BM Dohyeon", "Pretendard", sans-serif;
   font-weight: 400;
-  font-size: clamp(1.5rem, 3.2vw, 3.125rem);
+  font-size: clamp(1.25rem, 3.05vw, 3.125rem);
   line-height: 1.2;
   text-align: center;
   white-space: pre-line;
@@ -79,8 +84,8 @@ export const OrgCenter = styled.div`
 
 export const OrgNode = styled.div`
   position: absolute;
-  width: clamp(110px, 14vw, 180px);
-  height: clamp(110px, 14vw, 180px);
+  width: clamp(120px, 15.2vw, 250px);
+  aspect-ratio: 1;
   border-radius: 999px;
   background: #ffffff;
   border: 2px solid ${orange};
@@ -88,22 +93,22 @@ export const OrgNode = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px;
+  gap: 16px;
+  padding: 16px;
   text-align: center;
   transform: translate(-50%, -50%);
   box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.18);
 
   svg {
-    width: clamp(28px, 3.6vw, 48px);
-    height: clamp(28px, 3.6vw, 48px);
+    width: clamp(32px, 3.7vw, 60px);
+    height: clamp(32px, 3.7vw, 60px);
   }
 `;
 
 export const OrgNodeLabel = styled.span`
   font-family: "Pretendard", sans-serif;
-  font-size: clamp(0.85rem, 1.1vw, 1.125rem);
+  font-size: clamp(0.875rem, 1.22vw, 1.25rem);
   font-weight: 600;
   color: #111111;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
 `;

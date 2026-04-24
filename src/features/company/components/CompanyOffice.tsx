@@ -1,4 +1,5 @@
 import Section from "@/components/common/Section";
+import Reveal, { RevealGroup, RevealItem } from "@/components/common/Reveal";
 import {
   OfficeAddress,
   OfficeBadge,
@@ -45,29 +46,35 @@ export default function CompanyOffice() {
   return (
     <Section background="#fcfcfc" contained={false}>
       <OfficeInner>
-        <OfficeHeader>
-          <OfficeDot aria-hidden />
-          <OfficeTitle>사무실</OfficeTitle>
-        </OfficeHeader>
+        <Reveal y={20} duration={0.8}>
+          <OfficeHeader>
+            <OfficeDot aria-hidden />
+            <OfficeTitle>사무실</OfficeTitle>
+          </OfficeHeader>
+        </Reveal>
 
-        <OfficeGrid>
-          {offices.map((office) => (
-            <OfficeCard key={office.key}>
-              <OfficeCardHeader>
-                <OfficeBadge>{office.badge}</OfficeBadge>
-                <OfficeName>{office.name}</OfficeName>
-              </OfficeCardHeader>
-              <OfficeAddress>{office.address}</OfficeAddress>
-              <OfficeMapLink
-                href={office.mapHref}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                지도보기
-              </OfficeMapLink>
-            </OfficeCard>
-          ))}
-        </OfficeGrid>
+        <RevealGroup stagger={0.12} delay={0.1}>
+          <OfficeGrid>
+            {offices.map((office) => (
+              <RevealItem key={office.key} y={32} duration={0.8}>
+                <OfficeCard>
+                  <OfficeCardHeader>
+                    <OfficeBadge>{office.badge}</OfficeBadge>
+                    <OfficeName>{office.name}</OfficeName>
+                  </OfficeCardHeader>
+                  <OfficeAddress>{office.address}</OfficeAddress>
+                  <OfficeMapLink
+                    href={office.mapHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    지도보기
+                  </OfficeMapLink>
+                </OfficeCard>
+              </RevealItem>
+            ))}
+          </OfficeGrid>
+        </RevealGroup>
       </OfficeInner>
     </Section>
   );
