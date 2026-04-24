@@ -9,9 +9,6 @@ import {
   HeroTitle,
   HeroTitleLine,
   HeroVideo,
-  ScrollIndicator,
-  ScrollLine,
-  ScrollText,
   Section,
   VideoBackground,
 } from "./HeroSection.styles";
@@ -192,7 +189,7 @@ export default function HeroSection({ dict }: HeroSectionProps) {
                 initial={{ y: "110%" }}
                 animate={titleInView ? { y: 0 } : { y: "110%" }}
                 transition={{
-                  duration: 1.1,
+                  duration: 1.5,
                   ease: HERO_EASE,
                   delay: index * 0.18,
                 }}
@@ -204,11 +201,6 @@ export default function HeroSection({ dict }: HeroSectionProps) {
           ))}
         </HeroTitle>
       </HeroTextBlock>
-
-      <ScrollIndicator>
-        <ScrollLine />
-        <ScrollText>Scroll</ScrollText>
-      </ScrollIndicator>
     </Section>
   );
 }

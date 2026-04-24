@@ -65,8 +65,8 @@ export default function ConnectBusinessSection({ dict }: ConnectBusinessSectionP
       ...dict.digitalTransform,
       cases: [
         { label: "MOLESKINE (ITALY) - MOLESKINE SMART", href: "https://www.moleskine.com/en-us/shop/moleskine-smart/" },
-        { label: "LAMY (GERMANY) - LAMY safari all black ncode", href: "https://shop.lamy.com/de_de/highlights" },
         { label: "MONAMI(S. Korea) - Monami 153 edition", href: "https://www.neosmartpen.com/kor/neosmartpen-monami/" },
+        { label: "YANGJISA (S. Korea) - Smart Diary", href: "https://yangjisa.com/product/smart-diary/" },
       ],
       imagePosition: "left",
       image: "/images/home/connect2-stationery.png",
@@ -82,15 +82,6 @@ export default function ConnectBusinessSection({ dict }: ConnectBusinessSectionP
       imagePosition: "right",
       image: "/images/home/connect3-form.png",
       imageAlt: "Document Management",
-    },
-    {
-      ...dict.collaboration,
-      cases: [
-        { label: "Online whiteboard - Gridaboard", href: "https://gridaboard.io/" },
-      ],
-      imagePosition: "left",
-      image: "/images/home/connect4-collab.png",
-      imageAlt: "Collaboration",
     },
   ];
 

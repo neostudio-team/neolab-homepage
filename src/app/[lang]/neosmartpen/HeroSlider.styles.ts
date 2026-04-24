@@ -19,7 +19,7 @@ export const SlideImage = styled(Image)`
   object-fit: cover;
 `;
 
-export const NavButton = styled.button`
+const NavButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

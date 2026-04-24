@@ -51,5 +51,3 @@ export const ActionBtn = styled.a`display:inline-block;padding:.75rem 2rem;borde
 export const DarkTitle = styled(CenterTitle)`color:#fff;`;
 export const DarkSubtitle = styled(CenterDescSmall)`color:#9ca3af;`;
 export const CtaWrap = styled.div`text-align:center;margin-top:2rem;`;
-export const ActionBtnDark = styled.a`display:inline-block;padding:.75rem 1.5rem;border:1px solid #333;color:#333;background:transparent;font-size:14px;font-weight:500;border-radius:.25rem;transition:all .15s;&:hover{background:#333;color:#fff;}`;
-export const ActionBtnTeal = styled.a`display:inline-block;padding:.75rem 2rem;background:#39d2cc;color:#fff;font-size:14px;font-weight:500;border-radius:.25rem;transition:background .15s;&:hover{background:#2db8b3;}`;

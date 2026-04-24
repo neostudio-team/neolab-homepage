@@ -115,7 +115,7 @@ export default function StatsSection({ dict }: StatsSectionProps) {
       <RevealGroup stagger={0.2}>
         <PillRow>
           {pills.map((p) => (
-            <RevealItem key={p.label} y={80} duration={1.1} style={{ width: "100%" }}>
+            <RevealItem key={p.label} y={80} duration={1.1}>
               <StatPill item={p} />
             </RevealItem>
           ))}

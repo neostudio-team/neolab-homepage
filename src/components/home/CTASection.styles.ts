@@ -18,68 +18,35 @@ const ctaPartnerScroll = keyframes`
 
 export const TopRow = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 32px;
-  align-items: flex-start;
+  gap: 48px;
+  align-items: center;
   justify-content: space-between;
-  padding: 140px;
+  padding: 140px clamp(40px, 7.5vw, 140px);
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-    gap: 48px;
+  @media (max-width: 1023px) {
+    flex-direction: column;
   }
 `;
 
 export const Title = styled.h2`
   color: #fff;
   font-weight: 700;
-  font-size: 5rem;
+  font-size: clamp(2.25rem, 5vw, 5rem);
   flex: 1;
-`;
 
-export const ContactButton = styled.button`
-  appearance: none;
-  border: 0;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  background: transparent;
-  color: #fff;
-  padding: 0;
-  font-size: 60px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-
-  &:hover span:last-child {
-    transform: scale(1.05);
+  @media (max-width: 1023px) {
+    text-align: center;
   }
-`;
-
-export const ContactText = styled.span`
-  color: #fff;
-  font-size: clamp(40px, 4vw, 60px);
-  font-weight: 600;
-`;
-
-export const ContactCircle = styled.span`
-  display: grid;
-  place-items: center;
-  width: 140px;
-  height: 140px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
-  transition: transform 0.3s ease;
-  font-size: 48px;
 `;
 
 export const PartnerMarqueeOuter = styled.div`
   padding-bottom: 140px;
   width: 100vw;
   overflow: hidden;
+
+  @media (max-width: 1023px) {
+    padding-bottom: 80px;
+  }
 `;
 
 export const PartnerMarqueeTrack = styled.div`
@@ -111,8 +78,8 @@ export const PartnerMarqueeLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 280px;
-  height: 140px;
+  width: clamp(160px, 20vw, 280px);
+  height: clamp(80px, 10vw, 140px);
   border-radius: 16px;
   background: #fff;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);

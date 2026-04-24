@@ -3,7 +3,10 @@
 import { useEffect, useRef } from "react";
 import {
   BgDecoration,
-  CardImage,
+  CardBgImage,
+  CardContent,
+  CardDesc,
+  CardTitle,
   CardTrack,
   Heading,
   PinContent,
@@ -21,12 +24,39 @@ interface TechSectionProps {
   };
 }
 
-const cards = [
-  { src: "/images/home/figma/tech-card-1.png", alt: "Digitalization" },
-  { src: "/images/home/figma/tech-card-2.png", alt: "Interaction" },
-  { src: "/images/home/figma/tech-card-3.png", alt: "Integration" },
-  { src: "/images/home/figma/tech-card-4.png", alt: "Scalability" },
-] as const;
+interface TechCardData {
+  key: string;
+  title: string;
+  desc: string;
+  bg: string;
+}
+
+const cards: TechCardData[] = [
+  {
+    key: "digitalization",
+    title: "Digitalization",
+    desc: "독자 기술 Ncode를 이용한\n오프라인 공간의 스마트 디지털 구현",
+    bg: "/images/home/figma/tech/card-1-bg.png",
+  },
+  {
+    key: "interaction",
+    title: "Interaction",
+    desc: "스마트펜, 소리펜 등 전용 기기를 통한\n콘텐츠 경험 및 능동적 데이터 교감",
+    bg: "/images/home/figma/tech/card-2-bg.png",
+  },
+  {
+    key: "compatibility",
+    title: "Compatibility",
+    desc: "MS 오피스 등 외부 프로그램과의\n자유로운 데이터 연동",
+    bg: "/images/home/figma/tech/card-3-bg.png",
+  },
+  {
+    key: "scalability",
+    title: "Scalability",
+    desc: "전용 앱 개발 및 표준 포맷\n지원을 통한 AI 시스템 연동",
+    bg: "/images/home/figma/tech/card-4-bg.png",
+  },
+];
 
 export default function TechSection({ dict }: TechSectionProps) {
   void dict;
@@ -88,22 +118,23 @@ export default function TechSection({ dict }: TechSectionProps) {
       <PinSpacer ref={pinRef}>
         <PinContent>
           <SliderWrap ref={sliderRef}>
-            <RevealGroup stagger={0.18} amount={0.1}>
+            <RevealGroup once stagger={0.18} amount={0.1}>
               <CardTrack>
                 {cards.map((card, index) => (
-                  <RevealItem
-                    key={card.alt}
-                    y={100}
-                    duration={1.1}
-                  >
+                  <RevealItem key={card.key} y={100} duration={1.1}>
                     <TechCard $offset={index % 2 === 1}>
-                      <CardImage
-                        src={card.src}
-                        alt={card.alt}
+                      <CardBgImage
+                        src={card.bg}
+                        alt=""
                         fill
                         sizes="(max-width: 767px) 86vw, 38vw"
                         priority={index === 0}
+                        aria-hidden
                       />
+                      <CardContent>
+                        <CardTitle>{card.title}</CardTitle>
+                        <CardDesc>{card.desc}</CardDesc>
+                      </CardContent>
                     </TechCard>
                   </RevealItem>
                 ))}

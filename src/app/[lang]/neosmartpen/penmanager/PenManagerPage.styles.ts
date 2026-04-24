@@ -3,7 +3,7 @@ import Image from "next/image";
 import { media } from "@/styles/theme";
 
 export const Container = styled.div`max-width:1080px;margin:0 auto;padding:0 1rem;`;
-export const SectionWhite = styled.section`background:#fff;`;
+const SectionWhite = styled.section`background:#fff;`;
 export const HeroSection = styled(SectionWhite)`min-height:480px;`;
 export const HeroInner = styled(Container)`padding:4rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;`;
 export const HeroLogo = styled(Image)`object-fit:contain;margin-bottom:2rem;`;

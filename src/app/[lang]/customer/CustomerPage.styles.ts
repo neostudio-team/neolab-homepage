@@ -4,7 +4,7 @@ import { media } from "@/styles/theme";
 
 export const Page = styled.div`background:#fff;min-height:100vh;color:#333;`;
 export const Hero = styled.section`background:#fcf9f9;position:relative;overflow:hidden;padding:6rem 0;`;
-export const Container = styled.div`max-width:1080px;margin:0 auto;padding:0 1rem;`;
+const Container = styled.div`max-width:1080px;margin:0 auto;padding:0 1rem;`;
 export const HeroInner = styled(Container)`display:flex;flex-direction:column;position:relative;z-index:10;${media.md}{flex-direction:row;}`;
 export const Left = styled.div`width:100%;padding-top:2.5rem;${media.md}{width:50%;}`;
 export const AccentRow = styled.div`display:flex;align-items:center;gap:1rem;margin-bottom:1rem;`;

@@ -108,8 +108,8 @@ export const CircleButton = styled.button`
     border-color 0.25s ease;
   background: transparent;
   cursor: pointer;
-  width: clamp(220px, 23vw, 300px);
-  height: clamp(220px, 23vw, 300px);
+  width: clamp(160px, 23vw, 300px);
+  height: clamp(160px, 23vw, 300px);
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.75);
   font-size: clamp(24px, 3vw, 52px);
@@ -124,7 +124,7 @@ export const CircleButton = styled.button`
 
 export const CircleLine1 = styled.span`
   white-space: nowrap;
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
   position: absolute;
   left: -140px;
   background: ${colors.primary};
@@ -182,7 +182,7 @@ export const CloseButton = styled.button`
   top: 1rem;
   right: 1.25rem;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 1.5rem;
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
   line-height: 1;
   z-index: 10;
   background: none;
@@ -205,7 +205,7 @@ export const ModalBody = styled.div`
 export const ModalTitle = styled.h2`
   color: #fff;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
   letter-spacing: 0.2em;
   margin-bottom: 2rem;
 `;
@@ -220,12 +220,12 @@ export const SuccessWrap = styled.div`
 `;
 
 export const SuccessIcon = styled.div`
-  font-size: 3rem;
+  font-size: clamp(1.75rem, 3vw, 3rem);
 `;
 
 export const SuccessLead = styled.p`
   color: #fff;
-  font-size: 1.125rem;
+  font-size: clamp(0.95rem, 1.15vw, 1.125rem);
   font-weight: 600;
 `;
 

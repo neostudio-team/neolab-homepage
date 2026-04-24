@@ -3,7 +3,7 @@ import Image from "next/image";
 import { media } from "@/styles/theme";
 
 export const Container = styled.div`max-width:1080px;margin:0 auto;padding:0 1rem;`;
-export const NarrowContainer = styled.div`max-width:900px;margin:0 auto;padding:0 1rem;`;
+const NarrowContainer = styled.div`max-width:900px;margin:0 auto;padding:0 1rem;`;
 export const SectionWhite = styled.section`background:#fff;`;
 export const SectionGray = styled.section`background:#f7f7f7;`;
 export const HeroSection = styled(SectionWhite)`min-height:295px;`;

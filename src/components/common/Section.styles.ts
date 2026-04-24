@@ -5,14 +5,14 @@ export const SectionRoot = styled.section<{ $tone: "dark" | "light" }>`
   width: 100%;
   overflow: hidden;
   color: ${({ $tone }) => ($tone === "light" ? "#fff" : "#111")};
-  padding: 120px 1rem;
+  padding: 200px clamp(40px, 7.3vw, 140px);
 
-  @media (min-width: 768px) {
+  @media (max-width: 1023px) {
     padding: 160px 2.5rem;
   }
 
-  @media (min-width: 1024px) {
-    padding: 200px clamp(40px, 7.3vw, 140px);
+  @media (max-width: 767px) {
+    padding: 120px 1rem;
   }
 `;
 

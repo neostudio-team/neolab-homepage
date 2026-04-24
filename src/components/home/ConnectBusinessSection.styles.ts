@@ -18,7 +18,7 @@ export const Inner = styled.div`
 `;
 
 export const PageTitle = styled.h2`
-  font-size: 30px;
+  font-size: clamp(1.375rem, 1.9vw, 1.875rem);
   font-weight: 500;
   text-align: center;
   color: #333;
@@ -66,7 +66,7 @@ export const BlockImage = styled(Image)`
 `;
 
 export const Category = styled.p`
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -75,7 +75,7 @@ export const Category = styled.p`
 `;
 
 export const BlockTitle = styled.h3`
-  font-size: 22px;
+  font-size: clamp(1rem, 1.4vw, 1.375rem);
   font-weight: 700;
   color: #333;
   margin-bottom: 1rem;
@@ -84,7 +84,7 @@ export const BlockTitle = styled.h3`
 
 export const BlockDesc = styled.p`
   color: #666;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 2;
   margin-bottom: 1.5rem;
 `;
@@ -111,12 +111,12 @@ export const CaseIcon = styled.span`
   justify-content: center;
   color: ${colors.primary};
   font-weight: 700;
-  font-size: 10px;
+  font-size: 0.625rem;
   flex-shrink: 0;
 `;
 
 export const CaseLabel = styled.span`
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -145,12 +145,12 @@ export const CaseIconMuted = styled.span`
   justify-content: center;
   color: #9ca3af;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 0.625rem;
   flex-shrink: 0;
 `;
 
 export const CaseLabelMuted = styled.span`
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;

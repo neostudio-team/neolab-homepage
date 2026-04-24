@@ -119,7 +119,7 @@ const ja = {
       items: [
         { title: "Digitalization", description: "Ncode™マイクロドットパターンにより、2mm²以内の精度で位置を認識します。あらゆる紙がスマートなデジタルインターフェースに変換されます。" },
         { title: "Engagement", description: "自然な筆記動作のままソフトウェアと連携します。ユーザーとコンテンツの間で最も直感的なインターフェースを提供します。" },
-        { title: "Integration", description: "PowerPoint、Word、Excelなど多様なソフトウェアとスムーズに連携。標準化されたデータフォーマットでAIとの連携も容易です。" },
+        { title: "Compatibility", description: "PowerPoint、Word、Excelなど多様なソフトウェアとスムーズに連携。標準化されたデータフォーマットでAIとの連携も容易です。" },
         { title: "Scalability", description: "76カ国で実証された拡張性。教育、文具、エンタープライズなど多様な産業分野に展開可能なB2Bソリューションです。" },
       ],
     },

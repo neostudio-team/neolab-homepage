@@ -63,7 +63,7 @@ const home = {
           "자연스러운 필기 동작 그대로 소프트웨어와 연결됩니다. 사용자와 콘텐츠 사이의 가장 직관적인 인터페이스를 제공합니다.",
       },
       {
-        title: "Integration",
+        title: "Compatibility",
         description:
           "PowerPoint, Word, Excel 등 다양한 소프트웨어와 원활하게 연동됩니다. 표준화된 데이터 포맷으로 AI와의 접목도 손쉽게 가능합니다.",
       },

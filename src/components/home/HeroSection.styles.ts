@@ -70,12 +70,19 @@ export const HeroTextBlock = styled.div`
   justify-content: flex-end;
   max-width: 1400px;
   padding: 0 80px 140px;
+
+  @media (max-width: 1023px) {
+    padding: 0 48px 100px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 0 24px 80px;
+  }
 `;
 
 export const HeroTitle = styled.h1`
-  margin: 0;
   font-family: "DM Sans", sans-serif;
-  font-size: clamp(48px, 7vw, 128px);
+  font-size: clamp(3rem, 7vw, 8rem);
   line-height: 1.02;
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -90,30 +97,3 @@ export const HeroTitleLine = styled.span`
   overflow: hidden;
 `;
 
-export const HeroTitleLineInner = styled.span`
-  display: block;
-`;
-
-export const ScrollIndicator = styled.div`
-  position: absolute;
-  bottom: 32px;
-  right: 80px;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-`;
-
-export const ScrollLine = styled.div`
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.25));
-`;
-
-export const ScrollText = styled.span`
-  text-transform: uppercase;
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.2);
-`;

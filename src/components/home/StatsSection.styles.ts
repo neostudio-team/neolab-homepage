@@ -1,20 +1,9 @@
 import styled from "styled-components";
 
 export const Title = styled.h2`
-  margin: 0;
-  font-size: 5rem;
+  font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 700;
-  margin-bottom: 7.5rem;
-`;
-
-export const Subtitle = styled.p`
-  margin: 1rem 0 0;
-  font-size: 0.875rem;
-  color: rgba(0, 0, 0, 0.55);
-
-  @media (min-width: 768px) {
-    font-size: 1rem;
-  }
+  margin-bottom: clamp(3rem, 6vw, 7.5rem);
 `;
 
 export const PillRow = styled.div`
@@ -23,8 +12,15 @@ export const PillRow = styled.div`
   gap: 40px;
   margin-bottom: 48px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1339px) {
+    gap: 24px;
+  }
+
+  @media (max-width: 767px) {
     flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
   }
 `;
 
@@ -32,16 +28,18 @@ export const Pill = styled.div`
   background: #fff;
   border: 1px solid #111;
   border-radius: 100px;
-  padding: 24px 120px;
+  padding: 16px clamp(2rem, 6vw, 7.5rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex: 1 1 220px;
+  min-width: 0;
 `;
 
 export const Label = styled.p`
   margin: 0;
-  font-size: 18px;
+  font-size: clamp(0.95rem, 1.15vw, 1.125rem);
   font-weight: 500;
 `;
 
@@ -52,22 +50,22 @@ export const CountRow = styled.div`
 `;
 
 export const Count = styled.span`
-  font-size: 5rem;
+  font-size: clamp(2.5rem, 4vw, 5rem);
   font-weight: 700;
 `;
 
 export const Unit = styled.span`
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 2.4vw, 3rem);
   font-weight: 600;
 `;
 
 export const InfoRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 20px;
 
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 2fr;
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -82,12 +80,8 @@ export const InfoCard = styled.div`
 `;
 
 export const InfoTitle = styled.h3`
-  font-size: 1.5rem;
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
   font-weight: 700;
-`;
-
-export const InfoBody = styled.div`
-  font-size: 1rem;
 `;
 
 export const AwardsGrid = styled.div`
@@ -95,6 +89,11 @@ export const AwardsGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 24px;
   font-size: 1rem;
+
+  @media (max-width: 639px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;
 
 export const BulletList = styled.ul`

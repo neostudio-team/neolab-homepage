@@ -158,9 +158,9 @@ export const NavItemWrap = styled.div`
 `;
 
 const navLabelBase = `
-  padding: 8px 24px;
+  padding: 8px 32px;
   font-family: Pretendard, sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1;
   display: flex;
@@ -170,9 +170,9 @@ const navLabelBase = `
   letter-spacing: -0.01em;
   white-space: nowrap;
 
-  @media (min-width: 1280px) {
-    padding: 8px 32px;
-    font-size: 20px;
+  @media (max-width: 1279px) {
+    padding: 8px 24px;
+    font-size: 18px;
   }
 `;
 
@@ -189,11 +189,6 @@ export const NavParentLabel = styled.span<{
     if ($scrolled) return "#111111";
     return "#ffffff";
   }};
-`;
-
-export const NavChevron = styled.svg`
-  width: 14px;
-  height: 14px;
 `;
 
 export const NavTopLink = styled(Link)<{

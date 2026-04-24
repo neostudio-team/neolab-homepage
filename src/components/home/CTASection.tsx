@@ -1,6 +1,22 @@
 "use client";
 
-import { memo, type ReactElement } from "react";
+import { memo, type ReactElement, useSyncExternalStore } from "react";
+
+const LG_MEDIA_QUERY = "(max-width: 1024px)";
+
+function subscribeLgMedia(callback: () => void) {
+  const mq = window.matchMedia(LG_MEDIA_QUERY);
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getLgMediaSnapshot() {
+  return window.matchMedia(LG_MEDIA_QUERY).matches;
+}
+
+function getLgMediaServerSnapshot() {
+  return false;
+}
 import ContactModalTrigger from "../common/ContactModalTrigger";
 import Reveal from "../common/Reveal";
 import {
@@ -84,6 +100,11 @@ const PartnerMarquee = memo(PartnerMarqueeView);
 
 export default function CTASection({ dict }: CTASectionProps) {
   const buttonText = dict?.button ?? "Contact Us →";
+  const isLgUp = useSyncExternalStore(
+    subscribeLgMedia,
+    getLgMediaSnapshot,
+    getLgMediaServerSnapshot
+  );
 
   return (
     <Section>
@@ -94,7 +115,10 @@ export default function CTASection({ dict }: CTASectionProps) {
             <br />
             Impact every stroke.
           </Title>
-          <ContactModalTrigger buttonText={buttonText} />
+          <ContactModalTrigger
+            buttonText={buttonText}
+            variant={isLgUp ? "pill" : "circle"}
+          />
         </TopRow>
       </Reveal>
       <PartnerMarquee />

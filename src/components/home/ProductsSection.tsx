@@ -23,6 +23,7 @@ import {
   CardContent,
   ChipList,
   ChipButton,
+  ProductActionArea,
   ProductTextBlock,
   Row,
   SearchBadge,
@@ -33,6 +34,7 @@ import {
   SmallImageWrap,
   SmallTitle,
   SwappableProductImage,
+  ViewMoreButton,
 } from "./ProductsSection.styles";
 import { categories, type Category } from "./productsData";
 import { Icon } from "@iconify/react";
@@ -48,6 +50,7 @@ interface CategoryCardProps {
   active: boolean;
   onActivateByHover: (event: MouseEvent<HTMLButtonElement>) => void;
   onActivateByFocus: (event: FocusEvent<HTMLButtonElement>) => void;
+  onActivateByClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 function CategoryCardView({
@@ -56,15 +59,13 @@ function CategoryCardView({
   active,
   onActivateByHover,
   onActivateByFocus,
+  onActivateByClick,
 }: CategoryCardProps) {
   const router = useRouter();
   const [productIndex, setProductIndex] = useState(0);
   const product = category.products[productIndex];
   const hasSingleProductChip = category.products.length === 1;
-
-  const handleCardClick = () => {
-    router.push(product.href);
-  };
+  const showChipList = category.products.length > 1 || category.key === "pokoro";
 
   const handleChipSelect = useCallback(
     (event: MouseEvent<HTMLButtonElement> | FocusEvent<HTMLButtonElement>) => {
@@ -81,8 +82,18 @@ function CategoryCardView({
   ) => {
     event.stopPropagation();
     event.preventDefault();
-    handleChipSelect(event);
+    const nextIndex = Number(event.currentTarget.dataset.productIndex);
+    if (Number.isNaN(nextIndex)) return;
+    setProductIndex(nextIndex);
   };
+
+  const handleViewMore = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      router.push(product.href);
+    },
+    [product.href, router],
+  );
 
   return (
     <Card
@@ -91,7 +102,7 @@ function CategoryCardView({
       $active={active}
       onMouseEnter={onActivateByHover}
       onFocus={onActivateByFocus}
-      onClick={handleCardClick}
+      onClick={onActivateByClick}
       aria-pressed={active}
     >
       <CardContent $active={true} $visible={active}>
@@ -116,24 +127,30 @@ function CategoryCardView({
               <BigSub>{product.tagline}</BigSub>
             </ProductTextBlock>
           </BigInfo>
-          {category.products.length > 1 && (
-            <ChipList>
-              {category.products.map((p, i) => (
-                <ChipButton
-                  key={p.key}
-                  type="button"
-                  data-product-index={i}
-                  $active={i === productIndex}
-                  onMouseEnter={handleChipSelect}
-                  onFocus={handleChipSelect}
-                  onClick={handleChipClick}
-                  tabIndex={active ? 0 : -1}
-                >
-                  {p.chipLabel}
-                </ChipButton>
-              ))}
-            </ChipList>
-          )}
+          <ProductActionArea>
+            {showChipList && (
+              <ChipList>
+                {category.products.map((p, i) => (
+                  <ChipButton
+                    key={p.key}
+                    type="button"
+                    data-product-index={i}
+                    $active={i === productIndex}
+                    onMouseEnter={handleChipSelect}
+                    onFocus={handleChipSelect}
+                    onClick={handleChipClick}
+                    tabIndex={active ? 0 : -1}
+                  >
+                    {p.chipLabel}
+                  </ChipButton>
+                ))}
+              </ChipList>
+            )}
+            <ViewMoreButton type="button" onClick={handleViewMore}>
+              View more
+              <Icon icon="mdi:plus" aria-hidden />
+            </ViewMoreButton>
+          </ProductActionArea>
         </BigBody>
       </CardContent>
 
@@ -199,6 +216,13 @@ export default function ProductsSection({ dict }: ProductsSectionProps) {
     }, hoverActivateDelayMs);
   };
 
+  const activateByClick = (event: MouseEvent<HTMLButtonElement>) => {
+    const idx = Number(event.currentTarget.dataset.index);
+    if (Number.isNaN(idx) || idx === activeIndex) return;
+    clearHoverTimeout();
+    setActiveIndex(idx);
+  };
+
   useEffect(() => clearHoverTimeout, [clearHoverTimeout]);
 
   return (
@@ -213,6 +237,7 @@ export default function ProductsSection({ dict }: ProductsSectionProps) {
               active={index === activeIndex}
               onActivateByHover={activateByHover}
               onActivateByFocus={activateByFocus}
+              onActivateByClick={activateByClick}
             />
           ))}
         </Row>

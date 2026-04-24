@@ -6,7 +6,7 @@ const text = "#333";
 const muted = "#666";
 const teal = "#39d2cc";
 
-export const Container = styled.div`
+const Container = styled.div`
   max-width: 1080px;
   margin-left: auto;
   margin-right: auto;

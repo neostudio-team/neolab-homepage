@@ -17,7 +17,7 @@ export const BlockGray = styled.section`padding:3.5rem 0;background:#f5f8f8;`;
 export const BlockTitle = styled.h2`font-size:22px;font-weight:700;color:#333;margin-bottom:2rem;`;
 export const PolicyBox = styled.div`background:#f9f9f9;border-radius:.75rem;padding:1.5rem;font-size:14px;color:#555;line-height:1.7;display:flex;flex-direction:column;gap:.75rem;`;
 
-export const DotList = styled.ul`display:grid;gap:.75rem;`;
+const DotList = styled.ul`display:grid;gap:.75rem;`;
 export const DotListColumns = styled(DotList)`grid-template-columns:1fr;${media.md}{grid-template-columns:repeat(2,minmax(0,1fr));}`;
 export const DotList3 = styled(DotList)`grid-template-columns:1fr;${media.md}{grid-template-columns:repeat(3,minmax(0,1fr));}`;
 export const DotItem = styled.li`display:flex;align-items:center;gap:.5rem;font-size:14px;color:#555;`;

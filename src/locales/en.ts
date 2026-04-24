@@ -113,7 +113,7 @@ const en = {
       items: [
         { title: "Digitalization", description: "Ncode™ micro-dot patterns recognize position within 2mm² accuracy. Any paper can be transformed into a smart digital interface." },
         { title: "Engagement", description: "Connects seamlessly to software with natural handwriting motions. Provides the most intuitive interface between users and content." },
-        { title: "Integration", description: "Works smoothly with PowerPoint, Word, Excel and many more. Standardized data formats make AI integration easy." },
+        { title: "Compatibility", description: "Works smoothly with PowerPoint, Word, Excel and many more. Standardized data formats make AI integration easy." },
         { title: "Scalability", description: "Proven scalability deployed in 76 countries. A B2B solution expandable across education, stationery, and enterprise sectors." },
       ],
     },

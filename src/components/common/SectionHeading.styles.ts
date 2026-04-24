@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeadingWrap = styled.div`
   display: flex;
-  margin-bottom: 120px;
+  margin-bottom: clamp(48px, 8vw, 120px);
   align-items: center;
   justify-content: center;
 `;
@@ -11,7 +11,7 @@ export const HeadingTitle = styled.h2<{ $tone: "dark" | "light" }>`
   position: relative;
   margin: 0;
   color: ${({ $tone }) => ($tone === "light" ? "#fff" : "#000")};
-  font-size: clamp(44px, 5.5vw, 80px);
+  font-size: clamp(2rem, 5.5vw, 5rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -1px;
@@ -19,11 +19,11 @@ export const HeadingTitle = styled.h2<{ $tone: "dark" | "light" }>`
   &::before {
     content: "";
     position: absolute;
-    top: -30px;
-    left: -30px;
-    width: 40px;
-    height: 40px;
+    top: clamp(-30px, -2.5vw, -16px);
+    left: clamp(-30px, -2.5vw, -16px);
+    width: clamp(20px, 2.5vw, 40px);
+    height: clamp(20px, 2.5vw, 40px);
     border-radius: 999px;
-    border: 10px solid #f3a101;
+    border: clamp(5px, 0.6vw, 10px) solid #f3a101;
   }
 `;

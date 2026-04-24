@@ -35,7 +35,6 @@ export const StepCard = styled.div`display:flex;flex-direction:column;align-item
 export const StepBubble = styled.div`width:5rem;height:5rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;color:#fff;font-weight:900;font-size:22px;position:relative;z-index:10;background:linear-gradient(135deg,#0f2235,#4fa8d5);`;
 export const DarkHeading = styled(Heading)`color:#fff;text-align:center;`;
 export const Split3 = styled.div`display:grid;gap:2.5rem;${media.md}{grid-template-columns:repeat(3,minmax(0,1fr));}`;
-export const TagTitle = styled.h3`font-size:13px;font-weight:600;color:#4fa8d5;text-transform:uppercase;letter-spacing:3px;margin-bottom:1rem;`;
 export const ChipWrap = styled.div`display:flex;flex-wrap:wrap;gap:.5rem;`;
 export const Chip = styled.span`padding:.5rem 1rem;background:rgba(255,255,255,.1);color:#fff;font-size:14px;border-radius:9999px;border:1px solid rgba(255,255,255,.2);`;
 export const ChipBlue = styled(Chip)`background:rgba(79,168,213,.2);color:#4fa8d5;border-color:rgba(79,168,213,.4);`;
