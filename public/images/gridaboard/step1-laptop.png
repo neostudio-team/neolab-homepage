@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 210 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Mask-in">
+<mask id="mask0_0_39" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="210" height="210">
+<circle id="Ellipse 2172" cx="105" cy="105" r="105" fill="var(--fill-0, #C4C4C4)"/>
+</mask>
+<g mask="url(#mask0_0_39)">
+<g id="img_labtop">
+<path id="Vector" d="M7 38.625C7 30.3407 13.7157 23.625 22 23.625H183.625C191.909 23.625 198.625 30.3407 198.625 38.625V172.375H7V38.625Z" fill="var(--fill-0, #313747)"/>
+<rect id="screen" x="14" y="30.625" width="177.625" height="134.75" rx="5" fill="var(--fill-0, white)"/>
+<path id="Vector_2" opacity="0.1" d="M21 165.375L191.625 38.5V161.375C191.625 163.584 189.834 165.375 187.625 165.375H21Z" fill="var(--fill-0, #639DE1)"/>
+<path id="Vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M-16.625 172.375H221.375V179.813C221.375 185.289 214.732 187.25 209.475 187.25H-4.725C-9.98242 187.25 -16.625 185.289 -16.625 179.813V172.375Z" fill="var(--fill-0, #BDC3C7)"/>
+<path id="Vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M126.875 172.375C126.601 174.104 125.873 175.659 124.813 176.775C123.753 177.891 122.426 178.5 121.058 178.5H85.4422C84.074 178.499 82.748 177.889 81.6881 176.773C80.6283 175.657 79.8995 174.104 79.625 172.375H126.875V172.375Z" fill="var(--fill-0, #9DA5AA)"/>
+</g>
+</g>
+</g>
+</svg>
