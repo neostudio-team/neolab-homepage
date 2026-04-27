@@ -1,6 +1,6 @@
 "use client";
 
-import { type ComponentProps, type ReactNode } from "react";
+import { type ComponentProps, type ElementType, type ReactNode } from "react";
 import Reveal from "@/components/common/Reveal";
 import {
   ContentsSlot,
@@ -22,7 +22,7 @@ export type RevealHeadingBodyProps = {
   descriptionReveal?: RevealMotionProps;
   contentsReveal?: RevealMotionProps;
   /** Override the wrapper element (default: `section`). Useful inside another section. */
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
   /** Render top vertical padding. Default `true`. Set `false` when preceded by a section that already has bottom padding. */
   paddingTop?: boolean;
   /** Render bottom vertical padding. Default `true`. Set `false` when followed by a section that already has top padding. */
