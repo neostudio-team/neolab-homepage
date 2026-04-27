@@ -1,0 +1,14 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_18_87)">
+<path d="M26.25 11.25V1.25L21.25 3.75L17.5 1.25L13.75 3.75L8.75 1.25V11.25H1.25V58.75H33.75V11.25H26.25ZM58.75 1.25H38.75V28.75H58.75V1.25Z" fill="white"/>
+<path d="M26.25 13.75H8.75V18.75H26.25V13.75ZM33.75 18.75V30L1.25 36.25L33.75 18.75ZM48.75 1.25H43.75V28.75H48.75V1.25Z" fill="#FFCE84"/>
+<path d="M38.75 1.25V28.75H58.75V1.25H38.75Z" stroke="#111111" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M53.75 23.75V21.25M53.75 16.25V11.25M31.25 11.25H33.75V58.75H1.25V11.25H3.75M13.75 8.75H21.25M13.75 13.75H16.25M1.25 18.75H33.75M1.25 36.25L33.75 30M8.75 41.25H10M15 41.25H16.25M21.25 41.25H22.5M27.5 42.5L28.75 41.25M8.75 46.25H10M15 46.25H16.25M21.25 46.25H22.5M28.75 46.25V51.25M8.75 51.25H10M15 51.25H16.25M21.25 51.25H22.5M48.75 36.25V48.75M48.75 48.75L43.75 43.75M48.75 48.75L53.75 43.75M43.75 1.25V28.75H48.75V1.25H43.75Z" stroke="#111111" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.75 18.75V1.25L13.75 3.75L17.5 1.25L21.25 3.75L26.25 1.25V18.75" stroke="#111111" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_18_87">
+<rect width="60" height="60" fill="white"/>
+</clipPath>
+</defs>
+</svg>

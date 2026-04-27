@@ -5,13 +5,9 @@ import {
   OfficeBadge,
   OfficeCard,
   OfficeCardHeader,
-  OfficeDot,
   OfficeGrid,
-  OfficeHeader,
-  OfficeInner,
   OfficeMapLink,
   OfficeName,
-  OfficeTitle,
 } from "./CompanyOffice.styles";
 
 const offices = [
@@ -28,7 +24,7 @@ const offices = [
     key: "suwon",
     badge: "생산 HUB",
     name: "수원 사무실",
-    address: "경기도 수원시 권선구 서부로 1433-20\n델리스 4층",
+    address: "경기도 수원시 권선구 서부로\n1433-20, 델리스 4층",
     mapHref:
       "https://map.naver.com/v5/search/경기도 수원시 권선구 서부로 1433-20",
   },
@@ -44,38 +40,29 @@ const offices = [
 
 export default function CompanyOffice() {
   return (
-    <Section background="#fcfcfc" contained={false}>
-      <OfficeInner>
-        <Reveal y={20} duration={0.8}>
-          <OfficeHeader>
-            <OfficeDot aria-hidden />
-            <OfficeTitle>사무실</OfficeTitle>
-          </OfficeHeader>
-        </Reveal>
-
-        <RevealGroup stagger={0.12} delay={0.1}>
-          <OfficeGrid>
-            {offices.map((office) => (
-              <RevealItem key={office.key} y={32} duration={0.8}>
-                <OfficeCard>
-                  <OfficeCardHeader>
-                    <OfficeBadge>{office.badge}</OfficeBadge>
-                    <OfficeName>{office.name}</OfficeName>
-                  </OfficeCardHeader>
-                  <OfficeAddress>{office.address}</OfficeAddress>
-                  <OfficeMapLink
-                    href={office.mapHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    지도보기
-                  </OfficeMapLink>
-                </OfficeCard>
-              </RevealItem>
-            ))}
-          </OfficeGrid>
-        </RevealGroup>
-      </OfficeInner>
+    <Section background="#fcfcfc" title="사무실">
+      <RevealGroup stagger={0.12} delay={0.1}>
+        <OfficeGrid>
+          {offices.map((office) => (
+            <RevealItem key={office.key} y={32} duration={0.8}>
+              <OfficeCard>
+                <OfficeCardHeader>
+                  <OfficeBadge>{office.badge}</OfficeBadge>
+                  <OfficeName>{office.name}</OfficeName>
+                </OfficeCardHeader>
+                <OfficeAddress>{office.address}</OfficeAddress>
+                <OfficeMapLink
+                  href={office.mapHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  지도보기
+                </OfficeMapLink>
+              </OfficeCard>
+            </RevealItem>
+          ))}
+        </OfficeGrid>
+      </RevealGroup>
     </Section>
   );
 }

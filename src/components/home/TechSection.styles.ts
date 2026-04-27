@@ -1,18 +1,19 @@
 import Image from "next/image";
+import { media } from "@/styles/theme";
 import styled from "styled-components";
 
 export const Section = styled.section`
   position: relative;
   width: 100%;
   background: #fff;
-  padding: 200px 0 0;
+  padding: 80px 16px 40px;
 
-  @media (max-width: 1023px) {
+  ${media.md} {
     padding: 120px 24px 60px;
   }
 
-  @media (max-width: 767px) {
-    padding: 80px 16px 40px;
+  ${media.lg} {
+    padding: 200px 0 0;
   }
 `;
 
@@ -34,44 +35,45 @@ export const Heading = styled.h2`
   font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 700;
   padding: 0 1.5rem;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 
-  @media (max-width: 767px) {
-    margin-bottom: 32px;
+  ${media.md} {
+    margin-bottom: 40px;
   }
 `;
 
 export const PinSpacer = styled.div`
   position: relative;
   width: 100%;
-  height: 360vh;
+  height: auto;
   z-index: 1;
 
-  @media (max-width: 1023px) {
-    height: auto;
+  ${media.lg} {
+    height: 360vh;
   }
 `;
 
 export const PinContent = styled.div`
-  position: sticky;
-  top: 0;
+  position: static;
+  top: auto;
   width: 100%;
-  height: 100vh;
+  height: auto;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
 
-  @media (max-width: 1023px) {
-    position: static;
-    height: auto;
-    overflow: visible;
+  ${media.lg} {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
   }
 `;
 
 export const SliderWrap = styled.div`
   position: relative;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: visible;
   overflow-y: visible;
   scrollbar-width: none;
 
@@ -79,47 +81,49 @@ export const SliderWrap = styled.div`
     display: none;
   }
 
-  @media (max-width: 1023px) {
-    overflow: visible;
+  ${media.lg} {
+    overflow-x: hidden;
   }
 `;
 
 export const CardTrack = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: flex-start;
-  gap: 24px;
-  width: max-content;
-  padding: 0 clamp(24px, 7.3vw, 140px);
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
 
-  @media (max-width: 1023px) {
-    display: grid;
+  ${media.sm} {
     grid-template-columns: repeat(2, 1fr);
-    width: 100%;
     max-width: 720px;
-    margin: 0 auto;
-    padding: 0;
     gap: 20px;
   }
 
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr;
-    max-width: 100%;
-    gap: 16px;
+  ${media.lg} {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    max-width: none;
+    margin: 0;
+    padding: 0 clamp(24px, 7.3vw, 140px);
   }
 `;
 
 export const TechCard = styled.article<{ $offset: boolean }>`
   position: relative;
-  width: clamp(300px, 60vw, 760px);
+  width: 100%;
   aspect-ratio: 550 / 600;
   flex-shrink: 0;
-  margin-top: ${({ $offset }) => ($offset ? "clamp(48px, 7.5vw, 146px)" : "0")};
+  margin-top: 0;
   overflow: hidden;
   color: #ffffff;
 
-  @media (max-width: 1023px) {
-    width: 100%;
-    margin-top: 0;
+  ${media.lg} {
+    width: clamp(300px, 60vw, 760px);
+    margin-top: ${({ $offset }) => ($offset ? "clamp(48px, 7.5vw, 146px)" : "0")};
   }
 `;
 
@@ -134,21 +138,21 @@ export const CardContent = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 32px 28px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   z-index: 2;
   color: #ffffff;
 
-  @media (max-width: 1023px) {
+  ${media.md} {
     padding: 28px 24px;
     gap: 10px;
   }
 
-  @media (max-width: 767px) {
-    padding: 24px 20px;
-    gap: 8px;
+  ${media.lg} {
+    padding: 32px 28px;
+    gap: 12px;
   }
 `;
 

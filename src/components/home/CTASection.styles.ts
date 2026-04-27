@@ -1,4 +1,4 @@
-import { colors } from "@/styles/theme";
+import { colors, media } from "@/styles/theme";
 import Image from "next/image";
 import Link from "next/link";
 import styled, { keyframes } from "styled-components";
@@ -18,13 +18,19 @@ const ctaPartnerScroll = keyframes`
 
 export const TopRow = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 48px;
   align-items: center;
   justify-content: space-between;
-  padding: 140px clamp(40px, 7.5vw, 140px);
+  padding: 80px 1rem;
 
-  @media (max-width: 1023px) {
-    flex-direction: column;
+  ${media.md} {
+    padding: 100px 2.5rem;
+  }
+
+  ${media.lg} {
+    flex-direction: row;
+    padding: 140px clamp(40px, 7.5vw, 140px);
   }
 `;
 
@@ -33,19 +39,20 @@ export const Title = styled.h2`
   font-weight: 700;
   font-size: clamp(2.25rem, 5vw, 5rem);
   flex: 1;
+  text-align: center;
 
-  @media (max-width: 1023px) {
-    text-align: center;
+  ${media.lg} {
+    text-align: left;
   }
 `;
 
 export const PartnerMarqueeOuter = styled.div`
-  padding-bottom: 140px;
+  padding-bottom: 80px;
   width: 100vw;
   overflow: hidden;
 
-  @media (max-width: 1023px) {
-    padding-bottom: 80px;
+  ${media.lg} {
+    padding-bottom: 140px;
   }
 `;
 

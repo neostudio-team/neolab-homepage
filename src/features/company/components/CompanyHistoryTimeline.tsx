@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ContentCol,
   Dot,
@@ -50,40 +50,55 @@ const historyData = [
 ];
 
 export default function CompanyHistoryTimeline() {
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [visibleRows, setVisibleRows] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
+    const rootElement = rootRef.current;
+    if (!rootElement) return;
+
+    const timelineRows = rootElement.querySelectorAll<HTMLElement>(
+      "[data-timeline-row]",
+    );
+    if (timelineRows.length === 0) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-          }
+          const index = Number(
+            (entry.target as HTMLElement).dataset.timelineIndex ?? "-1",
+          );
+          if (index < 0) return;
+
+          setVisibleRows((prev) => {
+            if (prev[index] === entry.isIntersecting) return prev;
+            return { ...prev, [index]: entry.isIntersecting };
+          });
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -20px 0px" }
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
     );
 
-    itemRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
+    timelineRows.forEach((row) => {
+      observer.observe(row);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
-    <TimelineRoot>
+    <TimelineRoot ref={rootRef}>
       <TimelineLine />
 
       {historyData.map((item, idx) => (
         <TimelineRow
           key={item.year}
-          ref={(el) => {
-            itemRefs.current[idx] = el;
-          }}
           $index={idx}
+          data-visible={visibleRows[idx] ? "true" : "false"}
+          data-timeline-row
+          data-timeline-index={idx}
         >
           <YearCol>
             <YearText>{item.year}</YearText>

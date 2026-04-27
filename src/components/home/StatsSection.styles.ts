@@ -1,3 +1,4 @@
+import { media } from "@/styles/theme";
 import styled from "styled-components";
 
 export const Title = styled.h2`
@@ -8,19 +9,20 @@ export const Title = styled.h2`
 
 export const PillRow = styled.div`
   display: flex;
-  justify-content: flex-end;
-  gap: 40px;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  gap: 16px;
   margin-bottom: 48px;
 
-  @media (max-width: 1339px) {
+  ${media.md} {
+    flex-direction: row;
+    justify-content: flex-end;
     gap: 24px;
   }
 
-  @media (max-width: 767px) {
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    gap: 16px;
+  ${media.xl} {
+    gap: 40px;
   }
 `;
 
@@ -61,11 +63,11 @@ export const Unit = styled.span`
 
 export const InfoRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr;
   gap: 20px;
 
-  @media (max-width: 1023px) {
-    grid-template-columns: 1fr;
+  ${media.lg} {
+    grid-template-columns: 1fr 2fr;
   }
 `;
 
@@ -86,13 +88,13 @@ export const InfoTitle = styled.h3`
 
 export const AwardsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 16px;
   font-size: 1rem;
 
-  @media (max-width: 639px) {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  ${media.sm} {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
 `;
 

@@ -1,21 +1,22 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { colors } from "@/styles/theme";
+import { colors, media } from "@/styles/theme";
 
 export const Row = styled.div`
   display: flex;
   gap: 16px;
   align-items: stretch;
-  min-height: clamp(500px, 60vw, 700px);
+  flex-direction: column;
+  min-height: 0;
 
-
-  @media (max-width: 1279px) {
+  ${media.lg} {
     gap: 8px;
+    min-height: clamp(500px, 60vw, 700px);
+    flex-direction: row;
   }
 
-  @media (max-width: 1023px) {
-    flex-direction: column;
-    min-height: 0;
+  ${media.xl} {
+    gap: 16px;
   }
 `;
 
@@ -23,10 +24,9 @@ export const Card = styled.button<{ $active: boolean }>`
   appearance: none;
   cursor: default;
   text-align: left;
-  flex-grow: ${({ $active }) => ($active ? 792 : 246)};
-  flex-shrink: 1;
-  flex-basis: 0;
-  min-width: ${({ $active }) => ($active ? "340px" : "200px")};
+  flex: 1 1 auto;
+  min-width: 100%;
+  min-height: ${({ $active }) => ($active ? "520px" : "110px")};
   background: ${({ $active }) => ($active ? "#fff" : "#f8f8f8")};
   border: 1px solid
     ${({ $active }) => ($active ? "rgba(0,0,0,0.06)" : "transparent")};
@@ -34,35 +34,38 @@ export const Card = styled.button<{ $active: boolean }>`
   overflow: hidden;
   position: relative;
   transition:
-    flex-grow 1.05s cubic-bezier(0.19, 1, 0.22, 1),
-    min-width 1.05s cubic-bezier(0.19, 1, 0.22, 1),
+    min-height 1.05s cubic-bezier(0.19, 1, 0.22, 1),
     background-color 0.7s ease,
     border-color 0.7s ease;
   display: flex;
   flex-direction: column;
-  will-change: flex-grow;
+  will-change: min-height;
 
   &:focus-visible {
     outline: 2px solid ${colors.primary};
     outline-offset: 2px;
   }
 
-  @media (max-width: 1279px) {
-    min-width: ${({ $active }) => ($active ? "280px" : "170px")};
+  ${media.md} {
+    min-height: ${({ $active }) => ($active ? "560px" : "120px")};
   }
 
-  @media (max-width: 1023px) {
-    flex: 1 1 auto;
-    min-width: 100%;
-    min-height: ${({ $active }) => ($active ? "560px" : "120px")};
+  ${media.lg} {
+    flex-grow: ${({ $active }) => ($active ? 792 : 246)};
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-height: 0;
+    min-width: ${({ $active }) => ($active ? "280px" : "170px")};
     transition:
-      min-height 1.05s cubic-bezier(0.19, 1, 0.22, 1),
+      flex-grow 1.05s cubic-bezier(0.19, 1, 0.22, 1),
+      min-width 1.05s cubic-bezier(0.19, 1, 0.22, 1),
       background-color 0.7s ease,
       border-color 0.7s ease;
+    will-change: flex-grow;
   }
 
-  @media (max-width: 767px) {
-    min-height: ${({ $active }) => ($active ? "520px" : "110px")};
+  ${media.xl} {
+    min-width: ${({ $active }) => ($active ? "340px" : "200px")};
   }
 `;
 
@@ -70,51 +73,54 @@ export const CardContent = styled.div<{
   $active: boolean;
   $visible: boolean;
 }>`
-  position: absolute;
-  inset: 0;
-  padding: ${({ $active }) => ($active ? "40px" : "0")};
+  position: static;
+  inset: auto;
+  padding: ${({ $active }) => ($active ? "24px" : "16px 20px")};
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ $active }) => ($active ? "column" : "row")};
+  align-items: ${({ $active }) => ($active ? "stretch" : "center")};
   justify-content: space-between;
+  gap: ${({ $active }) => ($active ? "20px" : "16px")};
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  pointer-events: ${({ $visible }) => ($visible ? "auto" : "none")};
+  pointer-events: auto;
+  display: ${({ $visible }) => ($visible ? "flex" : "none")};
   transition: opacity 0.55s cubic-bezier(0.19, 1, 0.22, 1);
 
-
-  @media (max-width: 1279px) {
+  ${media.lg} {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    pointer-events: ${({ $visible }) => ($visible ? "auto" : "none")};
     padding: ${({ $active }) => ($active ? "24px" : "0")};
   }
 
-  @media (max-width: 1023px) {
-    position: static;
-    inset: auto;
-    display: ${({ $visible }) => ($visible ? "flex" : "none")};
-    flex-direction: ${({ $active }) => ($active ? "column" : "row")};
-    align-items: ${({ $active }) => ($active ? "stretch" : "center")};
-    justify-content: space-between;
-    gap: ${({ $active }) => ($active ? "20px" : "16px")};
-    padding: ${({ $active }) => ($active ? "24px" : "16px 20px")};
+  ${media.xl} {
+    padding: ${({ $active }) => ($active ? "40px" : "0")};
   }
 `;
 
 export const SmallHeader = styled.div`
   position: relative;
   z-index: 2;
-  padding: 34px 16px 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
 
-  @media (max-width: 1279px) {
+  ${media.lg} {
     padding: 24px 8px 0;
+    align-items: center;
+    gap: 16px;
+    flex: unset;
   }
 
-  @media (max-width: 1023px) {
-    padding: 0;
-    align-items: flex-start;
-    gap: 10px;
-    flex: 1;
+  ${media.xl} {
+    padding: 34px 16px 0;
   }
 `;
 
@@ -122,26 +128,26 @@ export const SmallTitle = styled.h3`
   margin: 0;
   font-size: clamp(1.125rem, 1.5vw, 1.5rem);
   font-weight: 700;
-  text-align: center;
+  text-align: left;
 
-  @media (max-width: 1023px) {
-    text-align: left;
+  ${media.lg} {
+    text-align: center;
   }
 `;
 
 export const SmallChipList = styled.div<{ $singleChip?: boolean }>`
-  display: grid;
-  grid-template-columns: ${({ $singleChip }) =>
-    $singleChip ? "minmax(0, 1fr)" : "repeat(2, minmax(0, 1fr))"};
-  justify-items: ${({ $singleChip }) => ($singleChip ? "center" : "stretch")};
-  gap: 4px;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: auto;
 
-  @media (max-width: 1023px) {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    width: auto;
+  ${media.lg} {
+    display: grid;
+    grid-template-columns: ${({ $singleChip }) =>
+      $singleChip ? "minmax(0, 1fr)" : "repeat(2, minmax(0, 1fr))"};
+    justify-items: ${({ $singleChip }) => ($singleChip ? "center" : "stretch")};
+    gap: 4px;
+    width: 100%;
   }
 `;
 
@@ -149,35 +155,37 @@ export const SmallChip = styled.span<{ $wide?: boolean; $singleChip?: boolean }>
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: ${({ $wide, $singleChip }) => {
-    if ($singleChip) return "auto";
-    return $wide ? "auto" : "100%";
-  }};
-  justify-self: ${({ $wide, $singleChip }) => {
-    if ($singleChip) return "center";
-    return $wide ? "start" : "stretch";
-  }};
-  border: 1px solid #757575;
+  width: auto;
+  justify-self: start;
+  border: none;
   border-radius: 100px;
-  padding: 4px 14px;
-  font-size: 0.875rem;
+  padding: 0;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: #757575;
+  color: #aaaaaa;
   background: transparent;
   white-space: nowrap;
 
-  @media (max-width: 1023px) {
-    width: auto;
-    justify-self: start;
-    border: none;
-    padding: 0;
-    background: transparent;
-    color: #aaaaaa;
-    font-size: 0.95rem;
-    font-weight: 500;
+  &::before {
+    content: "#";
+  }
+
+  ${media.lg} {
+    width: ${({ $wide, $singleChip }) => {
+      if ($singleChip) return "auto";
+      return $wide ? "auto" : "100%";
+    }};
+    justify-self: ${({ $wide, $singleChip }) => {
+      if ($singleChip) return "center";
+      return $wide ? "start" : "stretch";
+    }};
+    border: 1px solid #757575;
+    padding: 4px 14px;
+    font-size: 0.875rem;
+    color: #757575;
 
     &::before {
-      content: "#";
+      content: none;
     }
   }
 `;
@@ -189,8 +197,10 @@ export const ChipList = styled.div`
   width: 100%;
   max-width: 368px;
 
-  @media (max-width: 1023px) {
-    max-width: none;
+  max-width: none;
+
+  ${media.lg} {
+    max-width: 368px;
   }
 `;
 
@@ -229,19 +239,19 @@ export const ChipButton = styled.button<{ $active?: boolean }>`
 export const ProductActionArea = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
   width: 100%;
-  max-width: 368px;
+  max-width: none;
 
-  @media (max-width: 1023px) {
-    max-width: none;
-    align-items: center;
+  ${media.lg} {
+    max-width: 368px;
+    align-items: flex-start;
   }
 `;
 
 export const ViewMoreButton = styled.button`
-  display: none;
+  display: inline-flex;
   appearance: none;
   border: 0;
   background: transparent;
@@ -262,23 +272,25 @@ export const ViewMoreButton = styled.button`
     border-radius: 8px;
   }
 
-  @media (max-width: 1023px) {
-    display: inline-flex;
+  ${media.lg} {
+    display: none;
   }
 `;
 
 export const SmallImageWrap = styled.div`
   position: relative;
-  flex: 1;
-  width: 100%;
-  margin-top: 24px;
+  width: 160px;
+  min-width: 160px;
+  height: 88px;
+  margin-top: 0;
   overflow: hidden;
 
-  @media (max-width: 1023px) {
-    width: 160px;
-    min-width: 160px;
-    height: 88px;
-    margin-top: 0;
+  ${media.lg} {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    margin-top: 24px;
   }
 `;
 
@@ -303,8 +315,10 @@ export const SearchBadge = styled.span`
   pointer-events: none;
   z-index: 2;
 
-  @media (max-width: 1023px) {
-    display: none;
+  display: none;
+
+  ${media.lg} {
+    display: grid;
   }
 `;
 
@@ -312,31 +326,34 @@ export const BigImageWrap = styled.div`
   position: relative;
   flex: 1;
   width: 100%;
-  max-height: 420px;
+  max-height: none;
+  min-height: 220px;
   overflow: hidden;
 
-  @media (max-width: 1023px) {
-    min-height: 220px;
+  ${media.lg} {
+    max-height: 420px;
+    min-height: 0;
   }
 `;
 
 export const BigBody = styled.div`
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   gap: 16px;
-  margin-top: 14px;
-  flex-wrap: wrap;
+  margin-top: 0;
+  flex-direction: column;
 
-  @media (max-width: 1023px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0;
+  ${media.md} {
+    align-items: stretch;
   }
 
-  @media (max-width: 767px) {
-    align-items: stretch;
+  ${media.lg} {
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    flex-direction: row;
   }
 `;
 
@@ -344,10 +361,12 @@ export const BigInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  align-items: center;
+  text-align: center;
 
-  @media (max-width: 1023px) {
-    align-items: center;
-    text-align: center;
+  ${media.lg} {
+    align-items: flex-start;
+    text-align: left;
   }
 `;
 

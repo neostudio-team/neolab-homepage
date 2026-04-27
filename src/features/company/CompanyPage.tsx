@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import PageHero from "@/components/common/PageHero";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 import JaCompanyPage from "@/features/company/JaCompanyPage";
-import CompanyHero from "./components/CompanyHero";
 import CompanyVision from "./components/CompanyVision";
 import CompanyJourney from "./components/CompanyJourney";
 import CompanyTeam from "./components/CompanyTeam";
@@ -33,7 +33,10 @@ export default async function CompanyPage({
     <>
       <Header lang={lang} dict={dict.common.header} />
       <Page>
-        <CompanyHero />
+        <PageHero
+          title="회사 개요"
+          backgroundImage="/images/company/figma/hero-bg.png"
+        />
         <CompanyVision />
         <CompanyJourney />
         <CompanyTeam />

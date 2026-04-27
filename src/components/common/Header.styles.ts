@@ -158,9 +158,9 @@ export const NavItemWrap = styled.div`
 `;
 
 const navLabelBase = `
-  padding: 8px 32px;
+  padding: 8px 24px;
   font-family: Pretendard, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1;
   display: flex;
@@ -170,9 +170,9 @@ const navLabelBase = `
   letter-spacing: -0.01em;
   white-space: nowrap;
 
-  @media (max-width: 1279px) {
-    padding: 8px 24px;
-    font-size: 18px;
+  ${media.xl} {
+    padding: 8px 32px;
+    font-size: 20px;
   }
 `;
 

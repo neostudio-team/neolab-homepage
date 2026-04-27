@@ -23,6 +23,11 @@ export const TimelineRow = styled.div<{ $index: number }>`
   transition: opacity 0.55s ease ${({ $index }) => $index * 45}ms,
     transform 0.55s ease ${({ $index }) => $index * 45}ms;
 
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   &:last-child {
     border-bottom: none;
   }

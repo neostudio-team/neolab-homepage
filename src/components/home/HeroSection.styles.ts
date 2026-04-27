@@ -1,3 +1,4 @@
+import { media } from "@/styles/theme";
 import styled from "styled-components";
 
 export const Section = styled.section`
@@ -69,14 +70,14 @@ export const HeroTextBlock = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   max-width: 1400px;
-  padding: 0 80px 140px;
+  padding: 0 24px 80px;
 
-  @media (max-width: 1023px) {
+  ${media.md} {
     padding: 0 48px 100px;
   }
 
-  @media (max-width: 767px) {
-    padding: 0 24px 80px;
+  ${media.lg} {
+    padding: 0 80px 140px;
   }
 `;
 

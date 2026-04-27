@@ -1,4 +1,4 @@
-import { colors } from "@/styles/theme";
+import { colors, media } from "@/styles/theme";
 import styled from "styled-components";
 
 const orange = "#FF9900";
@@ -6,32 +6,33 @@ const orange = "#FF9900";
 export const PinSpacer = styled.div<{ $steps: number }>`
   position: relative;
   width: 100%;
-  height: calc(100vh + ${({ $steps }) => $steps * 60}vh);
-  background: #fcfcfc;
+  height: auto;
+  background: transparent;
 
-  @media (max-width: 1023px) {
-    height: auto;
-    background: transparent;
+  ${media.lg} {
+    height: calc(100vh + ${({ $steps }) => $steps * 60}vh);
+    background: #fcfcfc;
   }
 `;
 
 export const PinContent = styled.div`
-  position: sticky;
-  top: 0;
+  position: relative;
+  top: auto;
   width: 100%;
-  height: 100vh;
+  height: auto;
   display: flex;
   align-items: center;
-  overflow: hidden;
-  padding: 0 clamp(20px, 6vw, 140px);
-  background: #fcfcfc;
+  overflow: visible;
+  padding: clamp(80px, 12vw, 160px) clamp(20px, 6vw, 60px);
+  background: transparent;
 
-  @media (max-width: 1023px) {
-    position: relative;
-    top: auto;
-    height: auto;
-    overflow: visible;
-    padding: clamp(80px, 12vw, 160px) clamp(20px, 6vw, 60px);
+  ${media.lg} {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0 clamp(20px, 6vw, 140px);
+    background: #fcfcfc;
   }
 `;
 
@@ -40,29 +41,30 @@ export const JourneyInner = styled.div`
   max-width: 1300px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
+  grid-template-columns: 1fr;
   gap: clamp(40px, 6vw, 80px);
-  align-items: stretch;
+  align-items: start;
 
-  @media (max-width: 1023px) {
-    grid-template-columns: 1fr;
-    align-items: start;
+  ${media.lg} {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
+    align-items: stretch;
   }
 `;
 
 export const JourneyHeader = styled.div`
   position: relative;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 1fr auto 1fr;
-  row-gap: 16px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
 
-  @media (max-width: 1023px) {
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 32px;
+  ${media.lg} {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    row-gap: 16px;
+    margin-bottom: 0;
   }
 `;
 
@@ -70,7 +72,7 @@ export const JourneyTitle = styled.h2`
   position: relative;
   margin: 0;
   grid-row: 1;
-  align-self: end;
+  align-self: auto;
   font-size: clamp(2rem, 4.5vw, 5rem);
   font-weight: 700;
   line-height: 1.2;
@@ -87,8 +89,8 @@ export const JourneyTitle = styled.h2`
     border: clamp(5px, 0.6vw, 10px) solid ${colors.primary};
   }
 
-  @media (max-width: 1023px) {
-    align-self: auto;
+  ${media.lg} {
+    align-self: end;
   }
 `;
 
@@ -108,13 +110,8 @@ export const JourneyYear = styled.div`
 
 export const JourneyViewport = styled.div`
   position: relative;
-  height: 100vh;
-  overflow: hidden;
-
-  @media (max-width: 1023px) {
-    height: auto;
-    overflow: visible;
-  }
+  height: auto;
+  overflow: visible;
 
   /* fade masks at top/bottom for smooth visual */
   &::before,
@@ -126,6 +123,7 @@ export const JourneyViewport = styled.div`
     height: 30%;
     pointer-events: none;
     z-index: 1;
+    display: none;
   }
 
   &::before {
@@ -138,10 +136,13 @@ export const JourneyViewport = styled.div`
     background: linear-gradient(to top, #fcfcfc, rgba(252, 252, 252, 0));
   }
 
-  @media (max-width: 1023px) {
+  ${media.lg} {
+    height: 100vh;
+    overflow: hidden;
+
     &::before,
     &::after {
-      display: none;
+      display: block;
     }
   }
 `;
@@ -152,27 +153,26 @@ export const JourneyList = styled.ul`
   padding: 0;
   display: flex;
   flex-direction: column;
-  will-change: transform;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: none;
+  transition: none;
+  gap: 24px;
 
-  @media (max-width: 1023px) {
-    transform: none !important;
-    transition: none;
-    gap: 24px;
+  ${media.lg} {
+    will-change: transform;
+    transform: translateY(0);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    gap: 0;
   }
 `;
 
 export const JourneyEventItem = styled.li<{ $active?: boolean }>`
   display: flex;
   align-items: center;
-  height: clamp(80px, 12vh, 136px);
-  padding: 0 16px;
-  font-size: ${({ $active }) =>
-    $active
-      ? "clamp(1.25rem, 2.4vw, 2.5rem)"
-      : "clamp(1rem, 1.5vw, 1.75rem)"};
-  font-weight: ${({ $active }) => ($active ? 700 : 600)};
-  opacity: ${({ $active }) => ($active ? 1 : 0.25)};
+  height: auto;
+  padding: 0;
+  font-size: clamp(0.95rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  opacity: 1;
   transition:
     opacity 0.4s ease,
     font-size 0.4s ease,
@@ -184,22 +184,25 @@ export const JourneyEventItem = styled.li<{ $active?: boolean }>`
     margin-right: 16px;
   }
 
-  @media (max-width: 1023px) {
-    height: auto;
-    padding: 0;
-    opacity: 1;
-    font-size: clamp(0.95rem, 1.4vw, 1.25rem);
-    font-weight: 600;
+  ${media.lg} {
+    height: clamp(80px, 12vh, 136px);
+    padding: 0 16px;
+    font-size: ${({ $active }) =>
+      $active
+        ? "clamp(1.25rem, 2.4vw, 2.5rem)"
+        : "clamp(1rem, 1.5vw, 1.75rem)"};
+    font-weight: ${({ $active }) => ($active ? 700 : 600)};
+    opacity: ${({ $active }) => ($active ? 1 : 0.25)};
   }
 `;
 
 export const JourneyYearTag = styled.span`
-  display: none;
+  display: inline-block;
+  margin-right: 12px;
+  color: ${orange};
+  font-weight: 700;
 
-  @media (max-width: 1023px) {
-    display: inline-block;
-    margin-right: 12px;
-    color: ${orange};
-    font-weight: 700;
+  ${media.lg} {
+    display: none;
   }
 `;

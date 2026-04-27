@@ -5,22 +5,23 @@ import { media } from "@/styles/theme";
 
 export const FooterRoot = styled.footer`
   background: #f4f4f4;
+  padding: 40px 0 24px;
 `;
 
 export const FooterInner = styled.div`
   margin: 0 auto;
   max-width: 1920px;
-  padding: 40px 1rem 24px;
+  padding: 0 1rem 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;
 
   ${media.md} {
-    padding: 48px 2.5rem 24px;
+    padding: 0 2.5rem 24px;
   }
 
   ${media.lg} {
-    padding: 48px clamp(40px, 8.3vw, 160px) 24px;
+    padding: 0 clamp(40px, 8.3vw, 160px) 24px;
   }
 `;
 

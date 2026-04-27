@@ -56,9 +56,9 @@ export default function Footer({ lang, dict }: FooterProps) {
           </BrandRow>
           <BackToTopButton />
         </TopRow>
-
+       </FooterInner>
         <Divider />
-
+      <FooterInner>
         <BottomRow>
           <CopyrightText>{dict.copyright}</CopyrightText>
           <BottomRight>

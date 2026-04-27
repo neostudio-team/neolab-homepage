@@ -1,3 +1,4 @@
+import { media } from "@/styles/theme";
 import styled from "styled-components";
 
 export const SectionRoot = styled.section<{ $tone: "dark" | "light" }>`
@@ -5,14 +6,14 @@ export const SectionRoot = styled.section<{ $tone: "dark" | "light" }>`
   width: 100%;
   overflow: hidden;
   color: ${({ $tone }) => ($tone === "light" ? "#fff" : "#111")};
-  padding: 200px clamp(40px, 7.3vw, 140px);
+  padding: 120px 1rem;
 
-  @media (max-width: 1023px) {
+  ${media.md} {
     padding: 160px 2.5rem;
   }
 
-  @media (max-width: 767px) {
-    padding: 120px 1rem;
+  ${media.lg} {
+    padding: 200px clamp(40px, 7.3vw, 140px);
   }
 `;
 

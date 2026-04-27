@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
-export const HeroSection = styled.section`
+export const HeroSection = styled.section<{
+  $backgroundImage: string;
+  $height: string;
+}>`
   position: relative;
   width: 100%;
-  height: clamp(360px, 50vw, 580px);
-  background-image: url("/images/company/figma/hero-bg.png");
+  height: ${({ $height }) => $height};
+  background-image: url("${({ $backgroundImage }) => $backgroundImage}");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -13,20 +16,17 @@ export const HeroSection = styled.section`
   color: #ffffff;
 `;
 
-export const HeroOverlay = styled.div`
+export const HeroOverlay = styled.div<{ $overlayBackground: string }>`
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.45));
+  background: ${({ $overlayBackground }) => $overlayBackground};
   pointer-events: none;
 `;
 
 export const HeroTitle = styled.h1`
   position: relative;
-  margin: 0;
-  font-family: "Pretendard", sans-serif;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(3rem, 6vw, 6rem);
   font-weight: 700;
-  letter-spacing: -0.01em;
   text-align: center;
   color: #ffffff;
 `;

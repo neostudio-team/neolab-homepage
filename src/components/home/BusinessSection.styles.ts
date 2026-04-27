@@ -1,19 +1,20 @@
 import Image from "next/image";
+import { media } from "@/styles/theme";
 import styled from "styled-components";
 
 export const CardRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  grid-template-columns: 1fr;
+  gap: 20px;
 
-  @media (max-width: 1440px) {
+  ${media.sm} {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 
-  @media (max-width: 639px) {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  @media (min-width: 1441px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
   }
 `;
 
@@ -42,10 +43,6 @@ export const CardTitle = styled.h3`
   color: #ffffff;
   white-space: nowrap;
   text-align: center;
-
-  @media (max-width: 1279px) {
-    font-size: 1.5rem;
-  }
 `;
 
 export const LogoList = styled.div`

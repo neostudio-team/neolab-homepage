@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { colors } from "@/styles/theme";
+import { colors, media } from "@/styles/theme";
 
 const watermarkFlow = keyframes`
   from {
@@ -35,16 +35,16 @@ export const VisionParagraph = styled.p<{ $muted?: boolean }>`
 
 export const IndustryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   gap: 16px;
   margin-top: clamp(48px, 6vw, 80px);
 
-  @media (max-width: 1023px) {
+  ${media.sm} {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 539px) {
-    grid-template-columns: 1fr;
+  ${media.lg} {
+    grid-template-columns: repeat(4, 1fr);
   }
 `;
 
