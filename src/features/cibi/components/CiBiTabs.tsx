@@ -4,10 +4,6 @@ import { useState, useRef, useEffect, useCallback, type ReactNode } from "react"
 import { Icon } from "@iconify/react";
 import Reveal from "@/components/common/Reveal";
 import {
-  TabSection,
-  TabBarWrap,
-  TabBar,
-  TabBtn,
   SectionBlock,
   SectionLabel,
   LogoRowBorder,
@@ -30,6 +26,12 @@ import {
   DownloadRow,
   DownloadBtn,
 } from "../CiBiPage.styles";
+import {
+  TabSection,
+  TabBarWrap,
+  TabBar,
+  TabBtn,
+} from "@/components/common/PillTabs.styles";
 import Section from "@/components/common/Section";
 
 type TabId = "neolab" | "smartpen" | "aigle" | "pokoro";

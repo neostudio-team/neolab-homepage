@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Reveal from "@/components/common/Reveal";
 import {
   StickerTabsWrap,
   TabsList,
@@ -17,10 +18,10 @@ import {
 
 type TabId = "sticker" | "video" | "books";
 
-const TABS: { id: TabId; label: string; position: "top" | "middle" | "bottom" }[] = [
-  { id: "sticker", label: "팝펜 스티커", position: "top" },
-  { id: "video", label: "팝펜 비디오 스티커", position: "middle" },
-  { id: "books", label: "팝펜 패밀리 도서", position: "bottom" },
+const TABS: { id: TabId; label: string }[] = [
+  { id: "sticker", label: "팝펜 스티커" },
+  { id: "video", label: "팝펜 비디오 스티커" },
+  { id: "books", label: "팝펜 패밀리 도서" },
 ];
 
 const CONTENT: Record<
@@ -28,7 +29,7 @@ const CONTENT: Record<
   { img: string; title: string; body: React.ReactNode }
 > = {
   sticker: {
-    img: "/images/soundpen/sticker-1.png",
+    img: "/images/soundpen/figma/sticker-1.png",
     title: "팝펜 스티커",
     body: (
       <>
@@ -109,7 +110,6 @@ export default function StickerTabs() {
           <StickerTabBtn
             key={tab.id}
             $active={active === tab.id}
-            $position={tab.position}
             onClick={() => setActive(tab.id)}
           >
             {tab.label}

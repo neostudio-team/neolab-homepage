@@ -7,68 +7,8 @@ export const Page = styled.main`
   min-height: 100vh;
 `;
 
-/* ── Tab section (Figma: 200px top + 200px bottom around tabs+content) ── */
-export const TabSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(40px, 6.25vw, 120px);
-  padding: clamp(60px, 10.4vw, 200px) clamp(16px, 4vw, 40px);
-
-  & > div {
-    width: 100%;
-  }
-`;
-
-export const TabBarWrap = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
-/* On mobile: 2-col grid. From sm: flex row, wraps if needed. */
-export const TabBar = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  width: 100%;
-  max-width: 1080px;
-
-  ${media.sm} {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-  }
-`;
-
-export const TabBtn = styled.button<{ $active: boolean }>`
-  font-size: clamp(14px, 1.25vw, 24px);
-  font-weight: 600;
-  padding: clamp(14px, 1.6vw, 24px) clamp(16px, 1.6vw, 24px);
-  width: 100%;
-  border-radius: 999px;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
-  white-space: nowrap;
-  background: ${({ $active }) => ($active ? "#FF9900" : "#fff")};
-  color: ${({ $active }) => ($active ? "#fff" : "#111")};
-  border: 1px solid
-    ${({ $active }) => ($active ? "transparent" : "#ddd")};
-
-  &:hover {
-    background: ${({ $active }) => ($active ? "#FF9900" : "#f8f8f8")};
-  }
-
-  ${media.sm} {
-    width: clamp(160px, 14vw, 240px);
-  }
-`;
+/* Tab primitives (TabSection, TabBarWrap, TabBar, TabBtn) live in
+ * `@/components/common/PillTabs.styles` — shared with the Technology page. */
 
 /* ── Section blocks ─────────────────────────────── */
 export const SectionBlock = styled.div`

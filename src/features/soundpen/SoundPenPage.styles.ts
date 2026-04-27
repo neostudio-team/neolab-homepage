@@ -1,83 +1,28 @@
 import styled from "styled-components";
 import { media } from "@/styles/theme";
 
-/* ── Hero ───────────────────────────────────────── */
-export const HeroSection = styled.section`
-  position: relative;
-  width: 100%;
-  height: 50vw;
-  max-height: 950px;
-  min-height: 320px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ── Page wrapper ───────────────────────────────── */
+export const Page = styled.main`
+  background: #fff;
+  min-height: 100vh;
 `;
 
-export const HeroBgImg = styled.img`
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-`;
-
-export const HeroTitle = styled.h1`
-  position: relative;
-  z-index: 1;
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(48px, 7vw, 100px);
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: -0.02em;
-`;
-
-/* ── Intro section ──────────────────────────────── */
-export const IntroSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: clamp(60px, 6vw, 120px);
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: clamp(60px, 10vw, 200px) clamp(24px, 7vw, 140px);
-`;
-
-export const IntroText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  align-self: flex-start;
-  width: 100%;
-`;
-
-export const IntroTitle = styled.h2`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(32px, 5vw, 80px);
-  font-weight: 700;
-  color: #111;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-`;
-
-export const IntroDesc = styled.p`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(14px, 1.5vw, 28px);
-  font-weight: 500;
-  color: #111;
-  letter-spacing: -0.01em;
-  line-height: 1.6;
-`;
-
-/* CTA row */
+/* ──────────────────────────────────────────────────
+ * Intro CTA row — passed into <RevealHeadingBody contents>.
+ * Layout: [팝펜 팩토리 button] [main product image] [팝펜 공식몰 button]
+ * Stacks on mobile.
+ * ────────────────────────────────────────────────── */
 export const CtaRow = styled.div`
   display: flex;
+  flex-direction: column;
   gap: clamp(24px, 5vw, 80px);
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  flex-wrap: wrap;
+  width: 100%;
+
+  ${media.lg} {
+    flex-direction: row;
+  }
 `;
 
 export const CtaCard = styled.a<{ $filled?: boolean }>`
@@ -85,203 +30,152 @@ export const CtaCard = styled.a<{ $filled?: boolean }>`
   align-items: center;
   gap: 24px;
   padding: 24px 32px;
-  width: clamp(240px, 20vw, 386px);
+  width: 100%;
+  max-width: 386px;
   border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.2s;
+
   &:hover {
     opacity: 0.85;
   }
+
+  order: ${({ $filled }) => ($filled ? 2 : 1)};
+
   ${({ $filled }) =>
     $filled
-      ? `background: #FF9900; border: none;`
+      ? `background: #FF9900; border: 2px solid #FF9900;`
       : `background: transparent; border: 2px solid #FF9900; backdrop-filter: blur(12px);`}
+
+  ${media.lg} {
+    order: ${({ $filled }) => ($filled ? 3 : 1)};
+  }
 `;
 
 export const CtaLabel = styled.span<{ $filled?: boolean }>`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  flex: 1;
   font-size: clamp(16px, 1.3vw, 24px);
   font-weight: 600;
   letter-spacing: -0.005em;
   white-space: nowrap;
-  flex: 1;
   color: ${({ $filled }) => ($filled ? "#fff" : "#FF9900")};
 `;
 
-export const CtaCircle = styled.div<{ $filled?: boolean }>`
+/**
+ * Circular CTA matching Figma 51:2068 — same ring-with-protruding-arrow pattern
+ * as Tech `AppCardCta`, but colored per `$filled` (orange-on-transparent or
+ * white-on-orange).
+ */
+export const CtaCircle = styled.span<{ $filled?: boolean }>`
   position: relative;
-  width: 79px;
-  height: 79px;
   flex-shrink: 0;
-  border-radius: 50%;
-  border: 1px solid ${({ $filled }) => ($filled ? "#fff" : "#FF9900")};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 2px;
-`;
+  width: clamp(60px, 6vw, 79px);
+  height: clamp(60px, 6vw, 79px);
+  margin-right: clamp(18px, 2vw, 24px);
 
-export const CtaCircleText = styled.span<{ $filled?: boolean }>`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: ${({ $filled }) => ($filled ? "#fff" : "#FF9900")};
-`;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid ${({ $filled }) => ($filled ? "#fff" : "#FF9900")};
+    border-radius: 50%;
+  }
 
-export const CtaArrow = styled.img`
-  width: 25px;
-  height: 16px;
-  position: absolute;
-  right: 9px;
-  top: 50%;
-  transform: translateY(-50%);
+  span {
+    position: absolute;
+    left: 11%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(13px, 1.1vw, 16px);
+    font-weight: 600;
+    color: ${({ $filled }) => ($filled ? "#fff" : "#FF9900")};
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+
+  svg {
+    position: absolute;
+    left: 87%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(20px, 1.7vw, 25px);
+    height: auto;
+    color: ${({ $filled }) => ($filled ? "#fff" : "#FF9900")};
+  }
 `;
 
 export const CtaProductImg = styled.img`
-  width: clamp(200px, 26vw, 500px);
-  height: clamp(200px, 26vw, 500px);
-  object-fit: cover;
+  width: clamp(220px, 26vw, 500px);
+  height: clamp(220px, 26vw, 500px);
+  object-fit: contain;
   flex-shrink: 0;
+  order: 3;
+
+  ${media.lg} {
+    order: 2;
+  }
 `;
 
-/* ── 라인업 section ──────────────────────────────── */
-export const LineupSection = styled.section`
-  background: #fcfcfc;
-  padding: clamp(60px, 10vw, 200px) clamp(24px, 7vw, 140px);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(40px, 5vw, 80px);
-  overflow: hidden;
-`;
-
-export const LineupHead = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  align-items: center;
-  position: relative;
-`;
-
-export const LineupOrangeDot = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ff9900;
-`;
-
-export const LineupTitle = styled.h2`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(32px, 4vw, 64px);
-  font-weight: 700;
-  color: #111;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  text-align: center;
-`;
-
-export const LineupDesc = styled.p`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(14px, 1.3vw, 24px);
-  color: #000;
-  line-height: 1.4;
-  text-align: center;
-  letter-spacing: -0.01em;
-`;
-
+/* ──────────────────────────────────────────────────
+ * 라인업 — 4-card row inside <Section>.
+ * Stacks on mobile, side-by-side from md.
+ * ────────────────────────────────────────────────── */
 export const LineupCards = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 16px;
-  height: clamp(300px, 40vw, 670px);
-  align-items: center;
-  ${media.md} {
-    flex-direction: column;
-    height: auto;
+  width: 100%;
+
+  ${media.sm} {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  ${media.lg} {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 `;
 
 export const LineupCard = styled.div`
-  flex: 1;
-  min-width: 0;
-  height: 100%;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 16px;
-  padding: 32px;
+  padding: clamp(20px, 3vw, 32px);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(16px, 2vw, 24px);
   align-items: center;
   overflow: hidden;
-  ${media.md} {
-    height: auto;
-    padding: 24px;
-  }
 `;
 
 export const LineupCardImg = styled.img`
-  width: clamp(180px, 20vw, 500px);
-  height: clamp(180px, 20vw, 500px);
-  object-fit: cover;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1;
+  object-fit: contain;
 `;
 
 export const LineupCardName = styled.p`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  margin: 0;
   font-size: clamp(18px, 2vw, 32px);
   font-weight: 600;
   color: #111;
   letter-spacing: -0.005em;
   white-space: nowrap;
-  flex-shrink: 0;
 `;
 
-/* ── 스티커 & 패밀리 도서 section ────────────────── */
-export const StickerSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: clamp(40px, 5vw, 80px);
-  align-items: flex-start;
-  justify-content: center;
-  overflow: hidden;
-  padding: clamp(60px, 10vw, 200px) clamp(24px, 7vw, 140px);
-  position: relative;
-`;
-
-export const StickerHead = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
-export const StickerOrangeDot = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ff9900;
-  margin-bottom: 32px;
-`;
-
-export const StickerTitle = styled.h2`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(32px, 4vw, 64px);
-  font-weight: 700;
-  color: #111;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  text-align: center;
-`;
-
-/* ── Sticker tabs layout ─────────────────────────── */
+/* ──────────────────────────────────────────────────
+ * 스티커 & 패밀리 도서 — tab UI (3 vertical tabs + content panel).
+ * ────────────────────────────────────────────────── */
 export const StickerTabsWrap = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 16px;
   align-items: stretch;
   width: 100%;
-  ${media.md} {
-    flex-direction: column;
+
+  ${media.lg} {
+    flex-direction: row;
   }
 `;
 
@@ -290,25 +184,29 @@ export const TabsList = styled.div`
   flex-direction: column;
   gap: 16px;
   flex-shrink: 0;
-  width: clamp(200px, 33%, 641px);
-  justify-content: center;
-  ${media.md} {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
+  width: 100%;
+
+  ${media.lg} {
+    width: clamp(280px, 33%, 641px);
+    justify-content: center;
   }
 `;
 
-export const StickerTabBtn = styled.button<{ $active: boolean; $position: "top" | "middle" | "bottom" }>`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
+export const StickerTabBtn = styled.button<{ $active: boolean }>`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   font-size: clamp(16px, 1.8vw, 32px);
   font-weight: 600;
   letter-spacing: -0.005em;
-  padding: 32px;
+  padding: clamp(20px, 2.5vw, 32px);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   white-space: nowrap;
-  flex: 1;
 
   ${({ $active }) =>
     $active
@@ -316,19 +214,29 @@ export const StickerTabBtn = styled.button<{ $active: boolean; $position: "top" 
     background: #FF9900;
     color: #fff;
     border: none;
-    border-radius: 16px 0 0 16px;
-    width: calc(100% + 4px);
-    margin-right: -4px;
-    position: relative;
-    z-index: 1;
+    border-radius: 16px;
   `
       : `
     background: #fff;
     color: #111;
     border: 1px solid #ddd;
     border-radius: 16px;
-    text-align: left;
   `}
+
+  /* On lg+ the active tab "merges" with the panel: left side rounded,
+   * right side flat, and extends past the parent to cover the gap so it
+   * sits flush against the panel's orange border. */
+  ${media.lg} {
+    ${({ $active }) =>
+      $active &&
+      `
+      border-radius: 16px 0 0 16px;
+      width: calc(100% + 16px);
+      margin-right: -16px;
+      position: relative;
+      z-index: 1;
+    `}
+  }
 `;
 
 export const StickerPanel = styled.div<{ $activeIdx: number }>`
@@ -337,32 +245,38 @@ export const StickerPanel = styled.div<{ $activeIdx: number }>`
   background: #fff;
   border: 4px solid #ff9900;
   display: flex;
-  gap: 24px;
-  align-items: center;
-  padding: 40px;
-  height: clamp(300px, 35vw, 536px);
-  border-radius: ${({ $activeIdx }) =>
-    $activeIdx === 0
-      ? "0 16px 16px 16px"
-      : $activeIdx === 1
-        ? "16px"
-        : "16px 16px 0 16px"};
-  ${media.md} {
-    border-radius: 16px;
-    height: auto;
-    flex-direction: column;
+  flex-direction: column;
+  gap: clamp(16px, 2.5vw, 24px);
+  align-items: stretch;
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: 16px;
+
+  ${media.lg} {
+    flex-direction: row;
+    align-items: center;
+    height: clamp(420px, 35vw, 536px);
+    border-radius: ${({ $activeIdx }) =>
+      $activeIdx === 0
+        ? "0 16px 16px 16px"
+        : $activeIdx === 1
+          ? "16px"
+          : "16px 16px 16px 0"
+    };
+        
   }
 `;
 
 export const StickerPanelImg = styled.div`
   flex-shrink: 0;
-  width: clamp(120px, 18vw, 344px);
-  height: clamp(180px, 24vw, 431px);
+  width: 100%;
+  aspect-ratio: 344 / 431;
   position: relative;
   overflow: hidden;
-  ${media.md} {
-    width: 100%;
-    height: 200px;
+
+  ${media.lg} {
+    width: clamp(180px, 22vw, 344px);
+    height: auto;
+    aspect-ratio: 344 / 431;
   }
 `;
 
@@ -371,43 +285,43 @@ export const StickerPanelContent = styled.div`
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(16px, 2vw, 24px);
 `;
 
 export const StickerPanelTitle = styled.h3`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(18px, 1.8vw, 28px);
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
   font-weight: 700;
   color: #111;
   letter-spacing: -0.005em;
-  line-height: normal;
-  white-space: nowrap;
+  line-height: 1.2;
 `;
 
 export const StickerPanelDesc = styled.p`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(13px, 1.1vw, 20px);
+  margin: 0;
+  font-size: clamp(14px, 1.2vw, 20px);
   color: #111;
   line-height: 1.4;
   letter-spacing: -0.005em;
 `;
 
 export const StickerBulletList = styled.ul`
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 0;
   list-style: none;
 `;
 
 export const StickerBulletItem = styled.li`
-  font-family: "Pretendard Variable", Pretendard, sans-serif;
-  font-size: clamp(13px, 1.1vw, 20px);
+  display: flex;
+  gap: 8px;
+  font-size: clamp(14px, 1.2vw, 20px);
   color: #111;
   line-height: 1.4;
   letter-spacing: -0.005em;
-  display: flex;
-  gap: 8px;
+
   &::before {
     content: "•";
     flex-shrink: 0;
@@ -415,7 +329,7 @@ export const StickerBulletItem = styled.li`
 `;
 
 export const StickerBulletTitle = styled.strong`
-  font-weight: 600;
   display: block;
   margin-bottom: 4px;
+  font-weight: 600;
 `;

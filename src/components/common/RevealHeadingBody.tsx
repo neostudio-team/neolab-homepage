@@ -32,7 +32,7 @@ export type RevealHeadingBodyProps = {
 
 const titleDefaults: RevealMotionProps = {
   y: 40,
-  once: true,
+  once: false,
   amount: 0.2,
   duration: 1.0,
 };
@@ -40,14 +40,14 @@ const titleDefaults: RevealMotionProps = {
 const descDefaults: RevealMotionProps = {
   y: 32,
   delay: 0.15,
-  once: true,
+  once: false,
   amount: 0.2,
 };
 
 const contentsDefaults: RevealMotionProps = {
   y: 50,
   delay: 0.25,
-  once: true,
+  once: false,
   amount: 0.15,
   duration: 1.0,
 };
