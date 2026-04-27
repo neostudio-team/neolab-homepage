@@ -3,19 +3,17 @@ import styled from "styled-components";
 
 export const HeadingWrap = styled.div`
   display: flex;
-  margin-bottom: clamp(48px, 8vw, 120px);
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: clamp(24px, 2vw, 32px);
 `;
 
 export const HeadingTitle = styled.h2<{ $tone: "dark" | "light" }>`
   position: relative;
-  margin: 0;
   color: ${({ $tone }) => ($tone === "light" ? "#fff" : "#000")};
-  font-size: clamp(2rem, 5.5vw, 5rem);
+  font-size: clamp(2rem, 4.2vw, 4rem);
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -1px;
 
   &::before {
     content: "";
@@ -27,4 +25,11 @@ export const HeadingTitle = styled.h2<{ $tone: "dark" | "light" }>`
     border-radius: 999px;
     border: clamp(5px, 0.6vw, 10px) solid ${colors.primary};
   }
+`;
+
+export const HeadingDesc = styled.p<{ $tone: "dark" | "light" }>`
+  text-align: center;
+  color: ${({ $tone }) => ($tone === "light" ? "#fff" : "#111")};
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
+  white-space: pre-line;
 `;

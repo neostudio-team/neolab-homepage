@@ -4,7 +4,7 @@ import Footer from "@/components/common/Footer";
 import PageHero from "@/components/common/PageHero";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
-import JaCompanyPage from "@/features/company/JaCompanyPage";
+import JaCompanyPage from "@/app/[lang]/company/JaCompanyPage";
 import CompanyVision from "./components/CompanyVision";
 import CompanyJourney from "./components/CompanyJourney";
 import CompanyTeam from "./components/CompanyTeam";
@@ -35,7 +35,7 @@ export default async function CompanyPage({
       <Page>
         <PageHero
           title="회사 개요"
-          backgroundImage="/images/company/figma/hero-bg.png"
+          backgroundImage="/images/company/hero-bg.png"
         />
         <CompanyVision />
         <CompanyJourney />

@@ -8,24 +8,30 @@ import {
   SectionRoot,
 } from "./Section.styles";
 
-interface SectionProps extends HTMLAttributes<HTMLElement> {
+interface SectionProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   children: ReactNode;
-  title?: string;
+  title?: ReactNode;
+  desc?: ReactNode;
   tone?: "dark" | "light";
   background?: string;
   backgroundImage?: string;
   overlay?: string;
   contained?: boolean;
+  paddingTop?: CSSProperties["paddingTop"];
+  paddingBottom?: CSSProperties["paddingBottom"];
 }
 
 export default function Section({
   children,
-  title = "",
+  title,
+  desc,
   tone = "dark",
   background,
   backgroundImage,
   overlay,
   contained = true,
+  paddingTop,
+  paddingBottom,
   style,
   ...rest
 }: SectionProps) {
@@ -38,6 +44,8 @@ export default function Section({
           backgroundPosition: "center",
         }
       : {}),
+    ...(paddingTop !== undefined ? { paddingTop } : {}),
+    ...(paddingBottom !== undefined ? { paddingBottom } : {}),
     ...style,
   };
 
@@ -46,7 +54,11 @@ export default function Section({
   return (
     <SectionRoot $tone={tone} style={mergedStyle} {...rest}>
       {overlay && <SectionOverlay $bg={overlay} />}
-      {title.length > 0 && <SectionHeading tone={tone}>{title}</SectionHeading>}
+      {(title != null || desc != null) && (
+        <SectionHeading tone={tone} desc={desc}>
+          {title}
+        </SectionHeading>
+      )}
       {body}
     </SectionRoot>
   );

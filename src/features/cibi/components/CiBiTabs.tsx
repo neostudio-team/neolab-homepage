@@ -2,28 +2,19 @@
 
 import { useState, useRef, useEffect, useCallback, type ReactNode } from "react";
 import { Icon } from "@iconify/react";
+import Reveal from "@/components/common/Reveal";
 import {
   TabSection,
   TabBarWrap,
   TabBar,
   TabBtn,
-  TabDotArea,
-  TabDot,
-  ContentWrap,
-  ContentHeader,
-  ContentTitle,
-  ContentDesc,
   SectionBlock,
   SectionLabel,
   LogoRowBorder,
   LogoCell,
   LogoImg,
-  SpRows,
-  SpRow,
-  SpCell,
   LangRow,
   LangTag,
-  LangLogoBox,
   ColorCardsRow,
   ColorCard,
   ColorCardFull,
@@ -33,15 +24,13 @@ import {
   ColorMeta,
   ColorMetaRow,
   ColorMetaKey,
-  GradientCard,
   GradientSwatch,
   GradientStops,
-  GradientStop,
-  GradientHex,
   GradientRgb,
   DownloadRow,
   DownloadBtn,
 } from "../CiBiPage.styles";
+import Section from "@/components/common/Section";
 
 type TabId = "neolab" | "smartpen" | "aigle" | "pokoro";
 
@@ -116,19 +105,14 @@ function Btns() {
 /* ── NeoLAB CI ──────────────────────────────────── */
 function NeolabContent() {
   return (
-    <ContentWrap>
-      <ContentHeader>
-        <ContentTitle>네오랩컨버전스 - CI</ContentTitle>
-        <ContentDesc>
-          NeoLAB의 워드마크(텍스트형) 로고로 가장 기본이 되는 로고입니다.
-          <br />
-          로고는 워드마크로만 사용할 수 있으며, 일관된 커뮤니케이션을 위해
-          형태나 색상, 스타일의 변형, 타 그래픽 요소와의 결합 없이
-          <br />
-          그대로 사용해야 합니다.
-        </ContentDesc>
-      </ContentHeader>
-
+    <Section 
+      title="네오랩컨버전스 - CI" 
+      paddingTop={0} 
+      paddingBottom={0}
+      desc={
+        "NeoLAB의 워드마크(텍스트형) 로고로 가장 기본이 되는 로고입니다.\n로고는 워드마크로만 사용할 수 있으며, 일관된 커뮤니케이션을 위해 형태나 색상, 스타일의 변형, 타 그래픽 요소와의 결합 없이 그대로 사용해야 합니다."
+      }
+    >
       <SectionBlock>
         <SectionLabel>
           <span className="dot">• </span>Logo
@@ -138,13 +122,13 @@ function NeolabContent() {
             <LogoImg src={CI.logo1} alt="NeoLAB CI logo" />
           </LogoCell>
           <LogoCell $bg="#515559">
-            <LogoImg src={CI.logo1Dark} alt="NeoLAB CI logo dark" />
+            <LogoImg src={CI.logo1Dark} alt="NeoLAB CI logo (dark)" />
           </LogoCell>
           <LogoCell>
-            <LogoImg src={CI.logo2} alt="NeoLAB CI logo 2" />
+            <LogoImg src={CI.logo2} alt="NeoLAB CI symbol" />
           </LogoCell>
           <LogoCell $bg="#515559">
-            <LogoImg src={CI.logo2Dark} alt="NeoLAB CI logo 2 dark" />
+            <LogoImg src={CI.logo2Dark} alt="NeoLAB CI symbol (dark)" />
           </LogoCell>
         </LogoRowBorder>
       </SectionBlock>
@@ -186,51 +170,45 @@ function NeolabContent() {
       </SectionBlock>
 
       <Btns />
-    </ContentWrap>
+    </Section>
   );
 }
 
 /* ── NEO SMARTPEN BI ────────────────────────────── */
 function SmartpenContent() {
   return (
-    <ContentWrap>
-      <ContentHeader>
-        <ContentTitle>네오스마트펜 - BI</ContentTitle>
-        <ContentDesc>
-          NEO SMARTPEN의 메인 심볼과 영문 워드마크가 합쳐진 조합형 로고를 주
-          사용으로 지정하고 활용하며,{" "}
-          상황에 따라 심볼과 워드마크를 각각 사용할 수 있습니다.
-          <br />
-          일관된 커뮤니케이션을 위해 형태나 색상, 스타일의 변형, 타 그래픽
-          요소와의 결합 없이 그대로 사용해야 합니다.
-        </ContentDesc>
-      </ContentHeader>
+    <Section 
+      title="네오스마트펜 - BI" 
+      paddingTop={0} 
+      paddingBottom={0} 
+      desc={
+        "NEO SMARTPEN의 메인 심볼과 영문 워드마크가 합쳐진 조합형 로고를 주 사용으로 지정하고 활용하며, 상황에 따라 심볼과 워드마크를 각각 사용할 수 있습니다.\n일관된 커뮤니케이션 위해 형태나 색상, 스타일의 변형, 타 그래픽 요소와의 결합 없이 그대로 사용해야 합니다."
+      }
+    >
 
       <SectionBlock>
         <SectionLabel>
           <span className="dot">• </span>Logo
         </SectionLabel>
-        <SpRows>
-          <SpRow>
-            {SP.light.map((src, i) => (
-              <SpCell key={i}>
-                <LogoImg src={src} alt="" style={{ maxHeight: 65 }} />
-              </SpCell>
-            ))}
-          </SpRow>
-          <SpRow $dark>
-            {SP.dark.map((src, i) => (
-              <SpCell key={i}>
-                <LogoImg src={src} alt="" style={{ maxHeight: 65 }} />
-              </SpCell>
-            ))}
-          </SpRow>
-        </SpRows>
+        <LogoRowBorder>
+          {SP.light.map((src, i) => (
+            <LogoCell key={i}>
+              <LogoImg src={src} alt="" style={{ maxHeight: 65 }} />
+            </LogoCell>
+          ))}
+        </LogoRowBorder>
+        <LogoRowBorder $dark>
+          {SP.dark.map((src, i) => (
+            <LogoCell key={i}>
+              <LogoImg src={src} alt="" style={{ maxHeight: 65 }} />
+            </LogoCell>
+          ))}
+        </LogoRowBorder>
       </SectionBlock>
 
       <SectionBlock>
         <SectionLabel>
-          <span className="dot">• </span>Color System
+          <span className="dot">• </span>Color
         </SectionLabel>
         <ColorCardFull>
           <Swatch $bg="#4C4A49" />
@@ -249,26 +227,21 @@ function SmartpenContent() {
       </SectionBlock>
 
       <Btns />
-    </ContentWrap>
+    </Section>
   );
 }
 
 /* ── AiGLE BI ───────────────────────────────────── */
 function AigleContent() {
   return (
-    <ContentWrap>
-      <ContentHeader>
-        <ContentTitle>아이글 - BI</ContentTitle>
-        <ContentDesc>
-          AiGLE의 메인 심볼과 영문 워드마크가 합쳐진 조합형 로고를 주 사용으로
-          지정하고 활용하며,
-          <br />
-          상황에 따라 심볼과 워드마크를 각각 사용할 수 있습니다.
-          <br />
-          일관된 커뮤니케이션 위해 형태나 색상, 스타일의 변형, 타 그래픽
-          요소와의 결합 없이 그대로 사용해야 합니다.
-        </ContentDesc>
-      </ContentHeader>
+    <Section 
+      title="아이글 - BI" 
+      paddingTop={0} 
+      paddingBottom={0} 
+      desc={
+        "AiGLE의 메인 심볼과 영문 워드마크가 합쳐진 조합형 로고를 주 사용으로 지정하고 활용하며, 상황에 따라 심볼과 워드마크를 각각 사용할 수 있습니다.\n일관된 커뮤니케이션 위해 형태나 색상, 스타일의 변형, 타 그래픽 요소와의 결합 없이 그대로 사용해야 합니다."
+      }
+    >
 
       <SectionBlock>
         <SectionLabel>
@@ -276,35 +249,33 @@ function AigleContent() {
         </SectionLabel>
         <LangRow>
           <LangTag>영어</LangTag>
-          <LangLogoBox>
+          <LogoRowBorder>
             {AIGLE.enLight.map((src, i) => (
-              <LogoCell key={i} style={{ height: 100 }}>
+              <LogoCell key={i}>
                 <LogoImg src={src} alt="" />
               </LogoCell>
             ))}
             <LogoCell
               $bg="#37393a"
-              style={{ height: 100, borderRadius: 4 }}
             >
               <LogoImg src={AIGLE.enDark} alt="" />
             </LogoCell>
-          </LangLogoBox>
+          </LogoRowBorder>
         </LangRow>
         <LangRow>
           <LangTag>한글</LangTag>
-          <LangLogoBox>
+          <LogoRowBorder>
             {AIGLE.koLight.map((src, i) => (
-              <LogoCell key={i} style={{ height: 90 }}>
+              <LogoCell key={i}>
                 <LogoImg src={src} alt="" />
               </LogoCell>
             ))}
             <LogoCell
               $bg="#37393a"
-              style={{ height: 100, borderRadius: 4 }}
             >
               <LogoImg src={AIGLE.koDark} alt="" />
             </LogoCell>
-          </LangLogoBox>
+          </LogoRowBorder>
         </LangRow>
       </SectionBlock>
 
@@ -312,29 +283,29 @@ function AigleContent() {
         <SectionLabel>
           <span className="dot">• </span>Color
         </SectionLabel>
-        <GradientCard>
+        <ColorCard>
           <GradientSwatch />
           <GradientStops>
-            <GradientStop>
-              <GradientHex $color="#0CCBFF">
+            <ColorInfo>
+              <ColorHex $color="#0CCBFF">
                 <span className="pct">13.5% - </span>#0CCBFF
-              </GradientHex>
+              </ColorHex>
               <GradientRgb>R: 29 / G: 203 / B: 255</GradientRgb>
-            </GradientStop>
-            <GradientStop>
-              <GradientHex $color="#158BFA">
+            </ColorInfo>
+            <ColorInfo>
+              <ColorHex $color="#158BFA">
                 <span className="pct">50% - </span>#158BFA
-              </GradientHex>
+              </ColorHex>
               <GradientRgb>R: 21 / G: 139 / B: 250</GradientRgb>
-            </GradientStop>
-            <GradientStop>
-              <GradientHex $color="#5349F4">
+            </ColorInfo>
+            <ColorInfo>
+              <ColorHex $color="#5349F4">
                 <span className="pct">90% - </span>#5349F4
-              </GradientHex>
+              </ColorHex>
               <GradientRgb>R: 83 / G: 73 / B: 244</GradientRgb>
-            </GradientStop>
+            </ColorInfo>
           </GradientStops>
-        </GradientCard>
+        </ColorCard>
         <ColorCardsRow>
           <ColorCard>
             <Swatch $bg="#1D49F4" />
@@ -368,26 +339,21 @@ function AigleContent() {
       </SectionBlock>
 
       <Btns />
-    </ContentWrap>
+    </Section>
   );
 }
 
 /* ── POKORO BI ──────────────────────────────────── */
 function PokoroContent() {
   return (
-    <ContentWrap>
-      <ContentHeader>
-        <ContentTitle>포코로 - BI</ContentTitle>
-        <ContentDesc>
-          POKORO의 메인 심볼과 영문 워드마크가 합쳐진 조합형 로고를 주 사용으로
-          지정하고 활용하며,
-          <br />
-          상황에 따라 워드마크만 따로 사용할 수 있습니다.
-          <br />
-          일관된 커뮤니케이션 위해 형태나 색상, 스타일의 변형, 타 그래픽
-          요소와의 결합 없이 그대로 사용해야 합니다.
-        </ContentDesc>
-      </ContentHeader>
+    <Section 
+      title="포코로 - BI" 
+      paddingTop={0} 
+      paddingBottom={0} 
+      desc={
+        "POKORO의 메인 심볼과 영문 워드마크가 합쳐진 조합형 로고를 주 사용으로 지정하고 활용하며,\n상황에 따라 워드마크만 따로 사용할 수 있습니다.\n일관된 커뮤니케이션 위해 형태나 색상, 스타일의 변형, 타 그래픽 요소와의 결합 없이 그대로 사용해야 합니다."
+      }
+    >
 
       <SectionBlock>
         <SectionLabel>
@@ -395,33 +361,27 @@ function PokoroContent() {
         </SectionLabel>
         <LangRow>
           <LangTag>영어</LangTag>
-          <LangLogoBox>
+          <LogoRowBorder>
             {POKORO.enLight.map((src, i) => (
-              <LogoCell key={i} style={{ height: 100 }}>
+              <LogoCell key={i}>
                 <LogoImg src={src} alt="" />
               </LogoCell>
             ))}
-            <LogoCell
-              $bg="#231F20"
-              style={{ height: 100, borderRadius: 4 }}
-            >
+            <LogoCell $bg="#231F20">
               <LogoImg src={POKORO.enDark} alt="" />
             </LogoCell>
-          </LangLogoBox>
+          </LogoRowBorder>
         </LangRow>
         <LangRow>
           <LangTag>한글</LangTag>
-          <LangLogoBox>
-            <LogoCell style={{ height: 65 }}>
+          <LogoRowBorder>
+            <LogoCell>
               <LogoImg src={POKORO.koLight} alt="" />
             </LogoCell>
-            <LogoCell
-              $bg="#231F20"
-              style={{ height: 80, borderRadius: 4 }}
-            >
+            <LogoCell $bg="#231F20">
               <LogoImg src={POKORO.koDark} alt="" />
             </LogoCell>
-          </LangLogoBox>
+          </LogoRowBorder>
         </LangRow>
       </SectionBlock>
 
@@ -462,7 +422,7 @@ function PokoroContent() {
       </SectionBlock>
 
       <Btns />
-    </ContentWrap>
+    </Section>
   );
 }
 
@@ -487,7 +447,7 @@ export default function CiBiTabs() {
     if (btn && bar) {
       const br = btn.getBoundingClientRect();
       const pr = bar.getBoundingClientRect();
-      setDotLeft(br.left - pr.left + br.width / 2 - 20);
+      setDotLeft(br.left - pr.left + br.width / 2);
     }
   }, [active]);
 
@@ -500,26 +460,27 @@ export default function CiBiTabs() {
   return (
     <TabSection>
       <TabBarWrap ref={barRef}>
-        <TabBar>
-          {TABS.map((tab, i) => (
-            <TabBtn
-              key={tab.id}
-              $active={active === tab.id}
-              onClick={() => setActive(tab.id)}
-              ref={(el) => {
-                tabRefs.current[i] = el;
-              }}
-            >
-              {tab.label}
-            </TabBtn>
-          ))}
-        </TabBar>
-        <TabDotArea>
-          {dotLeft !== null && <TabDot style={{ left: dotLeft }} />}
-        </TabDotArea>
+        <Reveal y={32} once={false} amount={0.3}>
+          <TabBar>
+            {TABS.map((tab, i) => (
+              <TabBtn
+                key={tab.id}
+                $active={active === tab.id}
+                onClick={() => setActive(tab.id)}
+                ref={(el) => {
+                  tabRefs.current[i] = el;
+                }}
+              >
+                {tab.label}
+              </TabBtn>
+            ))}
+          </TabBar>
+        </Reveal>
       </TabBarWrap>
 
-      {CONTENT[active]}
+      <Reveal key={active} y={28} amount={0.1} duration={0.9} once={false}>
+        {CONTENT[active]}
+      </Reveal>
     </TabSection>
   );
 }

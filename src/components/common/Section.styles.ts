@@ -3,8 +3,11 @@ import styled from "styled-components";
 
 export const SectionRoot = styled.section<{ $tone: "dark" | "light" }>`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(48px, 6.25vw, 120px);
   width: 100%;
-  overflow: hidden;
   color: ${({ $tone }) => ($tone === "light" ? "#fff" : "#111")};
   padding: 120px 1rem;
 
@@ -26,9 +29,10 @@ export const SectionOverlay = styled.div<{ $bg: string }>`
 `;
 
 export const SectionInner = styled.div`
-  position: relative;
-  margin: 0 auto;
-  max-width: 1640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(40px, 6.25vw, 80px);
   width: 100%;
   z-index: 1;
 `;

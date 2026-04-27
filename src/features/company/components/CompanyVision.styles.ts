@@ -1,5 +1,9 @@
 import styled, { keyframes } from "styled-components";
 import { colors, media } from "@/styles/theme";
+import {
+  RevealDescription,
+  RevealTitle,
+} from "@/components/common/RevealHeadingBody.styles";
 
 const watermarkFlow = keyframes`
   from {
@@ -10,10 +14,8 @@ const watermarkFlow = keyframes`
   }
 `;
 
-export const VisionHeading = styled.div`
+export const VisionHeading = styled(RevealTitle)`
   font-size: clamp(2rem, 5.5vw, 5rem);
-  line-height: 1.2;
-  font-weight: 700;
 
   span {
     color: ${colors.primary};
@@ -27,10 +29,9 @@ export const VisionBodyGroup = styled.div`
   margin-top: clamp(24px, 5vw, 48px);
 `;
 
-export const VisionParagraph = styled.p<{ $muted?: boolean }>`
+export const VisionParagraph = styled(RevealDescription)<{ $muted?: boolean }>`
   font-size: clamp(1rem, 1.4vw, 1.5rem);
   font-weight: 400;
-  color: #111111;
 `;
 
 export const IndustryGrid = styled.div`
