@@ -1,80 +1,43 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
-import { LazySection } from "@/components/home";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
+import TechTabs from "./components/TechTabs";
 import {
-  AppCard,
-  AppCardDesc,
-  AppCardTitle,
-  AppFieldsTitle,
-  AppGrid,
-  AppIcon,
-  Body,
-  BodyNoMargin,
-  CenterIntro,
-  CenterWrap,
-  Col37,
-  Col50,
-  Col50FlexCenter,
-  Col58,
-  Col58FlexCenter,
-  Container,
-  DevDesc,
-  DevSection,
-  DevTitle,
-  FeatureIcon,
-  FeatureRow,
-  FeatureTitle,
-  FullImage,
-  GithubLink,
-  HardwareCard,
-  HardwareGrid,
-  HardwareIntroBody,
-  HeroContainer,
-  HeroDesc,
-  HeroLabel,
   HeroSection,
+  HeroBgImg,
   HeroTitle,
-  HwDesc,
-  HwIcon,
-  HwTitle,
-  IconWrap,
-  ImageStack,
-  PatentsContainer,
-  PatentsDesc,
-  PatentsTitle,
-  PatternImage,
-  SectionDark,
-  SectionGray,
-  SectionTitle,
-  SectionTitleSm,
-  SectionWhite,
-  ShopLink,
-  ShopWrap,
-  Stack,
-  SubTitle,
-  TwoCol,
-  WideImage,
+  MainContent,
+  IntroSection,
+  IntroHead,
+  IntroTitle,
+  IntroDesc,
+  IntroImgWrap,
+  IntroImg,
+  AppSection,
+  AppHead,
+  AppTitle,
+  AppDesc,
+  AppCards,
+  AppCard,
+  AppCardBgImg,
+  AppCardLabel,
+  DevSection,
+  DevBgOverlay,
+  DevBgImg,
+  DevInner,
+  DevTitle,
+  DevDesc,
+  DevBtn,
+  OrangeDot,
 } from "./TechnologyPage.styles";
 
 export const metadata: Metadata = {
-  title: "Technology - NeoLAB Convergence Inc.",
-  description: "Ncode Technology - The core technology behind NeoLAB products",
+  title: "기술/솔루션 | 네오랩컨버전스",
+  description:
+    "Ncode와 닷코드, 전자펜에 이르는 원천·기반·응용 기술 전반을 자체 개발한 네오랩컨버전스의 독자적 기술력",
 };
-
-const ncodeIcons = [
-  "/images/technology/icon-Ncode_1.png",
-  "/images/technology/icon-Ncode_2.png",
-];
-
-const hwIcons = [
-  "/images/technology/icon-Ncode_3-1.png",
-  "/images/technology/icon-Ncode_4.png",
-  "/images/technology/icon-Ncode_05-1.png",
-];
 
 export default async function TechnologyPage({
   params,
@@ -83,166 +46,91 @@ export default async function TechnologyPage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
-  const t = dict.technology;
-
-  const shopUrl =
-    lang === "ko"
-      ? "https://store.neosmartpen.com/"
-      : lang === "ja"
-        ? "https://neosmartpenjp.com/"
-        : "https://shop.neosmartpen.com/";
 
   return (
     <>
       <Header lang={lang} dict={dict.common.header} />
       <main>
+        {/* ── Hero ──────────────────────────────────── */}
         <HeroSection>
-          <HeroContainer>
-            <HeroLabel>{t.hero.label}</HeroLabel>
-            <HeroTitle>{t.hero.title}</HeroTitle>
-            <HeroDesc>{t.hero.description}</HeroDesc>
-          </HeroContainer>
+          <HeroBgImg src="/images/technology/hero-bg.jpg" alt="" />
+          <HeroTitle>기술/솔루션</HeroTitle>
         </HeroSection>
 
-        <SectionWhite>
-          <Container>
-            <TwoCol>
-              <Col37>
-                <SectionTitle>{t.whatIsNcode.title}</SectionTitle>
-                <Body>{t.whatIsNcode.p1}</Body>
-                <Body>{t.whatIsNcode.p2}</Body>
-              </Col37>
-              <Col58FlexCenter>
-                <PatternImage src="/images/technology/Neo-05_2.png" alt="Ncode Pattern" width={500} height={400} />
-              </Col58FlexCenter>
-            </TwoCol>
-          </Container>
-        </SectionWhite>
+        {/* ── Intro + Tabs ──────────────────────────── */}
+        <MainContent>
+          <IntroSection>
+            <IntroHead>
+              <IntroTitle>세상을 잇는 독자적 기술력.</IntroTitle>
+              <IntroDesc>
+                Ncode와 닷코드, 전자펜에 이르는 원천·기반·응용 기술 전반을
+                자체 개발하였으며,{"\n"}전 세계 100여 건의 특허를 통해 독보적인
+                기술 리더십을 확보하고 있습니다.
+              </IntroDesc>
+            </IntroHead>
+            <IntroImgWrap>
+              <IntroImg src="/images/technology/intro.jpg" alt="기술 소개" />
+            </IntroImgWrap>
+          </IntroSection>
 
-        <SectionGray>
-          <Container>
-            <TwoCol>
-              <Col50FlexCenter>
-                <PatternImage src="/images/technology/Neo-02.png" alt="Ncode Detail" width={500} height={400} />
-              </Col50FlexCenter>
-              <Col50>
-                <Stack>
-                  {t.ncodeFeatures.map((feature, i) => (
-                    <FeatureRow key={feature.title}>
-                      <FeatureIcon src={ncodeIcons[i]} alt={feature.title} width={48} height={48} />
-                      <div>
-                        <FeatureTitle>{feature.title}</FeatureTitle>
-                        <BodyNoMargin>{feature.description}</BodyNoMargin>
-                      </div>
-                    </FeatureRow>
-                  ))}
-                </Stack>
-              </Col50>
-            </TwoCol>
-          </Container>
-        </SectionGray>
+          {/* ── Tab section ───────────────────────── */}
+          <TechTabs />
+        </MainContent>
 
-        <LazySection>
-          <SectionWhite>
-            <Container>
-              <TwoCol>
-                <Col37>
-                  <SectionTitleSm>{t.printing.title}</SectionTitleSm>
-                  <Body>{t.printing.p1}</Body>
-                  <SubTitle>{t.printing.printAtHome}</SubTitle>
-                  <Body>{t.printing.p2}</Body>
-                </Col37>
-                <Col58>
-                  <ImageStack>
-                    <FullImage src="/images/technology/Neo-02_2.png" alt="Offset Printing" width={500} height={300} />
-                    <FullImage src="/images/technology/Neo-02_3.png" alt="Home Printing" width={500} height={300} />
-                  </ImageStack>
-                </Col58>
-              </TwoCol>
-            </Container>
-          </SectionWhite>
-        </LazySection>
+        {/* ── 응용 분야 ─────────────────────────────── */}
+        <AppSection>
+          <AppHead>
+            <OrangeDot />
+            <AppTitle>응용 분야</AppTitle>
+            <AppDesc>
+              Ncode 기술은 지면의 위치 정보를 실시간으로 데이터화하여,{"\n"}
+              활용 목적에 따라 스마트펜과 소리펜 두 가지 혁신적인 솔루션으로
+              구현됩니다.
+            </AppDesc>
+          </AppHead>
+          <AppCards>
+            <AppCard>
+              <AppCardBgImg
+                src="/images/technology/card-neosmartpen.jpg"
+                alt="네오스마트펜"
+              />
+              <AppCardLabel>네오스마트펜</AppCardLabel>
+            </AppCard>
+            <AppCard>
+              <AppCardBgImg
+                src="/images/technology/card-soripen.jpg"
+                alt="팝펜(소리펜)"
+              />
+              <AppCardLabel>팝펜(소리펜)</AppCardLabel>
+            </AppCard>
+          </AppCards>
+        </AppSection>
 
-        <LazySection>
-          <SectionGray>
-            <Container>
-              <CenterIntro>
-                <SectionTitle>{t.hardware.title}</SectionTitle>
-                <HardwareIntroBody>{t.hardware.description}</HardwareIntroBody>
-              </CenterIntro>
-            </Container>
-            <Container>
-              <HardwareGrid>
-                {t.hardware.features.map((feature, i) => (
-                  <HardwareCard key={feature.title}>
-                    <IconWrap>
-                      <HwIcon src={hwIcons[i]} alt={feature.title} width={64} height={64} />
-                    </IconWrap>
-                    <HwTitle>{feature.title}</HwTitle>
-                    <HwDesc>{feature.description}</HwDesc>
-                  </HardwareCard>
-                ))}
-              </HardwareGrid>
-              <CenterWrap>
-                <WideImage src="/images/technology/Neo-02_4-1.png" alt="Hardware Technology" width={800} height={400} />
-              </CenterWrap>
-              <ShopWrap>
-                <ShopLink href={shopUrl} target="_blank" rel="noopener noreferrer">
-                  {t.hardware.visitNeoSmartpen}
-                </ShopLink>
-              </ShopWrap>
-            </Container>
-          </SectionGray>
-        </LazySection>
-
-        <LazySection>
-          <SectionDark>
-            <PatentsContainer>
-              <PatentsTitle>{t.patents.title}</PatentsTitle>
-              <PatentsDesc>{t.patents.description}</PatentsDesc>
-            </PatentsContainer>
-          </SectionDark>
-        </LazySection>
-
-        <LazySection>
-          <SectionWhite>
-            <Container>
-              <CenterIntro>
-                <AppFieldsTitle>{t.applicationFields.title}</AppFieldsTitle>
-              </CenterIntro>
-            </Container>
-            <Container>
-              <AppGrid>
-                <AppCard>
-                  <AppIcon src="/images/technology/icon-smartpen.png" alt="Neo smartpen" width={80} height={80} />
-                  <div>
-                    <AppCardTitle>{t.applicationFields.neoSmartpen}</AppCardTitle>
-                    <AppCardDesc>{t.applicationFields.neoSmartpenDesc}</AppCardDesc>
-                  </div>
-                </AppCard>
-                <AppCard>
-                  <AppIcon src="/images/technology/icon-soripen.png" alt="Sound pen" width={80} height={80} />
-                  <div>
-                    <AppCardTitle>{t.applicationFields.soundPen}</AppCardTitle>
-                    <AppCardDesc>{t.applicationFields.soundPenDesc}</AppCardDesc>
-                  </div>
-                </AppCard>
-              </AppGrid>
-            </Container>
-          </SectionWhite>
-        </LazySection>
-
-        <LazySection>
-          <DevSection>
-            <Container>
-              <DevTitle>{dict.common.designedForDevelopers}</DevTitle>
-              <DevDesc>{dict.common.developersDescAlt}</DevDesc>
-              <GithubLink href="https://github.com/NeoSmartpen" target="_blank" rel="noopener noreferrer">
-                {dict.common.openSourceCode}
-              </GithubLink>
-            </Container>
-          </DevSection>
-        </LazySection>
+        {/* ── Developer section ─────────────────────── */}
+        <DevSection>
+          <DevBgOverlay />
+          <DevBgImg src="/images/technology/dev-bg.jpg" alt="" />
+          <DevInner>
+            <DevTitle>Designed for Developers</DevTitle>
+            <DevDesc>
+              누구나 네오스마트펜 응용 어플리케이션을 개발할 수 있습니다.{"\n"}
+              Github를 통해 SDK 소스코드와 예제 코드를 내려받을 수 있습니다.
+            </DevDesc>
+            <DevBtn
+              href="https://github.com/NeoSmartpen"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github로 이동하기
+              <img
+                src="/images/technology/arrow-right.png"
+                alt=""
+                width={32}
+                height={32}
+              />
+            </DevBtn>
+          </DevInner>
+        </DevSection>
       </main>
       <Footer lang={lang} dict={dict.common.footer} />
     </>

@@ -1,350 +1,465 @@
 import styled from "styled-components";
-import Image from "next/image";
-import Link from "next/link";
-import { colors, media } from "@/styles/theme";
+import { media } from "@/styles/theme";
 
-export const Container = styled.div`
-  max-width: 1080px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-`;
-
-export const HeroContainer = styled(Container)`
-  text-align: center;
-`;
-
-export const ShopWrap = styled.div`
-  text-align: center;
-  margin-top: 2rem;
-`;
-
-export const PatentsContainer = styled(Container)`
-  text-align: center;
-`;
-
+/* ── Hero ───────────────────────────────────────── */
 export const HeroSection = styled.section`
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  background: ${colors.dark};
-  color: #fff;
+  position: relative;
+  width: 100%;
+  height: 50vw;
+  max-height: 950px;
+  min-height: 320px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const HeroLabel = styled.p`
-  color: ${colors.primary};
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 14px;
-  margin-bottom: 1rem;
+export const HeroBgImg = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 `;
 
 export const HeroTitle = styled.h1`
-  font-size: 40px;
-  font-weight: 900;
-  margin-bottom: 1.5rem;
-`;
-
-export const HeroDesc = styled.p`
-  color: #d1d5db;
-  font-size: 14px;
-  line-height: 2;
-  max-width: 42rem;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-export const SectionWhite = styled.section`
-  padding: 54px 0;
-  background: #fff;
-`;
-
-export const SectionGray = styled.section`
-  padding: 54px 0;
-  background: #f1f1f1;
-`;
-
-export const SectionDark = styled.section`
-  padding: 4rem 0;
-  background: ${colors.dark};
+  position: relative;
+  z-index: 1;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(48px, 7vw, 100px);
+  font-weight: 700;
   color: #fff;
+  letter-spacing: -0.02em;
 `;
 
-export const TwoCol = styled.div`
+/* ── Main content ───────────────────────────────── */
+export const MainContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-
-  ${media.lg} {
-    flex-direction: row;
-  }
+  gap: clamp(80px, 10vw, 200px);
+  padding: clamp(60px, 10vw, 200px) clamp(24px, 7vw, 140px);
+  overflow: hidden;
 `;
 
-export const Col37 = styled.div`
-  width: 100%;
-
-  ${media.lg} {
-    width: 37%;
-  }
-`;
-
-export const Col58 = styled.div`
-  width: 100%;
-
-  ${media.lg} {
-    width: 58%;
-  }
-`;
-
-export const Col50 = styled.div`
-  width: 100%;
-
-  ${media.lg} {
-    width: 50%;
-  }
-`;
-
-export const Col58FlexCenter = styled(Col58)`
+/* ── Intro ──────────────────────────────────────── */
+export const IntroSection = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 120px);
 `;
 
-export const Col50FlexCenter = styled(Col50)`
+export const IntroHead = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 48px;
 `;
 
-export const SectionTitle = styled.h2`
-  font-size: 30px;
+export const IntroTitle = styled.h2`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(32px, 5vw, 80px);
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+`;
+
+export const IntroDesc = styled.p`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(14px, 1.5vw, 28px);
   font-weight: 500;
-  color: #000;
-  margin-bottom: 1.5rem;
+  color: #111;
+  letter-spacing: -0.01em;
+  line-height: 1.6;
 `;
 
-export const SectionTitleSm = styled.h2`
-  font-size: 22px;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 1rem;
-`;
-
-export const Body = styled.p`
-  color: #666;
-  font-size: 14px;
-  line-height: 2;
-  margin-bottom: 1rem;
-`;
-
-export const BodyNoMargin = styled(Body)`
-  margin-bottom: 0;
-`;
-
-export const HardwareIntroBody = styled(Body)`
-  max-width: 42rem;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-export const SubTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 0.75rem;
-  margin-top: 2rem;
-`;
-
-export const PatternImage = styled(Image)`
+export const IntroImgWrap = styled.div`
   width: 100%;
-  max-width: 28rem;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f8f8f8;
+  aspect-ratio: 16 / 9;
+  max-height: 600px;
+`;
+
+export const IntroImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+`;
+
+/* ── Tab bar ────────────────────────────────────── */
+export const TabBarWrap = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+export const TabBar = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+export const TabBtn = styled.button<{ $active: boolean }>`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(14px, 1.3vw, 24px);
+  font-weight: 600;
+  padding: 20px 24px;
+  min-width: clamp(120px, 12vw, 240px);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+  background: ${({ $active }) => ($active ? "#FF9900" : "#fff")};
+  color: ${({ $active }) => ($active ? "#fff" : "#111")};
+  border: ${({ $active }) => ($active ? "none" : "1px solid #ddd")};
+  &:hover {
+    background: ${({ $active }) => ($active ? "#FF9900" : "#f8f8f8")};
+  }
+`;
+
+export const TabDotArea = styled.div`
+  position: relative;
+  width: 100%;
+  height: 80px;
+  pointer-events: none;
+`;
+
+export const TabDot = styled.div`
+  position: absolute;
+  top: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ff9900;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+`;
+
+/* ── Tab content ────────────────────────────────── */
+export const TabContentWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 5vw, 80px);
+  width: 100%;
+`;
+
+export const ContentTitleArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  position: relative;
+`;
+
+export const ContentTitle = styled.h3`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  color: #000;
+  line-height: normal;
+`;
+
+export const ContentDesc = styled.p`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(14px, 1.3vw, 24px);
+  color: #000;
+  line-height: 1.4;
+  text-align: center;
+`;
+
+/* ── Two-column layout ──────────────────────────── */
+export const TwoCol = styled.div`
+  display: flex;
+  gap: clamp(24px, 5vw, 80px);
+  align-items: flex-start;
+  width: 100%;
+  ${media.md} {
+    flex-direction: column;
+  }
+`;
+
+export const TwoColCenter = styled(TwoCol)`
+  align-items: center;
+`;
+
+/* Ncode diagram */
+export const NcodeDiagramWrap = styled.div`
+  position: relative;
+  flex-shrink: 0;
+  width: 56%;
+  aspect-ratio: 915 / 594;
+  ${media.md} {
+    width: 100%;
+  }
+`;
+
+export const NcodeMainImg = styled.img`
+  position: absolute;
+  left: 8.6%;
+  top: 0;
+  width: 67.2%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+export const SynergyArr1Img = styled.img`
+  position: absolute;
+  left: 66.7%;
+  top: 23.2%;
+  width: 33.3%;
   height: auto;
 `;
 
-export const FeatureRow = styled.div`
+export const SynergyArr2Wrap = styled.div`
+  position: absolute;
+  left: 68.3%;
+  top: 40.6%;
+  width: 32.2%;
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(29.16deg);
 `;
 
-export const FeatureIcon = styled(Image)`
+export const SynergyArr2Img = styled.img`
+  width: 100%;
+  height: auto;
+`;
+
+/* Printing / Smart Pen left image */
+export const TabImgWrap = styled.div`
+  flex: 1;
+  min-width: 0;
+  padding: 0 clamp(0px, 5vw, 80px);
+  ${media.md} {
+    padding: 0;
+    width: 100%;
+  }
+`;
+
+export const TabMainImg = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+`;
+
+/* Feature cards */
+export const CardsCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  ${media.md} {
+    width: 100%;
+  }
+`;
+
+export const FeatureCard = styled.div`
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+`;
+
+export const FeatureIconImg = styled.img<{ $size?: number }>`
+  width: ${({ $size }) => $size ?? 70}px;
+  height: ${({ $size }) => $size ?? 70}px;
+  object-fit: contain;
   flex-shrink: 0;
 `;
 
-export const FeatureTitle = styled.h3`
+export const FeatureTitle = styled.h4`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(18px, 1.8vw, 28px);
   font-weight: 700;
-  color: #000;
-  margin-bottom: 0.5rem;
+  color: #111;
+  line-height: normal;
+  white-space: nowrap;
 `;
 
-export const Stack = styled.div`
+export const FeatureDesc = styled.p`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(13px, 1.1vw, 20px);
+  color: #111;
+  line-height: 1.4;
+  white-space: pre-line;
+`;
+
+/* ── 응용 분야 ──────────────────────────────────── */
+export const AppSection = styled.section`
+  background: #fcfcfc;
+  padding: clamp(60px, 10vw, 200px) clamp(24px, 7vw, 140px);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: clamp(40px, 5vw, 80px);
 `;
 
-export const ImageStack = styled.div`
+export const AppHead = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 48px;
+  align-items: center;
+  position: relative;
 `;
 
-export const FullImage = styled(Image)`
-  width: 100%;
-  height: auto;
-`;
-
-export const CenterIntro = styled.div`
-  text-align: center;
-  margin-bottom: 3rem;
-`;
-
-export const HardwareGrid = styled.div`
-  display: grid;
-  gap: 2rem;
-  margin-bottom: 3rem;
-  grid-template-columns: 1fr;
-
-  ${media.md} {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-`;
-
-export const HardwareCard = styled.div`
-  text-align: center;
-`;
-
-export const IconWrap = styled.div`
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
-`;
-
-export const HwIcon = styled(Image)``;
-
-export const HwTitle = styled.h3`
+export const AppTitle = styled.h2`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(32px, 4vw, 64px);
   font-weight: 700;
+  color: #111;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-align: center;
+`;
+
+export const AppDesc = styled.p`
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(14px, 1.3vw, 24px);
   color: #000;
-  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  text-align: center;
+  letter-spacing: -0.01em;
 `;
 
-export const HwDesc = styled.p`
-  color: #666;
-  font-size: 14px;
-`;
-
-export const WideImage = styled(Image)`
-  width: 100%;
-  max-width: 42rem;
-  height: auto;
-`;
-
-export const CenterWrap = styled.div`
+export const AppCards = styled.div`
   display: flex;
-  justify-content: center;
-`;
-
-export const ShopLink = styled(Link)`
-  display: inline-block;
-  background: ${colors.primary};
-  color: #fff;
-  padding: 0.75rem 2rem;
-  border-radius: 0.25rem;
-  font-weight: 600;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: background 0.15s;
-
-  &:hover {
-    background: ${colors.primaryDark};
-  }
-`;
-
-export const PatentsTitle = styled.h2`
-  font-size: 30px;
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-`;
-
-export const PatentsDesc = styled.p`
-  color: #d1d5db;
-  font-size: 14px;
-  line-height: 2;
-`;
-
-export const AppFieldsTitle = styled.h2`
-  font-size: 30px;
-  font-weight: 500;
-  color: #000;
-  margin-bottom: 1rem;
-`;
-
-export const AppGrid = styled.div`
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 1fr;
-
+  gap: 16px;
   ${media.md} {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex-direction: column;
   }
 `;
 
 export const AppCard = styled.div`
-  background: #f1f1f1;
-  border-radius: 0.5rem;
-  padding: 2rem;
+  flex: 1;
+  min-width: 0;
+  height: clamp(280px, 30vw, 500px);
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
+export const AppCardBgImg = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+`;
+
+export const AppCardLabel = styled.div`
+  position: relative;
+  z-index: 1;
+  background: rgba(17, 17, 17, 0.5);
+  backdrop-filter: blur(8px);
+  padding: 24px 40px;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(18px, 2vw, 32px);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+`;
+
+/* ── Developer section ──────────────────────────── */
+export const DevSection = styled.section`
+  position: relative;
+  padding: clamp(60px, 10vw, 140px) clamp(24px, 28vw, 420px);
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 400px;
 `;
 
-export const AppIcon = styled(Image)`
-  flex-shrink: 0;
+export const DevBgOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: #101324;
 `;
 
-export const AppCardTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #000;
+export const DevBgImg = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0.8;
 `;
 
-export const AppCardDesc = styled.p`
-  color: #666;
-  font-size: 14px;
-  margin-top: 0.5rem;
-`;
-
-export const DevSection = styled.section`
-  padding: 4rem 0;
-  background: ${colors.dark};
-  color: #fff;
+export const DevInner = styled.div`
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
   text-align: center;
+  max-width: 700px;
 `;
 
 export const DevTitle = styled.h2`
-  font-size: 30px;
-  font-weight: 500;
-  margin-bottom: 1rem;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.4;
 `;
 
 export const DevDesc = styled.p`
-  color: #d1d5db;
-  font-size: 14px;
-  margin-bottom: 2rem;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(14px, 1.3vw, 24px);
+  color: #fff;
+  line-height: 1.4;
 `;
 
-export const GithubLink = styled(Link)`
-  display: inline-block;
-  background: ${colors.teal};
-  color: #fff;
-  padding: 0.75rem 2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 14px;
+export const DevBtn = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 32px;
+  height: 80px;
+  min-width: clamp(200px, 20vw, 350px);
+  border: 1px solid #fff;
+  border-radius: 8px;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: clamp(14px, 1.3vw, 20px);
   font-weight: 600;
-  transition: opacity 0.15s;
-
+  color: #fff;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.2s;
   &:hover {
-    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.1);
   }
+`;
+
+/* Orange section dot */
+export const OrangeDot = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ff9900;
+  flex-shrink: 0;
 `;
